@@ -1,5 +1,5 @@
 {
-  "next": 14,
+  "next": 16,
   "critiques": [
     {
       "id": 1,
@@ -234,6 +234,43 @@
       "created": "2026-11-13T03:59:55+00:00",
       "updated": "2026-11-13T04:01:12.948971+00:00",
       "note": "Covered the torso with a fitted black shirt and shaded broad pecs and a narrower six-pack through the fabric."
+    },
+    {
+      "id": 14,
+      "status": "fixed",
+      "text": "Ok so Mason's neck doesn't look right at all. It should be aligned with his torso. Right now it is too far forward and looks really unnatural from the side.",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_side",
+        "frame": 0,
+        "region": [
+          14,
+          2,
+          34,
+          29
+        ]
+      },
+      "created": "2026-11-13T16:35:22+00:00",
+      "updated": "2026-11-13T16:37:12+00:00",
+      "note": "Centered the side-view neck above the torso and lowered the shoulder tops so the neck stays visible in idle and walking frames."
+    },
+    {
+      "id": 15,
+      "status": "fixed",
+      "text": "The left side of the bathroom looks good, but the right side still needs a entry from the other side coming up from the south side. You can mirror this edit to the other bathroom on the east side.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          620,
+          331,
+          561,
+          256
+        ]
+      },
+      "created": "2026-11-13T16:39:01+00:00",
+      "updated": "2026-11-13T16:42:59+00:00",
+      "note": "Added south-facing entrances to both bathrooms, moved the noticeboards beside the openings, and verified entry and exit through both doors."
     }
   ]
 }
