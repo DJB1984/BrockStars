@@ -1,5 +1,5 @@
 {
-  "next": 4,
+  "next": 8,
   "critiques": [
     {
       "id": 1,
@@ -50,6 +50,82 @@
       "created": "2026-11-13T02:51:32+00:00",
       "updated": "2026-11-13T02:56:12+00:00",
       "note": "Redrew the side walk with bent knees (heel strike, toe push-off, and a passing leg lifted with the knee forward), elbows bent and swinging opposite the legs, and the far arm showing behind the body."
+    },
+    {
+      "id": 4,
+      "status": "fixed",
+      "text": "his walk up and down look strange, change them to be more similar to his side walk which has a lot more detail.",
+      "target": {
+        "asset": "titus",
+        "anim": "walk_down",
+        "frame": 3,
+        "region": [
+          14,
+          16,
+          38,
+          37
+        ]
+      },
+      "created": "2026-11-13T03:32:38+00:00",
+      "updated": "2026-11-13T03:34:51+00:00",
+      "note": "Rebuilt the front and back walks like the side walk: the planted leg takes the weight while the trailing heel lifts, the passing leg rises with a bent, creased knee, and the elbows bend and swing opposite the legs (mirrored for the back view)."
+    },
+    {
+      "id": 5,
+      "status": "fixed",
+      "text": "his hand disapears",
+      "target": {
+        "asset": "titus",
+        "anim": "walk_down",
+        "frame": 2,
+        "region": [
+          44,
+          27,
+          7,
+          11
+        ]
+      },
+      "created": "2026-11-13T03:35:45+00:00",
+      "updated": "2026-11-13T03:37:57+00:00",
+      "note": "Fixed the back-swing hand being clipped at the edge of its layer, so the fist is drawn whole, and moved it onto whole pixels as a full 5px fist with lighter shading."
+    },
+    {
+      "id": 6,
+      "status": "fixed",
+      "text": "His arms are way to small rn, make them the size of the side walk and walk down",
+      "target": {
+        "asset": "titus",
+        "anim": "idle_up",
+        "frame": 0,
+        "region": [
+          42,
+          19,
+          9,
+          20
+        ]
+      },
+      "created": "2026-11-13T03:36:07+00:00",
+      "updated": "2026-11-13T03:39:00+00:00",
+      "note": "Replaced the thin idle arms (front, back and side) with the same thick, hanging arms the walks use, so idle and walk match."
+    },
+    {
+      "id": 7,
+      "status": "fixed",
+      "text": "his hand should be infront of his body when it swings",
+      "target": {
+        "asset": "titus",
+        "anim": "walk_up",
+        "frame": 2,
+        "region": [
+          35,
+          28,
+          11,
+          11
+        ]
+      },
+      "created": "2026-11-13T03:40:10+00:00",
+      "updated": "2026-11-13T03:41:05+00:00",
+      "note": "In the walk away from the camera the arms are now drawn behind the torso, so the forward-swinging hand passes in front of his body (hidden by his back) instead of over it."
     }
   ]
 }
