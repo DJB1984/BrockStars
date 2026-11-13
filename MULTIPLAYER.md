@@ -31,13 +31,13 @@ In the browser console, `brockNet` shows the session (`brockNet.role`, `brockNet
 folder next to itself for the rooms (with an `.htaccess` that keeps it private). The site must be HTTPS.
 
 The live site is https://brockstars.brookslanding.com, a subdomain whose document root is
-`/home/brooksl2/brockstars`.
+`/home/brooksl2/public_html/website_1215fb1d` (HostGator picked that name).
 
 - Over SFTP (works without shell access; the deploy key is in `~/.claude/deploy-hostgator.defaults.json`):
-  `npm run build`, then upload `dist/*` into `brockstars/` (`sftp -P 2222 ... brooksl2@brookslanding.com`,
-  `put -r dist/* brockstars/`). Old hashed files in `brockstars/assets/` can be deleted now and then.
+  `npm run build`, then upload `dist/*` into `public_html/website_1215fb1d/` (`sftp -P 2222 ... brooksl2@brookslanding.com`,
+  `put -r dist/* public_html/website_1215fb1d/`). Old hashed files in its `assets/` can be deleted now and then.
 - Or by hand: `npm run package`, then in cPanel's File Manager upload `brockstars-site.zip` into
-  `brockstars/` and Extract it.
+  that folder and Extract it.
 
 ## When players can't connect
 
