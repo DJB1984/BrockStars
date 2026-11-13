@@ -2,8 +2,8 @@
   "name": "BrockStars",
   "view": "topdown",
   "resolution": [
-    320,
-    180
+    640,
+    360
   ],
   "classes": {
     "small": {
@@ -46,8 +46,8 @@
         52
       ],
       "body": [
-        16,
-        30
+        24,
+        46
       ]
     },
     "overhead": {
@@ -70,5 +70,6 @@
     "version": "0.10.0",
     "guide": "CLAUDE.md",
     "guide_sha256": "bdfe4d7dc2ce02cd4fb3dab03fcd8de6a66f4228ce8f129eb7d8dcf5e50c2d85"
-  }
+  },
+  "zoom": 2
 }

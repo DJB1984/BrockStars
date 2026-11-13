@@ -1,33 +1,33 @@
 {
-  "name": "sink",
-  "type": "prop",
-  "view": "topdown",
-  "size": [
-    16,
-    16
-  ],
-  "origin": [
-    8,
-    16
-  ],
-  "footprint": [
-    0,
-    2,
-    16,
-    14
-  ],
-  "palette": {
-    "k": "outline",
-    "w": "white",
-    "h": "light_gray",
-    "l": "gray",
-    "m": "slate"
-  },
-  "animations": {
-    "idle": {
-      "frames": [
-        "sink"
-      ]
-    }
+ "name": "sink",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  32,
+  32
+ ],
+ "origin": [
+  16,
+  32
+ ],
+ "footprint": [
+  0,
+  4,
+  32,
+  28
+ ],
+ "palette": {
+  "k": "outline",
+  "w": "white",
+  "h": "light_gray",
+  "l": "gray",
+  "m": "slate"
+ },
+ "animations": {
+  "idle": {
+   "frames": [
+    "sink"
+   ]
   }
+ }
 }

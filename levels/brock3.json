@@ -233,1601 +233,1601 @@
    {
     "prop": "desk",
     "at": [
-     278,
-     42
+     556,
+     84
     ],
     "state": "front_books"
    },
    {
     "prop": "desk",
     "at": [
-     306,
-     42
+     612,
+     84
     ],
     "state": "front_lamp"
    },
    {
     "prop": "bed_green",
     "at": [
-     272,
-     82
+     544,
+     164
     ],
     "state": "north"
    },
    {
     "prop": "bed",
     "at": [
-     312,
-     82
+     624,
+     164
     ],
     "state": "north"
    },
    {
     "prop": "wardrobe",
     "at": [
-     272,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     312,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     342,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     370,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     336,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     376,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     336,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     376,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     406,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     434,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     400,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     440,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     400,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     440,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     470,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     498,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     464,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     504,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     464,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     504,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     534,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     562,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     528,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     568,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     528,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     568,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     598,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     626,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     592,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     632,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     592,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     632,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     662,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     690,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     656,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     696,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     656,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     696,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     726,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     754,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     720,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     760,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     720,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     760,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     790,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     818,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     784,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     824,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     784,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     824,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     854,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     882,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     848,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     888,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     848,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     888,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     918,
-     42
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     946,
-     42
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     912,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     952,
-     82
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     912,
-     104
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     952,
-     104
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     150,
-     210
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     178,
-     210
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     144,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     184,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     144,
-     272
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     184,
-     272
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     214,
-     210
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     242,
-     210
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     208,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     248,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     208,
-     272
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     248,
-     272
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     982,
-     210
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1010,
-     210
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     976,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     1016,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     976,
-     272
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1016,
-     272
-    ]
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1046,
-     210
-    ],
-    "state": "front_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1074,
-     210
-    ],
-    "state": "front_lamp"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     1040,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     1080,
-     250
-    ],
-    "state": "north"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1040,
-     272
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1080,
-     272
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     16,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     56,
-     378
-    ]
-   },
-   {
-    "prop": "bed",
-    "at": [
-     16,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     56,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     22,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     50,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     144,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     184,
-     378
-    ]
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     144,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     184,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     150,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     178,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     208,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     248,
-     378
-    ]
-   },
-   {
-    "prop": "bed",
-    "at": [
-     208,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     248,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     214,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     242,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     272,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     312,
-     378
-    ]
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     272,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     312,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     278,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     306,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     336,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     376,
-     378
-    ]
-   },
-   {
-    "prop": "bed",
-    "at": [
-     336,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     376,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     342,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     370,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     400,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     440,
-     378
-    ]
-   },
-   {
-    "prop": "bed",
-    "at": [
-     400,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     440,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     406,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     434,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     464,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     504,
-     378
-    ]
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     464,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     504,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     470,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     498,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     528,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     568,
-     378
-    ]
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     528,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     568,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     534,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     562,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     592,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     632,
-     378
-    ]
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     592,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     632,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     598,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     626,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     656,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     696,
-     378
-    ]
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     656,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     696,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     662,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     690,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     720,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     760,
-     378
-    ]
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     720,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     760,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     726,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     754,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     784,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     824,
-     378
-    ]
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     784,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     824,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     790,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     818,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     848,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     888,
-     378
-    ]
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     848,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_purple",
-    "at": [
-     888,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     854,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     882,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     912,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     952,
-     378
-    ]
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     912,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_green",
-    "at": [
-     952,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     918,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     946,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     976,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1016,
-     378
-    ]
-   },
-   {
-    "prop": "bed",
-    "at": [
-     976,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     1016,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     982,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1010,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1040,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1080,
-     378
-    ]
-   },
-   {
-    "prop": "bed_gray",
-    "at": [
-     1040,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed",
-    "at": [
-     1080,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1046,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1074,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1168,
-     378
-    ]
-   },
-   {
-    "prop": "wardrobe",
-    "at": [
-     1208,
-     378
-    ]
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     1168,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "bed_red",
-    "at": [
-     1208,
-     418
-    ],
-    "state": "south"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1174,
-     440
-    ],
-    "state": "back_books"
-   },
-   {
-    "prop": "desk",
-    "at": [
-     1202,
-     440
-    ],
-    "state": "back_lamp"
-   },
-   {
-    "prop": "couch",
-    "at": [
-     64,
+     544,
      208
     ]
    },
    {
-    "prop": "table",
+    "prop": "wardrobe",
     "at": [
-     36,
-     240
-    ]
-   },
-   {
-    "prop": "table",
-    "at": [
-     92,
-     240
-    ]
-   },
-   {
-    "prop": "couch",
-    "at": [
-     1152,
+     624,
      208
     ]
    },
    {
-    "prop": "table",
+    "prop": "desk",
+    "at": [
+     684,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     740,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     672,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     752,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     672,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     752,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     812,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     868,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     800,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     880,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     800,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     880,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     940,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     996,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     928,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1008,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     928,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1008,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1068,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
     "at": [
      1124,
-     240
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1056,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1136,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1056,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1136,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1196,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1252,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1184,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1264,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1184,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1264,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1324,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1380,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1312,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1392,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1312,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1392,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1452,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1508,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1440,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1520,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1440,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1520,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1580,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1636,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1568,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1648,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1568,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1648,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1708,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1764,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1696,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1776,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1696,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1776,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1836,
+     84
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1892,
+     84
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1824,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1904,
+     164
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1824,
+     208
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1904,
+     208
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     300,
+     420
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     356,
+     420
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     288,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     368,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     288,
+     544
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     368,
+     544
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     428,
+     420
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     484,
+     420
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     416,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     496,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     416,
+     544
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     496,
+     544
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1964,
+     420
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2020,
+     420
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1952,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     2032,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1952,
+     544
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2032,
+     544
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2092,
+     420
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2148,
+     420
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     2080,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     2160,
+     500
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2080,
+     544
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2160,
+     544
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     32,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     112,
+     756
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     32,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     112,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     44,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     100,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     288,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     368,
+     756
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     288,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     368,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     300,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     356,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     416,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     496,
+     756
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     416,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     496,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     428,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     484,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     544,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     624,
+     756
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     544,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     624,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     556,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     612,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     672,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     752,
+     756
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     672,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     752,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     684,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     740,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     800,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     880,
+     756
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     800,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     880,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     812,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     868,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     928,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1008,
+     756
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     928,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1008,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     940,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     996,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1056,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1136,
+     756
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1056,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1136,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1068,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1124,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1184,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1264,
+     756
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1184,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1264,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1196,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1252,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1312,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1392,
+     756
+    ]
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1312,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1392,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1324,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1380,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1440,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1520,
+     756
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1440,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1520,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1452,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1508,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1568,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1648,
+     756
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1568,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1648,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1580,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1636,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1696,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1776,
+     756
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1696,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1776,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1708,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1764,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1824,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1904,
+     756
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1824,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1904,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1836,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1892,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1952,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2032,
+     756
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1952,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     2032,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1964,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2020,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2080,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2160,
+     756
+    ]
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     2080,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     2160,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2092,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2148,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2336,
+     756
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     2416,
+     756
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     2336,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     2416,
+     836
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2348,
+     880
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     2404,
+     880
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "couch",
+    "at": [
+     128,
+     416
     ]
    },
    {
     "prop": "table",
     "at": [
-     1180,
-     240
+     72,
+     480
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     184,
+     480
+    ]
+   },
+   {
+    "prop": "couch",
+    "at": [
+     2304,
+     416
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     2248,
+     480
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     2360,
+     480
     ]
    },
    {
     "prop": "sink",
     "at": [
-     400,
-     198
+     800,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     416,
-     198
+     832,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     432,
-     198
+     864,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     448,
-     198
+     896,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     776,
-     198
+     1552,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     792,
-     198
+     1584,
+     396
     ]
    },
    {
     "prop": "sink",
     "at": [
-     808,
-     198
+     1616,
+     396
     ]
    },
    {
     "prop": "toilet",
     "at": [
-     420,
-     272
+     840,
+     544
     ],
     "state": "south"
    },
    {
     "prop": "toilet",
     "at": [
-     452,
-     272
+     904,
+     544
     ],
     "state": "south"
    },
    {
     "prop": "toilet",
     "at": [
-     772,
-     272
+     1544,
+     544
     ],
     "state": "south"
    },
    {
     "prop": "toilet",
     "at": [
-     804,
-     272
+     1608,
+     544
     ],
     "state": "south"
    }
   ]
  },
- "player": "student",
+ "player": "titus",
  "camera": {
   "zoom": 1
  }

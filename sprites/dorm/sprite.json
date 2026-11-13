@@ -2,8 +2,8 @@
  "name": "dorm",
  "type": "tileset",
  "size": [
-  8,
-  8
+  16,
+  16
  ],
  "columns": 8,
  "palette": {

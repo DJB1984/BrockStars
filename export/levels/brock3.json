@@ -7,8 +7,8 @@
  "infinite": false,
  "width": 153,
  "height": 56,
- "tilewidth": 8,
- "tileheight": 8,
+ "tilewidth": 16,
+ "tileheight": 16,
  "nextlayerid": 4,
  "nextobjectid": 211,
  "layers": [
@@ -17206,8 +17206,8 @@
      "visible": true,
      "rotation": 0,
      "properties": [],
-     "x": 612,
-     "y": 232,
+     "x": 1224,
+     "y": 464,
      "width": 0,
      "height": 0,
      "point": true
@@ -17231,8 +17231,8 @@
        "value": "front_books"
       }
      ],
-     "x": 278,
-     "y": 42,
+     "x": 556,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17256,8 +17256,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 306,
-     "y": 42,
+     "x": 612,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17281,8 +17281,8 @@
        "value": "north"
       }
      ],
-     "x": 272,
-     "y": 82,
+     "x": 544,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17306,8 +17306,8 @@
        "value": "north"
       }
      ],
-     "x": 312,
-     "y": 82,
+     "x": 624,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17326,8 +17326,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 272,
-     "y": 104,
+     "x": 544,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17346,8 +17346,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 312,
-     "y": 104,
+     "x": 624,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17371,8 +17371,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 342,
-     "y": 42,
+     "x": 684,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17396,8 +17396,8 @@
        "value": "front_books"
       }
      ],
-     "x": 370,
-     "y": 42,
+     "x": 740,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17421,8 +17421,8 @@
        "value": "north"
       }
      ],
-     "x": 336,
-     "y": 82,
+     "x": 672,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17446,8 +17446,8 @@
        "value": "north"
       }
      ],
-     "x": 376,
-     "y": 82,
+     "x": 752,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17466,8 +17466,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 336,
-     "y": 104,
+     "x": 672,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17486,8 +17486,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 376,
-     "y": 104,
+     "x": 752,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17511,8 +17511,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 406,
-     "y": 42,
+     "x": 812,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17536,8 +17536,8 @@
        "value": "front_books"
       }
      ],
-     "x": 434,
-     "y": 42,
+     "x": 868,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17561,8 +17561,8 @@
        "value": "north"
       }
      ],
-     "x": 400,
-     "y": 82,
+     "x": 800,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17586,8 +17586,8 @@
        "value": "north"
       }
      ],
-     "x": 440,
-     "y": 82,
+     "x": 880,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17606,8 +17606,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 400,
-     "y": 104,
+     "x": 800,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17626,8 +17626,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 440,
-     "y": 104,
+     "x": 880,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17651,8 +17651,8 @@
        "value": "front_books"
       }
      ],
-     "x": 470,
-     "y": 42,
+     "x": 940,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17676,8 +17676,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 498,
-     "y": 42,
+     "x": 996,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17701,8 +17701,8 @@
        "value": "north"
       }
      ],
-     "x": 464,
-     "y": 82,
+     "x": 928,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17726,8 +17726,8 @@
        "value": "north"
       }
      ],
-     "x": 504,
-     "y": 82,
+     "x": 1008,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17746,8 +17746,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 464,
-     "y": 104,
+     "x": 928,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17766,8 +17766,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 504,
-     "y": 104,
+     "x": 1008,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17791,8 +17791,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 534,
-     "y": 42,
+     "x": 1068,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17816,8 +17816,8 @@
        "value": "front_books"
       }
      ],
-     "x": 562,
-     "y": 42,
+     "x": 1124,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17841,8 +17841,8 @@
        "value": "north"
       }
      ],
-     "x": 528,
-     "y": 82,
+     "x": 1056,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17866,8 +17866,8 @@
        "value": "north"
       }
      ],
-     "x": 568,
-     "y": 82,
+     "x": 1136,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -17886,8 +17886,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 528,
-     "y": 104,
+     "x": 1056,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17906,8 +17906,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 568,
-     "y": 104,
+     "x": 1136,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -17931,8 +17931,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 598,
-     "y": 42,
+     "x": 1196,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17956,8 +17956,8 @@
        "value": "front_books"
       }
      ],
-     "x": 626,
-     "y": 42,
+     "x": 1252,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -17981,8 +17981,8 @@
        "value": "north"
       }
      ],
-     "x": 592,
-     "y": 82,
+     "x": 1184,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18006,8 +18006,8 @@
        "value": "north"
       }
      ],
-     "x": 632,
-     "y": 82,
+     "x": 1264,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18026,8 +18026,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 592,
-     "y": 104,
+     "x": 1184,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18046,8 +18046,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 632,
-     "y": 104,
+     "x": 1264,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18071,8 +18071,8 @@
        "value": "front_books"
       }
      ],
-     "x": 662,
-     "y": 42,
+     "x": 1324,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18096,8 +18096,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 690,
-     "y": 42,
+     "x": 1380,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18121,8 +18121,8 @@
        "value": "north"
       }
      ],
-     "x": 656,
-     "y": 82,
+     "x": 1312,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18146,8 +18146,8 @@
        "value": "north"
       }
      ],
-     "x": 696,
-     "y": 82,
+     "x": 1392,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18166,8 +18166,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 656,
-     "y": 104,
+     "x": 1312,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18186,8 +18186,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 696,
-     "y": 104,
+     "x": 1392,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18211,8 +18211,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 726,
-     "y": 42,
+     "x": 1452,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18236,8 +18236,8 @@
        "value": "front_books"
       }
      ],
-     "x": 754,
-     "y": 42,
+     "x": 1508,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18261,8 +18261,8 @@
        "value": "north"
       }
      ],
-     "x": 720,
-     "y": 82,
+     "x": 1440,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18286,8 +18286,8 @@
        "value": "north"
       }
      ],
-     "x": 760,
-     "y": 82,
+     "x": 1520,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18306,8 +18306,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 720,
-     "y": 104,
+     "x": 1440,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18326,8 +18326,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 760,
-     "y": 104,
+     "x": 1520,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18351,8 +18351,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 790,
-     "y": 42,
+     "x": 1580,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18376,8 +18376,8 @@
        "value": "front_books"
       }
      ],
-     "x": 818,
-     "y": 42,
+     "x": 1636,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18401,8 +18401,8 @@
        "value": "north"
       }
      ],
-     "x": 784,
-     "y": 82,
+     "x": 1568,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18426,8 +18426,8 @@
        "value": "north"
       }
      ],
-     "x": 824,
-     "y": 82,
+     "x": 1648,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18446,8 +18446,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 784,
-     "y": 104,
+     "x": 1568,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18466,8 +18466,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 824,
-     "y": 104,
+     "x": 1648,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18491,8 +18491,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 854,
-     "y": 42,
+     "x": 1708,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18516,8 +18516,8 @@
        "value": "front_books"
       }
      ],
-     "x": 882,
-     "y": 42,
+     "x": 1764,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18541,8 +18541,8 @@
        "value": "north"
       }
      ],
-     "x": 848,
-     "y": 82,
+     "x": 1696,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18566,8 +18566,8 @@
        "value": "north"
       }
      ],
-     "x": 888,
-     "y": 82,
+     "x": 1776,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18586,8 +18586,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 848,
-     "y": 104,
+     "x": 1696,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18606,8 +18606,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 888,
-     "y": 104,
+     "x": 1776,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18631,8 +18631,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 918,
-     "y": 42,
+     "x": 1836,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18656,8 +18656,8 @@
        "value": "front_books"
       }
      ],
-     "x": 946,
-     "y": 42,
+     "x": 1892,
+     "y": 84,
      "width": 0,
      "height": 0,
      "point": true
@@ -18681,8 +18681,8 @@
        "value": "north"
       }
      ],
-     "x": 912,
-     "y": 82,
+     "x": 1824,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18706,8 +18706,8 @@
        "value": "north"
       }
      ],
-     "x": 952,
-     "y": 82,
+     "x": 1904,
+     "y": 164,
      "width": 0,
      "height": 0,
      "point": true
@@ -18726,8 +18726,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 912,
-     "y": 104,
+     "x": 1824,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18746,8 +18746,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 952,
-     "y": 104,
+     "x": 1904,
+     "y": 208,
      "width": 0,
      "height": 0,
      "point": true
@@ -18771,8 +18771,8 @@
        "value": "front_books"
       }
      ],
-     "x": 150,
-     "y": 210,
+     "x": 300,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -18796,8 +18796,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 178,
-     "y": 210,
+     "x": 356,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -18821,8 +18821,8 @@
        "value": "north"
       }
      ],
-     "x": 144,
-     "y": 250,
+     "x": 288,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -18846,8 +18846,8 @@
        "value": "north"
       }
      ],
-     "x": 184,
-     "y": 250,
+     "x": 368,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -18866,8 +18866,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 144,
-     "y": 272,
+     "x": 288,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -18886,8 +18886,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 184,
-     "y": 272,
+     "x": 368,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -18911,8 +18911,8 @@
        "value": "front_books"
       }
      ],
-     "x": 214,
-     "y": 210,
+     "x": 428,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -18936,8 +18936,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 242,
-     "y": 210,
+     "x": 484,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -18961,8 +18961,8 @@
        "value": "north"
       }
      ],
-     "x": 208,
-     "y": 250,
+     "x": 416,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -18986,8 +18986,8 @@
        "value": "north"
       }
      ],
-     "x": 248,
-     "y": 250,
+     "x": 496,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -19006,8 +19006,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 208,
-     "y": 272,
+     "x": 416,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19026,8 +19026,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 248,
-     "y": 272,
+     "x": 496,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19051,8 +19051,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 982,
-     "y": 210,
+     "x": 1964,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -19076,8 +19076,8 @@
        "value": "front_books"
       }
      ],
-     "x": 1010,
-     "y": 210,
+     "x": 2020,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -19101,8 +19101,8 @@
        "value": "north"
       }
      ],
-     "x": 976,
-     "y": 250,
+     "x": 1952,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -19126,8 +19126,8 @@
        "value": "north"
       }
      ],
-     "x": 1016,
-     "y": 250,
+     "x": 2032,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -19146,8 +19146,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 976,
-     "y": 272,
+     "x": 1952,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19166,8 +19166,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1016,
-     "y": 272,
+     "x": 2032,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19191,8 +19191,8 @@
        "value": "front_books"
       }
      ],
-     "x": 1046,
-     "y": 210,
+     "x": 2092,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -19216,8 +19216,8 @@
        "value": "front_lamp"
       }
      ],
-     "x": 1074,
-     "y": 210,
+     "x": 2148,
+     "y": 420,
      "width": 0,
      "height": 0,
      "point": true
@@ -19241,8 +19241,8 @@
        "value": "north"
       }
      ],
-     "x": 1040,
-     "y": 250,
+     "x": 2080,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -19266,8 +19266,8 @@
        "value": "north"
       }
      ],
-     "x": 1080,
-     "y": 250,
+     "x": 2160,
+     "y": 500,
      "width": 0,
      "height": 0,
      "point": true
@@ -19286,8 +19286,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1040,
-     "y": 272,
+     "x": 2080,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19306,8 +19306,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1080,
-     "y": 272,
+     "x": 2160,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -19326,8 +19326,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 16,
-     "y": 378,
+     "x": 32,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19346,8 +19346,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 56,
-     "y": 378,
+     "x": 112,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19371,8 +19371,8 @@
        "value": "south"
       }
      ],
-     "x": 16,
-     "y": 418,
+     "x": 32,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19396,8 +19396,8 @@
        "value": "south"
       }
      ],
-     "x": 56,
-     "y": 418,
+     "x": 112,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19421,8 +19421,8 @@
        "value": "back_books"
       }
      ],
-     "x": 22,
-     "y": 440,
+     "x": 44,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19446,8 +19446,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 50,
-     "y": 440,
+     "x": 100,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19466,8 +19466,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 144,
-     "y": 378,
+     "x": 288,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19486,8 +19486,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 184,
-     "y": 378,
+     "x": 368,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19511,8 +19511,8 @@
        "value": "south"
       }
      ],
-     "x": 144,
-     "y": 418,
+     "x": 288,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19536,8 +19536,8 @@
        "value": "south"
       }
      ],
-     "x": 184,
-     "y": 418,
+     "x": 368,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19561,8 +19561,8 @@
        "value": "back_books"
       }
      ],
-     "x": 150,
-     "y": 440,
+     "x": 300,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19586,8 +19586,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 178,
-     "y": 440,
+     "x": 356,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19606,8 +19606,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 208,
-     "y": 378,
+     "x": 416,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19626,8 +19626,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 248,
-     "y": 378,
+     "x": 496,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19651,8 +19651,8 @@
        "value": "south"
       }
      ],
-     "x": 208,
-     "y": 418,
+     "x": 416,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19676,8 +19676,8 @@
        "value": "south"
       }
      ],
-     "x": 248,
-     "y": 418,
+     "x": 496,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19701,8 +19701,8 @@
        "value": "back_books"
       }
      ],
-     "x": 214,
-     "y": 440,
+     "x": 428,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19726,8 +19726,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 242,
-     "y": 440,
+     "x": 484,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19746,8 +19746,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 272,
-     "y": 378,
+     "x": 544,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19766,8 +19766,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 312,
-     "y": 378,
+     "x": 624,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19791,8 +19791,8 @@
        "value": "south"
       }
      ],
-     "x": 272,
-     "y": 418,
+     "x": 544,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19816,8 +19816,8 @@
        "value": "south"
       }
      ],
-     "x": 312,
-     "y": 418,
+     "x": 624,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19841,8 +19841,8 @@
        "value": "back_books"
       }
      ],
-     "x": 278,
-     "y": 440,
+     "x": 556,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19866,8 +19866,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 306,
-     "y": 440,
+     "x": 612,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -19886,8 +19886,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 336,
-     "y": 378,
+     "x": 672,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19906,8 +19906,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 376,
-     "y": 378,
+     "x": 752,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -19931,8 +19931,8 @@
        "value": "south"
       }
      ],
-     "x": 336,
-     "y": 418,
+     "x": 672,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19956,8 +19956,8 @@
        "value": "south"
       }
      ],
-     "x": 376,
-     "y": 418,
+     "x": 752,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -19981,8 +19981,8 @@
        "value": "back_books"
       }
      ],
-     "x": 342,
-     "y": 440,
+     "x": 684,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20006,8 +20006,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 370,
-     "y": 440,
+     "x": 740,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20026,8 +20026,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 400,
-     "y": 378,
+     "x": 800,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20046,8 +20046,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 440,
-     "y": 378,
+     "x": 880,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20071,8 +20071,8 @@
        "value": "south"
       }
      ],
-     "x": 400,
-     "y": 418,
+     "x": 800,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20096,8 +20096,8 @@
        "value": "south"
       }
      ],
-     "x": 440,
-     "y": 418,
+     "x": 880,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20121,8 +20121,8 @@
        "value": "back_books"
       }
      ],
-     "x": 406,
-     "y": 440,
+     "x": 812,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20146,8 +20146,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 434,
-     "y": 440,
+     "x": 868,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20166,8 +20166,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 464,
-     "y": 378,
+     "x": 928,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20186,8 +20186,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 504,
-     "y": 378,
+     "x": 1008,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20211,8 +20211,8 @@
        "value": "south"
       }
      ],
-     "x": 464,
-     "y": 418,
+     "x": 928,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20236,8 +20236,8 @@
        "value": "south"
       }
      ],
-     "x": 504,
-     "y": 418,
+     "x": 1008,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20261,8 +20261,8 @@
        "value": "back_books"
       }
      ],
-     "x": 470,
-     "y": 440,
+     "x": 940,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20286,8 +20286,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 498,
-     "y": 440,
+     "x": 996,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20306,8 +20306,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 528,
-     "y": 378,
+     "x": 1056,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20326,8 +20326,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 568,
-     "y": 378,
+     "x": 1136,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20351,8 +20351,8 @@
        "value": "south"
       }
      ],
-     "x": 528,
-     "y": 418,
+     "x": 1056,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20376,8 +20376,8 @@
        "value": "south"
       }
      ],
-     "x": 568,
-     "y": 418,
+     "x": 1136,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20401,8 +20401,8 @@
        "value": "back_books"
       }
      ],
-     "x": 534,
-     "y": 440,
+     "x": 1068,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20426,8 +20426,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 562,
-     "y": 440,
+     "x": 1124,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20446,8 +20446,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 592,
-     "y": 378,
+     "x": 1184,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20466,8 +20466,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 632,
-     "y": 378,
+     "x": 1264,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20491,8 +20491,8 @@
        "value": "south"
       }
      ],
-     "x": 592,
-     "y": 418,
+     "x": 1184,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20516,8 +20516,8 @@
        "value": "south"
       }
      ],
-     "x": 632,
-     "y": 418,
+     "x": 1264,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20541,8 +20541,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 598,
-     "y": 440,
+     "x": 1196,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20566,8 +20566,8 @@
        "value": "back_books"
       }
      ],
-     "x": 626,
-     "y": 440,
+     "x": 1252,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20586,8 +20586,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 656,
-     "y": 378,
+     "x": 1312,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20606,8 +20606,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 696,
-     "y": 378,
+     "x": 1392,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20631,8 +20631,8 @@
        "value": "south"
       }
      ],
-     "x": 656,
-     "y": 418,
+     "x": 1312,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20656,8 +20656,8 @@
        "value": "south"
       }
      ],
-     "x": 696,
-     "y": 418,
+     "x": 1392,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20681,8 +20681,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 662,
-     "y": 440,
+     "x": 1324,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20706,8 +20706,8 @@
        "value": "back_books"
       }
      ],
-     "x": 690,
-     "y": 440,
+     "x": 1380,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20726,8 +20726,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 720,
-     "y": 378,
+     "x": 1440,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20746,8 +20746,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 760,
-     "y": 378,
+     "x": 1520,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20771,8 +20771,8 @@
        "value": "south"
       }
      ],
-     "x": 720,
-     "y": 418,
+     "x": 1440,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20796,8 +20796,8 @@
        "value": "south"
       }
      ],
-     "x": 760,
-     "y": 418,
+     "x": 1520,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20821,8 +20821,8 @@
        "value": "back_books"
       }
      ],
-     "x": 726,
-     "y": 440,
+     "x": 1452,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20846,8 +20846,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 754,
-     "y": 440,
+     "x": 1508,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20866,8 +20866,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 784,
-     "y": 378,
+     "x": 1568,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20886,8 +20886,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 824,
-     "y": 378,
+     "x": 1648,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -20911,8 +20911,8 @@
        "value": "south"
       }
      ],
-     "x": 784,
-     "y": 418,
+     "x": 1568,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20936,8 +20936,8 @@
        "value": "south"
       }
      ],
-     "x": 824,
-     "y": 418,
+     "x": 1648,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -20961,8 +20961,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 790,
-     "y": 440,
+     "x": 1580,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -20986,8 +20986,8 @@
        "value": "back_books"
       }
      ],
-     "x": 818,
-     "y": 440,
+     "x": 1636,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21006,8 +21006,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 848,
-     "y": 378,
+     "x": 1696,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21026,8 +21026,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 888,
-     "y": 378,
+     "x": 1776,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21051,8 +21051,8 @@
        "value": "south"
       }
      ],
-     "x": 848,
-     "y": 418,
+     "x": 1696,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21076,8 +21076,8 @@
        "value": "south"
       }
      ],
-     "x": 888,
-     "y": 418,
+     "x": 1776,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21101,8 +21101,8 @@
        "value": "back_books"
       }
      ],
-     "x": 854,
-     "y": 440,
+     "x": 1708,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21126,8 +21126,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 882,
-     "y": 440,
+     "x": 1764,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21146,8 +21146,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 912,
-     "y": 378,
+     "x": 1824,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21166,8 +21166,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 952,
-     "y": 378,
+     "x": 1904,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21191,8 +21191,8 @@
        "value": "south"
       }
      ],
-     "x": 912,
-     "y": 418,
+     "x": 1824,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21216,8 +21216,8 @@
        "value": "south"
       }
      ],
-     "x": 952,
-     "y": 418,
+     "x": 1904,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21241,8 +21241,8 @@
        "value": "back_books"
       }
      ],
-     "x": 918,
-     "y": 440,
+     "x": 1836,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21266,8 +21266,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 946,
-     "y": 440,
+     "x": 1892,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21286,8 +21286,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 976,
-     "y": 378,
+     "x": 1952,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21306,8 +21306,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1016,
-     "y": 378,
+     "x": 2032,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21331,8 +21331,8 @@
        "value": "south"
       }
      ],
-     "x": 976,
-     "y": 418,
+     "x": 1952,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21356,8 +21356,8 @@
        "value": "south"
       }
      ],
-     "x": 1016,
-     "y": 418,
+     "x": 2032,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21381,8 +21381,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 982,
-     "y": 440,
+     "x": 1964,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21406,8 +21406,8 @@
        "value": "back_books"
       }
      ],
-     "x": 1010,
-     "y": 440,
+     "x": 2020,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21426,8 +21426,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1040,
-     "y": 378,
+     "x": 2080,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21446,8 +21446,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1080,
-     "y": 378,
+     "x": 2160,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21471,8 +21471,8 @@
        "value": "south"
       }
      ],
-     "x": 1040,
-     "y": 418,
+     "x": 2080,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21496,8 +21496,8 @@
        "value": "south"
       }
      ],
-     "x": 1080,
-     "y": 418,
+     "x": 2160,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21521,8 +21521,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 1046,
-     "y": 440,
+     "x": 2092,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21546,8 +21546,8 @@
        "value": "back_books"
       }
      ],
-     "x": 1074,
-     "y": 440,
+     "x": 2148,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21566,8 +21566,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1168,
-     "y": 378,
+     "x": 2336,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21586,8 +21586,8 @@
        "value": "wardrobe"
       }
      ],
-     "x": 1208,
-     "y": 378,
+     "x": 2416,
+     "y": 756,
      "width": 0,
      "height": 0,
      "point": true
@@ -21611,8 +21611,8 @@
        "value": "south"
       }
      ],
-     "x": 1168,
-     "y": 418,
+     "x": 2336,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21636,8 +21636,8 @@
        "value": "south"
       }
      ],
-     "x": 1208,
-     "y": 418,
+     "x": 2416,
+     "y": 836,
      "width": 0,
      "height": 0,
      "point": true
@@ -21661,8 +21661,8 @@
        "value": "back_books"
       }
      ],
-     "x": 1174,
-     "y": 440,
+     "x": 2348,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21686,8 +21686,8 @@
        "value": "back_lamp"
       }
      ],
-     "x": 1202,
-     "y": 440,
+     "x": 2404,
+     "y": 880,
      "width": 0,
      "height": 0,
      "point": true
@@ -21706,8 +21706,8 @@
        "value": "couch"
       }
      ],
-     "x": 64,
-     "y": 208,
+     "x": 128,
+     "y": 416,
      "width": 0,
      "height": 0,
      "point": true
@@ -21726,8 +21726,8 @@
        "value": "table"
       }
      ],
-     "x": 36,
-     "y": 240,
+     "x": 72,
+     "y": 480,
      "width": 0,
      "height": 0,
      "point": true
@@ -21746,8 +21746,8 @@
        "value": "table"
       }
      ],
-     "x": 92,
-     "y": 240,
+     "x": 184,
+     "y": 480,
      "width": 0,
      "height": 0,
      "point": true
@@ -21766,8 +21766,8 @@
        "value": "couch"
       }
      ],
-     "x": 1152,
-     "y": 208,
+     "x": 2304,
+     "y": 416,
      "width": 0,
      "height": 0,
      "point": true
@@ -21786,8 +21786,8 @@
        "value": "table"
       }
      ],
-     "x": 1124,
-     "y": 240,
+     "x": 2248,
+     "y": 480,
      "width": 0,
      "height": 0,
      "point": true
@@ -21806,8 +21806,8 @@
        "value": "table"
       }
      ],
-     "x": 1180,
-     "y": 240,
+     "x": 2360,
+     "y": 480,
      "width": 0,
      "height": 0,
      "point": true
@@ -21826,8 +21826,8 @@
        "value": "sink"
       }
      ],
-     "x": 400,
-     "y": 198,
+     "x": 800,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21846,8 +21846,8 @@
        "value": "sink"
       }
      ],
-     "x": 416,
-     "y": 198,
+     "x": 832,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21866,8 +21866,8 @@
        "value": "sink"
       }
      ],
-     "x": 432,
-     "y": 198,
+     "x": 864,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21886,8 +21886,8 @@
        "value": "sink"
       }
      ],
-     "x": 448,
-     "y": 198,
+     "x": 896,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21906,8 +21906,8 @@
        "value": "sink"
       }
      ],
-     "x": 776,
-     "y": 198,
+     "x": 1552,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21926,8 +21926,8 @@
        "value": "sink"
       }
      ],
-     "x": 792,
-     "y": 198,
+     "x": 1584,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21946,8 +21946,8 @@
        "value": "sink"
       }
      ],
-     "x": 808,
-     "y": 198,
+     "x": 1616,
+     "y": 396,
      "width": 0,
      "height": 0,
      "point": true
@@ -21971,8 +21971,8 @@
        "value": "south"
       }
      ],
-     "x": 420,
-     "y": 272,
+     "x": 840,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -21996,8 +21996,8 @@
        "value": "south"
       }
      ],
-     "x": 452,
-     "y": 272,
+     "x": 904,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -22021,8 +22021,8 @@
        "value": "south"
       }
      ],
-     "x": 772,
-     "y": 272,
+     "x": 1544,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -22046,8 +22046,8 @@
        "value": "south"
       }
      ],
-     "x": 804,
-     "y": 272,
+     "x": 1608,
+     "y": 544,
      "width": 0,
      "height": 0,
      "point": true
@@ -22060,10 +22060,10 @@
    "firstgid": 1,
    "name": "dorm",
    "image": "../dorm.png",
-   "imagewidth": 71,
-   "imageheight": 44,
-   "tilewidth": 8,
-   "tileheight": 8,
+   "imagewidth": 135,
+   "imageheight": 84,
+   "tilewidth": 16,
+   "tileheight": 16,
    "margin": 0,
    "spacing": 1,
    "columns": 8,
@@ -22586,7 +22586,7 @@
   {
    "name": "player",
    "type": "string",
-   "value": "student"
+   "value": "titus"
   },
   {
    "name": "camera",
@@ -22601,7 +22601,7 @@
    "color": "#265c42"
   },
   "accents": [],
-  "player": "student",
+  "player": "titus",
   "camera": {
    "zoom": 1
   },
@@ -22624,3075 +22624,3075 @@
     "id": 1,
     "name": "player",
     "type": "spawn",
-    "x": 612,
-    "y": 232
+    "x": 1224,
+    "y": 464
    },
    {
     "id": 2,
     "name": "desk",
     "type": "prop",
-    "x": 278,
-    "y": 42,
+    "x": 556,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     266,
-     22,
-     24,
-     18
+     532,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 3,
     "name": "desk",
     "type": "prop",
-    "x": 306,
-    "y": 42,
+    "x": 612,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     294,
-     22,
-     24,
-     18
+     588,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 4,
     "name": "bed_green",
     "type": "prop",
-    "x": 272,
-    "y": 82,
+    "x": 544,
+    "y": 164,
     "prop": "bed_green",
     "state": "north",
     "footprint": [
-     264,
-     48,
-     16,
-     33
+     528,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 5,
     "name": "bed",
     "type": "prop",
-    "x": 312,
-    "y": 82,
+    "x": 624,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     304,
-     48,
-     16,
-     33
+     608,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 6,
     "name": "wardrobe",
     "type": "prop",
-    "x": 272,
-    "y": 104,
+    "x": 544,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     264,
-     92,
-     16,
-     11
+     528,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 7,
     "name": "wardrobe",
     "type": "prop",
-    "x": 312,
-    "y": 104,
+    "x": 624,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     304,
-     92,
-     16,
-     11
+     608,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 8,
     "name": "desk",
     "type": "prop",
-    "x": 342,
-    "y": 42,
+    "x": 684,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     330,
-     22,
-     24,
-     18
+     660,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 9,
     "name": "desk",
     "type": "prop",
-    "x": 370,
-    "y": 42,
+    "x": 740,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     358,
-     22,
-     24,
-     18
+     716,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 10,
     "name": "bed_red",
     "type": "prop",
-    "x": 336,
-    "y": 82,
+    "x": 672,
+    "y": 164,
     "prop": "bed_red",
     "state": "north",
     "footprint": [
-     328,
-     48,
-     16,
-     33
+     656,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 11,
     "name": "bed_purple",
     "type": "prop",
-    "x": 376,
-    "y": 82,
+    "x": 752,
+    "y": 164,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     368,
-     48,
-     16,
-     33
+     736,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 12,
     "name": "wardrobe",
     "type": "prop",
-    "x": 336,
-    "y": 104,
+    "x": 672,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     328,
-     92,
-     16,
-     11
+     656,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 13,
     "name": "wardrobe",
     "type": "prop",
-    "x": 376,
-    "y": 104,
+    "x": 752,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     368,
-     92,
-     16,
-     11
+     736,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 14,
     "name": "desk",
     "type": "prop",
-    "x": 406,
-    "y": 42,
+    "x": 812,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     394,
-     22,
-     24,
-     18
+     788,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 15,
     "name": "desk",
     "type": "prop",
-    "x": 434,
-    "y": 42,
+    "x": 868,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     422,
-     22,
-     24,
-     18
+     844,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 16,
     "name": "bed",
     "type": "prop",
-    "x": 400,
-    "y": 82,
+    "x": 800,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     392,
-     48,
-     16,
-     33
+     784,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 17,
     "name": "bed",
     "type": "prop",
-    "x": 440,
-    "y": 82,
+    "x": 880,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     432,
-     48,
-     16,
-     33
+     864,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 18,
     "name": "wardrobe",
     "type": "prop",
-    "x": 400,
-    "y": 104,
+    "x": 800,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     392,
-     92,
-     16,
-     11
+     784,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 19,
     "name": "wardrobe",
     "type": "prop",
-    "x": 440,
-    "y": 104,
+    "x": 880,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     432,
-     92,
-     16,
-     11
+     864,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 20,
     "name": "desk",
     "type": "prop",
-    "x": 470,
-    "y": 42,
+    "x": 940,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     458,
-     22,
-     24,
-     18
+     916,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 21,
     "name": "desk",
     "type": "prop",
-    "x": 498,
-    "y": 42,
+    "x": 996,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     486,
-     22,
-     24,
-     18
+     972,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 22,
     "name": "bed",
     "type": "prop",
-    "x": 464,
-    "y": 82,
+    "x": 928,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     456,
-     48,
-     16,
-     33
+     912,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 23,
     "name": "bed_gray",
     "type": "prop",
-    "x": 504,
-    "y": 82,
+    "x": 1008,
+    "y": 164,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     496,
-     48,
-     16,
-     33
+     992,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 24,
     "name": "wardrobe",
     "type": "prop",
-    "x": 464,
-    "y": 104,
+    "x": 928,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     456,
-     92,
-     16,
-     11
+     912,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 25,
     "name": "wardrobe",
     "type": "prop",
-    "x": 504,
-    "y": 104,
+    "x": 1008,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     496,
-     92,
-     16,
-     11
+     992,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 26,
     "name": "desk",
     "type": "prop",
-    "x": 534,
-    "y": 42,
+    "x": 1068,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     522,
-     22,
-     24,
-     18
+     1044,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 27,
     "name": "desk",
     "type": "prop",
-    "x": 562,
-    "y": 42,
+    "x": 1124,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     550,
-     22,
-     24,
-     18
+     1100,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 28,
     "name": "bed",
     "type": "prop",
-    "x": 528,
-    "y": 82,
+    "x": 1056,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     520,
-     48,
-     16,
-     33
+     1040,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 29,
     "name": "bed_purple",
     "type": "prop",
-    "x": 568,
-    "y": 82,
+    "x": 1136,
+    "y": 164,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     560,
-     48,
-     16,
-     33
+     1120,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 30,
     "name": "wardrobe",
     "type": "prop",
-    "x": 528,
-    "y": 104,
+    "x": 1056,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     520,
-     92,
-     16,
-     11
+     1040,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 31,
     "name": "wardrobe",
     "type": "prop",
-    "x": 568,
-    "y": 104,
+    "x": 1136,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     560,
-     92,
-     16,
-     11
+     1120,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 32,
     "name": "desk",
     "type": "prop",
-    "x": 598,
-    "y": 42,
+    "x": 1196,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     586,
-     22,
-     24,
-     18
+     1172,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 33,
     "name": "desk",
     "type": "prop",
-    "x": 626,
-    "y": 42,
+    "x": 1252,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     614,
-     22,
-     24,
-     18
+     1228,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 34,
     "name": "bed_purple",
     "type": "prop",
-    "x": 592,
-    "y": 82,
+    "x": 1184,
+    "y": 164,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     584,
-     48,
-     16,
-     33
+     1168,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 35,
     "name": "bed",
     "type": "prop",
-    "x": 632,
-    "y": 82,
+    "x": 1264,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     624,
-     48,
-     16,
-     33
+     1248,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 36,
     "name": "wardrobe",
     "type": "prop",
-    "x": 592,
-    "y": 104,
+    "x": 1184,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     584,
-     92,
-     16,
-     11
+     1168,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 37,
     "name": "wardrobe",
     "type": "prop",
-    "x": 632,
-    "y": 104,
+    "x": 1264,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     624,
-     92,
-     16,
-     11
+     1248,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 38,
     "name": "desk",
     "type": "prop",
-    "x": 662,
-    "y": 42,
+    "x": 1324,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     650,
-     22,
-     24,
-     18
+     1300,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 39,
     "name": "desk",
     "type": "prop",
-    "x": 690,
-    "y": 42,
+    "x": 1380,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     678,
-     22,
-     24,
-     18
+     1356,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 40,
     "name": "bed_gray",
     "type": "prop",
-    "x": 656,
-    "y": 82,
+    "x": 1312,
+    "y": 164,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     648,
-     48,
-     16,
-     33
+     1296,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 41,
     "name": "bed",
     "type": "prop",
-    "x": 696,
-    "y": 82,
+    "x": 1392,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     688,
-     48,
-     16,
-     33
+     1376,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 42,
     "name": "wardrobe",
     "type": "prop",
-    "x": 656,
-    "y": 104,
+    "x": 1312,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     648,
-     92,
-     16,
-     11
+     1296,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 43,
     "name": "wardrobe",
     "type": "prop",
-    "x": 696,
-    "y": 104,
+    "x": 1392,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     688,
-     92,
-     16,
-     11
+     1376,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 44,
     "name": "desk",
     "type": "prop",
-    "x": 726,
-    "y": 42,
+    "x": 1452,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     714,
-     22,
-     24,
-     18
+     1428,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 45,
     "name": "desk",
     "type": "prop",
-    "x": 754,
-    "y": 42,
+    "x": 1508,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     742,
-     22,
-     24,
-     18
+     1484,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 46,
     "name": "bed_green",
     "type": "prop",
-    "x": 720,
-    "y": 82,
+    "x": 1440,
+    "y": 164,
     "prop": "bed_green",
     "state": "north",
     "footprint": [
-     712,
-     48,
-     16,
-     33
+     1424,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 47,
     "name": "bed_gray",
     "type": "prop",
-    "x": 760,
-    "y": 82,
+    "x": 1520,
+    "y": 164,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     752,
-     48,
-     16,
-     33
+     1504,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 48,
     "name": "wardrobe",
     "type": "prop",
-    "x": 720,
-    "y": 104,
+    "x": 1440,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     712,
-     92,
-     16,
-     11
+     1424,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 49,
     "name": "wardrobe",
     "type": "prop",
-    "x": 760,
-    "y": 104,
+    "x": 1520,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     752,
-     92,
-     16,
-     11
+     1504,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 50,
     "name": "desk",
     "type": "prop",
-    "x": 790,
-    "y": 42,
+    "x": 1580,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     778,
-     22,
-     24,
-     18
+     1556,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 51,
     "name": "desk",
     "type": "prop",
-    "x": 818,
-    "y": 42,
+    "x": 1636,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     806,
-     22,
-     24,
-     18
+     1612,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 52,
     "name": "bed_purple",
     "type": "prop",
-    "x": 784,
-    "y": 82,
+    "x": 1568,
+    "y": 164,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     776,
-     48,
-     16,
-     33
+     1552,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 53,
     "name": "bed_gray",
     "type": "prop",
-    "x": 824,
-    "y": 82,
+    "x": 1648,
+    "y": 164,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     816,
-     48,
-     16,
-     33
+     1632,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 54,
     "name": "wardrobe",
     "type": "prop",
-    "x": 784,
-    "y": 104,
+    "x": 1568,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     776,
-     92,
-     16,
-     11
+     1552,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 55,
     "name": "wardrobe",
     "type": "prop",
-    "x": 824,
-    "y": 104,
+    "x": 1648,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     816,
-     92,
-     16,
-     11
+     1632,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 56,
     "name": "desk",
     "type": "prop",
-    "x": 854,
-    "y": 42,
+    "x": 1708,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     842,
-     22,
-     24,
-     18
+     1684,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 57,
     "name": "desk",
     "type": "prop",
-    "x": 882,
-    "y": 42,
+    "x": 1764,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     870,
-     22,
-     24,
-     18
+     1740,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 58,
     "name": "bed_red",
     "type": "prop",
-    "x": 848,
-    "y": 82,
+    "x": 1696,
+    "y": 164,
     "prop": "bed_red",
     "state": "north",
     "footprint": [
-     840,
-     48,
-     16,
-     33
+     1680,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 59,
     "name": "bed",
     "type": "prop",
-    "x": 888,
-    "y": 82,
+    "x": 1776,
+    "y": 164,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     880,
-     48,
-     16,
-     33
+     1760,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 60,
     "name": "wardrobe",
     "type": "prop",
-    "x": 848,
-    "y": 104,
+    "x": 1696,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     840,
-     92,
-     16,
-     11
+     1680,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 61,
     "name": "wardrobe",
     "type": "prop",
-    "x": 888,
-    "y": 104,
+    "x": 1776,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     880,
-     92,
-     16,
-     11
+     1760,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 62,
     "name": "desk",
     "type": "prop",
-    "x": 918,
-    "y": 42,
+    "x": 1836,
+    "y": 84,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     906,
-     22,
-     24,
-     18
+     1812,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 63,
     "name": "desk",
     "type": "prop",
-    "x": 946,
-    "y": 42,
+    "x": 1892,
+    "y": 84,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     934,
-     22,
-     24,
-     18
+     1868,
+     44,
+     48,
+     36
     ]
    },
    {
     "id": 64,
     "name": "bed_purple",
     "type": "prop",
-    "x": 912,
-    "y": 82,
+    "x": 1824,
+    "y": 164,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     904,
-     48,
-     16,
-     33
+     1808,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 65,
     "name": "bed_gray",
     "type": "prop",
-    "x": 952,
-    "y": 82,
+    "x": 1904,
+    "y": 164,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     944,
-     48,
-     16,
-     33
+     1888,
+     96,
+     32,
+     66
     ]
    },
    {
     "id": 66,
     "name": "wardrobe",
     "type": "prop",
-    "x": 912,
-    "y": 104,
+    "x": 1824,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     904,
-     92,
-     16,
-     11
+     1808,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 67,
     "name": "wardrobe",
     "type": "prop",
-    "x": 952,
-    "y": 104,
+    "x": 1904,
+    "y": 208,
     "prop": "wardrobe",
     "footprint": [
-     944,
-     92,
-     16,
-     11
+     1888,
+     184,
+     32,
+     22
     ]
    },
    {
     "id": 68,
     "name": "desk",
     "type": "prop",
-    "x": 150,
-    "y": 210,
+    "x": 300,
+    "y": 420,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     138,
-     190,
-     24,
-     18
+     276,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 69,
     "name": "desk",
     "type": "prop",
-    "x": 178,
-    "y": 210,
+    "x": 356,
+    "y": 420,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     166,
-     190,
-     24,
-     18
+     332,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 70,
     "name": "bed_red",
     "type": "prop",
-    "x": 144,
-    "y": 250,
+    "x": 288,
+    "y": 500,
     "prop": "bed_red",
     "state": "north",
     "footprint": [
-     136,
-     216,
-     16,
-     33
+     272,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 71,
     "name": "bed_green",
     "type": "prop",
-    "x": 184,
-    "y": 250,
+    "x": 368,
+    "y": 500,
     "prop": "bed_green",
     "state": "north",
     "footprint": [
-     176,
-     216,
-     16,
-     33
+     352,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 72,
     "name": "wardrobe",
     "type": "prop",
-    "x": 144,
-    "y": 272,
+    "x": 288,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     136,
-     260,
-     16,
-     11
+     272,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 73,
     "name": "wardrobe",
     "type": "prop",
-    "x": 184,
-    "y": 272,
+    "x": 368,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     176,
-     260,
-     16,
-     11
+     352,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 74,
     "name": "desk",
     "type": "prop",
-    "x": 214,
-    "y": 210,
+    "x": 428,
+    "y": 420,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     202,
-     190,
-     24,
-     18
+     404,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 75,
     "name": "desk",
     "type": "prop",
-    "x": 242,
-    "y": 210,
+    "x": 484,
+    "y": 420,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     230,
-     190,
-     24,
-     18
+     460,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 76,
     "name": "bed_red",
     "type": "prop",
-    "x": 208,
-    "y": 250,
+    "x": 416,
+    "y": 500,
     "prop": "bed_red",
     "state": "north",
     "footprint": [
-     200,
-     216,
-     16,
-     33
+     400,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 77,
     "name": "bed_gray",
     "type": "prop",
-    "x": 248,
-    "y": 250,
+    "x": 496,
+    "y": 500,
     "prop": "bed_gray",
     "state": "north",
     "footprint": [
-     240,
-     216,
-     16,
-     33
+     480,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 78,
     "name": "wardrobe",
     "type": "prop",
-    "x": 208,
-    "y": 272,
+    "x": 416,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     200,
-     260,
-     16,
-     11
+     400,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 79,
     "name": "wardrobe",
     "type": "prop",
-    "x": 248,
-    "y": 272,
+    "x": 496,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     240,
-     260,
-     16,
-     11
+     480,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 80,
     "name": "desk",
     "type": "prop",
-    "x": 982,
-    "y": 210,
+    "x": 1964,
+    "y": 420,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     970,
-     190,
-     24,
-     18
+     1940,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 81,
     "name": "desk",
     "type": "prop",
-    "x": 1010,
-    "y": 210,
+    "x": 2020,
+    "y": 420,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     998,
-     190,
-     24,
-     18
+     1996,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 82,
     "name": "bed",
     "type": "prop",
-    "x": 976,
-    "y": 250,
+    "x": 1952,
+    "y": 500,
     "prop": "bed",
     "state": "north",
     "footprint": [
-     968,
-     216,
-     16,
-     33
+     1936,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 83,
     "name": "bed_purple",
     "type": "prop",
-    "x": 1016,
-    "y": 250,
+    "x": 2032,
+    "y": 500,
     "prop": "bed_purple",
     "state": "north",
     "footprint": [
-     1008,
-     216,
-     16,
-     33
+     2016,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 84,
     "name": "wardrobe",
     "type": "prop",
-    "x": 976,
-    "y": 272,
+    "x": 1952,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     968,
-     260,
-     16,
-     11
+     1936,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 85,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1016,
-    "y": 272,
+    "x": 2032,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     1008,
-     260,
-     16,
-     11
+     2016,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 86,
     "name": "desk",
     "type": "prop",
-    "x": 1046,
-    "y": 210,
+    "x": 2092,
+    "y": 420,
     "prop": "desk",
     "state": "front_books",
     "footprint": [
-     1034,
-     190,
-     24,
-     18
+     2068,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 87,
     "name": "desk",
     "type": "prop",
-    "x": 1074,
-    "y": 210,
+    "x": 2148,
+    "y": 420,
     "prop": "desk",
     "state": "front_lamp",
     "footprint": [
-     1062,
-     190,
-     24,
-     18
+     2124,
+     380,
+     48,
+     36
     ]
    },
    {
     "id": 88,
     "name": "bed_red",
     "type": "prop",
-    "x": 1040,
-    "y": 250,
+    "x": 2080,
+    "y": 500,
     "prop": "bed_red",
     "state": "north",
     "footprint": [
-     1032,
-     216,
-     16,
-     33
+     2064,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 89,
     "name": "bed_green",
     "type": "prop",
-    "x": 1080,
-    "y": 250,
+    "x": 2160,
+    "y": 500,
     "prop": "bed_green",
     "state": "north",
     "footprint": [
-     1072,
-     216,
-     16,
-     33
+     2144,
+     432,
+     32,
+     66
     ]
    },
    {
     "id": 90,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1040,
-    "y": 272,
+    "x": 2080,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     1032,
-     260,
-     16,
-     11
+     2064,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 91,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1080,
-    "y": 272,
+    "x": 2160,
+    "y": 544,
     "prop": "wardrobe",
     "footprint": [
-     1072,
-     260,
-     16,
-     11
+     2144,
+     520,
+     32,
+     22
     ]
    },
    {
     "id": 92,
     "name": "wardrobe",
     "type": "prop",
-    "x": 16,
-    "y": 378,
+    "x": 32,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     8,
-     366,
      16,
-     11
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 93,
     "name": "wardrobe",
     "type": "prop",
-    "x": 56,
-    "y": 378,
+    "x": 112,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     48,
-     366,
-     16,
-     11
+     96,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 94,
     "name": "bed",
     "type": "prop",
-    "x": 16,
-    "y": 418,
+    "x": 32,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     8,
-     384,
      16,
-     33
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 95,
     "name": "bed_purple",
     "type": "prop",
-    "x": 56,
-    "y": 418,
+    "x": 112,
+    "y": 836,
     "prop": "bed_purple",
     "state": "south",
     "footprint": [
-     48,
-     384,
-     16,
-     33
+     96,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 96,
     "name": "desk",
     "type": "prop",
-    "x": 22,
-    "y": 440,
+    "x": 44,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     10,
-     420,
-     24,
-     18
+     20,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 97,
     "name": "desk",
     "type": "prop",
-    "x": 50,
-    "y": 440,
+    "x": 100,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     38,
-     420,
-     24,
-     18
+     76,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 98,
     "name": "wardrobe",
     "type": "prop",
-    "x": 144,
-    "y": 378,
+    "x": 288,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     136,
-     366,
-     16,
-     11
+     272,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 99,
     "name": "wardrobe",
     "type": "prop",
-    "x": 184,
-    "y": 378,
+    "x": 368,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     176,
-     366,
-     16,
-     11
+     352,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 100,
     "name": "bed_red",
     "type": "prop",
-    "x": 144,
-    "y": 418,
+    "x": 288,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     136,
-     384,
-     16,
-     33
+     272,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 101,
     "name": "bed_gray",
     "type": "prop",
-    "x": 184,
-    "y": 418,
+    "x": 368,
+    "y": 836,
     "prop": "bed_gray",
     "state": "south",
     "footprint": [
-     176,
-     384,
-     16,
-     33
+     352,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 102,
     "name": "desk",
     "type": "prop",
-    "x": 150,
-    "y": 440,
+    "x": 300,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     138,
-     420,
-     24,
-     18
+     276,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 103,
     "name": "desk",
     "type": "prop",
-    "x": 178,
-    "y": 440,
+    "x": 356,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     166,
-     420,
-     24,
-     18
+     332,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 104,
     "name": "wardrobe",
     "type": "prop",
-    "x": 208,
-    "y": 378,
+    "x": 416,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     200,
-     366,
-     16,
-     11
+     400,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 105,
     "name": "wardrobe",
     "type": "prop",
-    "x": 248,
-    "y": 378,
+    "x": 496,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     240,
-     366,
-     16,
-     11
+     480,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 106,
     "name": "bed",
     "type": "prop",
-    "x": 208,
-    "y": 418,
+    "x": 416,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     200,
-     384,
-     16,
-     33
+     400,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 107,
     "name": "bed",
     "type": "prop",
-    "x": 248,
-    "y": 418,
+    "x": 496,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     240,
-     384,
-     16,
-     33
+     480,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 108,
     "name": "desk",
     "type": "prop",
-    "x": 214,
-    "y": 440,
+    "x": 428,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     202,
-     420,
-     24,
-     18
+     404,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 109,
     "name": "desk",
     "type": "prop",
-    "x": 242,
-    "y": 440,
+    "x": 484,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     230,
-     420,
-     24,
-     18
+     460,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 110,
     "name": "wardrobe",
     "type": "prop",
-    "x": 272,
-    "y": 378,
+    "x": 544,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     264,
-     366,
-     16,
-     11
+     528,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 111,
     "name": "wardrobe",
     "type": "prop",
-    "x": 312,
-    "y": 378,
+    "x": 624,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     304,
-     366,
-     16,
-     11
+     608,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 112,
     "name": "bed_red",
     "type": "prop",
-    "x": 272,
-    "y": 418,
+    "x": 544,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     264,
-     384,
-     16,
-     33
+     528,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 113,
     "name": "bed_purple",
     "type": "prop",
-    "x": 312,
-    "y": 418,
+    "x": 624,
+    "y": 836,
     "prop": "bed_purple",
     "state": "south",
     "footprint": [
-     304,
-     384,
-     16,
-     33
+     608,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 114,
     "name": "desk",
     "type": "prop",
-    "x": 278,
-    "y": 440,
+    "x": 556,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     266,
-     420,
-     24,
-     18
+     532,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 115,
     "name": "desk",
     "type": "prop",
-    "x": 306,
-    "y": 440,
+    "x": 612,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     294,
-     420,
-     24,
-     18
+     588,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 116,
     "name": "wardrobe",
     "type": "prop",
-    "x": 336,
-    "y": 378,
+    "x": 672,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     328,
-     366,
-     16,
-     11
+     656,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 117,
     "name": "wardrobe",
     "type": "prop",
-    "x": 376,
-    "y": 378,
+    "x": 752,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     368,
-     366,
-     16,
-     11
+     736,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 118,
     "name": "bed",
     "type": "prop",
-    "x": 336,
-    "y": 418,
+    "x": 672,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     328,
-     384,
-     16,
-     33
+     656,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 119,
     "name": "bed",
     "type": "prop",
-    "x": 376,
-    "y": 418,
+    "x": 752,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     368,
-     384,
-     16,
-     33
+     736,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 120,
     "name": "desk",
     "type": "prop",
-    "x": 342,
-    "y": 440,
+    "x": 684,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     330,
-     420,
-     24,
-     18
+     660,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 121,
     "name": "desk",
     "type": "prop",
-    "x": 370,
-    "y": 440,
+    "x": 740,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     358,
-     420,
-     24,
-     18
+     716,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 122,
     "name": "wardrobe",
     "type": "prop",
-    "x": 400,
-    "y": 378,
+    "x": 800,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     392,
-     366,
-     16,
-     11
+     784,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 123,
     "name": "wardrobe",
     "type": "prop",
-    "x": 440,
-    "y": 378,
+    "x": 880,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     432,
-     366,
-     16,
-     11
+     864,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 124,
     "name": "bed",
     "type": "prop",
-    "x": 400,
-    "y": 418,
+    "x": 800,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     392,
-     384,
-     16,
-     33
+     784,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 125,
     "name": "bed",
     "type": "prop",
-    "x": 440,
-    "y": 418,
+    "x": 880,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     432,
-     384,
-     16,
-     33
+     864,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 126,
     "name": "desk",
     "type": "prop",
-    "x": 406,
-    "y": 440,
+    "x": 812,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     394,
-     420,
-     24,
-     18
+     788,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 127,
     "name": "desk",
     "type": "prop",
-    "x": 434,
-    "y": 440,
+    "x": 868,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     422,
-     420,
-     24,
-     18
+     844,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 128,
     "name": "wardrobe",
     "type": "prop",
-    "x": 464,
-    "y": 378,
+    "x": 928,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     456,
-     366,
-     16,
-     11
+     912,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 129,
     "name": "wardrobe",
     "type": "prop",
-    "x": 504,
-    "y": 378,
+    "x": 1008,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     496,
-     366,
-     16,
-     11
+     992,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 130,
     "name": "bed_red",
     "type": "prop",
-    "x": 464,
-    "y": 418,
+    "x": 928,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     456,
-     384,
-     16,
-     33
+     912,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 131,
     "name": "bed_green",
     "type": "prop",
-    "x": 504,
-    "y": 418,
+    "x": 1008,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     496,
-     384,
-     16,
-     33
+     992,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 132,
     "name": "desk",
     "type": "prop",
-    "x": 470,
-    "y": 440,
+    "x": 940,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     458,
-     420,
-     24,
-     18
+     916,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 133,
     "name": "desk",
     "type": "prop",
-    "x": 498,
-    "y": 440,
+    "x": 996,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     486,
-     420,
-     24,
-     18
+     972,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 134,
     "name": "wardrobe",
     "type": "prop",
-    "x": 528,
-    "y": 378,
+    "x": 1056,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     520,
-     366,
-     16,
-     11
+     1040,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 135,
     "name": "wardrobe",
     "type": "prop",
-    "x": 568,
-    "y": 378,
+    "x": 1136,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     560,
-     366,
-     16,
-     11
+     1120,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 136,
     "name": "bed_green",
     "type": "prop",
-    "x": 528,
-    "y": 418,
+    "x": 1056,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     520,
-     384,
-     16,
-     33
+     1040,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 137,
     "name": "bed_red",
     "type": "prop",
-    "x": 568,
-    "y": 418,
+    "x": 1136,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     560,
-     384,
-     16,
-     33
+     1120,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 138,
     "name": "desk",
     "type": "prop",
-    "x": 534,
-    "y": 440,
+    "x": 1068,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     522,
-     420,
-     24,
-     18
+     1044,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 139,
     "name": "desk",
     "type": "prop",
-    "x": 562,
-    "y": 440,
+    "x": 1124,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     550,
-     420,
-     24,
-     18
+     1100,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 140,
     "name": "wardrobe",
     "type": "prop",
-    "x": 592,
-    "y": 378,
+    "x": 1184,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     584,
-     366,
-     16,
-     11
+     1168,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 141,
     "name": "wardrobe",
     "type": "prop",
-    "x": 632,
-    "y": 378,
+    "x": 1264,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     624,
-     366,
-     16,
-     11
+     1248,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 142,
     "name": "bed_green",
     "type": "prop",
-    "x": 592,
-    "y": 418,
+    "x": 1184,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     584,
-     384,
-     16,
-     33
+     1168,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 143,
     "name": "bed",
     "type": "prop",
-    "x": 632,
-    "y": 418,
+    "x": 1264,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     624,
-     384,
-     16,
-     33
+     1248,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 144,
     "name": "desk",
     "type": "prop",
-    "x": 598,
-    "y": 440,
+    "x": 1196,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     586,
-     420,
-     24,
-     18
+     1172,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 145,
     "name": "desk",
     "type": "prop",
-    "x": 626,
-    "y": 440,
+    "x": 1252,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     614,
-     420,
-     24,
-     18
+     1228,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 146,
     "name": "wardrobe",
     "type": "prop",
-    "x": 656,
-    "y": 378,
+    "x": 1312,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     648,
-     366,
-     16,
-     11
+     1296,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 147,
     "name": "wardrobe",
     "type": "prop",
-    "x": 696,
-    "y": 378,
+    "x": 1392,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     688,
-     366,
-     16,
-     11
+     1376,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 148,
     "name": "bed_gray",
     "type": "prop",
-    "x": 656,
-    "y": 418,
+    "x": 1312,
+    "y": 836,
     "prop": "bed_gray",
     "state": "south",
     "footprint": [
-     648,
-     384,
-     16,
-     33
+     1296,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 149,
     "name": "bed_gray",
     "type": "prop",
-    "x": 696,
-    "y": 418,
+    "x": 1392,
+    "y": 836,
     "prop": "bed_gray",
     "state": "south",
     "footprint": [
-     688,
-     384,
-     16,
-     33
+     1376,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 150,
     "name": "desk",
     "type": "prop",
-    "x": 662,
-    "y": 440,
+    "x": 1324,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     650,
-     420,
-     24,
-     18
+     1300,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 151,
     "name": "desk",
     "type": "prop",
-    "x": 690,
-    "y": 440,
+    "x": 1380,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     678,
-     420,
-     24,
-     18
+     1356,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 152,
     "name": "wardrobe",
     "type": "prop",
-    "x": 720,
-    "y": 378,
+    "x": 1440,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     712,
-     366,
-     16,
-     11
+     1424,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 153,
     "name": "wardrobe",
     "type": "prop",
-    "x": 760,
-    "y": 378,
+    "x": 1520,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     752,
-     366,
-     16,
-     11
+     1504,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 154,
     "name": "bed_green",
     "type": "prop",
-    "x": 720,
-    "y": 418,
+    "x": 1440,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     712,
-     384,
-     16,
-     33
+     1424,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 155,
     "name": "bed",
     "type": "prop",
-    "x": 760,
-    "y": 418,
+    "x": 1520,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     752,
-     384,
-     16,
-     33
+     1504,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 156,
     "name": "desk",
     "type": "prop",
-    "x": 726,
-    "y": 440,
+    "x": 1452,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     714,
-     420,
-     24,
-     18
+     1428,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 157,
     "name": "desk",
     "type": "prop",
-    "x": 754,
-    "y": 440,
+    "x": 1508,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     742,
-     420,
-     24,
-     18
+     1484,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 158,
     "name": "wardrobe",
     "type": "prop",
-    "x": 784,
-    "y": 378,
+    "x": 1568,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     776,
-     366,
-     16,
-     11
+     1552,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 159,
     "name": "wardrobe",
     "type": "prop",
-    "x": 824,
-    "y": 378,
+    "x": 1648,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     816,
-     366,
-     16,
-     11
+     1632,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 160,
     "name": "bed_green",
     "type": "prop",
-    "x": 784,
-    "y": 418,
+    "x": 1568,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     776,
-     384,
-     16,
-     33
+     1552,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 161,
     "name": "bed_purple",
     "type": "prop",
-    "x": 824,
-    "y": 418,
+    "x": 1648,
+    "y": 836,
     "prop": "bed_purple",
     "state": "south",
     "footprint": [
-     816,
-     384,
-     16,
-     33
+     1632,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 162,
     "name": "desk",
     "type": "prop",
-    "x": 790,
-    "y": 440,
+    "x": 1580,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     778,
-     420,
-     24,
-     18
+     1556,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 163,
     "name": "desk",
     "type": "prop",
-    "x": 818,
-    "y": 440,
+    "x": 1636,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     806,
-     420,
-     24,
-     18
+     1612,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 164,
     "name": "wardrobe",
     "type": "prop",
-    "x": 848,
-    "y": 378,
+    "x": 1696,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     840,
-     366,
-     16,
-     11
+     1680,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 165,
     "name": "wardrobe",
     "type": "prop",
-    "x": 888,
-    "y": 378,
+    "x": 1776,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     880,
-     366,
-     16,
-     11
+     1760,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 166,
     "name": "bed_green",
     "type": "prop",
-    "x": 848,
-    "y": 418,
+    "x": 1696,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     840,
-     384,
-     16,
-     33
+     1680,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 167,
     "name": "bed_purple",
     "type": "prop",
-    "x": 888,
-    "y": 418,
+    "x": 1776,
+    "y": 836,
     "prop": "bed_purple",
     "state": "south",
     "footprint": [
-     880,
-     384,
-     16,
-     33
+     1760,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 168,
     "name": "desk",
     "type": "prop",
-    "x": 854,
-    "y": 440,
+    "x": 1708,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     842,
-     420,
-     24,
-     18
+     1684,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 169,
     "name": "desk",
     "type": "prop",
-    "x": 882,
-    "y": 440,
+    "x": 1764,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     870,
-     420,
-     24,
-     18
+     1740,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 170,
     "name": "wardrobe",
     "type": "prop",
-    "x": 912,
-    "y": 378,
+    "x": 1824,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     904,
-     366,
-     16,
-     11
+     1808,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 171,
     "name": "wardrobe",
     "type": "prop",
-    "x": 952,
-    "y": 378,
+    "x": 1904,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     944,
-     366,
-     16,
-     11
+     1888,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 172,
     "name": "bed_red",
     "type": "prop",
-    "x": 912,
-    "y": 418,
+    "x": 1824,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     904,
-     384,
-     16,
-     33
+     1808,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 173,
     "name": "bed_green",
     "type": "prop",
-    "x": 952,
-    "y": 418,
+    "x": 1904,
+    "y": 836,
     "prop": "bed_green",
     "state": "south",
     "footprint": [
-     944,
-     384,
-     16,
-     33
+     1888,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 174,
     "name": "desk",
     "type": "prop",
-    "x": 918,
-    "y": 440,
+    "x": 1836,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     906,
-     420,
-     24,
-     18
+     1812,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 175,
     "name": "desk",
     "type": "prop",
-    "x": 946,
-    "y": 440,
+    "x": 1892,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     934,
-     420,
-     24,
-     18
+     1868,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 176,
     "name": "wardrobe",
     "type": "prop",
-    "x": 976,
-    "y": 378,
+    "x": 1952,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     968,
-     366,
-     16,
-     11
+     1936,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 177,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1016,
-    "y": 378,
+    "x": 2032,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     1008,
-     366,
-     16,
-     11
+     2016,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 178,
     "name": "bed",
     "type": "prop",
-    "x": 976,
-    "y": 418,
+    "x": 1952,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     968,
-     384,
-     16,
-     33
+     1936,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 179,
     "name": "bed_gray",
     "type": "prop",
-    "x": 1016,
-    "y": 418,
+    "x": 2032,
+    "y": 836,
     "prop": "bed_gray",
     "state": "south",
     "footprint": [
-     1008,
-     384,
-     16,
-     33
+     2016,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 180,
     "name": "desk",
     "type": "prop",
-    "x": 982,
-    "y": 440,
+    "x": 1964,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     970,
-     420,
-     24,
-     18
+     1940,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 181,
     "name": "desk",
     "type": "prop",
-    "x": 1010,
-    "y": 440,
+    "x": 2020,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     998,
-     420,
-     24,
-     18
+     1996,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 182,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1040,
-    "y": 378,
+    "x": 2080,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     1032,
-     366,
-     16,
-     11
+     2064,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 183,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1080,
-    "y": 378,
+    "x": 2160,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     1072,
-     366,
-     16,
-     11
+     2144,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 184,
     "name": "bed_gray",
     "type": "prop",
-    "x": 1040,
-    "y": 418,
+    "x": 2080,
+    "y": 836,
     "prop": "bed_gray",
     "state": "south",
     "footprint": [
-     1032,
-     384,
-     16,
-     33
+     2064,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 185,
     "name": "bed",
     "type": "prop",
-    "x": 1080,
-    "y": 418,
+    "x": 2160,
+    "y": 836,
     "prop": "bed",
     "state": "south",
     "footprint": [
-     1072,
-     384,
-     16,
-     33
+     2144,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 186,
     "name": "desk",
     "type": "prop",
-    "x": 1046,
-    "y": 440,
+    "x": 2092,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     1034,
-     420,
-     24,
-     18
+     2068,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 187,
     "name": "desk",
     "type": "prop",
-    "x": 1074,
-    "y": 440,
+    "x": 2148,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     1062,
-     420,
-     24,
-     18
+     2124,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 188,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1168,
-    "y": 378,
+    "x": 2336,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     1160,
-     366,
-     16,
-     11
+     2320,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 189,
     "name": "wardrobe",
     "type": "prop",
-    "x": 1208,
-    "y": 378,
+    "x": 2416,
+    "y": 756,
     "prop": "wardrobe",
     "footprint": [
-     1200,
-     366,
-     16,
-     11
+     2400,
+     732,
+     32,
+     22
     ]
    },
    {
     "id": 190,
     "name": "bed_red",
     "type": "prop",
-    "x": 1168,
-    "y": 418,
+    "x": 2336,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     1160,
-     384,
-     16,
-     33
+     2320,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 191,
     "name": "bed_red",
     "type": "prop",
-    "x": 1208,
-    "y": 418,
+    "x": 2416,
+    "y": 836,
     "prop": "bed_red",
     "state": "south",
     "footprint": [
-     1200,
-     384,
-     16,
-     33
+     2400,
+     768,
+     32,
+     66
     ]
    },
    {
     "id": 192,
     "name": "desk",
     "type": "prop",
-    "x": 1174,
-    "y": 440,
+    "x": 2348,
+    "y": 880,
     "prop": "desk",
     "state": "back_books",
     "footprint": [
-     1162,
-     420,
-     24,
-     18
+     2324,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 193,
     "name": "desk",
     "type": "prop",
-    "x": 1202,
-    "y": 440,
+    "x": 2404,
+    "y": 880,
     "prop": "desk",
     "state": "back_lamp",
     "footprint": [
-     1190,
-     420,
-     24,
-     18
+     2380,
+     840,
+     48,
+     36
     ]
    },
    {
     "id": 194,
     "name": "couch",
     "type": "prop",
-    "x": 64,
-    "y": 208,
+    "x": 128,
+    "y": 416,
     "prop": "couch",
     "footprint": [
-     40,
-     188,
-     48,
-     18
+     80,
+     376,
+     96,
+     36
     ]
    },
    {
     "id": 195,
     "name": "table",
     "type": "prop",
-    "x": 36,
-    "y": 240,
+    "x": 72,
+    "y": 480,
     "prop": "table",
     "footprint": [
-     20,
-     224,
-     32,
-     16
+     40,
+     448,
+     64,
+     32
     ]
    },
    {
     "id": 196,
     "name": "table",
     "type": "prop",
-    "x": 92,
-    "y": 240,
+    "x": 184,
+    "y": 480,
     "prop": "table",
     "footprint": [
-     76,
-     224,
-     32,
-     16
+     152,
+     448,
+     64,
+     32
     ]
    },
    {
     "id": 197,
     "name": "couch",
     "type": "prop",
-    "x": 1152,
-    "y": 208,
+    "x": 2304,
+    "y": 416,
     "prop": "couch",
     "footprint": [
-     1128,
-     188,
-     48,
-     18
+     2256,
+     376,
+     96,
+     36
     ]
    },
    {
     "id": 198,
     "name": "table",
     "type": "prop",
-    "x": 1124,
-    "y": 240,
+    "x": 2248,
+    "y": 480,
     "prop": "table",
     "footprint": [
-     1108,
-     224,
-     32,
-     16
+     2216,
+     448,
+     64,
+     32
     ]
    },
    {
     "id": 199,
     "name": "table",
     "type": "prop",
-    "x": 1180,
-    "y": 240,
+    "x": 2360,
+    "y": 480,
     "prop": "table",
     "footprint": [
-     1164,
-     224,
-     32,
-     16
+     2328,
+     448,
+     64,
+     32
     ]
    },
    {
     "id": 200,
     "name": "sink",
     "type": "prop",
-    "x": 400,
-    "y": 198,
+    "x": 800,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     392,
-     184,
-     16,
-     14
+     784,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 201,
     "name": "sink",
     "type": "prop",
-    "x": 416,
-    "y": 198,
+    "x": 832,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     408,
-     184,
-     16,
-     14
+     816,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 202,
     "name": "sink",
     "type": "prop",
-    "x": 432,
-    "y": 198,
+    "x": 864,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     424,
-     184,
-     16,
-     14
+     848,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 203,
     "name": "sink",
     "type": "prop",
-    "x": 448,
-    "y": 198,
+    "x": 896,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     440,
-     184,
-     16,
-     14
+     880,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 204,
     "name": "sink",
     "type": "prop",
-    "x": 776,
-    "y": 198,
+    "x": 1552,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     768,
-     184,
-     16,
-     14
+     1536,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 205,
     "name": "sink",
     "type": "prop",
-    "x": 792,
-    "y": 198,
+    "x": 1584,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     784,
-     184,
-     16,
-     14
+     1568,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 206,
     "name": "sink",
     "type": "prop",
-    "x": 808,
-    "y": 198,
+    "x": 1616,
+    "y": 396,
     "prop": "sink",
     "footprint": [
-     800,
-     184,
-     16,
-     14
+     1600,
+     368,
+     32,
+     28
     ]
    },
    {
     "id": 207,
     "name": "toilet",
     "type": "prop",
-    "x": 420,
-    "y": 272,
+    "x": 840,
+    "y": 544,
     "prop": "toilet",
     "state": "south",
     "footprint": [
-     415,
-     260,
-     10,
-     10
+     830,
+     520,
+     20,
+     20
     ]
    },
    {
     "id": 208,
     "name": "toilet",
     "type": "prop",
-    "x": 452,
-    "y": 272,
+    "x": 904,
+    "y": 544,
     "prop": "toilet",
     "state": "south",
     "footprint": [
-     447,
-     260,
-     10,
-     10
+     894,
+     520,
+     20,
+     20
     ]
    },
    {
     "id": 209,
     "name": "toilet",
     "type": "prop",
-    "x": 772,
-    "y": 272,
+    "x": 1544,
+    "y": 544,
     "prop": "toilet",
     "state": "south",
     "footprint": [
-     767,
-     260,
-     10,
-     10
+     1534,
+     520,
+     20,
+     20
     ]
    },
    {
     "id": 210,
     "name": "toilet",
     "type": "prop",
-    "x": 804,
-    "y": 272,
+    "x": 1608,
+    "y": 544,
     "prop": "toilet",
     "state": "south",
     "footprint": [
-     799,
-     260,
-     10,
-     10
+     1598,
+     520,
+     20,
+     20
     ]
    }
   ],
   "size": [
-   1224,
-   448
+   2448,
+   896
   ],
   "screen": [
-   320,
-   180
+   640,
+   360
   ]
  }
 }

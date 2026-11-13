@@ -4,20 +4,20 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 16
+        "w": 32,
+        "h": 32
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 16
+        "w": 32,
+        "h": 32
       },
       "sourceSize": {
-        "w": 16,
-        "h": 16
+        "w": 32,
+        "h": 32
       },
       "pivot": {
         "x": 0.5,
@@ -29,8 +29,8 @@
           [
             0,
             0,
-            16,
-            16
+            32,
+            32
           ]
         ],
         "hit": []
@@ -43,8 +43,8 @@
     "image": "sink.png",
     "format": "RGBA8888",
     "size": {
-      "w": 16,
-      "h": 16
+      "w": 32,
+      "h": 32
     },
     "scale": "1",
     "frameTags": [
@@ -64,15 +64,15 @@
       "view": "topdown",
       "class": null,
       "origin": [
-        8,
-        16
+        16,
+        32
       ],
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 2,
-        "w": 16,
-        "h": 14
+        "y": 4,
+        "w": 32,
+        "h": 28
       },
       "animations": {
         "sink_idle": {
@@ -88,9 +88,9 @@
         "solid": true,
         "footprint": [
           0,
-          2,
-          16,
-          14
+          4,
+          32,
+          28
         ],
         "ysort": true,
         "tiles": null

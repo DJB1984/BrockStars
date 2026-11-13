@@ -1,56 +1,56 @@
 {
-  "name": "desk",
-  "type": "prop",
-  "view": "topdown",
-  "size": [
-    24,
-    26
-  ],
-  "origin": [
-    12,
-    26
-  ],
-  "footprint": [
-    0,
-    6,
-    24,
-    18
-  ],
-  "palette": {
-    "k": "outline",
-    "T": "tan",
-    "o": "clay",
-    "b": "brown",
-    "e": "dark_brown",
-    "u": "navy",
-    "c": "blue",
-    "m": "slate",
-    "d": "dark_slate",
-    "h": "light_gray",
-    "y": "yellow",
-    "G": "forest",
-    "R": "red"
+ "name": "desk",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  48,
+  52
+ ],
+ "origin": [
+  24,
+  52
+ ],
+ "footprint": [
+  0,
+  12,
+  48,
+  36
+ ],
+ "palette": {
+  "k": "outline",
+  "T": "tan",
+  "o": "clay",
+  "b": "brown",
+  "e": "dark_brown",
+  "u": "navy",
+  "c": "blue",
+  "m": "slate",
+  "d": "dark_slate",
+  "h": "light_gray",
+  "y": "yellow",
+  "G": "forest",
+  "R": "red"
+ },
+ "animations": {
+  "front_lamp": {
+   "frames": [
+    "front_lamp"
+   ]
   },
-  "animations": {
-    "front_lamp": {
-      "frames": [
-        "front_lamp"
-      ]
-    },
-    "back_lamp": {
-      "frames": [
-        "back_lamp"
-      ]
-    },
-    "front_books": {
-      "frames": [
-        "front_books"
-      ]
-    },
-    "back_books": {
-      "frames": [
-        "back_books"
-      ]
-    }
+  "back_lamp": {
+   "frames": [
+    "back_lamp"
+   ]
+  },
+  "front_books": {
+   "frames": [
+    "front_books"
+   ]
+  },
+  "back_books": {
+   "frames": [
+    "back_books"
+   ]
   }
+ }
 }

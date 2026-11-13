@@ -1,33 +1,33 @@
 {
-  "name": "couch",
-  "type": "prop",
-  "view": "topdown",
-  "size": [
-    48,
-    24
-  ],
-  "origin": [
-    24,
-    24
-  ],
-  "footprint": [
-    0,
-    4,
-    48,
-    18
-  ],
-  "palette": {
-    "k": "outline",
-    "R": "salmon",
-    "r": "red",
-    "C": "crimson",
-    "e": "deep_brown"
-  },
-  "animations": {
-    "idle": {
-      "frames": [
-        "couch"
-      ]
-    }
+ "name": "couch",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  96,
+  48
+ ],
+ "origin": [
+  48,
+  48
+ ],
+ "footprint": [
+  0,
+  8,
+  96,
+  36
+ ],
+ "palette": {
+  "k": "outline",
+  "R": "salmon",
+  "r": "red",
+  "C": "crimson",
+  "e": "deep_brown"
+ },
+ "animations": {
+  "idle": {
+   "frames": [
+    "couch"
+   ]
   }
+ }
 }

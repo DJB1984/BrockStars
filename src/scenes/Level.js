@@ -28,7 +28,8 @@ export class Level extends Phaser.Scene {
   }
 
   create() {
-    const level = (this.level = pixelforgeLevel(this, this.levelName, { spawn: this.spawnName }));
+    // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
+    const level = (this.level = pixelforgeLevel(this, this.levelName, { spawn: this.spawnName, playerOptions: { speed: 140 } }));
     const player = level.player;
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);

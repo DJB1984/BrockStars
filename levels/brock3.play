@@ -1,24 +1,24 @@
-# Brock 3rd floor tour (8px grid): spawn in the centre hall, loop the corridors, visit rooms.
-wait 300ms
-up 1.3s                 # centre hall -> north corridor
-expect y < 160
-left 3.66s              # along the north corridor to the west men's room door
-down 1.5s               # into the men's room
-expect y > 190
+# Brock 3rd floor tour (16px grid, world at 2x): spawn in the centre hall, loop the corridors, visit rooms.
+wait 600ms
+up 2.6s                 # centre hall -> north corridor
+expect y < 320
+left 7.32s              # along the north corridor to the west men's room door
+down 3s               # into the men's room
+expect y > 380
 shot
-up 1.5s
-left 1s                 # to the west link
-down 2.4s               # down the west link to the south corridor
-expect y > 290
-left 2.69s              # to the west study lounge door
-up 2s                   # into the lounge
-expect y < 280
+up 3s
+left 2s                 # to the west link
+down 4.8s               # down the west link to the south corridor
+expect y > 580
+left 5.38s              # to the west study lounge door
+up 4s                   # into the lounge
+expect y < 560
 shot
-down 1s                 # back out to the middle of the south corridor
-right 16.5s             # the whole south corridor
-expect x > 1150
-left 3.91s              # back to the east link
-up 4s                   # up the east link and into room 330
-expect y < 100
+down 2s                 # back out to the middle of the south corridor
+right 33s             # the whole south corridor
+expect x > 2300
+left 7.82s              # back to the east link
+up 8s                   # up the east link and into room 330
+expect y < 200
 shot
 expect no fell

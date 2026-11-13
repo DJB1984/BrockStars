@@ -1,73 +1,73 @@
 {
-  "name": "bed",
-  "type": "prop",
-  "view": "topdown",
-  "size": [
-    16,
-    40
-  ],
-  "origin": [
-    8,
-    40
-  ],
-  "footprint": [
-    0,
-    6,
-    16,
-    33
-  ],
-  "palette": {
-    "k": "outline",
-    "T": "tan",
-    "o": "clay",
-    "b": "brown",
-    "e": "dark_brown",
-    "w": "white",
-    "h": "light_gray",
-    "u": "navy",
-    "N": "dark_slate",
-    "c": "blue"
+ "name": "bed",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  32,
+  80
+ ],
+ "origin": [
+  16,
+  80
+ ],
+ "footprint": [
+  0,
+  12,
+  32,
+  66
+ ],
+ "palette": {
+  "k": "outline",
+  "T": "tan",
+  "o": "clay",
+  "b": "brown",
+  "e": "dark_brown",
+  "w": "white",
+  "h": "light_gray",
+  "u": "navy",
+  "N": "dark_slate",
+  "c": "blue"
+ },
+ "animations": {
+  "north": {
+   "frames": [
+    "bed_n"
+   ]
   },
-  "animations": {
-    "north": {
-      "frames": [
-        "bed_n"
-      ]
-    },
-    "south": {
-      "frames": [
-        "bed_s"
-      ]
-    }
-  },
-  "variants": {
-    "bed_gray": {
-      "palette": {
-        "u": "light_gray",
-        "N": "gray",
-        "c": "white"
-      }
-    },
-    "bed_red": {
-      "palette": {
-        "u": "crimson",
-        "N": "deep_brown",
-        "c": "red"
-      }
-    },
-    "bed_green": {
-      "palette": {
-        "u": "forest",
-        "N": "dark_green",
-        "c": "green"
-      }
-    },
-    "bed_purple": {
-      "palette": {
-        "u": "plum",
-        "N": "deep_brown",
-        "c": "magenta"
-      }
-    }
+  "south": {
+   "frames": [
+    "bed_s"
+   ]
   }
+ },
+ "variants": {
+  "bed_gray": {
+   "palette": {
+    "u": "light_gray",
+    "N": "gray",
+    "c": "white"
+   }
+  },
+  "bed_red": {
+   "palette": {
+    "u": "crimson",
+    "N": "deep_brown",
+    "c": "red"
+   }
+  },
+  "bed_green": {
+   "palette": {
+    "u": "forest",
+    "N": "dark_green",
+    "c": "green"
+   }
+  },
+  "bed_purple": {
+   "palette": {
+    "u": "plum",
+    "N": "deep_brown",
+    "c": "magenta"
+   }
+  }
+ }
 }

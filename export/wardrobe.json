@@ -4,20 +4,20 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 26
+        "w": 32,
+        "h": 52
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 26
+        "w": 32,
+        "h": 52
       },
       "sourceSize": {
-        "w": 16,
-        "h": 26
+        "w": 32,
+        "h": 52
       },
       "pivot": {
         "x": 0.5,
@@ -29,8 +29,8 @@
           [
             0,
             0,
-            16,
-            26
+            32,
+            52
           ]
         ],
         "hit": []
@@ -43,8 +43,8 @@
     "image": "wardrobe.png",
     "format": "RGBA8888",
     "size": {
-      "w": 16,
-      "h": 26
+      "w": 32,
+      "h": 52
     },
     "scale": "1",
     "frameTags": [
@@ -64,15 +64,15 @@
       "view": "topdown",
       "class": null,
       "origin": [
-        8,
-        26
+        16,
+        52
       ],
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 14,
-        "w": 16,
-        "h": 11
+        "y": 28,
+        "w": 32,
+        "h": 22
       },
       "animations": {
         "wardrobe_idle": {
@@ -88,9 +88,9 @@
         "solid": true,
         "footprint": [
           0,
-          14,
-          16,
-          11
+          28,
+          32,
+          22
         ],
         "ysort": true,
         "tiles": null

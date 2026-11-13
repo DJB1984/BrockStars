@@ -4,20 +4,20 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 32,
-        "h": 20
+        "w": 64,
+        "h": 40
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 32,
-        "h": 20
+        "w": 64,
+        "h": 40
       },
       "sourceSize": {
-        "w": 32,
-        "h": 20
+        "w": 64,
+        "h": 40
       },
       "pivot": {
         "x": 0.5,
@@ -29,8 +29,8 @@
           [
             0,
             0,
-            32,
-            20
+            64,
+            40
           ]
         ],
         "hit": []
@@ -43,8 +43,8 @@
     "image": "table.png",
     "format": "RGBA8888",
     "size": {
-      "w": 32,
-      "h": 20
+      "w": 64,
+      "h": 40
     },
     "scale": "1",
     "frameTags": [
@@ -64,15 +64,15 @@
       "view": "topdown",
       "class": null,
       "origin": [
-        16,
-        20
+        32,
+        40
       ],
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 4,
-        "w": 32,
-        "h": 16
+        "y": 8,
+        "w": 64,
+        "h": 32
       },
       "animations": {
         "table_idle": {
@@ -88,9 +88,9 @@
         "solid": true,
         "footprint": [
           0,
-          4,
-          32,
-          16
+          8,
+          64,
+          32
         ],
         "ysort": true,
         "tiles": null

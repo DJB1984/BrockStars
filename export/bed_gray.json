@@ -4,20 +4,20 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 40
+        "w": 32,
+        "h": 80
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 40
+        "w": 32,
+        "h": 80
       },
       "sourceSize": {
-        "w": 16,
-        "h": 40
+        "w": 32,
+        "h": 80
       },
       "pivot": {
         "x": 0.5,
@@ -29,8 +29,8 @@
           [
             0,
             0,
-            16,
-            40
+            32,
+            80
           ]
         ],
         "hit": []
@@ -39,21 +39,21 @@
     "1": {
       "frame": {
         "x": 0,
-        "y": 41,
-        "w": 16,
-        "h": 40
+        "y": 81,
+        "w": 32,
+        "h": 80
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 16,
-        "h": 40
+        "w": 32,
+        "h": 80
       },
       "sourceSize": {
-        "w": 16,
-        "h": 40
+        "w": 32,
+        "h": 80
       },
       "pivot": {
         "x": 0.5,
@@ -65,8 +65,8 @@
           [
             0,
             0,
-            16,
-            40
+            32,
+            80
           ]
         ],
         "hit": []
@@ -79,8 +79,8 @@
     "image": "bed_gray.png",
     "format": "RGBA8888",
     "size": {
-      "w": 16,
-      "h": 81
+      "w": 32,
+      "h": 161
     },
     "scale": "1",
     "frameTags": [
@@ -107,15 +107,15 @@
       "view": "topdown",
       "class": null,
       "origin": [
-        8,
-        40
+        16,
+        80
       ],
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 6,
-        "w": 16,
-        "h": 33
+        "y": 12,
+        "w": 32,
+        "h": 66
       },
       "animations": {
         "bed_gray_north": {
@@ -137,9 +137,9 @@
         "solid": true,
         "footprint": [
           0,
-          6,
-          16,
-          33
+          12,
+          32,
+          66
         ],
         "ysort": true,
         "tiles": null

@@ -1,40 +1,40 @@
 {
-  "name": "toilet",
-  "type": "prop",
-  "view": "topdown",
-  "size": [
-    16,
-    16
-  ],
-  "origin": [
-    8,
-    16
-  ],
-  "footprint": [
-    3,
-    4,
-    10,
-    10
-  ],
-  "palette": {
-    "k": "outline",
-    "w": "white",
-    "h": "light_gray",
-    "l": "gray"
+ "name": "toilet",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  32,
+  32
+ ],
+ "origin": [
+  16,
+  32
+ ],
+ "footprint": [
+  6,
+  8,
+  20,
+  20
+ ],
+ "palette": {
+  "k": "outline",
+  "w": "white",
+  "h": "light_gray",
+  "l": "gray"
+ },
+ "animations": {
+  "idle": {
+   "frames": [
+    "toilet"
+   ]
   },
-  "animations": {
-    "idle": {
-      "frames": [
-        "toilet"
-      ]
-    },
-    "south": {
-      "frames": [
-        {
-          "from": "toilet",
-          "flip": "v"
-        }
-      ]
+  "south": {
+   "frames": [
+    {
+     "from": "toilet",
+     "flip": "v"
     }
+   ]
   }
+ }
 }
