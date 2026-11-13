@@ -1,5 +1,5 @@
 {
-  "next": 8,
+  "next": 14,
   "critiques": [
     {
       "id": 1,
@@ -126,6 +126,114 @@
       "created": "2026-11-13T03:40:10+00:00",
       "updated": "2026-11-13T03:41:05+00:00",
       "note": "In the walk away from the camera the arms are now drawn behind the torso, so the forward-swinging hand passes in front of his body (hidden by his back) instead of over it."
+    },
+    {
+      "id": 8,
+      "status": "fixed",
+      "text": "Can you make him relatively the same size as titus, but a little bit shorter. Right now the dimensions look really weird specifically the neck",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 0,
+        "region": [
+          10,
+          5,
+          47,
+          53
+        ]
+      },
+      "created": "2026-11-13T03:40:29+00:00",
+      "updated": "2026-11-13T03:42:56+00:00",
+      "note": "Matched Mason's build more closely to Titus, kept him three pixels shorter, and closed the neck gap in every direction."
+    },
+    {
+      "id": 9,
+      "status": "fixed",
+      "text": "Hey he is short and fat, base him off of how Titus was built, but keep the core aspects of how Mason is supposed to be different",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 0,
+        "region": [
+          10,
+          3,
+          44,
+          53
+        ]
+      },
+      "created": "2026-11-13T03:46:26+00:00",
+      "updated": "2026-11-13T03:48:14.178946+00:00",
+      "note": "Rebuilt Mason on Titus proportions with longer legs and a slimmer torso, retaining the cowboy hat, sunglasses, tactical gear, and Russian flag patch."
+    },
+    {
+      "id": 10,
+      "status": "fixed",
+      "text": "Ok so that is a little better., the torso is still too fat, and the head is too low. It looks like his head is being smashed into his body and he doesn't have a neck.",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 1,
+        "region": [
+          12,
+          7,
+          42,
+          28
+        ]
+      },
+      "created": "2026-11-13T03:51:11+00:00",
+      "updated": "2026-11-13T03:52:40.527943+00:00",
+      "note": "Narrowed the torso and shoulders, raised the head three pixels, and added a visible neck in all views and idle frames."
+    },
+    {
+      "id": 11,
+      "status": "fixed",
+      "text": "could you make his legs a little skinnier so they aren't so blocky. I want him to actually look fast",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 1,
+        "region": [
+          13,
+          33,
+          39,
+          21
+        ]
+      },
+      "created": "2026-11-13T03:55:43+00:00",
+      "updated": "2026-11-13T03:56:23.666678+00:00",
+      "note": "Slimmed the trouser legs and boots in every idle and walking view while preserving the bent-knee stride and planted feet."
+    },
+    {
+      "id": 12,
+      "status": "fixed",
+      "text": "Can you give him absolutely chiseled abs",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 1,
+        "region": [
+          15,
+          21,
+          33,
+          20
+        ]
+      },
+      "created": "2026-11-13T03:57:45+00:00",
+      "updated": "2026-11-13T03:58:29.173982+00:00",
+      "note": "Opened the tactical vest to show deeply shaded, chiseled abs with matching muscle definition in the side view."
+    },
+    {
+      "id": 13,
+      "status": "fixed",
+      "text": "the abs needs to be under the shirt, and he still needs to have pecs",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_down",
+        "frame": 1
+      },
+      "created": "2026-11-13T03:59:55+00:00",
+      "updated": "2026-11-13T04:01:12.948971+00:00",
+      "note": "Covered the torso with a fitted black shirt and shaded broad pecs and a narrower six-pack through the fabric."
     }
   ]
 }

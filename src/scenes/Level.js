@@ -25,14 +25,42 @@ export class Level extends Phaser.Scene {
   init(data) {
     this.levelName = data.level;
     this.spawnName = data.spawn;
+    const requested = data.character ?? this.character ?? new URLSearchParams(location.search).get('character');
+    this.character = ['mason', 'titus'].includes(requested) ? requested : 'mason';
+    this.playerPosition = data.playerPosition;
   }
 
   create() {
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
-    const level = (this.level = pixelforgeLevel(this, this.levelName, { spawn: this.spawnName, playerOptions: { speed: 140 } }));
+    const level = (this.level = pixelforgeLevel(this, this.levelName, {
+      spawn: this.spawnName, player: this.character,
+      playerOptions: { speed: this.character === 'mason' ? 180 : 140 },
+    }));
     const player = level.player;
+    if (player && this.playerPosition) player.body.reset(...this.playerPosition);
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);
+    // Both fighters remain playable; switching keeps the player's position and inventory.
+    const select = (character) => {
+      if (character === this.character || !player?.active || state.health <= 0) return;
+      this.scene.restart({ level: this.levelName, spawn: this.spawnName, character,
+        playerPosition: [player.x, player.y] });
+    };
+    ['titus', 'mason'].forEach((character, index) => {
+      const selected = character === this.character;
+      this.add.text(8 + index * 105, 8, `${index + 1} ${character === 'mason' ? 'Mason' : 'Titus'}${selected ? ' *' : ''}`, {
+        fontFamily: 'monospace', fontSize: '12px', color: selected ? '#f0bb7e' : '#ecedf0',
+        backgroundColor: '#24232a', padding: { x: 6, y: 5 },
+      }).setScrollFactor(0).setDepth(200001).setInteractive({ useHandCursor: true })
+        .on('pointerdown', () => select(character));
+    });
+    const switchTitus = () => select('titus'), switchMason = () => select('mason');
+    this.input.keyboard.on('keydown-ONE', switchTitus);
+    this.input.keyboard.on('keydown-TWO', switchMason);
+    this.events.once('shutdown', () => {
+      this.input.keyboard.off('keydown-ONE', switchTitus);
+      this.input.keyboard.off('keydown-TWO', switchMason);
+    });
     this.actors = [];
     for (const s of level.sprites) {
       const Type = TYPES[s.pixelforgeObject?.type];

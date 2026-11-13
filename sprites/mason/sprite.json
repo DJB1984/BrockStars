@@ -1,0 +1,364 @@
+{
+  "name": "mason",
+  "class": "topdown",
+  "palette": {
+    "k": "#17151c",
+    "z": "#18142555",
+    "s": "skin",
+    "S": "skin_shadow",
+    "b": "#5e4134",
+    "B": "#362926",
+    "e": "#221a1b",
+    "g": "#655e68",
+    "m": "#39363f",
+    "d": "#25232b",
+    "w": "#302d36",
+    "t": "#24232a",
+    "T": "#17151c",
+    "n": "#24232a",
+    "D": "#36343d",
+    "h": "#d79a59",
+    "H": "#f0bb7e",
+    "j": "#ad743f",
+    "J": "#805332",
+    "W": "#ecedf0",
+    "u": "#3165b9",
+    "r": "#c74046",
+    "a": "#f2cba5"
+  },
+  "roles": {
+    "*shadow": "none"
+  },
+  "hurt_pad": -1,
+  "animations": {
+    "idle_down": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "layers": [
+                "front_torso",
+                "front_arms",
+                "front_head"
+              ]
+            }
+          ],
+          "duration": 450
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "layers": [
+                "front_torso",
+                "front_arms",
+                {
+                  "from": "front_head",
+                  "offset": [
+                    0,
+                    1
+                  ]
+                }
+              ]
+            }
+          ],
+          "duration": 450
+        }
+      ]
+    },
+    "walk_down": {
+      "fps": 10,
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_step_l",
+            {
+              "from": {
+                "layers": [
+                  "front_torso",
+                  "front_arms_a",
+                  "front_head"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "layers": [
+                "front_torso",
+                "front_arms",
+                "front_head"
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_step_r",
+            {
+              "from": {
+                "layers": [
+                  "front_torso",
+                  "front_arms_b",
+                  "front_head"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "layers": [
+                "front_torso",
+                "front_arms",
+                "front_head"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "idle_up": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "layers": [
+                "back_torso",
+                "back_arms",
+                "back_head"
+              ]
+            }
+          ],
+          "duration": 450
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "layers": [
+                "back_torso",
+                "back_arms",
+                {
+                  "from": "back_head",
+                  "offset": [
+                    0,
+                    1
+                  ]
+                }
+              ]
+            }
+          ],
+          "duration": 450
+        }
+      ]
+    },
+    "walk_up": {
+      "fps": 10,
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_step_l",
+            {
+              "from": {
+                "layers": [
+                  "back_torso",
+                  "back_arms_a",
+                  "back_head"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "layers": [
+                "back_torso",
+                "back_arms",
+                "back_head"
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_step_r",
+            {
+              "from": {
+                "layers": [
+                  "back_torso",
+                  "back_arms_b",
+                  "back_head"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "layers": [
+                "back_torso",
+                "back_arms",
+                "back_head"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "idle_side": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            {
+              "layers": [
+                "side_torso",
+                "side_head",
+                "side_arm"
+              ]
+            }
+          ],
+          "duration": 450
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            {
+              "layers": [
+                "side_torso",
+                {
+                  "from": "side_head",
+                  "offset": [
+                    0,
+                    1
+                  ]
+                },
+                "side_arm"
+              ]
+            }
+          ],
+          "duration": 450
+        }
+      ]
+    },
+    "walk_side": {
+      "fps": 10,
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_walk_legs_a",
+            {
+              "layers": [
+                "side_walk_farm_fwd",
+                "side_torso",
+                "side_head",
+                "side_walk_arm_back"
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_walk_legs_pass_a",
+            {
+              "from": {
+                "layers": [
+                  "side_torso",
+                  "side_head",
+                  "side_walk_arm_mid"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_walk_legs_b",
+            {
+              "layers": [
+                "side_walk_farm_back",
+                "side_torso",
+                "side_head",
+                "side_walk_arm_fwd"
+              ]
+            }
+          ]
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_walk_legs_pass_b",
+            {
+              "from": {
+                "layers": [
+                  "side_torso",
+                  "side_head",
+                  "side_walk_arm_mid"
+                ]
+              },
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
