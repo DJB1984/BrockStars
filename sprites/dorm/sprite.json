@@ -186,7 +186,66 @@
   "jamb_r",
   "sill",
   "jamb_hl",
-  "jamb_hr"
+  "jamb_hr",
+  {
+   "name": "wall_cap_n_j",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_w_lo",
+    "o_e_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_n_jw",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_w_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_n_je",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_e_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_nw_je",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_w",
+    "o_e_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_ne_jw",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_e",
+    "o_w_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_w_je",
+   "from": "cap",
+   "layers": [
+    "o_w",
+    "o_e_lo"
+   ]
+  },
+  {
+   "name": "wall_cap_e_jw",
+   "from": "cap",
+   "layers": [
+    "o_e",
+    "o_w_lo"
+   ]
+  }
  ],
  "properties": {
   "wall*": {
