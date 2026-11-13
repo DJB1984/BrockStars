@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "local": "vite --mode quick",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite build && php -S 0.0.0.0:8002 -t dist",
+    "package": "vite build && node tools/package-site.mjs"
   },
   "dependencies": {
     "phaser": "3.90.0"
