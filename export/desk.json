@@ -1,0 +1,247 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 26
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            24,
+            25
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "1": {
+      "frame": {
+        "x": 0,
+        "y": 27,
+        "w": 24,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 26
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            24,
+            25
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "2": {
+      "frame": {
+        "x": 0,
+        "y": 54,
+        "w": 24,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 26
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            1,
+            24,
+            24
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "3": {
+      "frame": {
+        "x": 0,
+        "y": 81,
+        "w": 24,
+        "h": 26
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 26
+      },
+      "sourceSize": {
+        "w": 24,
+        "h": 26
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            24,
+            25
+          ]
+        ],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "desk.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 24,
+      "h": 107
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "desk_front_lamp",
+        "from": 0,
+        "to": 0,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "desk_back_lamp",
+        "from": 1,
+        "to": 1,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "desk_front_books",
+        "from": 2,
+        "to": 2,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "desk_back_books",
+        "from": 3,
+        "to": 3,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "desk",
+      "kind": "prop",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        12,
+        26
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 0,
+        "y": 6,
+        "w": 24,
+        "h": 18
+      },
+      "animations": {
+        "desk_front_lamp": {
+          "anim": "front_lamp",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "desk_back_lamp": {
+          "anim": "back_lamp",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "desk_front_books": {
+          "anim": "front_books",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "desk_back_books": {
+          "anim": "back_books",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        }
+      },
+      "prop": {
+        "layer": "world",
+        "scroll": 1.0,
+        "solid": true,
+        "footprint": [
+          0,
+          6,
+          24,
+          18
+        ],
+        "ysort": true,
+        "tiles": null
+      }
+    }
+  }
+}

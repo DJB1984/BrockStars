@@ -1,0 +1,149 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 40
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            16,
+            40
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "1": {
+      "frame": {
+        "x": 0,
+        "y": 41,
+        "w": 16,
+        "h": 40
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 40
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 40
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            16,
+            40
+          ]
+        ],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "bed.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 16,
+      "h": 81
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "bed_north",
+        "from": 0,
+        "to": 0,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "bed_south",
+        "from": 1,
+        "to": 1,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "bed",
+      "kind": "prop",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        8,
+        40
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 0,
+        "y": 6,
+        "w": 16,
+        "h": 33
+      },
+      "animations": {
+        "bed_north": {
+          "anim": "north",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "bed_south": {
+          "anim": "south",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        }
+      },
+      "prop": {
+        "layer": "world",
+        "scroll": 1.0,
+        "solid": true,
+        "footprint": [
+          0,
+          6,
+          16,
+          33
+        ],
+        "ysort": true,
+        "tiles": null
+      }
+    }
+  }
+}

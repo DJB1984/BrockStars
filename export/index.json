@@ -1,0 +1,27 @@
+{
+  "sprites": [
+    "student"
+  ],
+  "props": [
+    "bed",
+    "bed_gray",
+    "bed_green",
+    "bed_purple",
+    "bed_red",
+    "couch",
+    "desk",
+    "sink",
+    "table",
+    "toilet",
+    "wardrobe"
+  ],
+  "fx": [],
+  "tilesets": [
+    "dorm"
+  ],
+  "icons": [],
+  "fonts": [],
+  "levels": [
+    "brock3"
+  ]
+}

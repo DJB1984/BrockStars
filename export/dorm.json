@@ -1,0 +1,723 @@
+{
+  "type": "tileset",
+  "version": "1.10",
+  "tiledversion": "1.10.2",
+  "name": "dorm",
+  "image": "dorm.png",
+  "imagewidth": 71,
+  "imageheight": 44,
+  "tilewidth": 8,
+  "tileheight": 8,
+  "margin": 0,
+  "spacing": 1,
+  "columns": 8,
+  "tilecount": 39,
+  "tiles": [
+    {
+      "id": 0,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "carpet"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "rug"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "bath"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wood"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "concrete"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "stairs"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_n"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_e"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_w"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_ne"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_nw"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_ew"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_new"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_n"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_e"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_w"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_ne"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_nw"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_ew"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_hi_new"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_lo"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_lo_e"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_lo_w"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_face_lo_ew"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_hi_l"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_hi_m"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_hi_r"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_lo_l"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_lo_m"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "win_lo_r"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "board_l"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "board_r"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "jamb_l"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "jamb_r"
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "sill"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "jamb_hl"
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "jamb_hr"
+        }
+      ]
+    }
+  ],
+  "pixelforge": {
+    "tileset": "dorm",
+    "names": [
+      "carpet",
+      "rug",
+      "bath",
+      "wood",
+      "concrete",
+      "stairs",
+      "wall_cap",
+      "wall_cap_n",
+      "wall_cap_e",
+      "wall_cap_w",
+      "wall_cap_ne",
+      "wall_cap_nw",
+      "wall_cap_ew",
+      "wall_cap_new",
+      "wall_face_hi",
+      "wall_face_hi_n",
+      "wall_face_hi_e",
+      "wall_face_hi_w",
+      "wall_face_hi_ne",
+      "wall_face_hi_nw",
+      "wall_face_hi_ew",
+      "wall_face_hi_new",
+      "wall_face_lo",
+      "wall_face_lo_e",
+      "wall_face_lo_w",
+      "wall_face_lo_ew",
+      "win_hi_l",
+      "win_hi_m",
+      "win_hi_r",
+      "win_lo_l",
+      "win_lo_m",
+      "win_lo_r",
+      "board_l",
+      "board_r",
+      "jamb_l",
+      "jamb_r",
+      "sill",
+      "jamb_hl",
+      "jamb_hr"
+    ],
+    "properties": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "animations": {},
+    "sample": [
+      [
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15,
+        15
+      ],
+      [
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22,
+        22
+      ],
+      [
+        9,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        8
+      ],
+      [
+        9,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        8
+      ],
+      [
+        9,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        8
+      ],
+      [
+        15,
+        18,
+        19,
+        1,
+        1,
+        18,
+        15,
+        15
+      ],
+      [
+        22,
+        23,
+        24,
+        1,
+        1,
+        23,
+        22,
+        22
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "stamps": {}
+  }
+}

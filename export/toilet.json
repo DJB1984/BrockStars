@@ -1,0 +1,149 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            3,
+            0,
+            10,
+            15
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "1": {
+      "frame": {
+        "x": 0,
+        "y": 17,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            3,
+            1,
+            10,
+            15
+          ]
+        ],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "toilet.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 16,
+      "h": 33
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "toilet_idle",
+        "from": 0,
+        "to": 0,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "toilet_south",
+        "from": 1,
+        "to": 1,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "toilet",
+      "kind": "prop",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        8,
+        16
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 3,
+        "y": 4,
+        "w": 10,
+        "h": 10
+      },
+      "animations": {
+        "toilet_idle": {
+          "anim": "idle",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "toilet_south": {
+          "anim": "south",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        }
+      },
+      "prop": {
+        "layer": "world",
+        "scroll": 1.0,
+        "solid": true,
+        "footprint": [
+          3,
+          4,
+          10,
+          10
+        ],
+        "ysort": true,
+        "tiles": null
+      }
+    }
+  }
+}

@@ -1,0 +1,223 @@
+{
+ "name": "dorm",
+ "type": "tileset",
+ "size": [
+  8,
+  8
+ ],
+ "columns": 8,
+ "palette": {
+  "k": "outline",
+  "n": "night",
+  "d": "dark_slate",
+  "m": "slate",
+  "l": "gray",
+  "h": "light_gray",
+  "w": "white",
+  "N": "navy",
+  "u": "blue",
+  "c": "cyan",
+  "s": "sand",
+  "t": "tan",
+  "b": "brown",
+  "e": "deep_brown",
+  "q": "clay",
+  "y": "yellow",
+  "o": "clay"
+ },
+ "tiles": [
+  "carpet",
+  "rug",
+  "bath",
+  "wood",
+  "concrete",
+  "stairs",
+  {
+   "name": "wall_cap",
+   "from": "cap"
+  },
+  {
+   "name": "wall_cap_n",
+   "from": "cap",
+   "layers": [
+    "o_n"
+   ]
+  },
+  {
+   "name": "wall_cap_e",
+   "from": "cap",
+   "layers": [
+    "o_e"
+   ]
+  },
+  {
+   "name": "wall_cap_w",
+   "from": "cap",
+   "layers": [
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_cap_ne",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_e"
+   ]
+  },
+  {
+   "name": "wall_cap_nw",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_cap_ew",
+   "from": "cap",
+   "layers": [
+    "o_e",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_cap_new",
+   "from": "cap",
+   "layers": [
+    "o_n",
+    "o_e",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_hi",
+   "from": "face_hi"
+  },
+  {
+   "name": "wall_face_hi_n",
+   "from": "face_hi",
+   "layers": [
+    "o_n"
+   ]
+  },
+  {
+   "name": "wall_face_hi_e",
+   "from": "face_hi",
+   "layers": [
+    "o_e"
+   ]
+  },
+  {
+   "name": "wall_face_hi_w",
+   "from": "face_hi",
+   "layers": [
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_hi_ne",
+   "from": "face_hi",
+   "layers": [
+    "o_n",
+    "o_e"
+   ]
+  },
+  {
+   "name": "wall_face_hi_nw",
+   "from": "face_hi",
+   "layers": [
+    "o_n",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_hi_ew",
+   "from": "face_hi",
+   "layers": [
+    "o_e",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_hi_new",
+   "from": "face_hi",
+   "layers": [
+    "o_n",
+    "o_e",
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_lo",
+   "from": "face_lo"
+  },
+  {
+   "name": "wall_face_lo_e",
+   "from": "face_lo",
+   "layers": [
+    "o_e"
+   ]
+  },
+  {
+   "name": "wall_face_lo_w",
+   "from": "face_lo",
+   "layers": [
+    "o_w"
+   ]
+  },
+  {
+   "name": "wall_face_lo_ew",
+   "from": "face_lo",
+   "layers": [
+    "o_e",
+    "o_w"
+   ]
+  },
+  "win_hi_l",
+  "win_hi_m",
+  "win_hi_r",
+  "win_lo_l",
+  "win_lo_m",
+  "win_lo_r",
+  "board_l",
+  "board_r",
+  "jamb_l",
+  "jamb_r",
+  "sill",
+  "jamb_hl",
+  "jamb_hr"
+ ],
+ "properties": {
+  "wall*": {
+   "collides": true
+  },
+  "stairs": {
+   "collides": true
+  }
+ },
+ "sample": {
+  "legend": {
+   "r": "rug",
+   "c": "carpet",
+   "A": "wall_cap_e",
+   "B": "wall_cap_w",
+   "1": "wall_face_hi_n",
+   "2": "wall_face_lo",
+   "3": "wall_face_hi_ne",
+   "4": "wall_face_lo_e",
+   "5": "wall_face_hi_nw",
+   "6": "wall_face_lo_w"
+  },
+  "rows": [
+   "11111111",
+   "22222222",
+   "BrrrrrrA",
+   "BrrrrrrA",
+   "BrrrrrrA",
+   "135rr311",
+   "246rr422",
+   "cccccccc"
+  ]
+ }
+}

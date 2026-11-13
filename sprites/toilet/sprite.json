@@ -1,0 +1,40 @@
+{
+  "name": "toilet",
+  "type": "prop",
+  "view": "topdown",
+  "size": [
+    16,
+    16
+  ],
+  "origin": [
+    8,
+    16
+  ],
+  "footprint": [
+    3,
+    4,
+    10,
+    10
+  ],
+  "palette": {
+    "k": "outline",
+    "w": "white",
+    "h": "light_gray",
+    "l": "gray"
+  },
+  "animations": {
+    "idle": {
+      "frames": [
+        "toilet"
+      ]
+    },
+    "south": {
+      "frames": [
+        {
+          "from": "toilet",
+          "flip": "v"
+        }
+      ]
+    }
+  }
+}

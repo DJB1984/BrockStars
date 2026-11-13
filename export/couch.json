@@ -1,0 +1,100 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 48,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 48,
+        "h": 24
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            48,
+            22
+          ]
+        ],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "couch.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 48,
+      "h": 24
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "couch_idle",
+        "from": 0,
+        "to": 0,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "couch",
+      "kind": "prop",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        24,
+        24
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 0,
+        "y": 4,
+        "w": 48,
+        "h": 18
+      },
+      "animations": {
+        "couch_idle": {
+          "anim": "idle",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        }
+      },
+      "prop": {
+        "layer": "world",
+        "scroll": 1.0,
+        "solid": true,
+        "footprint": [
+          0,
+          4,
+          48,
+          18
+        ],
+        "ysort": true,
+        "tiles": null
+      }
+    }
+  }
+}

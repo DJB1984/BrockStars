@@ -1,0 +1,1834 @@
+{
+ "name": "brock3",
+ "view": "topdown",
+ "tileset": "dorm",
+ "background": {
+  "color": "#265c42"
+ },
+ "legend": {
+  "c": "rug",
+  "r": "rug",
+  "b": "rug",
+  "o": "rug",
+  "x": "rug",
+  "S": "stairs",
+  "A": "wall_cap_nw",
+  "B": "wall_face_hi_n",
+  "C": "wall_cap_n",
+  "D": "wall_cap_ne",
+  "E": "wall_cap_w",
+  "F": "wall_face_lo",
+  "G": "wall_cap",
+  "H": "wall_cap_e",
+  "I": "wall_cap_ew",
+  "J": "wall_face_hi_ne",
+  "K": "wall_face_hi_nw",
+  "L": "wall_face_hi",
+  "M": "wall_face_lo_e",
+  "N": "wall_face_lo_w",
+  "O": "wall_face_hi_ew",
+  "P": "wall_face_lo_ew",
+  "Q": "wall_cap_new",
+  "R": "wall_face_hi_e",
+  "T": "wall_face_hi_w",
+  "U": "win_hi_l",
+  "V": "win_hi_m",
+  "W": "win_hi_r",
+  "X": "win_lo_l",
+  "Y": "win_lo_m",
+  "Z": "win_lo_r",
+  "a": "jamb_hl",
+  "d": "jamb_hr",
+  "e": "board_l",
+  "f": "jamb_l",
+  "g": "sill",
+  "h": "jamb_r",
+  "i": "board_r"
+ },
+ "layers": [
+  {
+   "name": "ground",
+   "rows": [
+    "                                ABBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBD                                ",
+    "                                EFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFH                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
+    "                                EBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBH                                ",
+    "                                EFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFH                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
+    "ABBBBBBBBBBBBBBBCBBBBBBBCBBBBBBBHccccccABBJbbbKCBBBBBBBBBBBBCBBCBBBCCCCCDcccccccABBBBBBBCBBBCBBCBBBBBBBCJbbbKBBBBDccccccEBBBBBBBCBBBBBBBCBBBBBBBBBBBBBBBD",
+    "EFFFFFFFFFFFFFFFGFFFFFFFGFFFFFFFHccccccEFFMbbbNGFFFFFFFFFFFFGFFGFFFGGGGGHcccccccEFFFFFFFGFFFGFFGFFFFFFFGMbbbNFFFFHccccccEFFFFFFFGFFFFFFFGFFFFFFFFFFFFFFFH",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbObbObbbEGGGGHcccccccIxxxxSSSIbbbObbObbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbPbbPbbbEGGGGHcccccccIxxxxSSSIbbbPbbPbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbObbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxxxxSSSIbbbbbbbbbbbbbbObbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbPbbbbbbbbbbbbbbbbbbbEGGGGHcccccccOxxxxSSSIbbbbbbbbbbbbbbPbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccPxxxxSSSIbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbQbbbQbbbQbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbQbbbQbbbQbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccQxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "EBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBBBBBLBBBLBBBLBBBBBBBBLLLLLRcccccccTBBBBBBBLBBBBBLBBBLBBBLBBBBBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBH",
+    "EFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFMcccccccNFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFH",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
+    "EBJrrrKBDxxxKBBBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBBBJxxxABJrrrKBH",
+    "EFMrrrNFHxxxNFFFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFFFMxxxEFMrrrNFH",
+    "IrrrrrrrIxxxxxxxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxxxxxxxIrrrrrrrI",
+    "IrrrrrrrIxxxxxxxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxxxxxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
+    "ECCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCGCCCCCCCH"
+   ]
+  },
+  {
+   "name": "decor",
+   "rows": [
+    "...................................UVW.....UVW.....UVW.....UVW.....UVW.....UVW.....UVW.....UVW.....UVW.....UVW.....UVW...................................",
+    "...................................XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ.....XYZ...................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    "..................................a...d...a...d...a...d..ea...d...a...d...a...d...a...d..ea...d...a...d...a...d...a...d..................................",
+    "..................................fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh..................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    "...UVW...UVW.......UVW.....UVW.............................................................................................UVW.....UVW.....UVW...UVW.....",
+    "...XYZ...XYZ.......XYZ.....XYZ.............................................................................................XYZ.....XYZ.....XYZ...XYZ.....",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    "..........a...d...a...d...a...d...................ei..........ei.............................ei.............ei............a...d...a...d...a...d..........",
+    "..........fgggh...fgggh...fgggh...........................................................................................fgggh...fgggh...fgggh..........",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    "..a...d...........a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...........a...d..",
+    "..fgggh...........fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...........fgggh..",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    "........................................................................................................................................................."
+   ]
+  }
+ ],
+ "objects": {
+  "legend": {},
+  "rows": [
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   "............................................................................@............................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   ".........................................................................................................................................................",
+   "........................................................................................................................................................."
+  ],
+  "list": [
+   {
+    "prop": "desk",
+    "at": [
+     278,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     306,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     272,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     312,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     272,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     312,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     342,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     370,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     336,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     376,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     336,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     376,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     406,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     434,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     400,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     440,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     400,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     440,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     470,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     498,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     464,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     504,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     464,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     504,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     534,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     562,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     528,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     568,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     528,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     568,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     598,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     626,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     592,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     632,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     592,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     632,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     662,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     690,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     656,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     696,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     656,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     696,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     726,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     754,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     720,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     760,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     720,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     760,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     790,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     818,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     784,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     824,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     784,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     824,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     854,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     882,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     848,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     888,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     848,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     888,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     918,
+     42
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     946,
+     42
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     912,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     952,
+     82
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     912,
+     104
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     952,
+     104
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     150,
+     210
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     178,
+     210
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     144,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     184,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     144,
+     272
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     184,
+     272
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     214,
+     210
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     242,
+     210
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     208,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     248,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     208,
+     272
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     248,
+     272
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     982,
+     210
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1010,
+     210
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     976,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     1016,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     976,
+     272
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1016,
+     272
+    ]
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1046,
+     210
+    ],
+    "state": "front_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1074,
+     210
+    ],
+    "state": "front_lamp"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1040,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     1080,
+     250
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1040,
+     272
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1080,
+     272
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     16,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     56,
+     378
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     16,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     56,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     22,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     50,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     144,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     184,
+     378
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     144,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     184,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     150,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     178,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     208,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     248,
+     378
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     208,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     248,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     214,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     242,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     272,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     312,
+     378
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     272,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     312,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     278,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     306,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     336,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     376,
+     378
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     336,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     376,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     342,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     370,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     400,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     440,
+     378
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     400,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     440,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     406,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     434,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     464,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     504,
+     378
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     464,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     504,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     470,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     498,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     528,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     568,
+     378
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     528,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     568,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     534,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     562,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     592,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     632,
+     378
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     592,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     632,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     598,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     626,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     656,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     696,
+     378
+    ]
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     656,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     696,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     662,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     690,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     720,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     760,
+     378
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     720,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     760,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     726,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     754,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     784,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     824,
+     378
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     784,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     824,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     790,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     818,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     848,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     888,
+     378
+    ]
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     848,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_purple",
+    "at": [
+     888,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     854,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     882,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     912,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     952,
+     378
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     912,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_green",
+    "at": [
+     952,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     918,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     946,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     976,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1016,
+     378
+    ]
+   },
+   {
+    "prop": "bed",
+    "at": [
+     976,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1016,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     982,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1010,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1040,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1080,
+     378
+    ]
+   },
+   {
+    "prop": "bed_gray",
+    "at": [
+     1040,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed",
+    "at": [
+     1080,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1046,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1074,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1168,
+     378
+    ]
+   },
+   {
+    "prop": "wardrobe",
+    "at": [
+     1208,
+     378
+    ]
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1168,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bed_red",
+    "at": [
+     1208,
+     418
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1174,
+     440
+    ],
+    "state": "back_books"
+   },
+   {
+    "prop": "desk",
+    "at": [
+     1202,
+     440
+    ],
+    "state": "back_lamp"
+   },
+   {
+    "prop": "couch",
+    "at": [
+     64,
+     208
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     36,
+     240
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     92,
+     240
+    ]
+   },
+   {
+    "prop": "couch",
+    "at": [
+     1152,
+     208
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     1124,
+     240
+    ]
+   },
+   {
+    "prop": "table",
+    "at": [
+     1180,
+     240
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     400,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     416,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     432,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     448,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     776,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     792,
+     198
+    ]
+   },
+   {
+    "prop": "sink",
+    "at": [
+     808,
+     198
+    ]
+   },
+   {
+    "prop": "toilet",
+    "at": [
+     420,
+     272
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet",
+    "at": [
+     452,
+     272
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet",
+    "at": [
+     772,
+     272
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet",
+    "at": [
+     804,
+     272
+    ],
+    "state": "south"
+   }
+  ]
+ },
+ "player": "student",
+ "camera": {
+  "zoom": 1
+ }
+}
