@@ -1,0 +1,103 @@
+/* The lobby: Endesga 32 colors, like the art. */
+.lobby {
+  --ink: #ffffff;
+  --soft: #c0cbdc;
+  --dim: #8b9bb4;
+  --panel: #262b44;
+  --edge: #3a4466;
+  --field: #181425;
+  --gold: #feae34;
+  --gold-dark: #f77622;
+  --red: #ff0044;
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  overflow-y: auto;
+  background: rgb(24 20 37 / 0.88);
+  font: 15px/1.4 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  color: var(--ink);
+  z-index: 10;
+}
+.lobby .card {
+  width: min(360px, 100%);
+  display: grid;
+  gap: 12px;
+  padding: 18px 20px 12px;
+  background: var(--panel);
+  border: 2px solid var(--edge);
+  box-shadow: 0 4px 0 #0e0b16;
+}
+.lobby h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #3e2731;
+}
+.lobby h2 { margin: 0 0 6px; font-size: 13px; font-weight: normal; color: var(--soft); }
+.lobby .field { display: grid; gap: 4px; }
+.lobby .field span, .lobby legend { font-size: 13px; color: var(--soft); }
+.lobby input[name="name"], .lobby input[name="code"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px 10px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--field);
+  border: 2px solid var(--edge);
+  border-radius: 0;
+}
+.lobby input:focus-visible, .lobby button:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; }
+.lobby .chars { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 0; border: 0; }
+.lobby .chars legend { padding: 0; margin-bottom: 4px; }
+.lobby .chars label { position: relative; }
+.lobby .chars input { position: absolute; opacity: 0; }
+.lobby .chars span {
+  display: block;
+  padding: 8px;
+  text-align: center;
+  background: var(--field);
+  border: 2px solid var(--edge);
+  cursor: pointer;
+}
+.lobby .chars input:checked + span { border-color: var(--gold); color: var(--gold); }
+.lobby .chars input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 1px; }
+.lobby button {
+  padding: 9px 14px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--edge);
+  border: 0;
+  border-radius: 0;
+  box-shadow: 0 3px 0 #181425;
+  cursor: pointer;
+}
+.lobby button:hover { background: #5a6988; }
+.lobby button:active { transform: translateY(2px); box-shadow: 0 1px 0 #181425; }
+.lobby .primary { background: var(--gold-dark); font-weight: bold; }
+.lobby .primary:hover { background: var(--gold); color: #181425; }
+.lobby .join { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.lobby input[name="code"] { text-transform: uppercase; letter-spacing: 0.2em; }
+.lobby input[name="code"]::placeholder { letter-spacing: 0.2em; color: var(--dim); }
+.lobby .nearby { padding-top: 12px; border-top: 2px solid var(--edge); }
+.lobby .nearby ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.lobby .nearby li {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "who button" "meta button";
+  align-items: center;
+  column-gap: 8px;
+  padding: 6px 6px 6px 10px;
+  background: var(--field);
+}
+.lobby .nearby .who { grid-area: who; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lobby .nearby .meta { grid-area: meta; font-size: 12px; color: var(--dim); }
+.lobby .nearby button { grid-area: button; padding: 6px 12px; }
+.lobby .empty { margin: 0; font-size: 13px; color: var(--dim); }
+.lobby .status { margin: 0; min-height: 1.4em; font-size: 13px; color: var(--soft); }
+.lobby .status.error { color: #ff6b81; }
+.lobby .quiet { justify-self: center; background: none; box-shadow: none; color: var(--dim); text-decoration: underline; }
+.lobby .quiet:hover { background: none; color: var(--ink); }
+.lobby.busy button { opacity: 0.6; pointer-events: none; }

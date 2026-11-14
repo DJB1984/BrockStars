@@ -5,13 +5,13 @@
   "name": "dorm",
   "image": "dorm.png",
   "imagewidth": 135,
-  "imageheight": 84,
+  "imageheight": 101,
   "tilewidth": 16,
   "tileheight": 16,
   "margin": 0,
   "spacing": 1,
   "columns": 8,
-  "tilecount": 39,
+  "tilecount": 46,
   "tiles": [
     {
       "id": 0,
@@ -507,6 +507,111 @@
           "value": "jamb_hr"
         }
       ]
+    },
+    {
+      "id": 39,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_n_j"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_n_jw"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_n_je"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_nw_je"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_ne_jw"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_w_je"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "wall_cap_e_jw"
+        },
+        {
+          "name": "collides",
+          "type": "bool",
+          "value": true
+        }
+      ]
     }
   ],
   "pixelforge": {
@@ -550,7 +655,14 @@
       "jamb_r",
       "sill",
       "jamb_hl",
-      "jamb_hr"
+      "jamb_hr",
+      "wall_cap_n_j",
+      "wall_cap_n_jw",
+      "wall_cap_n_je",
+      "wall_cap_nw_je",
+      "wall_cap_ne_jw",
+      "wall_cap_w_je",
+      "wall_cap_e_jw"
     ],
     "properties": [
       {},
@@ -633,7 +745,28 @@
       {},
       {},
       {},
-      {}
+      {},
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      },
+      {
+        "collides": true
+      }
     ],
     "animations": {},
     "sample": [

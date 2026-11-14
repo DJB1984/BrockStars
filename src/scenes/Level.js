@@ -6,6 +6,8 @@ import { TitusCombat } from '../combat/TitusCombat.js';
 import { ATTACKS } from '../combat/rules.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
+import { net } from '../net/session.js';
+import { RemotePlayers } from '../net/remotes.js';
 
 // Object type (a level object's "type") → the class that gives it behaviour. Add yours here.
 const TYPES = { enemy: Walker };
@@ -20,6 +22,8 @@ const TYPES = { enemy: Walker };
 //   TYPES: sprites with those types get a behaviour object (enemies hurt on touch, die to attacks).
 // Hits land with this.feel (pixelforgeFeel): a hit stop, a small shake, a flash, knockback, and the
 // 'fx_hit' effect when the art has one.
+// Multiplayer (src/net/): the other players in this level are drawn from `net`, and this player's state is
+// sent to them every frame; the room code and head count show top right.
 // Dev only: B toggles the hit/hurt boxes, and window.pixelforgePlay drives the game for `pixelforge play`.
 export class Level extends Phaser.Scene {
   constructor() { super('level'); }
@@ -79,6 +83,18 @@ export class Level extends Phaser.Scene {
     on(this.events, 'pixelforge-trigger', (obj) => this.trigger(obj));
     on(bus, 'dead', () => this.time.delayedCall(400, () => { reset(); this.scene.restart({ level: this.levelName, spawn: this.spawnName }); }));
 
+    this.remotes = new RemotePlayers(this, net);
+    const badge = this.add.text(0, 8, '', {
+      fontFamily: 'monospace', fontSize: '12px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 6, y: 5 },
+    }).setOrigin(1, 0).setScrollFactor(0).setDepth(200001);
+    const showRoom = () => {
+      badge.setText(`Room ${net.room}  ${net.count} here`).setVisible(net.active).setX(this.scale.width - 8);
+    };
+    showRoom();
+    on(net, 'players', showRoom);
+    on(this.scale, 'resize', showRoom);
+    on(net, 'ended', (reason) => this.toast(reason));
+
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
       if (this.character === 'titus') {
@@ -106,6 +122,11 @@ export class Level extends Phaser.Scene {
     if (this.combatText?.active) this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block`);
     for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
+    if (net.active && p?.active) {
+      net.setLocal({ name: net.name, char: this.character, level: this.levelName, x: Math.round(p.x * 10) / 10,
+                     y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX });
+    }
+    this.remotes.update();
     if (p?.active) {
       const body = new Phaser.Geom.Rectangle(p.body.x, p.body.y, p.body.width, p.body.height);
       for (const item of this.pickups) {
@@ -128,6 +149,14 @@ export class Level extends Phaser.Scene {
         p.combat?.drawReach(this.debug);
       }
     }
+  }
+
+  // A short message at the top of the screen (the game ended, the host left).
+  toast(text) {
+    const t = this.add.text(this.scale.width / 2, 40, text, {
+      fontFamily: 'monospace', fontSize: '12px', color: '#ffffff', backgroundColor: '#24232a', padding: { x: 8, y: 6 },
+    }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(200002);
+    this.tweens.add({ targets: t, alpha: 0, delay: 3500, duration: 500, onComplete: () => t.destroy() });
   }
 
   trigger(obj) {

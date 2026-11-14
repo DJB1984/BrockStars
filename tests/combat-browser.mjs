@@ -99,7 +99,7 @@ try {
   await page.waitForTimeout(80);
   assert.deepEqual(errors,[]);
   await page.screenshot({path:'previews/titus-combat-practice.png'});
-  await page.goto('http://127.0.0.1:5173/?character=titus');
+  await page.goto('http://127.0.0.1:5173/?character=titus&solo');
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='brock3');
   assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health),100);
   await page.keyboard.press('2');

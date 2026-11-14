@@ -1,5 +1,5 @@
 {
-  "next": 16,
+  "next": 23,
   "critiques": [
     {
       "id": 1,
@@ -271,6 +271,120 @@
       "created": "2026-11-13T16:39:01+00:00",
       "updated": "2026-11-13T16:42:59+00:00",
       "note": "Added south-facing entrances to both bathrooms, moved the noticeboards beside the openings, and verified entry and exit through both doors."
+    },
+    {
+      "id": 16,
+      "status": "fixed",
+      "text": "remove the wood panels",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          681,
+          210,
+          61,
+          34
+        ]
+      },
+      "created": "2026-11-13T16:30:08+00:00",
+      "updated": "2026-11-13T16:30:58+00:00",
+      "note": "Removed the wooden door frame (jambs and sill) from that doorway so it opens straight onto the hall."
+    },
+    {
+      "id": 17,
+      "status": "fixed",
+      "text": "this corner (and others like it) look strange, fix them all.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          747,
+          359,
+          10,
+          13
+        ]
+      },
+      "created": "2026-11-13T16:43:40+00:00",
+      "updated": "2026-11-13T16:47:37+00:00",
+      "note": "Added outlined wall-top tiles where a wall meets a brick face and swapped them in at all 110 junctions, so each wall's outline runs up to the top of the brick wall."
+    },
+    {
+      "id": 18,
+      "status": "fixed",
+      "text": "turn these sideways for the room. people don't point dressers toward walls",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          732,
+          150,
+          40,
+          60
+        ]
+      },
+      "created": "2026-11-13T20:28:37+00:00",
+      "updated": "2026-11-13T20:32:24+00:00",
+      "note": "Added a sideways wardrobe prop (wardrobe_side, east/west) and turned all 64 wardrobes so their doors face into their room, each still flush against its wall."
+    },
+    {
+      "id": 19,
+      "status": "fixed",
+      "text": "remove the giant head peice",
+      "target": {
+        "asset": "bed",
+        "anim": "north",
+        "frame": 0,
+        "region": [
+          0,
+          0,
+          32,
+          14
+        ]
+      },
+      "created": "2026-11-13T20:31:10+00:00",
+      "updated": "2026-11-13T20:33:40+00:00",
+      "note": "Removed the tall headboard from the north-facing bed, so it now starts at the pillow (all colour variants follow)."
+    },
+    {
+      "id": 20,
+      "status": "fixed",
+      "text": "the lines make it look goofy, and they don't have handles on the sides. it's very much just like a wood square",
+      "target": {
+        "asset": "wardrobe_side",
+        "anim": "east",
+        "frame": 0,
+        "region": [
+          9,
+          3,
+          13,
+          43
+        ]
+      },
+      "created": "2026-11-13T20:33:55+00:00",
+      "updated": "2026-11-13T20:34:42+00:00",
+      "note": "Redrew the sideways wardrobe as a plain wood box (no door lines or handles); east and west now share the same frame."
+    },
+    {
+      "id": 21,
+      "status": "fixed",
+      "text": "add a little wood to the top, just a little",
+      "target": {
+        "asset": "bed"
+      },
+      "created": "2026-11-13T20:34:32+00:00",
+      "updated": "2026-11-13T20:35:29+00:00",
+      "note": "Added a short 4px wooden headboard above the pillow on the north-facing bed, styled like the footboard."
+    },
+    {
+      "id": 22,
+      "status": "fixed",
+      "text": "I like this bed, make all the other bed's like it, the south beds ought to have a similar base except near the head bc of the perspective change. doulb check your work.",
+      "target": {
+        "asset": "bed"
+      },
+      "created": "2026-11-13T20:37:41+00:00",
+      "updated": "2026-11-13T20:39:08+00:00",
+      "note": "Rebuilt the south-facing bed on the north bed's frame (small wood strip at the foot, front panel at the head), so every bed and colour variant now matches."
     }
   ]
 }

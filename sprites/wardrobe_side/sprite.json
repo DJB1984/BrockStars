@@ -1,0 +1,39 @@
+{
+ "name": "wardrobe_side",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  22,
+  52
+ ],
+ "origin": [
+  11,
+  52
+ ],
+ "footprint": [
+  0,
+  28,
+  22,
+  22
+ ],
+ "palette": {
+  "k": "outline",
+  "T": "tan",
+  "o": "clay",
+  "b": "brown",
+  "e": "dark_brown",
+  "h": "light_gray"
+ },
+ "animations": {
+  "east": {
+   "frames": [
+    "side"
+   ]
+  },
+  "west": {
+   "frames": [
+    "side"
+   ]
+  }
+ }
+}

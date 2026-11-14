@@ -14,7 +14,8 @@
     "sink",
     "table",
     "toilet",
-    "wardrobe"
+    "wardrobe",
+    "wardrobe_side"
   ],
   "fx": [],
   "tilesets": [

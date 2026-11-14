@@ -2,3 +2,6 @@ previews/
 node_modules/
 dist/
 __pycache__/
+server/net-data/
+brockstars-site.zip
+deploy.config.json

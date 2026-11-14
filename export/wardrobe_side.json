@@ -1,0 +1,149 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 22,
+        "h": 52
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 22,
+        "h": 52
+      },
+      "sourceSize": {
+        "w": 22,
+        "h": 52
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            22,
+            52
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "1": {
+      "frame": {
+        "x": 0,
+        "y": 53,
+        "w": 22,
+        "h": 52
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 22,
+        "h": 52
+      },
+      "sourceSize": {
+        "w": 22,
+        "h": 52
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "duration": 125,
+      "pixelforge": {
+        "hurt": [
+          [
+            0,
+            0,
+            22,
+            52
+          ]
+        ],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "wardrobe_side.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 22,
+      "h": 105
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "wardrobe_side_east",
+        "from": 0,
+        "to": 0,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "wardrobe_side_west",
+        "from": 1,
+        "to": 1,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "wardrobe_side",
+      "kind": "prop",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        11,
+        52
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 0,
+        "y": 28,
+        "w": 22,
+        "h": 22
+      },
+      "animations": {
+        "wardrobe_side_east": {
+          "anim": "east",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        },
+        "wardrobe_side_west": {
+          "anim": "west",
+          "loop": true,
+          "fps": 8.0,
+          "frames": 1
+        }
+      },
+      "prop": {
+        "layer": "world",
+        "scroll": 1.0,
+        "solid": true,
+        "footprint": [
+          0,
+          28,
+          22,
+          22
+        ],
+        "ysort": true,
+        "tiles": null
+      }
+    }
+  }
+}

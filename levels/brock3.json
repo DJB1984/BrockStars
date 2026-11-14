@@ -43,14 +43,21 @@
   "f": "jamb_l",
   "g": "sill",
   "h": "jamb_r",
-  "i": "board_r"
+  "i": "board_r",
+  "j": "wall_cap_n_j",
+  "k": "wall_cap_n_jw",
+  "l": "wall_cap_n_je",
+  "m": "wall_cap_nw_je",
+  "n": "wall_cap_ne_jw",
+  "p": "wall_cap_w_je",
+  "q": "wall_cap_e_jw"
  },
  "layers": [
   {
    "name": "ground",
    "rows": [
-    "                                ABBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBCBBBBBBBD                                ",
-    "                                EFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFGFFFFFFFH                                ",
+    "                                mBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBjBBBBBBBn                                ",
+    "                                IFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFIFFFFFFFI                                ",
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
@@ -62,16 +69,16 @@
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
     "                                IrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrI                                ",
-    "                                EBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBH                                ",
-    "                                EFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFH                                ",
+    "                                pBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBLBJrrrKBq                                ",
+    "                                IFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFFFMrrrNFI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
-    "ABBBBBBBBBBBBBBBCBBBBBBBCBBBBBBBHccccccABBJbbbKCBBBBBBBBBBBBCBBCBBBCCCCCDcccccccABBBBBBBCBBBCBBCBBBBBBBCJbbbKBBBBDccccccEBBBBBBBCBBBBBBBCBBBBBBBBBBBBBBBD",
-    "EFFFFFFFFFFFFFFFGFFFFFFFGFFFFFFFHccccccEFFMbbbNGFFFFFFFFFFFFGFFGFFFGGGGGHcccccccEFFFFFFFGFFFGFFGFFFFFFFGMbbbNFFFFHccccccEFFFFFFFGFFFFFFFGFFFFFFFFFFFFFFFH",
+    "mBBBBBBBBBBBBBBBjBBBBBBBjBBBBBBBqccccccmBBJbbbKjBBBBBBBBBBBBjBBjBBBkCCCCDcccccccmBBBBBBBjBBBjBBjBBBBBBBjJbbbKBBBBnccccccpBBBBBBBjBBBBBBBjBBBBBBBBBBBBBBBn",
+    "IFFFFFFFFFFFFFFFIFFFFFFFIFFFFFFFIccccccIFFMbbbNIFFFFFFFFFFFFIFFIFFFEGGGGHcccccccIFFFFFFFIFFFIFFIFFFFFFFIMbbbNFFFFIccccccIFFFFFFFIFFFFFFFIFFFFFFFFFFFFFFFI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbObbObbbEGGGGHcccccccIxxxxSSSIbbbObbObbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
@@ -83,16 +90,16 @@
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccQxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "EBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBBBBBLBBBLBBBLBJbbbKBBLLLLLRcccccccTBBBBBBBLJbbbKLBBBLBBBLBBBBBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBH",
-    "EFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFFFFFFFFFFFFFFFMbbbNFFFFFFFMcccccccNFFFFFFFFMbbbNFFFFFFFFFFFFFFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFH",
+    "pBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBBBBBLBBBLBBBLBJbbbKBBLLLLLRcccccccTBBBBBBBLJbbbKLBBBLBBBLBBBBBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBq",
+    "IFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFFFFFFFFFFFFFFFMbbbNFFFFFFFMcccccccNFFFFFFFFMbbbNFFFFFFFFFFFFFFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
-    "EBJrrrKBDxxxKBBBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBJrrrKBCBBBJxxxABJrrrKBH",
-    "EFMrrrNFHxxxNFFFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFMrrrNFGFFFMxxxEFMrrrNFH",
+    "pBJrrrKBnxxxKBBBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBJrrrKBjBBBJxxxmBJrrrKBq",
+    "IFMrrrNFIxxxNFFFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFMrrrNFIFFFMxxxIFMrrrNFI",
     "IrrrrrrrIxxxxxxxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxxxxxxxIrrrrrrrI",
     "IrrrrrrrIxxxxxxxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxxxxxxxIrrrrrrrI",
     "IrrrrrrrIxxxSSSxIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIrrrrrrrIxSSSxxxIrrrrrrrI",
@@ -123,8 +130,8 @@
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
-    "..................................a...d...a...d...a...d..ea...d...a...d...a...d...a...d..ea...d...a...d...a...d...a...d..................................",
-    "..................................fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh..................................",
+    ".........................................................e...............................e...............................................................",
+    ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
@@ -144,16 +151,16 @@
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
-    "..........a...d...a...d...a...d...................ei.............ei............................ei...........ei............a...d...a...d...a...d..........",
-    "..........fgggh...fgggh...fgggh...........................................................................................fgggh...fgggh...fgggh..........",
+    "..................................................ei.............ei............................ei...........ei...........................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
-    "..a...d...........a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...a...d...........a...d..",
-    "..fgggh...........fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...fgggh...........fgggh..",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
+    ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
@@ -263,18 +270,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     544,
+     539,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     624,
+     629,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -309,18 +318,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     672,
+     667,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     752,
+     757,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -355,18 +366,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     800,
+     795,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     880,
+     885,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -401,18 +414,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     928,
+     923,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1008,
+     1013,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -447,18 +462,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1056,
+     1051,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1136,
+     1141,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -493,18 +510,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1184,
+     1179,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1264,
+     1269,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -539,18 +558,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1312,
+     1307,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1392,
+     1397,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -585,18 +606,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1440,
+     1435,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1520,
+     1525,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -631,18 +654,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1568,
+     1563,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1648,
+     1653,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -677,18 +702,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1696,
+     1691,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1776,
+     1781,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -723,18 +750,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1824,
+     1819,
      208
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1904,
+     1909,
      208
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -769,18 +798,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     288,
+     283,
      544
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     368,
+     373,
      544
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -815,18 +846,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     416,
+     411,
      544
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     496,
+     501,
      544
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -861,18 +894,20 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1952,
+     1947,
      544
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2032,
+     2037,
      544
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "desk",
@@ -907,32 +942,36 @@
     "state": "north"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2080,
+     2075,
      544
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2160,
+     2165,
      544
-    ]
+    ],
+    "state": "west"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     32,
+     27,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     112,
+     117,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed",
@@ -967,18 +1006,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     288,
+     283,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     368,
+     373,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_red",
@@ -1013,18 +1054,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     416,
+     411,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     496,
+     501,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed",
@@ -1059,18 +1102,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     544,
+     539,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     624,
+     629,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_red",
@@ -1105,18 +1150,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     672,
+     667,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     752,
+     757,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed",
@@ -1151,18 +1198,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     800,
+     795,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     880,
+     885,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed",
@@ -1197,18 +1246,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     928,
+     923,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1008,
+     1013,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_red",
@@ -1243,18 +1294,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1056,
+     1051,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1136,
+     1141,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_green",
@@ -1289,18 +1342,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1184,
+     1179,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1264,
+     1269,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_green",
@@ -1335,18 +1390,20 @@
     "state": "back_books"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1312,
+     1307,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1392,
+     1397,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_gray",
@@ -1381,18 +1438,20 @@
     "state": "back_books"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1440,
+     1435,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1520,
+     1525,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_green",
@@ -1427,18 +1486,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1568,
+     1563,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1648,
+     1653,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_green",
@@ -1473,18 +1534,20 @@
     "state": "back_books"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1696,
+     1691,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1776,
+     1781,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_green",
@@ -1519,18 +1582,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1824,
+     1819,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1904,
+     1909,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_red",
@@ -1565,18 +1630,20 @@
     "state": "back_lamp"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     1952,
+     1947,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2032,
+     2037,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed",
@@ -1611,18 +1678,20 @@
     "state": "back_books"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2080,
+     2075,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2160,
+     2165,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_gray",
@@ -1657,18 +1726,20 @@
     "state": "back_books"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2336,
+     2331,
      756
-    ]
+    ],
+    "state": "east"
    },
    {
-    "prop": "wardrobe",
+    "prop": "wardrobe_side",
     "at": [
-     2416,
+     2421,
      756
-    ]
+    ],
+    "state": "west"
    },
    {
     "prop": "bed_red",
