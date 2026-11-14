@@ -1,5 +1,5 @@
 {
-  "next": 31,
+  "next": 32,
   "critiques": [
     {
       "id": 1,
@@ -506,7 +506,7 @@
     },
     {
       "id": 30,
-      "status": "working",
+      "status": "fixed",
       "text": "Remove this hanging chunk of desk.",
       "target": {
         "asset": "desk",
@@ -520,7 +520,20 @@
         ]
       },
       "created": "2026-11-14T16:50:10+00:00",
-      "updated": "2026-11-14T16:50:10+00:00"
+      "updated": "2026-11-14T16:52:20+00:00",
+      "note": "Trimmed the desktop so it ends at the leg on the front view (and at the matching edge on the back), so nothing overhangs; the footprint now covers just the desk."
+    },
+    {
+      "id": 31,
+      "status": "fixed",
+      "text": "The wall should be on the other side, it should kinda just look like a slab in the back. test your work to make sure it actually looks good.",
+      "target": {
+        "asset": "desk",
+        "anim": "back"
+      },
+      "created": "2026-11-14T16:50:50+00:00",
+      "updated": "2026-11-14T16:52:21+00:00",
+      "note": "Rebuilt the back view as a solid slab from behind with the drawer side on the right, matching the front's outline, and checked it in brock3."
     }
   ]
 }
