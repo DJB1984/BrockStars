@@ -70,7 +70,8 @@ export const TONES = {
   blue: { o: '#181425', h: '#2ce8f5', f: '#0099db', l: '#124e89', d: '#262b44' },
   red: { o: '#181425', h: '#f6757a', f: '#e43b44', l: '#a22633', d: '#3e2731' },
   slate: { o: '#181425', h: '#8b9bb4', f: '#5a6988', l: '#3a4466', d: '#262b44' },
-  night: { o: '#181425', h: '#5a6988', f: '#262b44', l: '#1d1a30' },
+  night: { o: '#181425', h: '#5a6988', f: '#262b44', l: '#1d1a30', d: '#0e0b16' },
+  chalk: { o: '#181425', h: '#ffffff', f: '#ffffff', l: '#c0cbdc' },
   ink: { o: '#181425', h: '#5a6988', f: '#181425', l: '#0e0b16' },
   paper: { o: '#181425', h: '#ffffff', f: '#ead4aa', l: '#e4a672' },
 } satisfies Record<string, Tone>;

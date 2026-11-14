@@ -99,7 +99,7 @@ export function FindGame({ level, initialName, onReady }: Props) {
           </span>
         </label>
 
-        <button type="button" className="btn btn-gold btn-big" onClick={host} disabled={busy}>
+        <button type="button" className="btn btn-red btn-big" onClick={host} disabled={busy}>
           <span className="btn-face">Host a game</span>
         </button>
 
@@ -118,7 +118,7 @@ export function FindGame({ level, initialName, onReady }: Props) {
               inputMode="text"
             />
           </span>
-          <button type="submit" className="btn btn-blue" disabled={busy}><span className="btn-face">Join</span></button>
+          <button type="submit" className="btn btn-gold" disabled={busy}><span className="btn-face">Join</span></button>
         </form>
 
         <section className="nearby" aria-labelledby="nearby-title">
@@ -138,7 +138,7 @@ export function FindGame({ level, initialName, onReady }: Props) {
                       {Array.from({ length: MAX_PLAYERS }, (_, i) => <i key={i} className={i < r.players ? 'on' : ''} />)}
                     </span>
                   </span>
-                  <button type="button" className="btn btn-blue btn-small" onClick={() => join(r.room)} disabled={busy}>
+                  <button type="button" className="btn btn-gold btn-small" onClick={() => join(r.room)} disabled={busy}>
                     <span className="btn-face">Join</span>
                   </button>
                 </li>

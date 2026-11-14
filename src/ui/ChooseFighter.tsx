@@ -76,7 +76,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
   return (
     <main className={`pick${fighting ? ' is-fighting' : ''}`} style={stageStyle}>
       <header className="pick-head">
-        <button type="button" className="btn btn-slate btn-small back" onClick={onBack} disabled={fighting}>
+        <button type="button" className="btn btn-night btn-small back" onClick={onBack} disabled={fighting}>
           <span className="btn-face"><Icon name="back" size={2} /> Back</span>
         </button>
         <h1 className="pick-title">Choose your fighter</h1>
@@ -186,7 +186,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
       </aside>
 
       <footer className="pick-go">
-        <button type="button" className="btn btn-gold btn-huge fight" onClick={fight} disabled={fighting}>
+        <button type="button" className="btn btn-red btn-huge fight" onClick={fight} disabled={fighting}>
           <span className="btn-face">Fight!</span>
         </button>
       </footer>
