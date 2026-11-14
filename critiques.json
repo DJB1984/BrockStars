@@ -394,7 +394,7 @@
         "asset": "desk"
       },
       "created": "2026-11-14T16:14:17+00:00",
-      "updated": "2026-11-14T16:27:25+00:00",
+      "updated": "2026-11-14T16:37:16+00:00",
       "note": "Removed the lamp and book stack from every desk, so all four states now show a bare desktop."
     },
     {
@@ -413,12 +413,12 @@
         ]
       },
       "created": "2026-11-14T16:14:34+00:00",
-      "updated": "2026-11-14T16:27:26+00:00",
+      "updated": "2026-11-14T16:37:16+00:00",
       "note": "Replaced the left drawer pedestal with a single shaded leg on both views; drawers stay on the right only."
     },
     {
       "id": 25,
-      "status": "open",
+      "status": "fixed",
       "text": "he's not a woman, make his chest a little less prominent",
       "target": {
         "asset": "titus",
@@ -432,7 +432,8 @@
         ]
       },
       "created": "2026-11-14T16:25:16+00:00",
-      "updated": "2026-11-14T16:25:16+00:00"
+      "updated": "2026-11-14T16:38:19+00:00",
+      "note": "Flattened Titus's side-view chest to a 1px step so the torso reads straight from shoulder to waist in idle, walk and punch."
     }
   ]
 }
