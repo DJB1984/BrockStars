@@ -1,5 +1,5 @@
 {
-  "next": 26,
+  "next": 27,
   "critiques": [
     {
       "id": 1,
@@ -434,6 +434,25 @@
       "created": "2026-11-14T16:25:16+00:00",
       "updated": "2026-11-14T16:38:19+00:00",
       "note": "Flattened Titus's side-view chest to a 1px step so the torso reads straight from shoulder to waist in idle, walk and punch."
+    },
+    {
+      "id": 26,
+      "status": "fixed",
+      "text": "move the chair under the desk",
+      "target": {
+        "asset": "desk",
+        "anim": "front_lamp",
+        "frame": 0,
+        "region": [
+          14,
+          26,
+          20,
+          25
+        ]
+      },
+      "created": "2026-11-14T16:40:59+00:00",
+      "updated": "2026-11-14T16:43:03+00:00",
+      "note": "Tucked the chair under the desk: on the front view it now sits in the kneehole, and on the back view it slides in behind the desktop."
     }
   ]
 }
