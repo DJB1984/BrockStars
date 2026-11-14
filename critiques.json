@@ -1,5 +1,5 @@
 {
-  "next": 29,
+  "next": 30,
   "critiques": [
     {
       "id": 1,
@@ -475,14 +475,33 @@
     },
     {
       "id": 28,
-      "status": "open",
+      "status": "fixed",
       "text": "the back actually looks horrible. flip it around people don't face the fall when they work at a desk.",
       "target": {
         "asset": "desk",
         "anim": "back_lamp"
       },
       "created": "2026-11-14T16:45:39+00:00",
-      "updated": "2026-11-14T16:45:39+00:00"
+      "updated": "2026-11-14T16:47:08+00:00",
+      "note": "Redrew the back view as the desk seen from behind: plain pedestal back on the left, a recessed modesty panel, and the leg on the right, with the chair facing the camera."
+    },
+    {
+      "id": 29,
+      "status": "open",
+      "text": "Remove the hanging chunk of desk",
+      "target": {
+        "asset": "desk",
+        "anim": "back_lamp",
+        "frame": 0,
+        "region": [
+          0,
+          21,
+          10,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:46:26+00:00",
+      "updated": "2026-11-14T16:46:26+00:00"
     }
   ]
 }
