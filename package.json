@@ -9,8 +9,9 @@
     "build": "vite build",
     "preview": "vite build && php -S 0.0.0.0:8002 -t dist",
     "package": "vite build && node tools/package-site.mjs",
-    "test": "node --test tests/combat.test.mjs",
-    "test:browser": "node tests/combat-browser.mjs"
+    "test": "node --test tests/combat.test.mjs tests/net-combat.test.mjs",
+    "test:browser": "node tests/combat-browser.mjs",
+    "test:multiplayer": "node tests/net-combat-browser.mjs"
   },
   "dependencies": {
     "phaser": "3.90.0"

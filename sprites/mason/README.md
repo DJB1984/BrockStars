@@ -10,7 +10,9 @@ The existing player controller mirrors the side animation to face left.
 
 Mason starts selected in the game. Move with WASD or arrow keys; choose Titus with 1 and Mason with 2,
 or click their on-screen buttons. `?character=titus` starts with Titus. Mason's movement speed is 180
-pixels/second compared with Titus's 140. Combat and the grapple ability are deferred.
+pixels/second compared with Titus's 140. C punches, X kicks, Z headbutts, and holding V blocks,
+using Titus's damage, timing, cooldowns, and directional guard rules. The grapple ability is deferred.
+Use `?practice=1&character=mason` to spar against the practice partner.
 
 Regenerate Mason's Phaser atlas and direction/walking previews with `python tools/export-mason.py`
 using a Python environment with Pillow. This small exporter supports Mason's current layer/offset

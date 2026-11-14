@@ -1,6 +1,8 @@
 """Export Mason's editable pixelforge grids (Pillow; no pixelforge CLI required)."""
 import json
 import base64
+from fnmatch import fnmatchcase
+from math import ceil
 from pathlib import Path
 from PIL import Image, ImageDraw
 
@@ -8,9 +10,15 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / 'sprites/mason'
 
 
-def render(entry, palette):
+def render(entry, palette, role=None, roles=None):
     canvas = Image.new('RGBA', (64, 64))
     if isinstance(entry, str):
+        assigned = 'hurt'
+        for pattern, value in (roles or {}).items():
+            if fnmatchcase(entry, pattern):
+                assigned = value
+        if role is not None and assigned != role:
+            return canvas
         rows = (SOURCE / 'frames' / f'{entry}.txt').read_text().splitlines()
         assert len(rows) == 64 and all(len(row) == 64 for row in rows), entry
         for y, row in enumerate(rows):
@@ -19,9 +27,11 @@ def render(entry, palette):
                     canvas.putpixel((x, y), palette[char])
         return canvas
     if 'from' in entry:
-        canvas = render(entry['from'], palette)
+        canvas = render(entry['from'], palette, role, roles)
     for layer in entry.get('layers', []):
-        canvas.alpha_composite(render(layer, palette))
+        canvas.alpha_composite(render(layer, palette, role, roles))
+    if entry.get('flip') == 'h':
+        canvas = canvas.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
     if 'offset' in entry:
         shifted = Image.new('RGBA', canvas.size)
         shifted.paste(canvas, tuple(entry['offset']))
@@ -34,13 +44,24 @@ def main():
     shared = json.loads((ROOT / 'palettes/game.json').read_text())['colors']
     from PIL.ImageColor import getcolor
     palette = {k: getcolor(shared.get(v, v), 'RGBA') for k, v in spec['palette'].items()}
-    sheet = Image.new('RGBA', (259, 324))
+    count = sum(len(a['frames']) for a in spec['animations'].values())
+    sheet = Image.new('RGBA', (259, ceil(count / 4) * 65 - 1))
     frames, tags, animations, images = {}, [], {}, []
     for action, animation in spec['animations'].items():
         start = len(frames)
         for entry in animation['frames']:
             index = len(frames)
             image = render(entry, palette)
+            boxes = {}
+            for role in ('hurt', 'hit'):
+                bounds = render(entry, palette, role, spec.get('roles')).getbbox()
+                if bounds:
+                    pad = spec.get(f'{role}_pad', 0)
+                    left, top = max(0, bounds[0]-pad), max(0, bounds[1]-pad)
+                    right, bottom = min(64, bounds[2]+pad), min(64, bounds[3]+pad)
+                    boxes[role] = [[left, top, right-left, bottom-top]]
+                else:
+                    boxes[role] = []
             images.append(image)
             x, y = (index % 4) * 65, (index // 4) * 65
             sheet.paste(image, (x, y))
@@ -50,11 +71,11 @@ def main():
                 'spriteSourceSize': {'x': 0, 'y': 0, 'w': 64, 'h': 64},
                 'sourceSize': {'w': 64, 'h': 64}, 'pivot': {'x': .5, 'y': .8125},
                 'duration': entry.get('duration', round(1000 / animation.get('fps', 8))),
-                'pixelforge': {'hurt': [[20, 8, 24, 44]], 'hit': []},
+                'pixelforge': boxes,
             }
         key = f'mason_{action}'
         tags.append({'name': key, 'from': start, 'to': len(frames)-1, 'direction': 'forward', 'color': '#000000ff'})
-        animations[key] = {'anim': action, 'loop': True, 'fps': animation.get('fps', 8), 'frames': len(frames)-start}
+        animations[key] = {'anim': action, 'loop': animation.get('loop', True), 'fps': animation.get('fps', 8), 'frames': len(frames)-start}
     metadata = {'app': 'pixelforge', 'version': '1.0', 'image': 'mason.png', 'format': 'RGBA8888',
                 'size': {'w': sheet.width, 'h': sheet.height}, 'scale': '1', 'frameTags': tags, 'layers': [], 'slices': [],
                 'pixelforge': {'sprite': 'mason', 'kind': 'sprite', 'view': 'topdown', 'class': 'topdown',
@@ -76,7 +97,7 @@ def main():
                  'anims': []}
         for tag in tags:
             action = animations[tag['name']]
-            entry['anims'].append({'name': action['anim'], 'loop': True, 'fps': action['fps'],
+            entry['anims'].append({'name': action['anim'], 'loop': action['loop'], 'fps': action['fps'],
                 'frames': [{'x': frames[str(i)]['frame']['x'], 'y': frames[str(i)]['frame']['y'],
                             'd': frames[str(i)]['duration'], **frames[str(i)]['pixelforge']}
                            for i in range(tag['from'], tag['to'] + 1)]})
@@ -99,7 +120,7 @@ def main():
             bg.alpha_composite(image)
             sequence.append(bg.resize((256, 256), Image.Resampling.NEAREST).convert('RGB'))
         sequence[0].save(preview / f'mason-walk-{name}.gif', save_all=True, append_images=sequence[1:], duration=100, loop=0)
-    print('Exported Mason: 18 frames, 6 animations; previews/mason-directions.png')
+    print(f'Exported Mason: {len(frames)} frames, {len(animations)} animations; previews/mason-directions.png')
 
 
 if __name__ == '__main__':

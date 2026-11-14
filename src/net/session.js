@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { call, beacon, pack, unpack, SignalError } from './signal.js';
+import { RoomCombat } from './combat.js';
 
 // One multiplayer game, kept across level restarts (doors, character switches). The host's browser is the
 // hub: every joiner opens a WebRTC data channel to it, sends where it is ~15 times a second, and gets back
@@ -61,6 +62,9 @@ class NetSession extends Phaser.Events.EventEmitter {
     this.timers = [];
     this.sent = 0;           // sequence numbers: unreliable channels can deliver out of order
     this.heard = 0;
+    this.commandNumber = 0;
+    this.arena = new RoomCombat();
+    this.combatState = { fighters: {}, hits: [] };
     this.rosterKey = '';
   }
 
@@ -122,8 +126,17 @@ class NetSession extends Phaser.Events.EventEmitter {
   }
 
   fromClient(from, text) {
-    const msg = JSON.parse(text);
+    let msg;
+    try { msg = JSON.parse(text); } catch { return; }
+    if (!msg || typeof msg !== 'object') return;
+    if (msg.type === 'combat' && this.peers.get(from)?.channel?.readyState === 'open') {
+      this.arena.sync(this.roomPlayers(), performance.now(), [this.id,...this.peers.keys()]);
+      this.arena.command(from, msg.command, performance.now());
+      return;
+    }
     if (msg.type !== 'me' || !this.peers.has(from)) return;
+    if (!msg.p || !Number.isSafeInteger(msg.p.n) || !Number.isFinite(msg.p.x) || !Number.isFinite(msg.p.y)
+        || !['mason','titus'].includes(msg.p.char) || typeof msg.p.level !== 'string') return;
     const last = this.players[from];
     if (last && msg.p.n <= last.n) return;
     this.players[from] = { ...msg.p, heard: performance.now() };
@@ -139,11 +152,13 @@ class NetSession extends Phaser.Events.EventEmitter {
   hostSend() {
     const now = performance.now(), players = {};
     for (const [id, p] of Object.entries(this.players)) {
-      if (now - p.heard > QUIET_MS) delete this.players[id];
-      else players[id] = { ...p, heard: undefined };
+      if (now - p.heard <= QUIET_MS) players[id] = { ...p, heard: undefined };
     }
     if (this.local) players[this.id] = { ...this.local, n: ++this.sent };
-    const text = JSON.stringify({ type: 'snap', n: this.sent, players });
+    const combat = this.arena.tick(players, now, [this.id,...this.peers.keys()]);
+    this.combatState = combat;
+    this.emit('combat', combat);
+    const text = JSON.stringify({ type: 'snap', n: this.sent, players, combat });
     for (const { channel } of this.peers.values()) {
       if (channel?.readyState === 'open') try { channel.send(text); } catch { /* closing */ }
     }
@@ -156,7 +171,8 @@ class NetSession extends Phaser.Events.EventEmitter {
     const reply = await call('join', { room, name });
     const auth = { room: reply.room, peer: reply.peer, key: reply.key };
     const pc = new RTCPeerConnection({ iceServers: reply.ice });
-    const channel = pc.createDataChannel('game', { ordered: false, maxRetransmits: 0 });
+    // Combat commands and results must arrive once and in order, including during packet loss.
+    const channel = pc.createDataChannel('game', { ordered: true });
     try {
       await pc.setLocalDescription(await pc.createOffer());
       await gathered(pc);
@@ -195,6 +211,10 @@ class NetSession extends Phaser.Events.EventEmitter {
     this.heard = msg.n;
     delete msg.players[this.id];
     this.players = msg.players;
+    if (msg.combat) {
+      this.combatState = msg.combat;
+      this.emit('combat', msg.combat);
+    }
     this.roster();
   }
 
@@ -206,6 +226,23 @@ class NetSession extends Phaser.Events.EventEmitter {
   }
 
   // ---- both ----------------------------------------------------------------------------------------
+
+  roomPlayers() {
+    const players = Object.fromEntries(Object.entries(this.players).filter(([,p]) => performance.now()-p.heard <= QUIET_MS));
+    return { ...players, ...(this.local ? { [this.id]: this.local } : {}) };
+  }
+
+  combatCommand(action, facing) {
+    if (!this.active) return;
+    const command = { action, facing, n: ++this.commandNumber };
+    if (this.role === 'host') {
+      this.arena.sync(this.roomPlayers(), performance.now(), [this.id,...this.peers.keys()]);
+      this.arena.command(this.id, command, performance.now());
+    } else {
+      const channel = this.peers.get('h')?.channel;
+      if (channel?.readyState === 'open') channel.send(JSON.stringify({type:'combat',command}));
+    }
+  }
 
   async quick({ name, level, room }) {
     for (let attempt = 0; attempt < 8; attempt++) {

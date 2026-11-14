@@ -21,7 +21,10 @@ through it, so it runs on HostGator's Hatchling plan with nothing else to pay fo
 | `npm run preview` | builds `dist/` and serves it with PHP, exactly what goes on HostGator | http://localhost:8002 |
 | `npm run package` | builds `dist/` and zips it into `brockstars-site.zip` for cPanel's File Manager | |
 
-All of them need PHP on the PATH (`php -v`); without it the game runs solo. URL options: `?level=brock3`
+The Vite dev servers need PHP: set `PHP_BIN` to its executable path, place a portable Windows copy at
+`node_modules/php-runtime/php.exe`, or install PHP on the PATH (`php -v`). The portable copy is local to
+this checkout and may be removed by `npm ci`. The PHP preview command needs PHP on the PATH.
+Without PHP, use Play solo; hosting and joining require matchmaking. URL options: `?level=brock3`
 or `?solo` skip the lobby (playtests use `?level`), `?quick` acts like `npm run local`, `?character=titus`.
 In the browser console, `brockNet` shows the session (`brockNet.role`, `brockNet.players`).
 
@@ -54,5 +57,20 @@ network may block direct connections between devices." The fix is a TURN relay: 
 
 - The host's tab is the game: when it closes, the game ends for everyone (on `npm run local`, another
   tab takes over). A hidden host tab gets throttled by the browser, so others see it update slowly.
-- Up to 8 players per room. Players walk through each other; attacks and items aren't shared yet.
+- Up to 8 players per room. Players walk through each other; items aren't shared yet.
 - Rooms close 15 seconds after the host stops checking in.
+
+## Shared combat
+
+Mason and Titus can fight other players in the same level: C punches, X kicks, Z headbutts,
+and holding V blocks the direction you faced when you started blocking. The host checks attack
+range, timing, cooldowns, and blocking, then shares damage, health, hit effects, and knockback.
+Each attack can hit each opponent once. Health regenerates after 45 seconds without damage;
+a knockout respawns the player after a short pause. Other players' name tags display their health.
+
+Combat commands and results use an ordered, reliable WebRTC channel. Movement still sends about
+15 snapshots a second. Both players need the updated game files; refresh older open tabs after deploying.
+The host validates combat against the latest reported positions; movement remains client-controlled.
+
+Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against
+`npm run dev` to exercise two browser clients (Playwright and Chrome/Chromium required).

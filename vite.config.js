@@ -1,6 +1,10 @@
 import { defineConfig } from 'vite';
 import { spawn } from 'node:child_process';
-import { copyFileSync } from 'node:fs';
+import { copyFileSync, existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+
+const localPhp = fileURLToPath(new URL('./node_modules/php-runtime/php.exe', import.meta.url));
+const phpCommand = process.env.PHP_BIN || (existsSync(localPhp) ? localPhp : 'php');
 
 // Multiplayer matchmaking is server/net.php. The dev servers run it with PHP's built-in server and proxy
 // /net.php to it; the build copies it into dist/, next to the game, for the web host.
@@ -8,8 +12,8 @@ function matchmaking(phpPort) {
   return {
     name: 'brockstars-matchmaking',
     configureServer(server) {
-      const php = spawn('php', ['-S', `127.0.0.1:${phpPort}`, '-t', 'server'], { stdio: 'ignore' });
-      php.on('error', () => server.config.logger.warn('  php not found: no matchmaking, so multiplayer is off'));
+      const php = spawn(phpCommand, ['-S', `127.0.0.1:${phpPort}`, '-t', 'server'], { stdio: 'ignore', windowsHide: true });
+      php.on('error', (error) => server.config.logger.warn(`  Matchmaking could not start: ${error.message}. Install PHP or set PHP_BIN to its executable path.`));
       const stop = () => php.kill();
       server.httpServer?.once('close', stop);
       process.once('exit', stop);

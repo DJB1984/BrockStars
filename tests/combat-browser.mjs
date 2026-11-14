@@ -1,12 +1,14 @@
 // Run against npm run dev. Uses installed Playwright, or PLAYWRIGHT_MODULE from a bundled runtime.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
+const character = process.env.CHARACTER ?? 'titus';
 import assert from 'node:assert/strict';
 const browser=await chromium.launch({headless:true,executablePath:process.env.BROWSER_EXECUTABLE});
 const page=await browser.newPage({viewport:{width:1280,height:760}}), errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 try {
-  await page.goto('http://127.0.0.1:5173/?practice=1');
+  await page.goto(`http://127.0.0.1:5173/?practice=1&character=${character}`);
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='combat-practice');
+  assert.equal(await page.evaluate(()=>window.pixelforgePlay.player.texture.key),character);
   const results=await page.evaluate(async()=>{
     const out=[];
     const play=window.pixelforgePlay; play.freeze();
@@ -38,7 +40,7 @@ try {
     const check=(label,ok,detail)=>{checks.push({label,ok,detail});};
     setupFight(); s.partner.body.reset(500,220);
     let st=play.step(100,{punch:true,right:true});
-    check('attack slows movement to 60%',Math.abs(st.vx-84)<0.01,st.vx);
+    check('attack slows movement to 60%',Math.abs(st.vx-s.player.controller.opts.speed*0.6)<0.01,st.vx);
     st=play.step(100,{kick:true,headbutt:true});
     check('cannot cancel punch with another attack',st.combat.attack==='punch',st.combat);
     st=play.step(600,{kick:true,headbutt:true});
@@ -51,7 +53,7 @@ try {
     st=play.step(17,{block:true});
     st=play.step(100,{block:true,up:true});
     check('moving does not turn block',st.combat.blockFacing==='right'&&st.facing==='right',st.combat);
-    check('blocking moves at half speed',Math.abs(st.vy+70)<0.01,st.vy);
+    check('blocking moves at half speed',Math.abs(st.vy+s.player.controller.opts.speed*0.5)<0.01,st.vy);
     st=play.step(3000,{block:true});
     check('block expires after three seconds',!st.combat.blocking,st.combat);
     st=play.step(1500,{block:true});
@@ -98,10 +100,11 @@ try {
   await page.keyboard.up('v');
   await page.waitForTimeout(80);
   assert.deepEqual(errors,[]);
-  await page.screenshot({path:'previews/titus-combat-practice.png'});
-  await page.goto('http://127.0.0.1:5173/?character=titus&solo');
+  await page.screenshot({path:`previews/${character}-combat-practice.png`});
+  await page.goto(`http://127.0.0.1:5173/?character=${character}&solo`);
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='brock3');
   assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health),100);
+  assert.ok(await page.evaluate(()=>window.pixelforgePlay.player.combat));
   await page.keyboard.press('2');
   await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='mason');
   await page.keyboard.press('1');

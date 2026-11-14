@@ -81,7 +81,9 @@ export class Level extends Phaser.Scene {
 
     const on = (emitter, event, fn) => { emitter.on(event, fn); this.events.once('shutdown', () => emitter.off(event, fn)); };
     on(this.events, 'pixelforge-trigger', (obj) => this.trigger(obj));
-    on(bus, 'dead', () => this.time.delayedCall(400, () => { reset(); this.scene.restart({ level: this.levelName, spawn: this.spawnName }); }));
+    on(bus, 'dead', () => {
+      if (!net.active) this.time.delayedCall(400, () => { reset(); this.scene.restart({ level: this.levelName, spawn: this.spawnName }); });
+    });
 
     this.remotes = new RemotePlayers(this, net);
     const badge = this.add.text(0, 8, '', {
@@ -97,8 +99,31 @@ export class Level extends Phaser.Scene {
 
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
-      if (this.character === 'titus') {
+      if (['titus', 'mason'].includes(this.character)) {
         this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable });
+        on(player, 'pixelforge-attack', () => {
+          const attack = this.combat.rules.attack;
+          if (attack) net.combatCommand(attack.name, attack.facing);
+        });
+        on(player, 'combat-block', (facing) => net.combatCommand('block', facing));
+        on(player, 'combat-release', () => net.combatCommand('release'));
+        const life = net.combatState.fighters[net.id]?.life ?? 0;
+        on(net, 'combat', ({fighters, hits}) => {
+          const self = fighters[net.id];
+          if (!self || !player.active) return;
+          if (self.life !== life) {
+            reset();
+            this.scene.restart({level:this.levelName,spawn:this.spawnName,character:this.character});
+            return;
+          }
+          if (playerHealth.value !== self.health) {
+            playerHealth.value = self.health;
+            playerHealth.onChange(self.health);
+          }
+          for (const hit of hits) if (hit.target === net.id) {
+            this.combat.applyHit(hit.from ?? {x:player.x-1,y:player.y}, hit);
+          }
+        });
         this.combatText = this.add.text(8, 32, '', { fontFamily: 'monospace', fontSize: '10px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 5, y: 4 } }).setScrollFactor(0).setDepth(200001);
       } else enablePixelforgeHits(this, player, hittable, (target) => {
         this.feel.hitStop(50).shake(80, 1);
@@ -118,7 +143,7 @@ export class Level extends Phaser.Scene {
   }
 
   update(time, delta) {
-    playerHealth.update(delta);
+    if (!net.active) playerHealth.update(delta);
     if (this.combatText?.active) this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block`);
     for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
@@ -197,6 +222,7 @@ export class Level extends Phaser.Scene {
     const p = this.level.player;
     if (this.time.now < (this.invulnerableUntil ?? 0) || state.health <= 0) return;
     this.invulnerableUntil = this.time.now + 1000;
+    if (net.active) { net.combatCommand('hazard'); return; }
     if (p.combat) p.combat.receive(enemy, ATTACKS.punch);
     else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
     this.tweens.add({ targets: p, alpha: 0.3, duration: 100, yoyo: true, repeat: 4, onComplete: () => p.setAlpha(1) });

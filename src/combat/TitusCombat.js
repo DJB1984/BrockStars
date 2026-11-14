@@ -29,18 +29,24 @@ export class TitusCombat {
         // Presses during knockback are consumed too, so held keys cannot become queued attacks.
         const input = c.readInput();
         this.rules.previous = { ...input };
-        if (this.rules.block && (!input.block || time >= this.rules.block.until)) this.rules.endBlock(time);
+        if (this.rules.block && (!input.block || time >= this.rules.block.until)) {
+          this.rules.endBlock(time);
+          sprite.emit('combat-release');
+        }
       }
       update(time);
     };
     c.updateTopdown = (input) => {
       const now = scene.time.now, old = this.rules.attack;
+      const wasBlocking = !!this.rules.block;
       // Face a newly pressed movement direction before starting an action.
       if (!old && !this.rules.block) {
         const dx = Number(input.right) - Number(input.left), dy = Number(input.down) - Number(input.up);
         if (dx || dy) c.facing = dx ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
       }
       this.rules.update(now, input, c.facing);
+      if (!wasBlocking && this.rules.block) sprite.emit('combat-block', this.rules.block.facing);
+      if (wasBlocking && !this.rules.block) sprite.emit('combat-release');
       if (!old && this.rules.attack) {
         this.struck.clear();
         c.busy = `${sprite.texture.key}_${this.rules.attack.name}_${this.rules.attack.facing === 'left' || this.rules.attack.facing === 'right' ? 'side' : this.rules.attack.facing}`;
@@ -109,9 +115,16 @@ export class TitusCombat {
   }
   receive(from, spec) {
     const result = this.rules.receive(spec, directionTo(from.x - this.sprite.x, from.y - this.sprite.y), this.scene.time.now);
+    return this.applyHit(from, result);
+  }
+  // Network damage is already resolved by the host; apply its visual/physics result once.
+  applyHit(from, result) {
     if (!result.damage) return result;
     this.scene.feel?.flash(this.sprite, 90, result.blocked ? 0x77bbff : 0xffffff);
     if (result.stagger) {
+      this.rules.attack = null;
+      this.rules.staggerUntil = this.scene.time.now + result.stagger;
+      if (this.rules.block) this.rules.endBlock(this.scene.time.now);
       this.controller.busy = null;
       playFacing(this.sprite, 'idle', this.controller.facing);
     }

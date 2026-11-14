@@ -1,4 +1,5 @@
 import { pixelforgeBody } from '../../export/pixelforge.js';
+import { ATTACKS } from '../combat/rules.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
 // past, between the two updates around that moment: smooth walking instead of hops.
@@ -12,6 +13,14 @@ export class RemotePlayers {
     this.scene = scene;
     this.net = net;
     this.shown = new Map();
+    const hits = ({hits}) => {
+      for (const hit of hits) {
+        const sprite = this.shown.get(hit.target)?.sprite;
+        if (sprite) scene.feel?.flash(sprite, 90, hit.blocked ? 0x77bbff : 0xffffff);
+      }
+    };
+    net.on('combat', hits);
+    scene.events.once('shutdown', () => net.off('combat', hits));
     scene.events.once('shutdown', () => { for (const id of [...this.shown.keys()]) this.remove(id); });
   }
 
@@ -22,6 +31,7 @@ export class RemotePlayers {
       if (p.level !== scene.levelName || !scene.textures.exists(p.char)) continue;
       here.add(id);
       const r = this.shown.get(id) ?? this.add(id, p);
+      const fresh = p.n !== r.n;
       if (p.n !== r.n) {   // a new update: remember where, and when it came
         r.n = p.n;
         const last = r.samples.at(-1);
@@ -39,9 +49,23 @@ export class RemotePlayers {
       }
       const sprite = r.sprite;
       if (sprite.texture.key !== p.char) sprite.setTexture(p.char);
-      if (p.anim && scene.anims.exists(p.anim)) sprite.play(p.anim, true);
-      sprite.setPosition(x, y).setFlipX(!!p.flip).setDepth(y - 0.5);   // level with you: behind you
-      r.label.setText(p.name || 'Player').setPosition(Math.round(x), Math.round(y - this.headroom(p.char))).setDepth(1e5 + 1);
+      const combat = this.net.combatState.fighters[id];
+      const facing = combat?.attack?.facing ?? combat?.block;
+      const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
+      let anim = p.anim;
+      if (combat?.attack) anim = `${p.char}_${combat.attack.name}_${dir}`;
+      else if (combat?.block) anim = `${p.char}_block_${dir}`;
+      else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
+      if (anim && scene.anims.exists(anim)) {
+        sprite.play(anim, true);
+        if (fresh && combat?.attack) {
+          const duration = ATTACKS[combat.attack.name].frames.reduce((a,b)=>a+b,0);
+          sprite.anims.setProgress(Math.min(0.99, combat.attack.elapsed/duration));
+        }
+      }
+      sprite.setPosition(x, y).setFlipX(facing ? facing === 'left' : !!p.flip).setDepth(y - 0.5);
+      r.label.setText(`${p.name || 'Player'}${combat ? ` ${Math.ceil(combat.health)}/100` : ''}`)
+        .setPosition(Math.round(x), Math.round(y - this.headroom(p.char))).setDepth(1e5 + 1);
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);
   }
