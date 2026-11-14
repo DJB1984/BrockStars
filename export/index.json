@@ -4,6 +4,8 @@
     "titus"
   ],
   "props": [
+    "bathroom_sink",
+    "bathroom_sink_compact",
     "bed",
     "bed_gray",
     "bed_green",
@@ -11,9 +13,15 @@
     "bed_red",
     "couch",
     "desk",
+    "shower_stall",
+    "shower_stall_central",
+    "shower_stall_compact",
     "sink",
     "table",
     "toilet",
+    "toilet_stall",
+    "toilet_stall_compact",
+    "urinal",
     "wardrobe",
     "wardrobe_side"
   ],

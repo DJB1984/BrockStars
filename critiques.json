@@ -1,5 +1,5 @@
 {
-  "next": 32,
+  "next": 42,
   "critiques": [
     {
       "id": 1,
@@ -534,6 +534,186 @@
       "created": "2026-11-14T16:50:50+00:00",
       "updated": "2026-11-14T16:52:21+00:00",
       "note": "Rebuilt the back view as a solid slab from behind with the drawer side on the right, matching the front's outline, and checked it in brock3."
+    },
+    {
+      "id": 32,
+      "status": "fixed",
+      "text": "Ok so the bathroom entrances are actually in reality reversed. They currently should have the top door on the east side of the top and the bottom door should be on the west side.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          622,
+          342,
+          553,
+          235
+        ]
+      },
+      "created": "2026-11-14T17:59:17+00:00",
+      "updated": "2026-11-14T18:00:30+00:00",
+      "note": "Moved the north entrance to the east and the south entrance to the west, closed the old openings, and checked the rendered level."
+    },
+    {
+      "id": 33,
+      "status": "fixed",
+      "text": "Ok same thing with this bathroom, the top entrance should be on the west side and the bottom entrance should be on the east side. Also I have to pictures of what the bathroom should actually look like on the inside.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1416,
+          308,
+          421,
+          269
+        ]
+      },
+      "created": "2026-11-14T18:04:25+00:00",
+      "updated": "2026-11-14T18:13:39+00:00",
+      "note": "Corrected the entrances and rebuilt both mirrored bathroom interiors from the photos, with six central showers, cream toilet stalls, urinals, sinks, and gray tile; checked the renders and player routes."
+    },
+    {
+      "id": 34,
+      "status": "fixed",
+      "text": "OK hold up lets just focus on the left side right now. Between the stairs and the doorway are the two stalls and the 2 urinals, then the door/ entrance. The sinks are on the south side wall and there is 4. You can delete the sinks you have behind and infront of the showers because those don't belong there. Then you can push the showers back against the wall so that they aren't in the middle",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1403,
+          318,
+          208,
+          269
+        ]
+      },
+      "created": "2026-11-14T18:15:55+00:00",
+      "updated": "2026-11-14T18:17:26+00:00",
+      "note": "Refined only the marked east bathroom: two stalls then two urinals then the north entrance, four sinks on the south wall, and six showers against the north and south walls; checked the render and both entrance routes."
+    },
+    {
+      "id": 35,
+      "status": "fixed",
+      "text": "OK so we need to squish the stalls closer to the wall and the urinals. The sinks also need to be a different size and upagainst the wall. The top door needs to be closer to the left and there also is a little wall the comes accross infront of the door as you come in that makes an backwards L so you can't see into the shower area",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1413,
+          319,
+          230,
+          234
+        ]
+      },
+      "created": "2026-11-14T18:20:35+00:00",
+      "updated": "2026-11-14T18:22:26+00:00",
+      "note": "Packed two narrower stalls and two urinals against the stairwell end, resized the four sinks to 24px counters flush with the south wall, shifted the north entrance west, and added a backward-L privacy screen with a verified walkable route."
+    },
+    {
+      "id": 36,
+      "status": "fixed",
+      "text": "Ok so now the left side looks good, the right side now needs to mirror the left side, but with the perspective from the south obviously. Ask me any clarifying questions if needed",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1408,
+          310,
+          437,
+          263
+        ]
+      },
+      "created": "2026-11-14T18:23:37+00:00",
+      "updated": "2026-11-14T18:26:03+00:00",
+      "note": "Mirrored the approved left half into the right half with south-facing stalls and urinals, four north-wall sinks, and a rotated privacy screen at the south entrance; retained six wall-backed showers and verified the player route."
+    },
+    {
+      "id": 37,
+      "status": "fixed",
+      "text": "ok theL wall needs to be shorter, and not take up so much space. The middle of the bathroom should have the 6 showers facing each other and should have a central space in the bathroom",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1425,
+          349,
+          392,
+          199
+        ]
+      },
+      "created": "2026-11-14T18:28:42+00:00",
+      "updated": "2026-11-14T18:30:57+00:00",
+      "note": "Shortened both L screens to two-tile returns and placed all six showers in two facing rows in the middle with a 32px central aisle; verified both entrances remain walkable."
+    },
+    {
+      "id": 38,
+      "status": "fixed",
+      "text": "OK I think we are going to need to expand the bathroom to have the showers sit against the wall flat. I think we need to expand it over about 3 tiles to the left and make the stair room smaller so we can fit the bathroom the way I want it",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1278,
+          328,
+          561,
+          257
+        ]
+      },
+      "created": "2026-11-14T18:33:57+00:00",
+      "updated": "2026-11-14T18:36:22+00:00",
+      "note": "Expanded the bathroom three tiles west, narrowed and refit the stair room, shifted the left fixtures and entrance west, and placed the six facing showers flat against the north and south walls with an open central floor; checked the render and player routes."
+    },
+    {
+      "id": 39,
+      "status": "fixed",
+      "text": "Ok I think we might reduce the amount of shower stalls to two so that the fomatting looks better. There also is a short wall between the sinks and the showers",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1268,
+          327,
+          577,
+          264
+        ]
+      },
+      "created": "2026-11-14T18:42:08+00:00",
+      "updated": "2026-11-14T18:43:50+00:00",
+      "note": "Reduced the showers to two per wall (four total), widened the cubicles, and added a short divider between each sink counter and shower area; checked the render and both entrance routes."
+    },
+    {
+      "id": 40,
+      "status": "fixed",
+      "text": "Actually if you shift the short wall over one tile we can fit a third shower on each side",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          1255,
+          328,
+          581,
+          257
+        ]
+      },
+      "created": "2026-11-14T18:44:41+00:00",
+      "updated": "2026-11-14T18:45:47+00:00",
+      "note": "Moved both short sink dividers one tile toward the sinks and restored three full-width showers on each wall, retaining the open center and verified entrance routes."
+    },
+    {
+      "id": 41,
+      "status": "fixed",
+      "text": "Ok can you mirror exacly what you did with the east bathrooms and make the interior the same as on this one, but keep the top entrance on the middle right, and the bottom entrance in the middle left",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          616,
+          326,
+          563,
+          261
+        ]
+      },
+      "created": "2026-11-14T18:47:55+00:00",
+      "updated": "2026-11-14T18:49:25+00:00",
+      "note": "Mirrored the finished east bathroom fixtures, showers, sink dividers, and privacy screens into the west bathroom, with its top entrance in the middle-right and bottom entrance in the middle-left; checked matching layouts and player routes."
     }
   ]
 }

@@ -23,7 +23,9 @@
   "e": "deep_brown",
   "q": "clay",
   "y": "yellow",
-  "o": "clay"
+  "o": "clay",
+  "v": "#646862",
+  "z": "#74786f"
  },
  "tiles": [
   "carpet",
@@ -245,7 +247,8 @@
     "o_e",
     "o_w_lo"
    ]
-  }
+  },
+  "bathroom_floor"
  ],
  "properties": {
   "wall*": {

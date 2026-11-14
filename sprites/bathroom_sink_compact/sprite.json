@@ -1,0 +1,44 @@
+{
+ "name": "bathroom_sink_compact",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  24,
+  24
+ ],
+ "origin": [
+  12,
+  24
+ ],
+ "footprint": [
+  0,
+  0,
+  24,
+  24
+ ],
+ "palette": {
+  "k": "outline",
+  "w": "white",
+  "h": "light_gray",
+  "l": "gray",
+  "m": "slate",
+  "d": "dark_slate",
+  "n": "night",
+  "c": "#e6e2cf",
+  "s": "#b9b7a8",
+  "g": "#646862",
+  "f": "#777b73"
+ },
+ "animations": {
+  "south": {
+   "frames": [
+    "south"
+   ]
+  },
+  "north": {
+   "frames": [
+    "north"
+   ]
+  }
+ }
+}

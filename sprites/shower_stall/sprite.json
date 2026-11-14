@@ -1,0 +1,44 @@
+{
+ "name": "shower_stall",
+ "type": "prop",
+ "view": "topdown",
+ "size": [
+  48,
+  32
+ ],
+ "origin": [
+  24,
+  32
+ ],
+ "footprint": [
+  0,
+  0,
+  48,
+  32
+ ],
+ "palette": {
+  "k": "outline",
+  "w": "white",
+  "h": "light_gray",
+  "l": "gray",
+  "m": "slate",
+  "d": "dark_slate",
+  "n": "night",
+  "c": "#e6e2cf",
+  "s": "#b9b7a8",
+  "g": "#646862",
+  "f": "#777b73"
+ },
+ "animations": {
+  "north": {
+   "frames": [
+    "north"
+   ]
+  },
+  "south": {
+   "frames": [
+    "south"
+   ]
+  }
+ }
+}

@@ -8,7 +8,7 @@
  "legend": {
   "c": "rug",
   "r": "rug",
-  "b": "rug",
+  "b": "bathroom_floor",
   "o": "rug",
   "x": "rug",
   "S": "stairs",
@@ -77,21 +77,21 @@
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
-    "mBBBBBBBBBBBBBBBjBBBBBBBjBBBBBBBqccccccmBBJbbbKjBBBBBBBBBBBBjBBjBBBkCCCCDcccccccmBBBBBBBjBBBjBBjBBBBBBBjJbbbKBBBBnccccccpBBBBBBBjBBBBBBBjBBBBBBBBBBBBBBBn",
-    "IFFFFFFFFFFFFFFFIFFFFFFFIFFFFFFFIccccccIFFMbbbNIFFFFFFFFFFFFIFFIFFFEGGGGHcccccccIFFFFFFFIFFFIFFIFFFFFFFIMbbbNFFFFIccccccIFFFFFFFIFFFFFFFIFFFFFFFFFFFFFFFI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbIbbIbbbEGGGGHcccccccIxxxxSSSIbbbIbbIbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbObbObbbEGGGGHcccccccIxxxxSSSIbbbObbObbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbbbbbPbbPbbbEGGGGHcccccccIxxxxSSSIbbbPbbPbbbbbbbIbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbObbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxxxxSSSIbbbbbbbbbbbbbbObbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbPbbbbbbbbbbbbbbbbbbbEGGGGHcccccccOxxxxSSSIbbbbbbbbbbbbbbPbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccPxxxxSSSIbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbQbbbQbbbQbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbQbbbQbbbQbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccxxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbIbbbIbbbbbbbbEGGGGHcccccccQxxxxSSSIbbbbbIbbbIbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "pBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBBBBBLBBBLBBBLBJbbbKBBLLLLLRcccccccTBBBBBBBLJbbbKLBBBLBBBLBBBBBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBq",
-    "IFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFFFFFFFFFFFFFFFMbbbNFFFFFFFMcccccccNFFFFFFFFMbbbNFFFFFFFFFFFFFFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFI",
+    "mBBBBBBBBBBBBBBBjBBBBBBBjBBBBBBBqccccccmBBBBBBBjBBBBBBBBJbbbKBBBBBBkCCCCDcccccccmBBBBjBBBBBBJbbbKBBBBBBBBjBBBBBBBnccccccpBBBBBBBjBBBBBBBjBBBBBBBBBBBBBBBn",
+    "IFFFFFFFFFFFFFFFIFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFFMbbbNFFFFFFEGGGGHcccccccIFFFFIFFFFFFMbbbNFFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFIFFFFFFFFFFFFFFFI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbIbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbIbbbbbbbbIbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbObbbbbbbbTJbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbKRbbbbbbbbObbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbPbbbbbbbbNMbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbNMbbbbbbbbPbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccOxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccPxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbKJbbbbbbbbQbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbQbbbbbbbbKJbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbNIbbbbbbbbIbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbIbbbbbbbbIMbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbbbbbbIbbbbbbbEGGGGHcccccccQxSSSIbbbbbbbIbbbbbbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "pBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBJbbbRBBBBBBBBLBBBBBBBLLLLLRcccccccTBBBBLBBBBBBBLBBBBBBBBTbbbKBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBq",
+    "IFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFMbbbMFFFFFFFFFFFFFFFFFFFFFMcccccccNFFFFFFFFFFFFFFFFFFFFFNbbbNFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
@@ -151,7 +151,7 @@
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
-    "..................................................ei.............ei............................ei...........ei...........................................",
+    ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
     ".........................................................................................................................................................",
@@ -1816,82 +1816,353 @@
     ]
    },
    {
-    "prop": "sink",
+    "prop": "toilet_stall_compact",
     "at": [
-     800,
-     396
-    ]
+     1392,
+     404
+    ],
+    "state": "north"
    },
    {
-    "prop": "sink",
+    "prop": "toilet_stall_compact",
     "at": [
-     832,
-     396
-    ]
+     1424,
+     404
+    ],
+    "state": "north"
    },
    {
-    "prop": "sink",
+    "prop": "urinal",
     "at": [
-     864,
-     396
-    ]
+     1450,
+     400
+    ],
+    "state": "north"
    },
    {
-    "prop": "sink",
+    "prop": "urinal",
     "at": [
-     896,
-     396
-    ]
+     1470,
+     400
+    ],
+    "state": "north"
    },
    {
-    "prop": "sink",
+    "prop": "bathroom_sink_compact",
     "at": [
-     1552,
-     396
-    ]
-   },
-   {
-    "prop": "sink",
-    "at": [
-     1584,
-     396
-    ]
-   },
-   {
-    "prop": "sink",
-    "at": [
-     1616,
-     396
-    ]
-   },
-   {
-    "prop": "toilet",
-    "at": [
-     840,
+     1388,
      544
     ],
     "state": "south"
    },
    {
-    "prop": "toilet",
+    "prop": "bathroom_sink_compact",
     "at": [
-     904,
+     1412,
      544
     ],
     "state": "south"
    },
    {
-    "prop": "toilet",
+    "prop": "bathroom_sink_compact",
     "at": [
-     1544,
+     1436,
      544
     ],
     "state": "south"
    },
    {
-    "prop": "toilet",
+    "prop": "bathroom_sink_compact",
     "at": [
-     1608,
+     1460,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     1792,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     1760,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     1734,
+     540
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     1714,
+     540
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1796,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1772,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1748,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1724,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1572,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1612,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1652,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1532,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1572,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     1612,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     1056,
+     404
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     1024,
+     404
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     998,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     978,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1060,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1036,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     1012,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     988,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     656,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "toilet_stall_compact",
+    "at": [
+     688,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     714,
+     540
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "urinal",
+    "at": [
+     734,
+     540
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     652,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     676,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     700,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "bathroom_sink_compact",
+    "at": [
+     724,
+     392
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     876,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     836,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     796,
+     400
+    ],
+    "state": "north"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     916,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     876,
+     544
+    ],
+    "state": "south"
+   },
+   {
+    "prop": "shower_stall_central",
+    "at": [
+     836,
      544
     ],
     "state": "south"
