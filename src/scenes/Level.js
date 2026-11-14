@@ -8,6 +8,7 @@ import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
 import { net } from '../net/session.js';
 import { RemotePlayers } from '../net/remotes.js';
+import { FIGHTER_IDS, fighter } from '../fighters.js';
 
 // Object type (a level object's "type") → the class that gives it behaviour. Add yours here.
 const TYPES = { enemy: Walker };
@@ -32,7 +33,7 @@ export class Level extends Phaser.Scene {
     this.levelName = data.level;
     this.spawnName = data.spawn;
     const requested = data.character ?? this.character ?? new URLSearchParams(location.search).get('character');
-    this.character = ['mason', 'titus'].includes(requested) ? requested : 'mason';
+    this.character = FIGHTER_IDS.includes(requested) ? requested : FIGHTER_IDS[0];
     this.playerPosition = data.playerPosition;
   }
 
@@ -42,7 +43,7 @@ export class Level extends Phaser.Scene {
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
     const level = (this.level = pixelforgeLevel(this, this.levelName, {
       spawn: this.spawnName, player: this.character,
-      playerOptions: { speed: this.character === 'mason' ? 180 : 140 },
+      playerOptions: { speed: fighter(this.character).speed },
     }));
     const player = level.player;
     if (player && this.playerPosition) player.body.reset(...this.playerPosition);
