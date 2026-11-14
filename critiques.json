@@ -1,5 +1,5 @@
 {
-  "next": 30,
+  "next": 31,
   "critiques": [
     {
       "id": 1,
@@ -501,8 +501,26 @@
         ]
       },
       "created": "2026-11-14T16:46:26+00:00",
-      "updated": "2026-11-14T16:48:23+00:00",
-      "note": "Removed the tall slab under the back-view desktop, so the top is now a thin 4px board on the pedestal and leg; the chair moved down with it."
+      "updated": "2026-11-14T16:49:13+00:00",
+      "note": "Undone at your request: the back view is back to the full desktop slab from #28."
+    },
+    {
+      "id": 30,
+      "status": "working",
+      "text": "Remove this hanging chunk of desk.",
+      "target": {
+        "asset": "desk",
+        "anim": "front",
+        "frame": 0,
+        "region": [
+          1,
+          7,
+          9,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:50:10+00:00",
+      "updated": "2026-11-14T16:50:10+00:00"
     }
   ]
 }
