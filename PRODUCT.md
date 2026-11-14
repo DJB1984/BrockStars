@@ -40,8 +40,8 @@ A fighting game made by and about one friend group. The roster is real people wi
   - Planned specials (`Brocktopia/Davis Brock Fighter Game…pdf`): Mason, Grapple (slow choke hold, massive damage, long cooldown); Titus, Leg Sweep (knocks the opponent down, medium damage). Neither is built.
   - Mason's design doc profile: "Russian spy/agent". His sprite is a cowboy agent.
 - Fighter sprites are pixelforge exports (`export/mason.png|json`, `export/titus.png|json`; top-down class, 64×64, idle/walk/attack in down/up/side). The pick screen should show these real sprites.
-- Combat controls are keyboard only today. There are no in-game touch controls, so phones can get through login, but playing on a phone is an **open decision**.
-- Two players picking the same fighter is currently allowed; nothing prevents it. Whether that should change is undecided.
+- Combat controls are keyboard only. The login screens must work on phones; **phone combat (touch controls) is out of scope for now** (decided 2026-11-14).
+- **Two players may pick the same fighter** (decided 2026-11-14). The pick screen never locks a fighter because someone else has it.
 - Hosting is static files plus one PHP script on shared hosting: no Node server, no database.
 
 ## Brand Commitments
@@ -49,6 +49,7 @@ A fighting game made by and about one friend group. The roster is real people wi
 - Name: **BrockStars**. Setting: Brock Hall.
 - Pixel-art world in the Endesga 32 palette (`palettes/game.json`); the UI should feel pixelated to match.
 - **Do not use the pixelforge bitmap fonts** in this UI (user directive).
+- **UI direction: arcade fighting game, kept pixelated** (user directive, 2026-11-14). The references are classic fighters like Street Fighter II (character select: big fighter, arrows, roster cursor, stat panel) and current games like Brawl Stars (chunky saturated buttons, bold outlines, punchy motion). The user turned down whiteboard, ticket and editorial directions.
 - Fighters are portrayed affectionately. They are real friends, and the tone is inside-joke fun, not mean.
 
 ## Evidence on Hand

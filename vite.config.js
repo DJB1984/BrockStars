@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 import { spawn } from 'node:child_process';
 import { copyFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -32,7 +33,7 @@ export default defineConfig(({ mode }) => {
     base: './',
     publicDir: 'export',
     server: { port, host: mode === 'quick' ? true : undefined, proxy: { '/net.php': `http://127.0.0.1:${port + 1000}` } },
-    plugins: [matchmaking(port + 1000)],
+    plugins: [react(), matchmaking(port + 1000)],
     build: { outDir: 'dist', assetsInlineLimit: 0, chunkSizeWarningLimit: 2000 },
   };
 });

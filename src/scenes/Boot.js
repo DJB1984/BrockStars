@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { loadPixelforgeAll, createPixelforgeAll, PIXELFORGE_INDEX } from '../../export/pixelforge.js';
-import { showLobby } from '../lobby.js';
+import { showLobby } from '../ui/mount.tsx';
 import { net } from '../net/session.js';
 
 // The room every tab of the local test server (`npm run local`) shares.
@@ -9,7 +9,7 @@ const QUICK_ROOM = 'LOCAL';
 // Loads everything `pixelforge export` wrote (export/index.json lists it) with a progress bar, makes every
 // animation, then starts the first level: ?level=NAME in the URL, else a level called "start", else the
 // first one in the index.
-// Before the level, the lobby (src/lobby.js) hosts or joins a multiplayer game. It's skipped:
+// Before the level, the lobby (src/ui) hosts or joins a multiplayer game. It's skipped:
 //   on the local test server (`npm run local`, or ?quick): straight into the level, joining room LOCAL in
 //     the background, so every open tab plays together;
 //   with ?level=NAME (playtests) or ?solo: straight into the level, alone.
@@ -44,7 +44,7 @@ export class Boot extends Phaser.Scene {
     if (import.meta.env.MODE === 'quick' || params.has('quick')) {
       autoJoin(first);
     } else if (!asked && !params.has('solo')) {
-      ({ character } = await showLobby({ level: first }));
+      ({ character } = await showLobby({ level: first, character }));
     }
     this.scene.start('level', { level: first, character });
   }
