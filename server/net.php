@@ -9,8 +9,10 @@
 //   POST poll  {room, peer, key, players?}  → {messages}; the host's polls keep its room open
 //   POST leave {room, peer, key}            the host leaving closes the room
 // A net.config.php next to this file can add ICE servers (a TURN relay, for networks that block direct
-// connections). It returns a list:
+// connections, like campus Wi-Fi). It returns either a list of fixed servers:
 //   <?php return [['urls' => 'turn:relay.example.com:3478', 'username' => 'u', 'credential' => 'p']];
+// or a Cloudflare TURN key, whose short-lived credentials this script mints (the token never leaves the server):
+//   <?php return ['cloudflare' => ['key_id' => '...', 'token' => '...']];
 
 header('Content-Type: application/json');
 header('Cache-Control: no-store');
@@ -36,10 +38,60 @@ class Refusal extends Exception {
 function reply($data, $status = 200) { http_response_code($status); echo json_encode($data); exit; }
 function fail($key, $message, $status = 400) { reply(['error' => $message, 'code' => $key], $status); }
 
+const TURN_TTL = 86400;     // Cloudflare credentials last a day...
+const TURN_REUSE = 43200;   // ...and are handed out for half of it, so every game gets 12 hours or more
+
 function ice() {
   $servers = [['urls' => ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478']]];
   $extra = __DIR__ . '/net.config.php';
-  if (is_file($extra)) $servers = array_merge($servers, (array) include $extra);
+  if (!is_file($extra)) return $servers;
+  $config = (array) include $extra;
+  if (isset($config['cloudflare'])) return array_merge($servers, cloudflare_turn($config['cloudflare']));
+  return array_merge($servers, $config);
+}
+
+// Asks Cloudflare for TURN credentials, cached in net-data/ so it's one request every 12 hours, not one a
+// player. If Cloudflare can't be reached, players still get STUN (and the last credentials while they last).
+function cloudflare_turn($cf) {
+  global $DATA;
+  $cache = "$DATA/turn.json";
+  $saved = json_decode((string) @file_get_contents($cache), true);
+  $usable = $saved && time() - $saved['at'] < TURN_TTL - 600 ? $saved['servers'] : [];
+  if ($saved && time() - $saved['at'] < TURN_REUSE) return $saved['servers'];
+  if ($saved && time() - ($saved['failed'] ?? 0) < 300) return $usable;   // don't stall every join on an outage
+
+  $url = 'https://rtc.live.cloudflare.com/v1/turn/keys/' . rawurlencode($cf['key_id'] ?? '')
+       . '/credentials/generate-ice-servers';
+  $body = json_encode(['ttl' => TURN_TTL]);
+  $headers = ['Authorization: Bearer ' . ($cf['token'] ?? ''), 'Content-Type: application/json'];
+  if (function_exists('curl_init')) {
+    $ch = curl_init($url);
+    curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_POSTFIELDS => $body, CURLOPT_HTTPHEADER => $headers,
+                            CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 5]);
+    $text = curl_exec($ch);
+    $ok = curl_getinfo($ch, CURLINFO_RESPONSE_CODE) < 300;
+    curl_close($ch);
+  } else {
+    $text = @file_get_contents($url, false, stream_context_create(['http' => [
+      'method' => 'POST', 'header' => implode("\r\n", $headers), 'content' => $body, 'timeout' => 5]]));
+    $ok = $text !== false;
+  }
+  $reply = $ok ? json_decode((string) $text, true) : null;
+  if (!isset($reply['iceServers'])) {
+    error_log('[net] Cloudflare TURN: ' . substr((string) $text, 0, 200));
+    file_put_contents($cache, json_encode(['at' => $saved['at'] ?? 0, 'servers' => $saved['servers'] ?? [],
+                                           'failed' => time()]), LOCK_EX);
+    return $usable;
+  }
+
+  // Keep only the relays (STUN is listed above already), and drop port 53, which browsers time out on.
+  $servers = [];
+  foreach ((array) $reply['iceServers'] as $s) {
+    if (!isset($s['username'])) continue;
+    $s['urls'] = array_values(array_filter((array) $s['urls'], fn($u) => !preg_match('/:53(\?|$)/', $u)));
+    if ($s['urls']) $servers[] = $s;
+  }
+  file_put_contents($cache, json_encode(['at' => time(), 'servers' => $servers]), LOCK_EX);
   return $servers;
 }
 

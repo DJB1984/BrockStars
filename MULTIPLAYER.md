@@ -46,8 +46,26 @@ The live site is https://brockstars.brookslanding.com, a subdomain whose documen
 
 Players find each other with free STUN servers (Google, Cloudflare). That works on most home networks. Some
 networks (campus Wi-Fi especially) block direct connections between devices; the joiner then sees "This
-network may block direct connections between devices." The fix is a TURN relay: create
-`net.config.php` next to `net.php` on the server (it isn't overwritten by deploys) returning its details:
+network may block direct connections between devices." The fix is a TURN relay: when two players can't
+reach each other, their traffic goes through it instead (the relay is tried only after a direct connection
+fails, so home games stay direct).
+
+Cloudflare's TURN is free for the first 1,000 GB a month, which is far more than this game uses, and it
+listens on port 443 over TLS, which campus firewalls let through like ordinary HTTPS:
+
+1. In the Cloudflare dashboard, open **Realtime → TURN Server** and create a TURN key. Copy its
+   **Turn Token ID** and **API Token** (the token is shown once).
+2. On the server, create `net.config.php` next to `net.php` (deploys don't overwrite it):
+   ```php
+   <?php return ['cloudflare' => ['key_id' => 'TURN_TOKEN_ID', 'token' => 'API_TOKEN']];
+   ```
+`net.php` asks Cloudflare for credentials that last a day and gives them to players for 12 hours (cached
+in `net-data/turn.json`), so the API token never reaches a browser. If Cloudflare can't be reached it logs
+`[net] Cloudflare TURN: ...` to the PHP error log and waits 5 minutes before trying again. Players still get
+STUN in the meantime. To check it, host a game and run `brockNet.ice` in the browser console: it should
+list `turn.cloudflare.com`.
+
+Any other TURN server works too, with fixed credentials:
 
 ```php
 <?php return [['urls' => 'turn:relay.example.com:3478', 'username' => 'user', 'credential' => 'pass']];
