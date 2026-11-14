@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixelforgePlay, pixelforgeFeel, pixelforgeDialog,
          spawnPixelforgeFx } from '../../export/pixelforge.js';
-import { state, bus, damage, addCoins, addItem, reset } from '../game.js';
+import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../game.js';
+import { TitusCombat } from '../combat/TitusCombat.js';
+import { ATTACKS } from '../combat/rules.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
 
@@ -31,6 +33,8 @@ export class Level extends Phaser.Scene {
   }
 
   create() {
+    this.combat = null;
+    this.combatText = null;
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
     const level = (this.level = pixelforgeLevel(this, this.levelName, {
       spawn: this.spawnName, player: this.character,
@@ -77,7 +81,10 @@ export class Level extends Phaser.Scene {
 
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
-      enablePixelforgeHits(this, player, hittable, (target) => {
+      if (this.character === 'titus') {
+        this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable });
+        this.combatText = this.add.text(8, 32, '', { fontFamily: 'monospace', fontSize: '10px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 5, y: 4 } }).setScrollFactor(0).setDepth(200001);
+      } else enablePixelforgeHits(this, player, hittable, (target) => {
         this.feel.hitStop(50).shake(80, 1);
         if (this.textures.exists('fx_hit')) spawnPixelforgeFx(this, (player.x + target.x) / 2, target.body.center.y, 'fx_hit');
         target.actor.hit(player);
@@ -88,13 +95,15 @@ export class Level extends Phaser.Scene {
     }
 
     if (import.meta.env.DEV) {
-      installPixelforgePlay(this, level, { extra: () => ({ health: state.health, coins: state.coins, inventory: [...state.inventory] }) });
+      installPixelforgePlay(this, level, { extra: () => ({ health: state.health, coins: state.coins, inventory: [...state.inventory], combat: player?.combat?.snapshot() }) });
       this.debug = this.add.graphics().setDepth(2e5);
       this.input.keyboard.on('keydown-B', () => { this.showBoxes = !this.showBoxes; });
     }
   }
 
-  update(time) {
+  update(time, delta) {
+    playerHealth.update(delta);
+    if (this.combatText?.active) this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block`);
     for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
     if (p?.active) {
@@ -114,7 +123,10 @@ export class Level extends Phaser.Scene {
     }
     if (this.debug) {
       this.debug.clear();
-      if (this.showBoxes && p) drawPixelforgeBoxes(this.debug, [p, ...this.level.sprites.filter((s) => s.active)]);
+      if (this.showBoxes && p) {
+        drawPixelforgeBoxes(this.debug, [p, ...this.level.sprites.filter((s) => s.active)]);
+        p.combat?.drawReach(this.debug);
+      }
     }
   }
 
@@ -156,8 +168,8 @@ export class Level extends Phaser.Scene {
     const p = this.level.player;
     if (this.time.now < (this.invulnerableUntil ?? 0) || state.health <= 0) return;
     this.invulnerableUntil = this.time.now + 1000;
-    damage(1);
-    this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2);
+    if (p.combat) p.combat.receive(enemy, ATTACKS.punch);
+    else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
     this.tweens.add({ targets: p, alpha: 0.3, duration: 100, yoyo: true, repeat: 4, onComplete: () => p.setAlpha(1) });
   }
 }

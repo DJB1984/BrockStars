@@ -18,6 +18,10 @@ export class Boot extends Phaser.Scene {
 
   create() {
     createPixelforgeAll(this);
+    if (new URLSearchParams(location.search).get('practice') === '1') {
+      this.scene.start('combat-practice');
+      return;
+    }
     const levels = this.cache.json.get(PIXELFORGE_INDEX)?.levels ?? [];
     const asked = new URLSearchParams(location.search).get('level');
     const first = [asked, 'start'].find((n) => levels.includes(n)) ?? levels[0];

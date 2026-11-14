@@ -11,7 +11,7 @@ export class Walker {
     this.scene = scene;
     this.sprite = sprite;
     this.level = level;
-    this.hp = props.hp ?? 2;
+    this.hp = props.hp ?? 100;
     this.speed = props.speed ?? 30;
     this.range = (props.range ?? 3) * level.map.tileWidth;
     this.home = sprite.x;
@@ -43,11 +43,11 @@ export class Walker {
   }
 
   // Struck by the player's attack (`from` is the player).
-  hit(from) {
+  hit(from, spec = { damage: 4, stagger: 250, knockback: 120 }) {
     const s = this.sprite;
-    this.hp -= 1;
-    this.recoverAt = this.scene.time.now + 250;
-    this.scene.feel.flash(s).knockback(s, from, 120);   // the level scene's pixelforgeFeel
+    this.hp -= spec.damage;
+    this.recoverAt = this.scene.time.now + Math.max(80, spec.stagger);
+    this.scene.feel.flash(s).knockback(s, from, spec.knockback);
     if (this.hp <= 0) {
       s.body.enable = false;
       this.scene.tweens.add({ targets: s, alpha: 0, duration: 200, onComplete: () => s.destroy() });
