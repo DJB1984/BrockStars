@@ -64,16 +64,17 @@ export const SLICE: Record<keyof typeof GRIDS, [number, number, number, number]>
 
 export type Tone = { o: string; h: string; f: string; l: string; d?: string };
 
-// Endesga 32 ramps
+// Ramps from the Brock Hall badge: pine slate, a brick / ember / amber sunset, cream and white
 export const TONES = {
-  gold: { o: '#181425', h: '#fee761', f: '#feae34', l: '#f77622', d: '#be4a2f' },
-  blue: { o: '#181425', h: '#2ce8f5', f: '#0099db', l: '#124e89', d: '#262b44' },
-  red: { o: '#181425', h: '#f6757a', f: '#e43b44', l: '#a22633', d: '#3e2731' },
-  slate: { o: '#181425', h: '#8b9bb4', f: '#5a6988', l: '#3a4466', d: '#262b44' },
-  night: { o: '#181425', h: '#5a6988', f: '#262b44', l: '#1d1a30', d: '#0e0b16' },
-  chalk: { o: '#181425', h: '#ffffff', f: '#ffffff', l: '#c0cbdc' },
-  ink: { o: '#181425', h: '#5a6988', f: '#181425', l: '#0e0b16' },
-  paper: { o: '#181425', h: '#ffffff', f: '#ead4aa', l: '#e4a672' },
+  ember: { o: '#12212a', h: '#f0a040', f: '#d86830', l: '#b83028', d: '#6e1f1a' },
+  amber: { o: '#12212a', h: '#f8d890', f: '#f0a040', l: '#d86830', d: '#b83028' },
+  brick: { o: '#12212a', h: '#d85a44', f: '#b83028', l: '#8a2420', d: '#4a1614' },
+  pine: { o: '#12212a', h: '#304048', f: '#203840', l: '#182830', d: '#0c171c' },
+  // the badge's banner: slate inside a white rule
+  badge: { o: '#f8f8f8', h: '#304048', f: '#203840', l: '#182830' },
+  deep: { o: '#12212a', h: '#304048', f: '#182830', l: '#0c171c' },
+  well: { o: '#0c171c', h: '#304048', f: '#12212a', l: '#0c171c' },
+  cream: { o: '#12212a', h: '#ffffff', f: '#e8d0a8', l: '#c8a878', d: '#9a7a50' },
 } satisfies Record<string, Tone>;
 
 export type ToneName = keyof typeof TONES;
@@ -99,7 +100,7 @@ export function frameUrl(kind: keyof typeof GRIDS, tone: ToneName): string {
   return url;
 }
 
-// Writes every frame as a CSS custom property (--frame-panel-gold ...), so the stylesheet can use them.
+// Writes every frame as a CSS custom property (--frame-panel-badge ...), so the stylesheet can use them.
 export function installFrames(root: HTMLElement) {
   for (const kind of Object.keys(GRIDS) as (keyof typeof GRIDS)[]) {
     for (const tone of Object.keys(TONES) as ToneName[]) root.style.setProperty(`--frame-${kind}-${tone}`, frameUrl(kind, tone));

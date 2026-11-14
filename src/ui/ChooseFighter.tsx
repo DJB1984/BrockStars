@@ -11,7 +11,7 @@ import { Icon, Platform } from './Icon';
 type Fighter = (typeof FIGHTERS)[number];
 
 // UI-only: each fighter's color behind them on the stage, taken from their sprite
-const ACCENT: Record<string, string> = { mason: '#feae34', titus: '#0099db' };
+const ACCENT: Record<string, string> = { mason: '#f0a040', titus: '#e8d0a8' };
 const MAX_SPEED = 200;
 const MAX_DAMAGE = 10;
 const HEALTH = 100;
@@ -71,12 +71,12 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
   }, [go, fight, onBack]);
 
   const speedCells = Math.round((f.speed / MAX_SPEED) * 10);
-  const stageStyle = { '--accent': ACCENT[f.id] ?? '#feae34' } as CSSProperties;
+  const stageStyle = { '--accent': ACCENT[f.id] ?? '#f0a040' } as CSSProperties;
 
   return (
     <main className={`pick${fighting ? ' is-fighting' : ''}`} style={stageStyle}>
       <header className="pick-head">
-        <button type="button" className="btn btn-night btn-small back" onClick={onBack} disabled={fighting}>
+        <button type="button" className="btn btn-pine btn-small back" onClick={onBack} disabled={fighting}>
           <span className="btn-face"><Icon name="back" size={2} /> Back</span>
         </button>
         <h1 className="pick-title">Choose your fighter</h1>
@@ -85,13 +85,13 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
 
       <section className="stage" aria-roledescription="carousel" aria-label="Fighters">
         <div className="stage-rays" aria-hidden="true" />
-        <button type="button" className="arrow arrow-left btn btn-gold" onClick={() => go(-1)} aria-label="Previous fighter" disabled={fighting}>
+        <button type="button" className="arrow arrow-left btn btn-amber" onClick={() => go(-1)} aria-label="Previous fighter" disabled={fighting}>
           <span className="btn-face"><Icon name="right" size={4} flip /></span>
         </button>
 
         <div className="stage-spot">
           <div className="stage-floor" aria-hidden="true">
-            <Platform w={44} h={10} size={narrow ? 4 : 6} top="#5a6988" fill="#262b44" rim="#181425" />
+            <Platform w={44} h={10} size={narrow ? 4 : 6} top="#304048" fill="#182830" rim="#12212a" />
           </div>
           <div key={`${f.id}-${fighting}`} className={`stage-fighter enter-${dir}`}>
             <Sprite
@@ -106,7 +106,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
           </div>
         </div>
 
-        <button type="button" className="arrow arrow-right btn btn-gold" onClick={() => go(1)} aria-label="Next fighter" disabled={fighting}>
+        <button type="button" className="arrow arrow-right btn btn-amber" onClick={() => go(1)} aria-label="Next fighter" disabled={fighting}>
           <span className="btn-face"><Icon name="right" size={4} /></span>
         </button>
 
@@ -186,7 +186,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
       </aside>
 
       <footer className="pick-go">
-        <button type="button" className="btn btn-red btn-huge fight" onClick={fight} disabled={fighting}>
+        <button type="button" className="btn btn-ember btn-huge fight" onClick={fight} disabled={fighting}>
           <span className="btn-face">Fight!</span>
         </button>
       </footer>

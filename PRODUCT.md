@@ -50,6 +50,7 @@ A fighting game made by and about one friend group. The roster is real people wi
 - Pixel-art world in the Endesga 32 palette (`palettes/game.json`); the UI should feel pixelated to match.
 - **Do not use the pixelforge bitmap fonts** in this UI (user directive).
 - **UI direction: arcade fighting game, kept pixelated** (user directive, 2026-11-14). The references are classic fighters like Street Fighter II (character select: big fighter, arrows, roster cursor, stat panel) and current games like Brawl Stars (chunky saturated buttons, bold outlines, punchy motion). The user turned down whiteboard, ticket and editorial directions.
+- **UI colors come from the Brock Hall (Cedarville University) badge** (user directive, 2026-11-14): pine slate `#203840`, a striped sunset in brick `#b83028`, ember `#d86830` and amber `#f0a040`, a pine treeline, white rules, cream `#e8d0a8`. Turned down: navy and gold ("looks very AI") and crimson and black ("looks like a football team").
 - Fighters are portrayed affectionately. They are real friends, and the tone is inside-joke fun, not mean.
 
 ## Evidence on Hand
