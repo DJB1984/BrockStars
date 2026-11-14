@@ -36,7 +36,6 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
   useEffect(() => { FIGHTERS.forEach((x) => preloadSprite(x.id)); }, []);
 
   useEffect(() => {
-    if (session.mode === 'solo') return;
     const update = () => setCount(net.count);
     net.on('players', update);
     return () => { net.off('players', update); };
@@ -102,7 +101,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
               onEnd={() => onFight(f.id)}
               scale={narrow ? 4 : 6}
               className="stage-sprite"
-              label={`${f.fullName}, ${f.tagline}`}
+              label={f.fullName}
             />
           </div>
         </div>
@@ -112,8 +111,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
         </button>
 
         <div key={f.id} className="stage-name" aria-live="polite">
-          <span className="stage-name-big">{f.name}</span>
-          <span className="stage-name-full">{f.fullName}</span>
+          <span className="stage-name-big">{f.fullName}</span>
         </div>
 
         <ol className="roster" aria-label="Roster">
@@ -138,8 +136,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
       <aside className="card px-panel" aria-label={`${f.name}’s stats`}>
         <div key={f.id} className="card-body">
           <div className="card-head">
-            <h2 className="card-name">{f.name}</h2>
-            <span className="chip">{f.tagline}</span>
+            <h2 className="card-name">{f.fullName}</h2>
           </div>
 
           <dl className="stats">
@@ -192,7 +189,6 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
         <button type="button" className="btn btn-gold btn-huge fight" onClick={fight} disabled={fighting}>
           <span className="btn-face">Fight!</span>
         </button>
-        <p className="hint"><kbd>←</kbd><kbd>→</kbd><span>Switch</span><kbd>Enter</kbd><span>Fight</span></p>
       </footer>
 
       {fighting && <div className="flash" aria-hidden="true" />}
@@ -223,9 +219,6 @@ function Meter({ cells, tone = 'gold' }: { cells: number; tone?: 'gold' | 'green
 }
 
 function RoomBadge({ session, count }: { session: Session; count: number }) {
-  if (session.mode === 'solo') {
-    return <div className="room-badge"><span className="room-badge-label">Playing</span><span className="room-badge-code">Solo</span></div>;
-  }
   return (
     <div className="room-badge">
       <span className="room-badge-label">{session.mode === 'host' ? 'Friends join with' : 'Room'}</span>

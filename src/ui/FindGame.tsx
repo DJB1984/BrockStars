@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { listRooms, net, remember, type RoomInfo, type Session } from './session';
-import { Sprite } from './Sprite';
-import { Icon } from './Icon';
 
-// Phase one: a name, then host a game, join one by code or from the list of games on this Wi-Fi, or play solo.
+// Phase one: a name, then host a game, or join one by code or from the list of games on this Wi-Fi.
+// (Solo play skips the lobby: ?solo in the URL.)
 
 const REFRESH_MS = 3000;
 const MAX_PLAYERS = 8;
@@ -75,13 +74,6 @@ export function FindGame({ level, initialName, onReady }: Props) {
     join(room);
   };
 
-  const solo = () => {
-    if (busy) return;
-    const trimmed = name.trim();
-    if (trimmed) remember('brockstars.name', trimmed);
-    onReady({ mode: 'solo' });
-  };
-
   return (
     <main className={`find${busy ? ' is-busy' : ''}`}>
       <header className="find-title">
@@ -89,12 +81,6 @@ export function FindGame({ level, initialName, onReady }: Props) {
           <span className="logo-brock">Brock</span>
           <span className="logo-stars">Stars</span>
         </h1>
-        <p className="logo-sub">Fight your friends in Brock Hall</p>
-        <div className="find-cast" aria-hidden="true">
-          <Sprite id="mason" anim="idle_side" scale={4} className="cast cast-left" />
-          <Sprite id="titus" anim="idle_side" scale={4} className="cast cast-right" />
-          <span className="cast-vs">VS</span>
-        </div>
       </header>
 
       <section className="find-panel px-panel" aria-label="Find a game">
@@ -135,13 +121,9 @@ export function FindGame({ level, initialName, onReady }: Props) {
           <button type="submit" className="btn btn-blue" disabled={busy}><span className="btn-face">Join</span></button>
         </form>
 
-        <section className="nearby" aria-labelledby="nearby-title">
-          <h2 id="nearby-title" className="nearby-title">Games on your Wi-Fi</h2>
-          {rooms === null ? (
-            <p className="nearby-empty">Looking for games…</p>
-          ) : rooms.length === 0 ? (
-            <p className="nearby-empty">None yet. When a friend on your Wi-Fi hosts, their game shows up here.</p>
-          ) : (
+        {rooms && rooms.length > 0 && (
+          <section className="nearby" aria-labelledby="nearby-title">
+            <h2 id="nearby-title" className="nearby-title">Games on your Wi-Fi</h2>
             <ul className="rooms">
               {rooms.map((r) => (
                 <li key={r.room} className="room">
@@ -158,14 +140,10 @@ export function FindGame({ level, initialName, onReady }: Props) {
                 </li>
               ))}
             </ul>
-          )}
-        </section>
+          </section>
+        )}
 
         <p className={`status${status.error ? ' is-error' : ''}`} role="status">{status.text}</p>
-
-        <button type="button" className="btn-text" onClick={solo} disabled={busy}>
-          Play solo <Icon name="back" size={2} flip />
-        </button>
       </section>
     </main>
   );

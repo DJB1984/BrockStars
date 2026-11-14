@@ -20,7 +20,6 @@ export type RoomInfo = { room: string; host: string; players: number };
 export const listRooms = async () => ((await call('rooms')) as { rooms: RoomInfo[] }).rooms;
 
 export type Session =
-  | { mode: 'solo' }
   | { mode: 'host'; room: string }
   | { mode: 'join'; room: string };
 

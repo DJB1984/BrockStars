@@ -5,11 +5,11 @@
 //   special  the design doc's special ability; `ready: false` until it's built
 export const FIGHTERS = [
   {
-    id: 'mason', name: 'Mason', fullName: 'Mason Risner', tagline: 'Cowboy spy', trait: 'Fast', speed: 180,
+    id: 'mason', name: 'Mason', fullName: 'Mason Risner', trait: 'Fast', speed: 180,
     special: { name: 'Grapple', text: 'A slow choke hold that deals massive damage, then a long cooldown.', ready: false },
   },
   {
-    id: 'titus', name: 'Titus', fullName: 'Titus Webster', tagline: 'Gray-suit brawler', trait: 'Normal', speed: 140,
+    id: 'titus', name: 'Titus', fullName: 'Titus Webster', trait: 'Normal', speed: 140,
     special: { name: 'Leg Sweep', text: 'Kicks their legs out and knocks them down for medium damage.', ready: false },
   },
 ];

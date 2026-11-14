@@ -19,7 +19,7 @@ export function Lobby({ level, initialCharacter, onDone }: Props) {
 
   // The host closed the game while you were still choosing: back to finding one.
   useEffect(() => {
-    if (!session || session.mode === 'solo') return;
+    if (!session) return;
     const ended = () => setSession(null);
     net.on('ended', ended);
     return () => { net.off('ended', ended); };
