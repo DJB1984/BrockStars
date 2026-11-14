@@ -34,22 +34,22 @@
  "animations": {
   "front_lamp": {
    "frames": [
-    "front_lamp"
+    "front"
    ]
   },
   "back_lamp": {
    "frames": [
-    "back_lamp"
+    "back"
    ]
   },
   "front_books": {
    "frames": [
-    "front_books"
+    "front"
    ]
   },
   "back_books": {
    "frames": [
-    "back_books"
+    "back"
    ]
   }
  }

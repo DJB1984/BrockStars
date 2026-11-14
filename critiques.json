@@ -1,5 +1,5 @@
 {
-  "next": 23,
+  "next": 26,
   "critiques": [
     {
       "id": 1,
@@ -385,6 +385,54 @@
       "created": "2026-11-13T20:37:41+00:00",
       "updated": "2026-11-13T20:39:08+00:00",
       "note": "Rebuilt the south-facing bed on the north bed's frame (small wood strip at the foot, front panel at the head), so every bed and colour variant now matches."
+    },
+    {
+      "id": 23,
+      "status": "fixed",
+      "text": "remove the props from the top of the desks",
+      "target": {
+        "asset": "desk"
+      },
+      "created": "2026-11-14T16:14:17+00:00",
+      "updated": "2026-11-14T16:27:25+00:00",
+      "note": "Removed the lamp and book stack from every desk, so all four states now show a bare desktop."
+    },
+    {
+      "id": 24,
+      "status": "fixed",
+      "text": "the desks only have drawers on the right side, just have a leg here.",
+      "target": {
+        "asset": "desk",
+        "anim": "front_lamp",
+        "frame": 0,
+        "region": [
+          0,
+          7,
+          15,
+          31
+        ]
+      },
+      "created": "2026-11-14T16:14:34+00:00",
+      "updated": "2026-11-14T16:27:26+00:00",
+      "note": "Replaced the left drawer pedestal with a single shaded leg on both views; drawers stay on the right only."
+    },
+    {
+      "id": 25,
+      "status": "open",
+      "text": "he's not a woman, make his chest a little less prominent",
+      "target": {
+        "asset": "titus",
+        "anim": "walk_side",
+        "frame": 3,
+        "region": [
+          35,
+          17,
+          6,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:25:16+00:00",
+      "updated": "2026-11-14T16:25:16+00:00"
     }
   ]
 }
