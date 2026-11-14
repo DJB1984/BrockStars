@@ -17228,7 +17228,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 556,
@@ -17253,7 +17253,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 612,
@@ -17378,7 +17378,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 684,
@@ -17403,7 +17403,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 740,
@@ -17528,7 +17528,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 812,
@@ -17553,7 +17553,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 868,
@@ -17678,7 +17678,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 940,
@@ -17703,7 +17703,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 996,
@@ -17828,7 +17828,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1068,
@@ -17853,7 +17853,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1124,
@@ -17978,7 +17978,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1196,
@@ -18003,7 +18003,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1252,
@@ -18128,7 +18128,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1324,
@@ -18153,7 +18153,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1380,
@@ -18278,7 +18278,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1452,
@@ -18303,7 +18303,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1508,
@@ -18428,7 +18428,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1580,
@@ -18453,7 +18453,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1636,
@@ -18578,7 +18578,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1708,
@@ -18603,7 +18603,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1764,
@@ -18728,7 +18728,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1836,
@@ -18753,7 +18753,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 1892,
@@ -18878,7 +18878,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 300,
@@ -18903,7 +18903,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 356,
@@ -19028,7 +19028,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 428,
@@ -19053,7 +19053,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 484,
@@ -19178,7 +19178,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 1964,
@@ -19203,7 +19203,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 2020,
@@ -19328,7 +19328,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_books"
+       "value": "front"
       }
      ],
      "x": 2092,
@@ -19353,7 +19353,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "front_lamp"
+       "value": "front"
       }
      ],
      "x": 2148,
@@ -19578,7 +19578,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 44,
@@ -19603,7 +19603,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 100,
@@ -19728,7 +19728,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 300,
@@ -19753,7 +19753,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 356,
@@ -19878,7 +19878,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 428,
@@ -19903,7 +19903,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 484,
@@ -20028,7 +20028,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 556,
@@ -20053,7 +20053,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 612,
@@ -20178,7 +20178,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 684,
@@ -20203,7 +20203,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 740,
@@ -20328,7 +20328,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 812,
@@ -20353,7 +20353,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 868,
@@ -20478,7 +20478,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 940,
@@ -20503,7 +20503,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 996,
@@ -20628,7 +20628,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1068,
@@ -20653,7 +20653,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1124,
@@ -20778,7 +20778,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1196,
@@ -20803,7 +20803,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1252,
@@ -20928,7 +20928,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1324,
@@ -20953,7 +20953,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1380,
@@ -21078,7 +21078,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1452,
@@ -21103,7 +21103,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1508,
@@ -21228,7 +21228,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1580,
@@ -21253,7 +21253,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1636,
@@ -21378,7 +21378,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1708,
@@ -21403,7 +21403,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1764,
@@ -21528,7 +21528,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 1836,
@@ -21553,7 +21553,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1892,
@@ -21678,7 +21678,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 1964,
@@ -21703,7 +21703,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 2020,
@@ -21828,7 +21828,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 2092,
@@ -21853,7 +21853,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 2148,
@@ -21978,7 +21978,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_books"
+       "value": "back"
       }
      ],
      "x": 2348,
@@ -22003,7 +22003,7 @@
       {
        "name": "state",
        "type": "string",
-       "value": "back_lamp"
+       "value": "back"
       }
      ],
      "x": 2404,
@@ -23059,7 +23059,7 @@
     "x": 556,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      532,
      44,
@@ -23074,7 +23074,7 @@
     "x": 612,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      588,
      44,
@@ -23149,7 +23149,7 @@
     "x": 684,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      660,
      44,
@@ -23164,7 +23164,7 @@
     "x": 740,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      716,
      44,
@@ -23239,7 +23239,7 @@
     "x": 812,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      788,
      44,
@@ -23254,7 +23254,7 @@
     "x": 868,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      844,
      44,
@@ -23329,7 +23329,7 @@
     "x": 940,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      916,
      44,
@@ -23344,7 +23344,7 @@
     "x": 996,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      972,
      44,
@@ -23419,7 +23419,7 @@
     "x": 1068,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1044,
      44,
@@ -23434,7 +23434,7 @@
     "x": 1124,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1100,
      44,
@@ -23509,7 +23509,7 @@
     "x": 1196,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1172,
      44,
@@ -23524,7 +23524,7 @@
     "x": 1252,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1228,
      44,
@@ -23599,7 +23599,7 @@
     "x": 1324,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1300,
      44,
@@ -23614,7 +23614,7 @@
     "x": 1380,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1356,
      44,
@@ -23689,7 +23689,7 @@
     "x": 1452,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1428,
      44,
@@ -23704,7 +23704,7 @@
     "x": 1508,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1484,
      44,
@@ -23779,7 +23779,7 @@
     "x": 1580,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1556,
      44,
@@ -23794,7 +23794,7 @@
     "x": 1636,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1612,
      44,
@@ -23869,7 +23869,7 @@
     "x": 1708,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1684,
      44,
@@ -23884,7 +23884,7 @@
     "x": 1764,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1740,
      44,
@@ -23959,7 +23959,7 @@
     "x": 1836,
     "y": 84,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1812,
      44,
@@ -23974,7 +23974,7 @@
     "x": 1892,
     "y": 84,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1868,
      44,
@@ -24049,7 +24049,7 @@
     "x": 300,
     "y": 420,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      276,
      380,
@@ -24064,7 +24064,7 @@
     "x": 356,
     "y": 420,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      332,
      380,
@@ -24139,7 +24139,7 @@
     "x": 428,
     "y": 420,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      404,
      380,
@@ -24154,7 +24154,7 @@
     "x": 484,
     "y": 420,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      460,
      380,
@@ -24229,7 +24229,7 @@
     "x": 1964,
     "y": 420,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      1940,
      380,
@@ -24244,7 +24244,7 @@
     "x": 2020,
     "y": 420,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      1996,
      380,
@@ -24319,7 +24319,7 @@
     "x": 2092,
     "y": 420,
     "prop": "desk",
-    "state": "front_books",
+    "state": "front",
     "footprint": [
      2068,
      380,
@@ -24334,7 +24334,7 @@
     "x": 2148,
     "y": 420,
     "prop": "desk",
-    "state": "front_lamp",
+    "state": "front",
     "footprint": [
      2124,
      380,
@@ -24469,7 +24469,7 @@
     "x": 44,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      20,
      840,
@@ -24484,7 +24484,7 @@
     "x": 100,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      76,
      840,
@@ -24559,7 +24559,7 @@
     "x": 300,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      276,
      840,
@@ -24574,7 +24574,7 @@
     "x": 356,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      332,
      840,
@@ -24649,7 +24649,7 @@
     "x": 428,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      404,
      840,
@@ -24664,7 +24664,7 @@
     "x": 484,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      460,
      840,
@@ -24739,7 +24739,7 @@
     "x": 556,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      532,
      840,
@@ -24754,7 +24754,7 @@
     "x": 612,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      588,
      840,
@@ -24829,7 +24829,7 @@
     "x": 684,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      660,
      840,
@@ -24844,7 +24844,7 @@
     "x": 740,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      716,
      840,
@@ -24919,7 +24919,7 @@
     "x": 812,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      788,
      840,
@@ -24934,7 +24934,7 @@
     "x": 868,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      844,
      840,
@@ -25009,7 +25009,7 @@
     "x": 940,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      916,
      840,
@@ -25024,7 +25024,7 @@
     "x": 996,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      972,
      840,
@@ -25099,7 +25099,7 @@
     "x": 1068,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1044,
      840,
@@ -25114,7 +25114,7 @@
     "x": 1124,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1100,
      840,
@@ -25189,7 +25189,7 @@
     "x": 1196,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1172,
      840,
@@ -25204,7 +25204,7 @@
     "x": 1252,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1228,
      840,
@@ -25279,7 +25279,7 @@
     "x": 1324,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1300,
      840,
@@ -25294,7 +25294,7 @@
     "x": 1380,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1356,
      840,
@@ -25369,7 +25369,7 @@
     "x": 1452,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1428,
      840,
@@ -25384,7 +25384,7 @@
     "x": 1508,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1484,
      840,
@@ -25459,7 +25459,7 @@
     "x": 1580,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1556,
      840,
@@ -25474,7 +25474,7 @@
     "x": 1636,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1612,
      840,
@@ -25549,7 +25549,7 @@
     "x": 1708,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1684,
      840,
@@ -25564,7 +25564,7 @@
     "x": 1764,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1740,
      840,
@@ -25639,7 +25639,7 @@
     "x": 1836,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1812,
      840,
@@ -25654,7 +25654,7 @@
     "x": 1892,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1868,
      840,
@@ -25729,7 +25729,7 @@
     "x": 1964,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      1940,
      840,
@@ -25744,7 +25744,7 @@
     "x": 2020,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      1996,
      840,
@@ -25819,7 +25819,7 @@
     "x": 2092,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      2068,
      840,
@@ -25834,7 +25834,7 @@
     "x": 2148,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      2124,
      840,
@@ -25909,7 +25909,7 @@
     "x": 2348,
     "y": 880,
     "prop": "desk",
-    "state": "back_books",
+    "state": "back",
     "footprint": [
      2324,
      840,
@@ -25924,7 +25924,7 @@
     "x": 2404,
     "y": 880,
     "prop": "desk",
-    "state": "back_lamp",
+    "state": "back",
     "footprint": [
      2380,
      840,
