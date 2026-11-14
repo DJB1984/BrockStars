@@ -111,6 +111,7 @@ export class Level extends Phaser.Scene {
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
           if (!self || !player.active) return;
+          this.combat.rules.readyAt.takedown = this.time.now + (self.takedownCooldown ?? 0);
           if (self.life !== life) {
             reset();
             this.scene.restart({level:this.levelName,spawn:this.spawnName,character:this.character});
@@ -144,7 +145,11 @@ export class Level extends Phaser.Scene {
 
   update(time, delta) {
     if (!net.active) playerHealth.update(delta);
-    if (this.combatText?.active) this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block`);
+    if (this.combatText?.active) {
+      const remaining = this.combat.snapshot().cooldowns.takedown;
+      const special = this.character === 'titus' ? `  S Takedown ${remaining ? `${(remaining/1000).toFixed(1)}s` : 'Ready'}` : '';
+      this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block${special}`);
+    }
     for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
     if (net.active && p?.active) {

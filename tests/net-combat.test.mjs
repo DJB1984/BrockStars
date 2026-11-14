@@ -66,3 +66,30 @@ test('a connected player becoming temporarily quiet cannot reset their health',(
   assert.equal(room.tick(p,5001,['a','b']).fighters.b.health,96);
   room.tick(quiet,5002,['a']);assert.equal(room.fighters.has('b'),false);
 });
+
+test('Takedown has a 500ms wind-up, narrow reach, and hits only the nearest opponent once',()=>{
+  const {room,p}=setup(); p.c={x:123,y:100,level:'brock3'};
+  room.tick(p,0); cmd(room,'a','takedown','right',1,0);
+  assert.equal(room.tick(p,499).fighters.b.health,100);
+  const hit=room.tick(p,510);
+  assert.equal(hit.fighters.b.health,75); assert.equal(hit.fighters.b.knockdown,1500);
+  assert.equal(hit.fighters.b.knockdownFacing,'left');
+  assert.equal(hit.hits[0].knockdownFacing,'left');
+  assert.equal(hit.fighters.c.health,100); assert.equal(hit.hits.length,1);
+  p.b.x=200;
+  assert.equal(room.tick(p,550).fighters.c.health,100);
+  for(const [x,y] of [[125,100],[120,111],[90,100]]) {
+    const {room:r,p:pos}=setup(); Object.assign(pos.b,{x,y});r.tick(pos,0);
+    cmd(r,'a','takedown','right',1,0); assert.equal(r.tick(pos,520).fighters.b.health,100);
+  }
+});
+
+test('host blocks Takedown, consumes its cooldown on misses, and rejects Mason using it',()=>{
+  const {room,p}=setup(); cmd(room,'b','block','left',1,0);cmd(room,'a','takedown','right',1,0);
+  const hit=room.tick(p,520); assert.equal(hit.fighters.b.health,93.75); assert.equal(hit.fighters.b.knockdown,0);
+  room.tick(p,1100);cmd(room,'a','takedown','right',2,1101);assert.equal(room.fighters.get('a').action,null);
+  p.b.x=200;room.tick(p,20000);cmd(room,'a','takedown','right',3,20000);room.tick(p,21100);
+  cmd(room,'a','takedown','right',4,22000);assert.equal(room.fighters.get('a').action,null);
+  p.a.char='mason';room.tick(p,40000);cmd(room,'a','takedown','right',5,40000);
+  assert.equal(room.fighters.get('a').action,null);
+});

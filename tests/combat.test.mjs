@@ -42,3 +42,31 @@ test('regen waits 45 seconds, heals 2 HP/s, restarts after damage and caps at 10
   h.take(1); h.update(45000); assert.equal(h.value,89); h.update(6000); assert.equal(h.value,100);
   h.take(100); h.update(60000); assert.equal(h.value,0);
 });
+
+test('Takedown is Titus-only, requires a fresh press, and consumes 20s cooldown on a miss across scene changes', () => {
+  const health=new HealthPool(), c=new CombatRules(health);
+  c.update(100,{takedown:true},'left');
+  assert.deepEqual(c.attack,{name:'takedown',facing:'left'});
+  c.finishAttack();
+  const next=new CombatRules(health);
+  next.update(1200,{takedown:true},'right'); assert.equal(next.attack,null);
+  next.update(20100,{takedown:true},'right'); assert.equal(next.attack,null);
+  next.update(20101,{},'right'); next.update(20102,{takedown:true},'right');
+  assert.equal(next.attack.name,'takedown');
+  const mason=new CombatRules(new HealthPool(),'mason');
+  mason.update(0,{takedown:true},'down'); assert.equal(mason.attack,null);
+});
+
+test('Takedown knocks down for 1.5s and interrupts attacks; a front block prevents the knockdown', () => {
+  const c=new CombatRules(); c.update(0,{kick:true},'right');
+  const hit=c.receive(ATTACKS.takedown,'left',500);
+  assert.equal(hit.damage,25); assert.equal(hit.knockdown,1500); assert.equal(c.attack,null);
+  c.update(1999,{punch:true},'right'); assert.equal(c.attack,null);
+  c.update(2000,{},'right'); c.update(2001,{punch:true},'right'); assert.equal(c.attack.name,'punch');
+  for(const facing of ['left','right','up','down']) {
+    const defender=new CombatRules(); defender.update(0,{block:true},facing);
+    const blocked=defender.receive(ATTACKS.takedown,facing,500);
+    assert.equal(blocked.damage,6.25); assert.equal(blocked.knockdown,0); assert.equal(blocked.stagger,0);
+    assert.ok(defender.block);
+  }
+});

@@ -16,7 +16,7 @@ export class RemotePlayers {
     const hits = ({hits}) => {
       for (const hit of hits) {
         const sprite = this.shown.get(hit.target)?.sprite;
-        if (sprite) scene.feel?.flash(sprite, 90, hit.blocked ? 0x77bbff : 0xffffff);
+        if (sprite && !hit.knockdown) scene.feel?.flash(sprite, 90, hit.blocked ? 0x77bbff : 0xffffff);
       }
     };
     net.on('combat', hits);
@@ -50,15 +50,17 @@ export class RemotePlayers {
       const sprite = r.sprite;
       if (sprite.texture.key !== p.char) sprite.setTexture(p.char);
       const combat = this.net.combatState.fighters[id];
-      const facing = combat?.attack?.facing ?? combat?.block;
+      const facing = (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block;
       const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
       let anim = p.anim;
-      if (combat?.attack) anim = `${p.char}_${combat.attack.name}_${dir}`;
+      if (combat?.knockdown) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
+      else if (combat?.attack) anim = `${p.char}_${combat.attack.name}_${dir}`;
       else if (combat?.block) anim = `${p.char}_block_${dir}`;
       else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
       if (anim && scene.anims.exists(anim)) {
         sprite.play(anim, true);
-        if (fresh && combat?.attack) {
+        if (combat?.knockdown) sprite.anims.setProgress(Math.min(0.99, 1-combat.knockdown/1500));
+        else if (fresh && combat?.attack) {
           const duration = ATTACKS[combat.attack.name].frames.reduce((a,b)=>a+b,0);
           sprite.anims.setProgress(Math.min(0.99, combat.attack.elapsed/duration));
         }
