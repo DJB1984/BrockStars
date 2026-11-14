@@ -121,9 +121,13 @@ export function FindGame({ level, initialName, onReady }: Props) {
           <button type="submit" className="btn btn-blue" disabled={busy}><span className="btn-face">Join</span></button>
         </form>
 
-        {rooms && rooms.length > 0 && (
-          <section className="nearby" aria-labelledby="nearby-title">
-            <h2 id="nearby-title" className="nearby-title">Games on your Wi-Fi</h2>
+        <section className="nearby" aria-labelledby="nearby-title">
+          <h2 id="nearby-title" className="nearby-title">Games on your Wi-Fi</h2>
+          {!rooms || rooms.length === 0 ? (
+            <div className="room room-empty" role="status" aria-label="Looking for games on your Wi-Fi">
+              <span className="scan" aria-hidden="true"><i /><i /><i /></span>
+            </div>
+          ) : (
             <ul className="rooms">
               {rooms.map((r) => (
                 <li key={r.room} className="room">
@@ -140,8 +144,8 @@ export function FindGame({ level, initialName, onReady }: Props) {
                 </li>
               ))}
             </ul>
-          </section>
-        )}
+          )}
+        </section>
 
         <p className={`status${status.error ? ' is-error' : ''}`} role="status">{status.text}</p>
       </section>
