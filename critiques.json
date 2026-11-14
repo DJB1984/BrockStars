@@ -1,5 +1,5 @@
 {
-  "next": 27,
+  "next": 29,
   "critiques": [
     {
       "id": 1,
@@ -453,6 +453,36 @@
       "created": "2026-11-14T16:40:59+00:00",
       "updated": "2026-11-14T16:43:03+00:00",
       "note": "Tucked the chair under the desk: on the front view it now sits in the kneehole, and on the back view it slides in behind the desktop."
+    },
+    {
+      "id": 27,
+      "status": "fixed",
+      "text": "Shrink in the left leg the chair the inside is about as wide as the chair.",
+      "target": {
+        "asset": "desk",
+        "anim": "front_books",
+        "frame": 0,
+        "region": [
+          0,
+          7,
+          14,
+          32
+        ]
+      },
+      "created": "2026-11-14T16:44:52+00:00",
+      "updated": "2026-11-14T16:45:40+00:00",
+      "note": "Moved the left leg in to x 9-13 so the kneehole is just the chair's width plus 2px each side, on both views; the desktop keeps its full width."
+    },
+    {
+      "id": 28,
+      "status": "open",
+      "text": "the back actually looks horrible. flip it around people don't face the fall when they work at a desk.",
+      "target": {
+        "asset": "desk",
+        "anim": "back_lamp"
+      },
+      "created": "2026-11-14T16:45:39+00:00",
+      "updated": "2026-11-14T16:45:39+00:00"
     }
   ]
 }
