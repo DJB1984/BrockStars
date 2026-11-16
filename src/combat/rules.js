@@ -1,9 +1,15 @@
+// frames = [windup, active, return, recovery] ms; the build scripts bake them into both sprites'
+// animations, so a frames change needs `node scripts/build-titus-combat.mjs`, the Mason patch and a re-export.
+// lunge = px/s added toward the attack's facing through windup+active, closing the gap mid-swing.
 export const ATTACKS = Object.freeze({
-  punch: { key: 'C', damage: 4, cooldown: 400, frames: [100, 60, 90, 150], reach: 28, knockback: 25, stagger: 0 },
-  kick: { key: 'X', damage: 6, cooldown: 800, frames: [160, 100, 120, 220], reach: 44, knockback: 45, stagger: 0 },
-  headbutt: { key: 'Z', damage: 10, cooldown: 1500, frames: [220, 80, 120, 280], reach: 24, knockback: 140, stagger: 350 },
+  punch: { key: 'C', damage: 4, cooldown: 300, frames: [70, 90, 60, 100], reach: 34, width: 20, lunge: 60, knockback: 25, stagger: 0 },
+  kick: { key: 'X', damage: 6, cooldown: 550, frames: [110, 120, 80, 150], reach: 50, width: 22, lunge: 80, knockback: 45, stagger: 0 },
+  headbutt: { key: 'Z', damage: 10, cooldown: 1000, frames: [150, 110, 90, 200], reach: 30, width: 20, lunge: 110, knockback: 140, stagger: 350 },
   takedown: { key: 'S', character: 'titus', damage: 25, cooldown: 20000, frames: [500, 100, 180, 320], reach: 24, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 1500, knockdown: 1500 },
 });
+// Positions are body centres, but people are hit on their body, not at their centre: every
+// attack zone is credited the defender's half-width on all sides.
+export const BODY = 9;
 export const BLOCK = Object.freeze({ duration: 3000, cooldown: 1000, reduction: 0.75, speed: 0.5 });
 export const REGEN = Object.freeze({ delay: 45000, perSecond: 2 });
 export const DIRECTIONS = Object.freeze({ up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] });
@@ -19,7 +25,7 @@ export function attackTargets(source, targets, facing, spec) {
   return targets.filter(target => {
     const dx = target.x - source.x, dy = target.y - source.y;
     const forward = dx * fx + dy * fy, across = Math.abs(dx * fy - dy * fx);
-    return forward >= 0 && forward <= spec.reach && across <= (spec.width ?? 18);
+    return forward >= -BODY && forward <= spec.reach + BODY && across <= (spec.width ?? 18) + BODY;
   }).sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
 }
 
@@ -67,7 +73,7 @@ export class CombatRules {
       for (const [name, spec] of Object.entries(ATTACKS)) {
         if (spec.character && spec.character !== this.character) continue;
         if (input[name] && !this.previous[name] && now >= (this.readyAt[name] ?? 0)) {
-          this.attack = { name, facing };
+          this.attack = { name, facing, start: now };
           this.readyAt[name] = now + spec.cooldown;
           break;
         }

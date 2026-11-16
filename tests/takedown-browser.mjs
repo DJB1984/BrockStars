@@ -46,7 +46,7 @@ try {
     check('block reduces damage',s.partnerHealth.value===93.75);
     check('block prevents knockdown',s.partnerCombat.snapshot().knockdownRemaining===0);
     s.partner.controller.readInput=readPartner;
-    resetTakedown('right',30);play.step(1200,{takedown:true});
+    resetTakedown('right',40);play.step(1200,{takedown:true});
     check('miss consumes cooldown',s.partnerHealth.value===100 && s.combat.snapshot().cooldowns.takedown>18000);
     play.step(17,{});play.step(1200,{takedown:true});check('cooldown prevents retry',s.combat.rules.attack===null);
     resetTakedown('right',50);play.step(650,{takedown:true});s.partner.body.reset(320,220);

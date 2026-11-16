@@ -1,5 +1,5 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, CombatRules, directionTo, attackTargets } from './rules.js';
+import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets } from './rules.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
 export class TitusCombat {
@@ -54,6 +54,18 @@ export class TitusCombat {
       if (!wasBlocking && this.rules.block) sprite.emit('combat-block', this.rules.block.facing);
       if (wasBlocking && !this.rules.block) sprite.emit('combat-release');
       if (!old && this.rules.attack) {
+        // Facing assist: a swing that would whiff turns toward an opponent who IS in range on
+        // another side, so "roughly facing them" is enough. The chosen facing is what goes to the host.
+        const spec = ATTACKS[this.rules.attack.name];
+        const live = this.targets().filter(t => t.active && t !== sprite && (t.combat ? t.combat.rules.health.value > 0 : true));
+        if (!attackTargets(sprite, live, this.rules.attack.facing, spec).length) {
+          let best = null;
+          for (const dir of Object.keys(DIRECTIONS)) {
+            const [t] = dir === this.rules.attack.facing ? [] : attackTargets(sprite, live, dir, spec);
+            if (t) { const d = Math.hypot(t.x - sprite.x, t.y - sprite.y); if (!best || d < best.d) best = { dir, d }; }
+          }
+          if (best) { this.rules.attack.facing = best.dir; c.facing = best.dir; }
+        }
         this.struck.clear();
         c.busy = `${sprite.texture.key}_${this.rules.attack.name}_${this.rules.attack.facing === 'left' || this.rules.attack.facing === 'right' ? 'side' : this.rules.attack.facing}`;
         playFacing(sprite, this.rules.attack.name, this.rules.attack.facing);
@@ -66,8 +78,16 @@ export class TitusCombat {
         if (this.rules.block) playFacing(sprite, 'block', action.facing);
         const dx = Number(input.right) - Number(input.left), dy = Number(input.down) - Number(input.up);
         const length = Math.hypot(dx, dy) || 1;
-        const speed = c.opts.speed * (this.rules.block ? BLOCK.speed : (ATTACKS[action.name].speed ?? 0.6));
-        sprite.body.setVelocity(dx / length * speed, dy / length * speed);
+        // Walking into an attack keeps most of its momentum, and the swing itself lunges toward
+        // its facing through windup+active, so a moving target can't simply outwalk the hit.
+        const spec = this.rules.block ? null : ATTACKS[action.name];
+        const speed = c.opts.speed * (this.rules.block ? BLOCK.speed : (spec.speed ?? 0.8));
+        let vx = dx / length * speed, vy = dy / length * speed;
+        if (spec?.lunge && now <= (action.start ?? 0) + spec.frames[0] + spec.frames[1]) {
+          const [fx, fy] = DIRECTIONS[action.facing];
+          vx += fx * spec.lunge; vy += fy * spec.lunge;
+        }
+        sprite.body.setVelocity(vx, vy);
         sprite.setDepth(sprite.y);
       } else {
         c.busy = null;
@@ -112,8 +132,9 @@ export class TitusCombat {
   drawReach(graphics) {
     const attack = this.rules.attack;
     if (!attack || !pixelforgeBoxes(this.sprite, 'hit').length) return;
-    const {reach,width=18}=ATTACKS[attack.name], [x,y]=[this.sprite.x,this.sprite.y];
-    const boxes={right:[x,y-width,reach,width*2],left:[x-reach,y-width,reach,width*2],up:[x-width,y-reach,width*2,reach],down:[x-width,y,width*2,reach]};
+    // Draw the zone a body centre actually hits in: the spec's rect credited BODY on every side.
+    const spec=ATTACKS[attack.name], reach=spec.reach+BODY*2, width=(spec.width??18)+BODY, [x,y]=[this.sprite.x,this.sprite.y];
+    const boxes={right:[x-BODY,y-width,reach,width*2],left:[x-reach+BODY,y-width,reach,width*2],up:[x-width,y-reach+BODY,width*2,reach],down:[x-width,y-BODY,width*2,reach]};
     graphics.lineStyle(1,0xff5577).strokeRect(...boxes[attack.facing]);
   }
   receive(from, spec) {

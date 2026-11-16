@@ -9,8 +9,8 @@ const cmd=(room,id,action,facing,n,time)=>room.command(id,{action,facing,n},time
 test('host resolves a short active frame between ticks once; duplicate commands cannot double-hit',()=>{
   const {room,p}=setup();
   cmd(room,'a','punch','right',1,0);
-  room.tick(p,99);
-  const first=room.tick(p,165);
+  room.tick(p,60);
+  const first=room.tick(p,180);
   assert.equal(first.fighters.b.health,96); assert.equal(first.hits.length,1);
   cmd(room,'a','punch','right',1,170);
   assert.equal(room.tick(p,190).hits.length,0);
@@ -18,7 +18,8 @@ test('host resolves a short active frame between ticks once; duplicate commands 
 });
 
 test('range, facing, and level isolate hits',()=>{
-  for(const [x,y,level] of [[129,100,'brock3'],[90,100,'brock3'],[120,120,'brock3'],[120,100,'elsewhere']]) {
+  // Zones credit the defender's body (BODY=9): punch covers forward -9..43, across 29.
+  for(const [x,y,level] of [[144,100,'brock3'],[90,100,'brock3'],[120,131,'brock3'],[120,100,'elsewhere']]) {
     const {room,p}=setup(); Object.assign(p.b,{x,y,level}); room.tick(p,1);
     cmd(room,'a','punch','right',1,1);
     assert.equal(room.tick(p,120).fighters.b.health,100);
@@ -78,7 +79,7 @@ test('Takedown has a 500ms wind-up, narrow reach, and hits only the nearest oppo
   assert.equal(hit.fighters.c.health,100); assert.equal(hit.hits.length,1);
   p.b.x=200;
   assert.equal(room.tick(p,550).fighters.c.health,100);
-  for(const [x,y] of [[125,100],[120,111],[90,100]]) {
+  for(const [x,y] of [[134,100],[120,120],[90,100]]) {
     const {room:r,p:pos}=setup(); Object.assign(pos.b,{x,y});r.tick(pos,0);
     cmd(r,'a','takedown','right',1,0); assert.equal(r.tick(pos,520).fighters.b.health,100);
   }

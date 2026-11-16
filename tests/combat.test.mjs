@@ -13,9 +13,9 @@ test('attacks require a fresh press after the animation ends and respect their o
   assert.equal(c.attack,null); // a held/queued key cannot trigger
   c.update(401,{},'right'); c.update(402,{kick:true},'right');
   assert.equal(c.attack.name,'kick');
-  c.finishAttack(); c.update(1000,{},'right'); c.update(1001,{kick:true},'right');
+  c.finishAttack(); c.update(900,{},'right'); c.update(901,{kick:true},'right');
   assert.equal(c.attack,null);
-  c.update(1202,{},'right'); c.update(1203,{kick:true},'right');
+  c.update(952,{},'right'); c.update(953,{kick:true},'right');
   assert.equal(c.attack.name,'kick');
 });
 test('block direction stays fixed, expires at 3s and needs release plus cooldown', () => {
@@ -46,7 +46,7 @@ test('regen waits 45 seconds, heals 2 HP/s, restarts after damage and caps at 10
 test('Takedown is Titus-only, requires a fresh press, and consumes 20s cooldown on a miss across scene changes', () => {
   const health=new HealthPool(), c=new CombatRules(health);
   c.update(100,{takedown:true},'left');
-  assert.deepEqual(c.attack,{name:'takedown',facing:'left'});
+  assert.deepEqual(c.attack,{name:'takedown',facing:'left',start:100});
   c.finishAttack();
   const next=new CombatRules(health);
   next.update(1200,{takedown:true},'right'); assert.equal(next.attack,null);
