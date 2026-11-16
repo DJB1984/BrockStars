@@ -219,6 +219,15 @@ function Meter({ cells, tone = 'gold' }: { cells: number; tone?: 'gold' | 'green
 }
 
 function RoomBadge({ session, count }: { session: Session; count: number }) {
+  if (session.mode === 'world') {
+    return (
+      <div className="room-badge">
+        <span className="room-badge-label">Everyone's in</span>
+        <span className="room-badge-code">Brock</span>
+        <span className="room-badge-count"><Icon name="person" size={2} /> {count} online</span>
+      </div>
+    );
+  }
   return (
     <div className="room-badge">
       <span className="room-badge-label">{session.mode === 'host' ? 'Friends join with' : 'Room'}</span>

@@ -5,12 +5,18 @@ it, send where they are ~15 times a second, and get everyone back. The web host 
 `net.php`, a small PHP script that lists rooms and passes the connection handshake. No game traffic goes
 through it, so it runs on HostGator's Hatchling plan with nothing else to pay for.
 
+Everyone plays one shared game: the lobby's **Play** button joins room `BROCK` (`WORLD_ROOM`), and whichever
+browser gets there first is its hub. When the hub's tab closes, the others reconnect within a second or two
+and one of them takes over (`net.stay`). Private games still work (`net.host`, `net.join`), but their
+controls (Host, Join by code, Games on your Wi-Fi) are hidden: set `PRIVATE_GAMES` in `src/ui/FindGame.tsx`
+to bring them back. The home screen shows how many are in the shared game (`net.php?action=world`).
+
 | | |
 |---|---|
 | `server/net.php` | matchmaking: rooms, join codes, games on your network, the handshake |
-| `src/net/session.js` | `net`: host / join / quick, the WebRTC connections, everyone's state |
+| `src/net/session.js` | `net`: host / join / quick / stay, the WebRTC connections, everyone's state |
 | `src/net/remotes.js` | draws the other players in the level (smoothed, with name tags) |
-| `src/lobby.js` | the start screen: name, character, host, join by code or from the list, solo |
+| `src/ui/` | the start screen: name and Play (the shared game), then the fighter |
 
 ## Running it
 
@@ -73,9 +79,10 @@ Any other TURN server works too, with fixed credentials:
 
 ## Limits
 
-- The host's tab is the game: when it closes, the game ends for everyone (on `npm run local`, another
-  tab takes over). A hidden host tab gets throttled by the browser, so others see it update slowly.
-- Up to 8 players per room. Players walk through each other; items aren't shared yet.
+- The host's tab is the game. In the shared game and on `npm run local`, another tab takes over when it
+  closes (everyone blinks out for a second or two); a private hosted game ends for everyone. A hidden host tab gets throttled by the browser, so others see it update slowly.
+- Up to 16 players in the shared game and 8 in a private one. The hub sends every player to every other
+  player, so its upload grows with the square of the players: past ~16 it needs a real game server. Players walk through each other; items aren't shared yet.
 - Rooms close 15 seconds after the host stops checking in.
 
 ## Shared combat

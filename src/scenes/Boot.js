@@ -9,7 +9,7 @@ const QUICK_ROOM = 'LOCAL';
 // Loads everything `pixelforge export` wrote (export/index.json lists it) with a progress bar, makes every
 // animation, then starts the first level: ?level=NAME in the URL, else a level called "start", else the
 // first one in the index.
-// Before the level, the lobby (src/ui) hosts or joins a multiplayer game. It's skipped:
+// Before the level, the lobby (src/ui) puts the player in the shared game (net.stay, WORLD_ROOM). It's skipped:
 //   on the local test server (`npm run local`, or ?quick): straight into the level, joining room LOCAL in
 //     the background, so every open tab plays together;
 //   with ?level=NAME (playtests) or ?solo: straight into the level, alone.
@@ -50,14 +50,12 @@ export class Boot extends Phaser.Scene {
   }
 }
 
-// Joins room LOCAL, or opens it if no other tab has; when that game ends (the hosting tab closed), tries
-// again, so one of the tabs left takes over as host.
+// Joins room LOCAL, or opens it if no other tab has; when the hosting tab closes, one of the tabs left
+// takes over as host (net.stay).
 function autoJoin(level) {
   const name = (() => { try { return localStorage.getItem('brockstars.name'); } catch { return null; } })()
     || `Player ${10 + (crypto.getRandomValues(new Uint8Array(1))[0] % 90)}`;
-  const connect = () => net.quick({ name, level, room: QUICK_ROOM })
+  net.stay({ name, level, room: QUICK_ROOM })
     .then(() => console.info(`[net] ${net.role === 'host' ? 'hosting' : 'joined'} room ${net.room} as ${name}`))
     .catch((e) => console.warn(`[net] playing solo: ${e.message}`));
-  net.on('ended', () => setTimeout(connect, 500 + Math.random() * 1000));
-  connect();
 }

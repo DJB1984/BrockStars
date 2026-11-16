@@ -7,7 +7,9 @@ import { RoomCombat } from './combat.js';
 // everyone's latest state. net.php is only used to find the host and swap the connection handshake.
 //   await net.host({ name, level })         opens a room; net.room is the code to share
 //   await net.join({ name, room })          joins one (throws a SignalError with a readable message)
-//   await net.quick({ name, level, room })  joins `room`, or opens it if nobody has (the local test server)
+//   await net.quick({ name, level, room })  joins `room`, or opens it if nobody has
+//   await net.stay({ name, level, room })   quick, and stays in `room`: when the hub's tab closes, everyone
+//                                           left reconnects and one of them becomes the hub (WORLD_ROOM, LOCAL)
 //   net.setLocal({ name, char, level, x, y, anim, flip })   this player, every frame
 //   net.players                             everyone else: { id: that same state }
 //   events: 'players' (someone came, went, or the game started/ended), 'ended' (reason)
@@ -19,6 +21,11 @@ const CONNECT_MS = 15000;
 const GATHER_MS = 3000;      // longest wait for ICE candidates before sending a handshake
 const QUIET_MS = 4000;       // a player not heard from in this long is hidden (a backgrounded tab)
 const LOST_MS = 6000;        // a connection 'disconnected' this long is given up
+
+const REJOIN_MS = [500, 1500, 3000, 6000, 10000];   // stay(): waits between reconnect attempts, then the last one
+
+// The one game everyone plays in (the lobby's Play button). Its cap is WORLD_MAX in server/net.php.
+export const WORLD_ROOM = 'BROCK';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -95,7 +102,9 @@ class NetSession extends Phaser.Events.EventEmitter {
     if (this.polling) return;
     this.polling = true;
     try {
-      const { messages } = await call('poll', { room: this.room, peer: this.id, key: this.key, players: this.count });
+      // Everyone connected, including joiners still choosing a fighter: the room's cap and "players online".
+      const players = 1 + this.peers.size;
+      const { messages } = await call('poll', { room: this.room, peer: this.id, key: this.key, players });
       for (const m of messages) {
         const msg = unpack(m.data);
         if (msg.type === 'offer' && this.role === 'host') this.accept(m.from, msg.sdp).catch((e) => console.warn('[net] accept', e));
@@ -154,11 +163,13 @@ class NetSession extends Phaser.Events.EventEmitter {
     for (const [id, p] of Object.entries(this.players)) {
       if (now - p.heard <= QUIET_MS) players[id] = { ...p, heard: undefined };
     }
-    if (this.local) players[this.id] = { ...this.local, n: ++this.sent };
+    // Numbered even while the host is still in the lobby (no local state yet), or joiners drop them as stale.
+    const n = ++this.sent;
+    if (this.local) players[this.id] = { ...this.local, n };
     const combat = this.arena.tick(players, now, [this.id,...this.peers.keys()]);
     this.combatState = combat;
     this.emit('combat', combat);
-    const text = JSON.stringify({ type: 'snap', n: this.sent, players, combat });
+    const text = JSON.stringify({ type: 'snap', n, players, combat });
     for (const { channel } of this.peers.values()) {
       if (channel?.readyState === 'open') try { channel.send(text); } catch { /* closing */ }
     }
@@ -253,6 +264,23 @@ class NetSession extends Phaser.Events.EventEmitter {
     throw new SignalError(`Couldn't join or open room ${room}.`, 'busy');
   }
 
+  // Resolves once in the room, like quick(). After that, losing the game (the hub left, the network
+  // dropped) reconnects in the background instead of ending it; only end('left') leaves for good.
+  async stay({ name, level, room }) {
+    this.staying = { name, level, room };
+    try { await this.quick({ name, level, room }); } catch (e) { this.staying = null; throw e; }
+  }
+
+  async rejoin() {
+    const staying = this.staying;
+    for (let attempt = 0; this.staying === staying && !this.active; attempt++) {
+      await sleep(REJOIN_MS[Math.min(attempt, REJOIN_MS.length - 1)] * (0.5 + Math.random()));
+      if (this.staying !== staying || this.active) return;
+      try { await this.quick(staying); } catch (e) { console.warn(`[net] reconnecting to ${staying.room}: ${e.message}`); }
+    }
+    if (!this.staying && this.active) this.end('left');   // left (Back) while this attempt was connecting
+  }
+
   // Calls `lost` when the connection fails, or stays 'disconnected' (a dropped network) for LOST_MS.
   watch(pc, lost) {
     let timer = null;
@@ -272,6 +300,7 @@ class NetSession extends Phaser.Events.EventEmitter {
   }
 
   end(reason) {
+    if (reason === 'left') this.staying = null;
     if (!this.active) return;
     const auth = { room: this.room, peer: this.id, key: this.key };
     for (const t of this.timers) clearInterval(t);
@@ -279,7 +308,8 @@ class NetSession extends Phaser.Events.EventEmitter {
     if (this.role === 'host') call('leave', auth).catch(() => {});
     this.clear();
     this.roster(true);
-    this.emit('ended', reason);
+    if (this.staying) this.rejoin();
+    else this.emit('ended', reason);
   }
 
   // The page is closing: tell the server (a host's room closes) and the other players.

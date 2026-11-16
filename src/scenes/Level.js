@@ -6,7 +6,7 @@ import { TitusCombat } from '../combat/TitusCombat.js';
 import { ATTACKS } from '../combat/rules.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
-import { net } from '../net/session.js';
+import { net, WORLD_ROOM } from '../net/session.js';
 import { RemotePlayers } from '../net/remotes.js';
 import { FIGHTER_IDS, fighter } from '../fighters.js';
 
@@ -91,7 +91,7 @@ export class Level extends Phaser.Scene {
       fontFamily: 'monospace', fontSize: '12px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 6, y: 5 },
     }).setOrigin(1, 0).setScrollFactor(0).setDepth(200001);
     const showRoom = () => {
-      badge.setText(`Room ${net.room}  ${net.count} here`).setVisible(net.active).setX(this.scale.width - 8);
+      badge.setText(net.room === WORLD_ROOM ? `${net.count} online` : `Room ${net.room}  ${net.count} here`).setVisible(net.active).setX(this.scale.width - 8);
     };
     showRoom();
     on(net, 'players', showRoom);

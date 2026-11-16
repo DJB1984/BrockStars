@@ -26,7 +26,7 @@ export function Lobby({ level, initialCharacter, onDone }: Props) {
   }, [session]);
 
   const back = () => {
-    if (net.active) net.end('left');
+    net.end('left');
     setSession(null);
   };
 

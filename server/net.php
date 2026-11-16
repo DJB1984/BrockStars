@@ -2,7 +2,9 @@
 // BrockStars matchmaking. The players' browsers play each other directly over WebRTC; this script only
 // introduces them. It keeps the open rooms and passes the handshake (an offer and an answer) between a
 // joiner and the host. Plain PHP and files, so it runs on shared hosting. Every request is net.php?action=...
-//   GET  rooms                              rooms hosted from the caller's network (same public address)
+//   GET  rooms                              rooms hosted from the caller's network (same public address),
+//                                           not counting the shared game (WORLD_ROOM)
+//   GET  world                              → {players}: how many are in the shared game right now
 //   POST host  {name, level, room?}         opens a room (a random code, or `room`) → {room, peer: "h", key, ice}
 //   POST join  {room, name}                 → {room, peer, key, host, ice}
 //   POST send  {room, peer, key, to, data}  queues one message for another peer in the room
@@ -20,6 +22,8 @@ header('Cache-Control: no-store');
 const ROOM_TTL = 15;        // seconds a room stays open without its host polling
 const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 const MAX_PLAYERS = 8;
+const WORLD_ROOM = 'BROCK';  // the one game everyone plays in (src/net/session.js); any browser can be its hub
+const WORLD_MAX = 16;       // the hub relays every player to every other, so its upload grows with players squared
 const MAX_INBOX = 40;
 const MAX_DATA = 24000;     // one handshake message (base64 SDP), in bytes
 
@@ -117,6 +121,7 @@ function clean_name($name, $fallback = 'Player') {
 function token($bytes) { return bin2hex(random_bytes($bytes)); }
 function room_path($code) { global $DATA; return "$DATA/room-$code.json"; }
 function alive($room) { return $room && time() - $room['hostSeen'] < ROOM_TTL; }
+function max_players($code) { return $code === WORLD_ROOM ? WORLD_MAX : MAX_PLAYERS; }
 
 // Runs $fn on the room under an exclusive lock. $fn returns [the room to save (null deletes it), result],
 // or throws a Refusal, which leaves the room as it was and fails the request.
@@ -170,11 +175,23 @@ if ($action === 'rooms') {
   $rooms = [];
   foreach (glob(room_path('*')) as $path) {
     $room = json_decode((string) @file_get_contents($path), true);
-    if (alive($room) && $room['network'] === $network) {
+    if (alive($room) && $room['network'] === $network && $room['code'] !== WORLD_ROOM) {
       $rooms[] = ['room' => $room['code'], 'host' => $room['host'], 'level' => $room['level'], 'players' => $room['players']];
     }
   }
   reply(['rooms' => $rooms]);
+}
+
+if ($action === 'world') {
+  $f = @fopen(room_path(WORLD_ROOM), 'r');
+  $room = null;
+  if ($f) {
+    flock($f, LOCK_SH);   // not mid-write by with_room
+    $room = json_decode((string) stream_get_contents($f), true);
+    flock($f, LOCK_UN);
+    fclose($f);
+  }
+  reply(['players' => alive($room) ? (int) $room['players'] : 0]);
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') fail('method', 'Use POST for this.', 405);
@@ -207,7 +224,7 @@ switch ($action) {
   case 'join':
     $result = with_room($code, function ($room) use ($code, $in) {
       if (!alive($room)) throw new Refusal('no-room', "There's no open game with code $code.");
-      if ($room['players'] >= MAX_PLAYERS) throw new Refusal('full', 'That game is full.');
+      if ($room['players'] >= max_players($code)) throw new Refusal('full', 'That game is full.');
       foreach ($room['peers'] as $id => $p) if ($p['seen'] < time() - 60) unset($room['peers'][$id]);
       $peer = token(3);
       $key = token(16);
@@ -230,11 +247,11 @@ switch ($action) {
     reply(['ok' => true]);
 
   case 'poll':
-    $messages = with_room($code, function ($room) use ($peer, $key, $in) {
+    $messages = with_room($code, function ($room) use ($code, $peer, $key, $in) {
       check_peer($room, $peer, $key);
       if ($peer === 'h') {
         $room['hostSeen'] = time();
-        if (isset($in['players'])) $room['players'] = max(1, min(MAX_PLAYERS, (int) $in['players']));
+        if (isset($in['players'])) $room['players'] = max(1, min(max_players($code), (int) $in['players']));
       } else {
         if (!alive($room)) throw new Refusal('no-room', 'That game has ended.');
         $room['peers'][$peer]['seen'] = time();
