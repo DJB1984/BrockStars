@@ -9,6 +9,7 @@ import { Walker } from '../objects/Walker.js';
 import { net, WORLD_ROOM } from '../net/session.js';
 import { RemotePlayers } from '../net/remotes.js';
 import { FIGHTER_IDS, fighter } from '../fighters.js';
+import { enableCornerSlide } from '../cornerSlide.js';
 
 // Object type (a level object's "type") → the class that gives it behaviour. Add yours here.
 const TYPES = { enemy: Walker };
@@ -135,6 +136,8 @@ export class Level extends Phaser.Scene {
       this.physics.add.overlap(player, this.actors.map((a) => a.sprite), (_, enemy) => {
         if (enemy.body.enable) this.hurt(enemy);
       });
+      // clipping a corner by a few pixels slides you around it instead of stopping you
+      if (level.info?.view !== 'side') enableCornerSlide(player, { layers: Object.values(level.layers), props: level.props });
     }
 
     if (import.meta.env.DEV) {
