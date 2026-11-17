@@ -95,14 +95,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            4,
+            5,
             26,
-            47
+            46
           ]
         ],
         "hit": []
@@ -131,14 +131,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            5,
+            4,
             26,
-            46
+            47
           ]
         ],
         "hit": []
@@ -167,14 +167,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            4,
+            5,
             26,
-            47
+            46
           ]
         ],
         "hit": []
@@ -203,14 +203,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            5,
+            4,
             26,
-            46
+            47
           ]
         ],
         "hit": []
@@ -311,14 +311,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            4,
+            5,
             26,
-            47
+            46
           ]
         ],
         "hit": []
@@ -347,14 +347,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            5,
+            4,
             26,
-            46
+            47
           ]
         ],
         "hit": []
@@ -383,14 +383,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            4,
+            5,
             26,
-            47
+            46
           ]
         ],
         "hit": []
@@ -419,14 +419,14 @@
         "x": 0.5,
         "y": 0.8125
       },
-      "duration": 100,
+      "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             19,
-            5,
+            4,
             26,
-            46
+            47
           ]
         ],
         "hit": []
@@ -3083,7 +3083,7 @@
         "mason_walk_down": {
           "anim": "walk_down",
           "loop": true,
-          "fps": 10.0,
+          "fps": 8.0,
           "frames": 4
         },
         "mason_idle_up": {
@@ -3095,7 +3095,7 @@
         "mason_walk_up": {
           "anim": "walk_up",
           "loop": true,
-          "fps": 10.0,
+          "fps": 8.0,
           "frames": 4
         },
         "mason_idle_side": {
