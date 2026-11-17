@@ -19,14 +19,38 @@ export function directionTo(dx, dy) {
   return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
 }
 
+// Narrow t in [lo, hi] to where v0 - t*dv stays inside [min, max]; false once it's empty.
+function clip(range, v0, dv, min, max) {
+  if (!dv) return v0 >= min && v0 <= max;
+  const a = (v0 - max) / dv, b = (v0 - min) / dv;
+  range[0] = Math.max(range[0], Math.min(a, b));
+  range[1] = Math.min(range[1], Math.max(a, b));
+  return range[0] <= range[1];
+}
+
+// Is the target in the zone of an attacker standing anywhere on the segment from a to b?
+function zoneAlong(a, b, target, fx, fy, spec) {
+  const dx = target.x - a.x, dy = target.y - a.y, mx = b.x - a.x, my = b.y - a.y;
+  const width = (spec.width ?? 18) + BODY, range = [0, 1];
+  return clip(range, dx * fx + dy * fy, mx * fx + my * fy, -BODY, spec.reach + BODY)
+    && clip(range, dx * fy - dy * fx, mx * fy - my * fx, -width, width);
+}
+
 // Share target geometry and nearest-first selection between local play and the host.
-export function attackTargets(source, targets, facing, spec) {
-  const [fx, fy] = DIRECTIONS[facing];
-  return targets.filter(target => {
-    const dx = target.x - source.x, dy = target.y - source.y;
-    const forward = dx * fx + dy * fy, across = Math.abs(dx * fy - dy * fx);
-    return forward >= -BODY && forward <= spec.reach + BODY && across <= (spec.width ?? 18) + BODY;
-  }).sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
+// `path` is where the attacker has been since the swing started (oldest first). A lunge can carry
+// the attacker through someone before the strike comes out, so the zone sweeps that whole path:
+// anyone the swing passed over is hit, not only whoever is still in front at the active frame.
+export function attackTargets(source, targets, facing, spec, path = []) {
+  const [fx, fy] = DIRECTIONS[facing], points = [...path, source];
+  return targets.filter(target => points.some((point, i) => zoneAlong(points[i - 1] ?? point, point, target, fx, fy, spec)))
+    .sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
+}
+
+// Record the attacker's position for attackTargets' path, skipping samples where it stood still.
+export function extendPath(path, { x, y }) {
+  const last = path[path.length - 1];
+  if (!last || last.x !== x || last.y !== y) path.push({ x, y });
+  return path;
 }
 
 // Continuous game time, including time spent moving between levels. A blocked hit still resets regen.

@@ -1,5 +1,5 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets } from './rules.js';
+import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets, extendPath } from './rules.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
 export class TitusCombat {
@@ -10,6 +10,7 @@ export class TitusCombat {
     this.targets = targets;
     this.onHit = onHit;
     this.struck = new Set();
+    this.path = [];
     sprite.combat = this;
     const c = sprite.controller;
     this.controller = c;
@@ -67,6 +68,7 @@ export class TitusCombat {
           if (best) { this.rules.attack.facing = best.dir; c.facing = best.dir; }
         }
         this.struck.clear();
+        this.path = [{ x: sprite.x, y: sprite.y }];
         c.busy = `${sprite.texture.key}_${this.rules.attack.name}_${this.rules.attack.facing === 'left' || this.rules.attack.facing === 'right' ? 'side' : this.rules.attack.facing}`;
         playFacing(sprite, this.rules.attack.name, this.rules.attack.facing);
         sprite.emit('pixelforge-attack', sprite);
@@ -114,11 +116,13 @@ export class TitusCombat {
   checkHits() {
     const attack = this.rules.attack;
     if (!attack || !this.sprite.active || this.rules.health.value <= 0) return;
+    // Track the lunge from the wind-up on, so the strike covers everyone the swing carried us over.
+    extendPath(this.path, this.sprite);
     const hits = pixelforgeBoxes(this.sprite, 'hit');
     if (!hits.length) return;
     const spec = ATTACKS[attack.name];
     const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (target.combat ? target.combat.rules.health.value > 0 : true));
-    for (const target of attackTargets(this.sprite, candidates, attack.facing, spec)) {
+    for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path)) {
       // In this three-quarter view a head and boot have different drawn heights. Combat range
       // lives on the ground plane so rotating the same move never changes its reach.
       // The exported art still determines the active frames, never the wind-up or recovery.
@@ -132,10 +136,13 @@ export class TitusCombat {
   drawReach(graphics) {
     const attack = this.rules.attack;
     if (!attack || !pixelforgeBoxes(this.sprite, 'hit').length) return;
-    // Draw the zone a body centre actually hits in: the spec's rect credited BODY on every side.
-    const spec=ATTACKS[attack.name], reach=spec.reach+BODY*2, width=(spec.width??18)+BODY, [x,y]=[this.sprite.x,this.sprite.y];
-    const boxes={right:[x-BODY,y-width,reach,width*2],left:[x-reach+BODY,y-width,reach,width*2],up:[x-width,y-reach+BODY,width*2,reach],down:[x-width,y-BODY,width*2,reach]};
-    graphics.lineStyle(1,0xff5577).strokeRect(...boxes[attack.facing]);
+    // Draw the zone a body centre actually hits in: the spec's rect credited BODY on every side,
+    // swept over the lunge so far.
+    const spec=ATTACKS[attack.name], reach=spec.reach+BODY, width=(spec.width??18)+BODY, [fx,fy]=DIRECTIONS[attack.facing];
+    const corners=[...this.path,this.sprite].flatMap(({x,y})=>[[x-fx*BODY,y-fy*BODY],[x+fx*reach,y+fy*reach]])
+      .flatMap(([x,y])=>[[x+fy*width,y+fx*width],[x-fy*width,y-fx*width]]);
+    const xs=corners.map(c=>c[0]), ys=corners.map(c=>c[1]), x=Math.min(...xs), y=Math.min(...ys);
+    graphics.lineStyle(1,0xff5577).strokeRect(x,y,Math.max(...xs)-x,Math.max(...ys)-y);
   }
   receive(from, spec) {
     const result = this.rules.receive(spec, directionTo(from.x - this.sprite.x, from.y - this.sprite.y), this.scene.time.now);
