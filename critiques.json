@@ -1,5 +1,5 @@
 {
-  "next": 48,
+  "next": 59,
   "critiques": [
     {
       "id": 1,
@@ -804,6 +804,198 @@
       "created": "2026-11-17T02:21:37+00:00",
       "updated": "2026-11-17T02:34:59+00:00",
       "note": "Furniture now stands flush against walls and overlaps the wall face: desks sit in the room corners either side of the window (re-anchored to their floor contact), and the couch, bottom-room wardrobes, wall sinks, urinals, toilets and shower backs moved up onto the wall, with collision boxes on the floor so you can walk right up to them."
+    },
+    {
+      "id": 48,
+      "status": "fixed",
+      "text": "move the beds back a bit, they're too far down right now, double check your work.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          523,
+          80,
+          43,
+          86
+        ]
+      },
+      "created": "2026-11-17T02:38:42+00:00",
+      "updated": "2026-11-17T02:40:42+00:00",
+      "note": "Moved all 64 beds up 20px, so they no longer run into the wardrobes and still leave room in front of the desks (bottom-row rooms too, giving the desk chairs space)."
+    },
+    {
+      "id": 49,
+      "status": "fixed",
+      "text": "Showers should take up the whole wall, not have brick above them, you may need to rework this section of the wall completely",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          762,
+          334,
+          56,
+          73
+        ]
+      },
+      "created": "2026-11-17T02:39:13+00:00",
+      "updated": "2026-11-17T02:46:49+00:00",
+      "note": "The north shower stalls now have a full-height tiled back wall (with the shower head up high), so the showers fill the whole wall under its top edge with no brick above, in both bathrooms."
+    },
+    {
+      "id": 50,
+      "status": "fixed",
+      "text": "This chunk of wall looks quite aqward",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          893,
+          335,
+          21,
+          58
+        ]
+      },
+      "created": "2026-11-17T02:39:50+00:00",
+      "updated": "2026-11-17T02:46:55+00:00",
+      "note": "Reworked the divider wall beside the showers: its wall top now runs from the top of the north wall down to the L, and the L's foot got its own wall top, so no brick chunk hangs off it (mirrored in the east bathroom)."
+    },
+    {
+      "id": 51,
+      "status": "fixed",
+      "text": "fix this wall",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          799,
+          496,
+          21,
+          31
+        ]
+      },
+      "created": "2026-11-17T03:05:28+00:00",
+      "updated": "2026-11-17T03:08:24+00:00",
+      "note": "Rebuilt the L wall by the bottom door: it now has a wall top over the whole L, brick only on the stub's south face, and the wall end outline on the doorway side (mirrored in the east bathroom)."
+    },
+    {
+      "id": 52,
+      "status": "fixed",
+      "text": "These three as a group look really goofy, fix them",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          762,
+          331,
+          134,
+          63
+        ]
+      },
+      "created": "2026-11-17T03:05:46+00:00",
+      "updated": "2026-11-17T03:12:21+00:00",
+      "note": "Redrew the shower stalls: white tiled back wall with a shower head and valve, cream side panels like the toilet stalls, a blue curtain bunched at the side, a light mosaic floor with a drain and a curb (the south-facing row matches)."
+    },
+    {
+      "id": 53,
+      "status": "fixed",
+      "text": "Make this bottom feel like the end of a wall, it looks like a floor board rn.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          853,
+          357,
+          43,
+          14
+        ]
+      },
+      "created": "2026-11-17T03:17:57+00:00",
+      "updated": "2026-11-17T03:18:55+00:00",
+      "note": "The shower's tiled back wall now ends in the same baseboard as the brick walls (gray line, slate band, dark edge, outline), so it reads as the foot of a wall instead of a floorboard."
+    },
+    {
+      "id": 54,
+      "status": "fixed",
+      "text": "The curtain shouldn't go from the floor to the back of the ceilling, it should be a box kinda if you know what i'm talking about",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          797,
+          337,
+          27,
+          57
+        ]
+      },
+      "created": "2026-11-17T03:19:41+00:00",
+      "updated": "2026-11-17T03:21:58+00:00",
+      "note": "The curtain now hangs from a rod across the front of each stall down to the curb, and the side panels change shade where their front edge starts, so the stall reads as a box instead of a strip running up the back wall."
+    },
+    {
+      "id": 55,
+      "status": "fixed",
+      "text": "remove the curtain",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          883,
+          351,
+          19,
+          47
+        ]
+      },
+      "created": "2026-11-17T03:23:40+00:00",
+      "updated": "2026-11-17T03:25:26+00:00",
+      "note": "Removed the curtain from the north-facing showers; the rod across the front stays so each stall still reads as a box."
+    },
+    {
+      "id": 56,
+      "status": "fixed",
+      "text": "Remove the top bar",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          765,
+          354,
+          141,
+          8
+        ]
+      },
+      "created": "2026-11-17T03:26:27+00:00",
+      "updated": "2026-11-17T03:27:50+00:00",
+      "note": "Removed the bar across the front of the north-facing showers, leaving clean tiled stalls between the cream side panels."
+    },
+    {
+      "id": 57,
+      "status": "fixed",
+      "text": "Remove the curtain",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          843,
+          489,
+          26,
+          37
+        ]
+      },
+      "created": "2026-11-17T03:26:37+00:00",
+      "updated": "2026-11-17T03:28:58+00:00",
+      "note": "Removed the curtain from the south-facing showers."
+    },
+    {
+      "id": 58,
+      "status": "fixed",
+      "text": "remove the bar",
+      "target": {
+        "asset": "brock3",
+        "level": true
+      },
+      "created": "2026-11-17T03:26:44+00:00",
+      "updated": "2026-11-17T03:29:04+00:00",
+      "note": "Removed the curtain rod from the south-facing showers, so both rows are plain stalls between the cream side panels."
     }
   ]
 }

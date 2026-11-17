@@ -77,21 +77,21 @@
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
     "                                IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI                                ",
-    "mBBBBBBBBBBBBBBBjBBBBBBBjBBBBBBBqccccccmBBBBBBBjBBBBBBBBJbbbKBBBBBBkCCCCDcccccccmBBBBjBBBBBBJbbbKBBBBBBBBjBBBBBBBnccccccpBBBBBBBjBBBBBBBjBBBBBBBBBBBBBBBn",
-    "IFFFFFFFFFFFFFFFIFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFFMbbbNFFFFFFEGGGGHcccccccIFFFFIFFFFFFMbbbNFFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFIFFFFFFFFFFFFFFFI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbIbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbIbbbbbbbbIbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbObbbbbbbbTJbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbKRbbbbbbbbObbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "mBBBBBBBBBBBBBBBjBBBBBBBjBBBBBBBqccccccmBBBBBBBjBBBBBBBBQbbbKBBBBBBkCCCCDcccccccmBBBBjBBBBBBJbbbQBBBBBBBBjBBBBBBBnccccccpBBBBBBBjBBBBBBBjBBBBBBBBBBBBBBBn",
+    "IFFFFFFFFFFFFFFFIFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFFIbbbNFFFFFFEGGGGHcccccccIFFFFIFFFFFFMbbbIFFFFFFFFIFFFFFFFIccccccIFFFFFFFIFFFFFFFIFFFFFFFFFFFFFFFI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbIbbbbbbbbEDbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbAHbbbbbbbbIbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbObbbbbbbbTRbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbTRbbbbbbbbObbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbPbbbbbbbbNMbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbNMbbbbbbbbPbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccIxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccOxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccPxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
     "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbbbbbbbbbbbbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbbbbbbbbbbbbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbKJbbbbbbbbQbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbQbbbbbbbbKJbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbNIbbbbbbbbIbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbIbbbbbbbbIMbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbbIbbbbbbbbIbbbbbbbEGGGGHcccccccQxSSSIbbbbbbbIbbbbbbbbIbbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
-    "pBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBJbbbRBBBBBBBBLBBBBBBBLLLLLRcccccccTBBBBLBBBBBBBLBBBBBBBBTbbbKBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBq",
-    "IFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFMbbbMFFFFFFFFFFFFFFFFFFFFFMcccccccNFFFFFFFFFFFFFFFFFFFFFNbbbNFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbADbbbbbbbbQbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbQbbbbbbbbADbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbTIbbbbbbbbIbbbbbbbEGGGGHcccccccxxSSSIbbbbbbbIbbbbbbbbIRbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "IoooooooooooooooIrrrrrrrIrrrrrrrIccccccIbbbbbbbbbNIbbbbbbbbIbbbbbbbEGGGGHcccccccQxSSSIbbbbbbbIbbbbbbbbIMbbbbbbbbbIccccccIrrrrrrrIrrrrrrrIoooooooooooooooI",
+    "pBBBBBBBBBJoooKBLBJrrrKBLBJrrrKBRccccccTBBBBBBJbbbTBBBBBBBBLBBBBBBBLLLLLRcccccccTBBBBLBBBBBBBLBBBBBBBBRbbbKBBBBBBRccccccTBJrrrKBLBJrrrKBLBJoooKBBBBBBBBBq",
+    "IFFFFFFFFFMoooNFFFMrrrNFFFMrrrNFMccccccNFFFFFFMbbbNFFFFFFFFFFFFFFFFFFFFFMcccccccNFFFFFFFFFFFFFFFFFFFFFMbbbNFFFFFFMccccccNFMrrrNFFFMrrrNFFFMoooNFFFFFFFFFI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
     "IcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccI",
@@ -257,7 +257,7 @@
     "prop": "bed_green",
     "at": [
      544,
-     164
+     144
     ],
     "state": "north"
    },
@@ -265,7 +265,7 @@
     "prop": "bed",
     "at": [
      624,
-     164
+     144
     ],
     "state": "north"
    },
@@ -305,7 +305,7 @@
     "prop": "bed_red",
     "at": [
      672,
-     164
+     144
     ],
     "state": "north"
    },
@@ -313,7 +313,7 @@
     "prop": "bed_purple",
     "at": [
      752,
-     164
+     144
     ],
     "state": "north"
    },
@@ -353,7 +353,7 @@
     "prop": "bed",
     "at": [
      800,
-     164
+     144
     ],
     "state": "north"
    },
@@ -361,7 +361,7 @@
     "prop": "bed",
     "at": [
      880,
-     164
+     144
     ],
     "state": "north"
    },
@@ -401,7 +401,7 @@
     "prop": "bed",
     "at": [
      928,
-     164
+     144
     ],
     "state": "north"
    },
@@ -409,7 +409,7 @@
     "prop": "bed_gray",
     "at": [
      1008,
-     164
+     144
     ],
     "state": "north"
    },
@@ -449,7 +449,7 @@
     "prop": "bed",
     "at": [
      1056,
-     164
+     144
     ],
     "state": "north"
    },
@@ -457,7 +457,7 @@
     "prop": "bed_purple",
     "at": [
      1136,
-     164
+     144
     ],
     "state": "north"
    },
@@ -497,7 +497,7 @@
     "prop": "bed_purple",
     "at": [
      1184,
-     164
+     144
     ],
     "state": "north"
    },
@@ -505,7 +505,7 @@
     "prop": "bed",
     "at": [
      1264,
-     164
+     144
     ],
     "state": "north"
    },
@@ -545,7 +545,7 @@
     "prop": "bed_gray",
     "at": [
      1312,
-     164
+     144
     ],
     "state": "north"
    },
@@ -553,7 +553,7 @@
     "prop": "bed",
     "at": [
      1392,
-     164
+     144
     ],
     "state": "north"
    },
@@ -593,7 +593,7 @@
     "prop": "bed_green",
     "at": [
      1440,
-     164
+     144
     ],
     "state": "north"
    },
@@ -601,7 +601,7 @@
     "prop": "bed_gray",
     "at": [
      1520,
-     164
+     144
     ],
     "state": "north"
    },
@@ -641,7 +641,7 @@
     "prop": "bed_purple",
     "at": [
      1568,
-     164
+     144
     ],
     "state": "north"
    },
@@ -649,7 +649,7 @@
     "prop": "bed_gray",
     "at": [
      1648,
-     164
+     144
     ],
     "state": "north"
    },
@@ -689,7 +689,7 @@
     "prop": "bed_red",
     "at": [
      1696,
-     164
+     144
     ],
     "state": "north"
    },
@@ -697,7 +697,7 @@
     "prop": "bed",
     "at": [
      1776,
-     164
+     144
     ],
     "state": "north"
    },
@@ -737,7 +737,7 @@
     "prop": "bed_purple",
     "at": [
      1824,
-     164
+     144
     ],
     "state": "north"
    },
@@ -745,7 +745,7 @@
     "prop": "bed_gray",
     "at": [
      1904,
-     164
+     144
     ],
     "state": "north"
    },
@@ -785,7 +785,7 @@
     "prop": "bed_red",
     "at": [
      288,
-     500
+     480
     ],
     "state": "north"
    },
@@ -793,7 +793,7 @@
     "prop": "bed_green",
     "at": [
      368,
-     500
+     480
     ],
     "state": "north"
    },
@@ -833,7 +833,7 @@
     "prop": "bed_red",
     "at": [
      416,
-     500
+     480
     ],
     "state": "north"
    },
@@ -841,7 +841,7 @@
     "prop": "bed_gray",
     "at": [
      496,
-     500
+     480
     ],
     "state": "north"
    },
@@ -881,7 +881,7 @@
     "prop": "bed",
     "at": [
      1952,
-     500
+     480
     ],
     "state": "north"
    },
@@ -889,7 +889,7 @@
     "prop": "bed_purple",
     "at": [
      2032,
-     500
+     480
     ],
     "state": "north"
    },
@@ -929,7 +929,7 @@
     "prop": "bed_red",
     "at": [
      2080,
-     500
+     480
     ],
     "state": "north"
    },
@@ -937,7 +937,7 @@
     "prop": "bed_green",
     "at": [
      2160,
-     500
+     480
     ],
     "state": "north"
    },
@@ -977,7 +977,7 @@
     "prop": "bed",
     "at": [
      32,
-     836
+     816
     ],
     "state": "south"
    },
@@ -985,7 +985,7 @@
     "prop": "bed_purple",
     "at": [
      112,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1025,7 +1025,7 @@
     "prop": "bed_red",
     "at": [
      288,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1033,7 +1033,7 @@
     "prop": "bed_gray",
     "at": [
      368,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1073,7 +1073,7 @@
     "prop": "bed",
     "at": [
      416,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1081,7 +1081,7 @@
     "prop": "bed",
     "at": [
      496,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1121,7 +1121,7 @@
     "prop": "bed_red",
     "at": [
      544,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1129,7 +1129,7 @@
     "prop": "bed_purple",
     "at": [
      624,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1169,7 +1169,7 @@
     "prop": "bed",
     "at": [
      672,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1177,7 +1177,7 @@
     "prop": "bed",
     "at": [
      752,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1217,7 +1217,7 @@
     "prop": "bed",
     "at": [
      800,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1225,7 +1225,7 @@
     "prop": "bed",
     "at": [
      880,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1265,7 +1265,7 @@
     "prop": "bed_red",
     "at": [
      928,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1273,7 +1273,7 @@
     "prop": "bed_green",
     "at": [
      1008,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1313,7 +1313,7 @@
     "prop": "bed_green",
     "at": [
      1056,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1321,7 +1321,7 @@
     "prop": "bed_red",
     "at": [
      1136,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1361,7 +1361,7 @@
     "prop": "bed_green",
     "at": [
      1184,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1369,7 +1369,7 @@
     "prop": "bed",
     "at": [
      1264,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1409,7 +1409,7 @@
     "prop": "bed_gray",
     "at": [
      1312,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1417,7 +1417,7 @@
     "prop": "bed_gray",
     "at": [
      1392,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1457,7 +1457,7 @@
     "prop": "bed_green",
     "at": [
      1440,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1465,7 +1465,7 @@
     "prop": "bed",
     "at": [
      1520,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1505,7 +1505,7 @@
     "prop": "bed_green",
     "at": [
      1568,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1513,7 +1513,7 @@
     "prop": "bed_purple",
     "at": [
      1648,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1553,7 +1553,7 @@
     "prop": "bed_green",
     "at": [
      1696,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1561,7 +1561,7 @@
     "prop": "bed_purple",
     "at": [
      1776,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1601,7 +1601,7 @@
     "prop": "bed_red",
     "at": [
      1824,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1609,7 +1609,7 @@
     "prop": "bed_green",
     "at": [
      1904,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1649,7 +1649,7 @@
     "prop": "bed",
     "at": [
      1952,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1657,7 +1657,7 @@
     "prop": "bed_gray",
     "at": [
      2032,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1697,7 +1697,7 @@
     "prop": "bed_gray",
     "at": [
      2080,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1705,7 +1705,7 @@
     "prop": "bed",
     "at": [
      2160,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1745,7 +1745,7 @@
     "prop": "bed_red",
     "at": [
      2336,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1753,7 +1753,7 @@
     "prop": "bed_red",
     "at": [
      2416,
-     836
+     816
     ],
     "state": "south"
    },
@@ -1947,7 +1947,7 @@
     "prop": "shower_stall_central",
     "at": [
      1573,
-     357
+     358
     ],
     "state": "north"
    },
@@ -1955,7 +1955,7 @@
     "prop": "shower_stall_central",
     "at": [
      1616,
-     357
+     358
     ],
     "state": "north"
    },
@@ -1963,7 +1963,7 @@
     "prop": "shower_stall_central",
     "at": [
      1659,
-     357
+     358
     ],
     "state": "north"
    },
@@ -2123,7 +2123,7 @@
     "prop": "shower_stall_central",
     "at": [
      875,
-     357
+     358
     ],
     "state": "north"
    },
@@ -2131,7 +2131,7 @@
     "prop": "shower_stall_central",
     "at": [
      832,
-     357
+     358
     ],
     "state": "north"
    },
@@ -2139,7 +2139,7 @@
     "prop": "shower_stall_central",
     "at": [
      789,
-     357
+     358
     ],
     "state": "north"
    },
