@@ -21,14 +21,14 @@
       },
       "pivot": {
         "x": 0.5,
-        "y": 1.0
+        "y": 0.9615384615384616
       },
       "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             9,
-            8,
+            19,
             39,
             31
           ]
@@ -57,7 +57,7 @@
       },
       "pivot": {
         "x": 0.5,
-        "y": 1.0
+        "y": 0.9615384615384616
       },
       "duration": 125,
       "pixelforge": {
@@ -108,14 +108,14 @@
       "class": null,
       "origin": [
         24,
-        52
+        50
       ],
       "anchor": "feet",
       "body": {
         "x": 9,
-        "y": 12,
+        "y": 40,
         "w": 39,
-        "h": 36
+        "h": 10
       },
       "animations": {
         "desk_front": {
@@ -137,9 +137,9 @@
         "solid": true,
         "footprint": [
           9,
-          12,
+          40,
           39,
-          36
+          10
         ],
         "ysort": true,
         "tiles": null

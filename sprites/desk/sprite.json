@@ -8,13 +8,13 @@
  ],
  "origin": [
   24,
-  52
+  50
  ],
  "footprint": [
   9,
-  12,
+  40,
   39,
-  36
+  10
  ],
  "palette": {
   "k": "outline",

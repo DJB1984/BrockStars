@@ -1,5 +1,5 @@
 {
-  "next": 47,
+  "next": 48,
   "critiques": [
     {
       "id": 1,
@@ -734,23 +734,6 @@
       "note": "Moved the desks flush against the north wall in every dorm room (8px up)."
     },
     {
-      "id": 43,
-      "status": "working",
-      "text": "Put these on the bottom against the wall",
-      "target": {
-        "asset": "brock3",
-        "level": true,
-        "region": [
-          860,
-          679,
-          55,
-          78
-        ]
-      },
-      "created": "2026-11-17T01:52:40+00:00",
-      "updated": "2026-11-17T01:52:41+00:00"
-    },
-    {
       "id": 44,
       "status": "fixed",
       "text": "put these showers against the wall. you should be able to walk into them",
@@ -803,6 +786,24 @@
       "created": "2026-11-17T01:56:01+00:00",
       "updated": "2026-11-17T02:13:06+00:00",
       "note": "Moved every front-facing desk up 5px so its back edge covers the baseboard and meets the window sill, so the desks read as pushed against the wall."
+    },
+    {
+      "id": 47,
+      "status": "fixed",
+      "text": "We're having an issue which can be seen with the desks (and other places like the sinks and showers) assests should be able to go flush up against the walls, rather than sitting infront of them like so. Although this looks alright in reality there is space between the desk and the wall it just gets muddled with perspective. design it so that items can be pushed right up to walls like in reall life, they should be able to over lap. ask any questions you've got",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          719,
+          5,
+          54,
+          58
+        ]
+      },
+      "created": "2026-11-17T02:21:37+00:00",
+      "updated": "2026-11-17T02:34:59+00:00",
+      "note": "Furniture now stands flush against walls and overlaps the wall face: desks sit in the room corners either side of the window (re-anchored to their floor contact), and the couch, bottom-room wardrobes, wall sinks, urinals, toilets and shower backs moved up onto the wall, with collision boxes on the floor so you can walk right up to them."
     }
   ]
 }

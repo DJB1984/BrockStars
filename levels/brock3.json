@@ -240,16 +240,16 @@
    {
     "prop": "desk",
     "at": [
-     556,
-     71
+     543,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     612,
-     71
+     616,
+     42
     ],
     "state": "front"
    },
@@ -288,16 +288,16 @@
    {
     "prop": "desk",
     "at": [
-     684,
-     71
+     671,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     740,
-     71
+     744,
+     42
     ],
     "state": "front"
    },
@@ -336,16 +336,16 @@
    {
     "prop": "desk",
     "at": [
-     812,
-     71
+     799,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     868,
-     71
+     872,
+     42
     ],
     "state": "front"
    },
@@ -384,16 +384,16 @@
    {
     "prop": "desk",
     "at": [
-     940,
-     71
+     927,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     996,
-     71
+     1000,
+     42
     ],
     "state": "front"
    },
@@ -432,16 +432,16 @@
    {
     "prop": "desk",
     "at": [
-     1068,
-     71
+     1055,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1124,
-     71
+     1128,
+     42
     ],
     "state": "front"
    },
@@ -480,16 +480,16 @@
    {
     "prop": "desk",
     "at": [
-     1196,
-     71
+     1183,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1252,
-     71
+     1256,
+     42
     ],
     "state": "front"
    },
@@ -528,16 +528,16 @@
    {
     "prop": "desk",
     "at": [
-     1324,
-     71
+     1311,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1380,
-     71
+     1384,
+     42
     ],
     "state": "front"
    },
@@ -576,16 +576,16 @@
    {
     "prop": "desk",
     "at": [
-     1452,
-     71
+     1439,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1508,
-     71
+     1512,
+     42
     ],
     "state": "front"
    },
@@ -624,16 +624,16 @@
    {
     "prop": "desk",
     "at": [
-     1580,
-     71
+     1567,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1636,
-     71
+     1640,
+     42
     ],
     "state": "front"
    },
@@ -672,16 +672,16 @@
    {
     "prop": "desk",
     "at": [
-     1708,
-     71
+     1695,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1764,
-     71
+     1768,
+     42
     ],
     "state": "front"
    },
@@ -720,16 +720,16 @@
    {
     "prop": "desk",
     "at": [
-     1836,
-     71
+     1823,
+     42
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     1892,
-     71
+     1896,
+     42
     ],
     "state": "front"
    },
@@ -768,16 +768,16 @@
    {
     "prop": "desk",
     "at": [
-     300,
-     407
+     287,
+     378
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     356,
-     407
+     360,
+     378
     ],
     "state": "front"
    },
@@ -816,16 +816,16 @@
    {
     "prop": "desk",
     "at": [
-     428,
-     407
+     415,
+     378
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     484,
-     407
+     488,
+     378
     ],
     "state": "front"
    },
@@ -864,16 +864,16 @@
    {
     "prop": "desk",
     "at": [
-     1964,
-     407
+     1951,
+     378
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     2020,
-     407
+     2024,
+     378
     ],
     "state": "front"
    },
@@ -912,16 +912,16 @@
    {
     "prop": "desk",
     "at": [
-     2092,
-     407
+     2079,
+     378
     ],
     "state": "front"
    },
    {
     "prop": "desk",
     "at": [
-     2148,
-     407
+     2152,
+     378
     ],
     "state": "front"
    },
@@ -961,7 +961,7 @@
     "prop": "wardrobe_side",
     "at": [
      27,
-     756
+     728
     ],
     "state": "east"
    },
@@ -969,7 +969,7 @@
     "prop": "wardrobe_side",
     "at": [
      117,
-     756
+     728
     ],
     "state": "west"
    },
@@ -992,7 +992,7 @@
    {
     "prop": "desk",
     "at": [
-     44,
+     31,
      880
     ],
     "state": "back"
@@ -1000,7 +1000,7 @@
    {
     "prop": "desk",
     "at": [
-     100,
+     104,
      880
     ],
     "state": "back"
@@ -1009,7 +1009,7 @@
     "prop": "wardrobe_side",
     "at": [
      283,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1017,7 +1017,7 @@
     "prop": "wardrobe_side",
     "at": [
      373,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1040,7 +1040,7 @@
    {
     "prop": "desk",
     "at": [
-     300,
+     287,
      880
     ],
     "state": "back"
@@ -1048,7 +1048,7 @@
    {
     "prop": "desk",
     "at": [
-     356,
+     360,
      880
     ],
     "state": "back"
@@ -1057,7 +1057,7 @@
     "prop": "wardrobe_side",
     "at": [
      411,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1065,7 +1065,7 @@
     "prop": "wardrobe_side",
     "at": [
      501,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1088,7 +1088,7 @@
    {
     "prop": "desk",
     "at": [
-     428,
+     415,
      880
     ],
     "state": "back"
@@ -1096,7 +1096,7 @@
    {
     "prop": "desk",
     "at": [
-     484,
+     488,
      880
     ],
     "state": "back"
@@ -1105,7 +1105,7 @@
     "prop": "wardrobe_side",
     "at": [
      539,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1113,7 +1113,7 @@
     "prop": "wardrobe_side",
     "at": [
      629,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1136,7 +1136,7 @@
    {
     "prop": "desk",
     "at": [
-     556,
+     543,
      880
     ],
     "state": "back"
@@ -1144,7 +1144,7 @@
    {
     "prop": "desk",
     "at": [
-     612,
+     616,
      880
     ],
     "state": "back"
@@ -1153,7 +1153,7 @@
     "prop": "wardrobe_side",
     "at": [
      667,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1161,7 +1161,7 @@
     "prop": "wardrobe_side",
     "at": [
      757,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1184,7 +1184,7 @@
    {
     "prop": "desk",
     "at": [
-     684,
+     671,
      880
     ],
     "state": "back"
@@ -1192,7 +1192,7 @@
    {
     "prop": "desk",
     "at": [
-     740,
+     744,
      880
     ],
     "state": "back"
@@ -1201,7 +1201,7 @@
     "prop": "wardrobe_side",
     "at": [
      795,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1209,7 +1209,7 @@
     "prop": "wardrobe_side",
     "at": [
      885,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1232,7 +1232,7 @@
    {
     "prop": "desk",
     "at": [
-     812,
+     799,
      880
     ],
     "state": "back"
@@ -1240,7 +1240,7 @@
    {
     "prop": "desk",
     "at": [
-     868,
+     872,
      880
     ],
     "state": "back"
@@ -1249,7 +1249,7 @@
     "prop": "wardrobe_side",
     "at": [
      923,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1257,7 +1257,7 @@
     "prop": "wardrobe_side",
     "at": [
      1013,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1280,7 +1280,7 @@
    {
     "prop": "desk",
     "at": [
-     940,
+     927,
      880
     ],
     "state": "back"
@@ -1288,7 +1288,7 @@
    {
     "prop": "desk",
     "at": [
-     996,
+     1000,
      880
     ],
     "state": "back"
@@ -1297,7 +1297,7 @@
     "prop": "wardrobe_side",
     "at": [
      1051,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1305,7 +1305,7 @@
     "prop": "wardrobe_side",
     "at": [
      1141,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1328,7 +1328,7 @@
    {
     "prop": "desk",
     "at": [
-     1068,
+     1055,
      880
     ],
     "state": "back"
@@ -1336,7 +1336,7 @@
    {
     "prop": "desk",
     "at": [
-     1124,
+     1128,
      880
     ],
     "state": "back"
@@ -1345,7 +1345,7 @@
     "prop": "wardrobe_side",
     "at": [
      1179,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1353,7 +1353,7 @@
     "prop": "wardrobe_side",
     "at": [
      1269,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1376,7 +1376,7 @@
    {
     "prop": "desk",
     "at": [
-     1196,
+     1183,
      880
     ],
     "state": "back"
@@ -1384,7 +1384,7 @@
    {
     "prop": "desk",
     "at": [
-     1252,
+     1256,
      880
     ],
     "state": "back"
@@ -1393,7 +1393,7 @@
     "prop": "wardrobe_side",
     "at": [
      1307,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1401,7 +1401,7 @@
     "prop": "wardrobe_side",
     "at": [
      1397,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1424,7 +1424,7 @@
    {
     "prop": "desk",
     "at": [
-     1324,
+     1311,
      880
     ],
     "state": "back"
@@ -1432,7 +1432,7 @@
    {
     "prop": "desk",
     "at": [
-     1380,
+     1384,
      880
     ],
     "state": "back"
@@ -1441,7 +1441,7 @@
     "prop": "wardrobe_side",
     "at": [
      1435,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1449,7 +1449,7 @@
     "prop": "wardrobe_side",
     "at": [
      1525,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1472,7 +1472,7 @@
    {
     "prop": "desk",
     "at": [
-     1452,
+     1439,
      880
     ],
     "state": "back"
@@ -1480,7 +1480,7 @@
    {
     "prop": "desk",
     "at": [
-     1508,
+     1512,
      880
     ],
     "state": "back"
@@ -1489,7 +1489,7 @@
     "prop": "wardrobe_side",
     "at": [
      1563,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1497,7 +1497,7 @@
     "prop": "wardrobe_side",
     "at": [
      1653,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1520,7 +1520,7 @@
    {
     "prop": "desk",
     "at": [
-     1580,
+     1567,
      880
     ],
     "state": "back"
@@ -1528,7 +1528,7 @@
    {
     "prop": "desk",
     "at": [
-     1636,
+     1640,
      880
     ],
     "state": "back"
@@ -1537,7 +1537,7 @@
     "prop": "wardrobe_side",
     "at": [
      1691,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1545,7 +1545,7 @@
     "prop": "wardrobe_side",
     "at": [
      1781,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1568,7 +1568,7 @@
    {
     "prop": "desk",
     "at": [
-     1708,
+     1695,
      880
     ],
     "state": "back"
@@ -1576,7 +1576,7 @@
    {
     "prop": "desk",
     "at": [
-     1764,
+     1768,
      880
     ],
     "state": "back"
@@ -1585,7 +1585,7 @@
     "prop": "wardrobe_side",
     "at": [
      1819,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1593,7 +1593,7 @@
     "prop": "wardrobe_side",
     "at": [
      1909,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1616,7 +1616,7 @@
    {
     "prop": "desk",
     "at": [
-     1836,
+     1823,
      880
     ],
     "state": "back"
@@ -1624,7 +1624,7 @@
    {
     "prop": "desk",
     "at": [
-     1892,
+     1896,
      880
     ],
     "state": "back"
@@ -1633,7 +1633,7 @@
     "prop": "wardrobe_side",
     "at": [
      1947,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1641,7 +1641,7 @@
     "prop": "wardrobe_side",
     "at": [
      2037,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1664,7 +1664,7 @@
    {
     "prop": "desk",
     "at": [
-     1964,
+     1951,
      880
     ],
     "state": "back"
@@ -1672,7 +1672,7 @@
    {
     "prop": "desk",
     "at": [
-     2020,
+     2024,
      880
     ],
     "state": "back"
@@ -1681,7 +1681,7 @@
     "prop": "wardrobe_side",
     "at": [
      2075,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1689,7 +1689,7 @@
     "prop": "wardrobe_side",
     "at": [
      2165,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1712,7 +1712,7 @@
    {
     "prop": "desk",
     "at": [
-     2092,
+     2079,
      880
     ],
     "state": "back"
@@ -1720,7 +1720,7 @@
    {
     "prop": "desk",
     "at": [
-     2148,
+     2152,
      880
     ],
     "state": "back"
@@ -1729,7 +1729,7 @@
     "prop": "wardrobe_side",
     "at": [
      2331,
-     756
+     728
     ],
     "state": "east"
    },
@@ -1737,7 +1737,7 @@
     "prop": "wardrobe_side",
     "at": [
      2421,
-     756
+     728
     ],
     "state": "west"
    },
@@ -1760,7 +1760,7 @@
    {
     "prop": "desk",
     "at": [
-     2348,
+     2335,
      880
     ],
     "state": "back"
@@ -1768,7 +1768,7 @@
    {
     "prop": "desk",
     "at": [
-     2404,
+     2408,
      880
     ],
     "state": "back"
@@ -1777,7 +1777,7 @@
     "prop": "couch",
     "at": [
      128,
-     416
+     400
     ]
    },
    {
@@ -1798,7 +1798,7 @@
     "prop": "couch",
     "at": [
      2304,
-     416
+     400
     ]
    },
    {
@@ -1819,7 +1819,7 @@
     "prop": "toilet_stall_compact",
     "at": [
      1392,
-     404
+     396
     ],
     "state": "north"
    },
@@ -1827,7 +1827,7 @@
     "prop": "toilet_stall_compact",
     "at": [
      1424,
-     404
+     396
     ],
     "state": "north"
    },
@@ -1835,7 +1835,7 @@
     "prop": "urinal",
     "at": [
      1450,
-     400
+     376
     ],
     "state": "north"
    },
@@ -1843,7 +1843,7 @@
     "prop": "urinal",
     "at": [
      1470,
-     400
+     376
     ],
     "state": "north"
    },
@@ -1899,7 +1899,7 @@
     "prop": "urinal",
     "at": [
      1734,
-     540
+     545
     ],
     "state": "south"
    },
@@ -1907,7 +1907,7 @@
     "prop": "urinal",
     "at": [
      1714,
-     540
+     545
     ],
     "state": "south"
    },
@@ -1915,7 +1915,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      1796,
-     392
+     373
     ],
     "state": "north"
    },
@@ -1923,7 +1923,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      1772,
-     392
+     373
     ],
     "state": "north"
    },
@@ -1931,7 +1931,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      1748,
-     392
+     373
     ],
     "state": "north"
    },
@@ -1939,7 +1939,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      1724,
-     392
+     373
     ],
     "state": "north"
    },
@@ -1947,7 +1947,7 @@
     "prop": "shower_stall_central",
     "at": [
      1573,
-     367
+     357
     ],
     "state": "north"
    },
@@ -1955,7 +1955,7 @@
     "prop": "shower_stall_central",
     "at": [
      1616,
-     367
+     357
     ],
     "state": "north"
    },
@@ -1963,7 +1963,7 @@
     "prop": "shower_stall_central",
     "at": [
      1659,
-     367
+     357
     ],
     "state": "north"
    },
@@ -1995,7 +1995,7 @@
     "prop": "toilet_stall_compact",
     "at": [
      1056,
-     404
+     396
     ],
     "state": "north"
    },
@@ -2003,7 +2003,7 @@
     "prop": "toilet_stall_compact",
     "at": [
      1024,
-     404
+     396
     ],
     "state": "north"
    },
@@ -2011,7 +2011,7 @@
     "prop": "urinal",
     "at": [
      998,
-     400
+     376
     ],
     "state": "north"
    },
@@ -2019,7 +2019,7 @@
     "prop": "urinal",
     "at": [
      978,
-     400
+     376
     ],
     "state": "north"
    },
@@ -2075,7 +2075,7 @@
     "prop": "urinal",
     "at": [
      714,
-     540
+     545
     ],
     "state": "south"
    },
@@ -2083,7 +2083,7 @@
     "prop": "urinal",
     "at": [
      734,
-     540
+     545
     ],
     "state": "south"
    },
@@ -2091,7 +2091,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      652,
-     392
+     373
     ],
     "state": "north"
    },
@@ -2099,7 +2099,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      676,
-     392
+     373
     ],
     "state": "north"
    },
@@ -2107,7 +2107,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      700,
-     392
+     373
     ],
     "state": "north"
    },
@@ -2115,7 +2115,7 @@
     "prop": "bathroom_sink_compact",
     "at": [
      724,
-     392
+     373
     ],
     "state": "north"
    },
@@ -2123,7 +2123,7 @@
     "prop": "shower_stall_central",
     "at": [
      875,
-     367
+     357
     ],
     "state": "north"
    },
@@ -2131,7 +2131,7 @@
     "prop": "shower_stall_central",
     "at": [
      832,
-     367
+     357
     ],
     "state": "north"
    },
@@ -2139,7 +2139,7 @@
     "prop": "shower_stall_central",
     "at": [
      789,
-     367
+     357
     ],
     "state": "north"
    },
