@@ -241,7 +241,7 @@
     "prop": "desk",
     "at": [
      556,
-     84
+     71
     ],
     "state": "front"
    },
@@ -249,7 +249,7 @@
     "prop": "desk",
     "at": [
      612,
-     84
+     71
     ],
     "state": "front"
    },
@@ -289,7 +289,7 @@
     "prop": "desk",
     "at": [
      684,
-     84
+     71
     ],
     "state": "front"
    },
@@ -297,7 +297,7 @@
     "prop": "desk",
     "at": [
      740,
-     84
+     71
     ],
     "state": "front"
    },
@@ -337,7 +337,7 @@
     "prop": "desk",
     "at": [
      812,
-     84
+     71
     ],
     "state": "front"
    },
@@ -345,7 +345,7 @@
     "prop": "desk",
     "at": [
      868,
-     84
+     71
     ],
     "state": "front"
    },
@@ -385,7 +385,7 @@
     "prop": "desk",
     "at": [
      940,
-     84
+     71
     ],
     "state": "front"
    },
@@ -393,7 +393,7 @@
     "prop": "desk",
     "at": [
      996,
-     84
+     71
     ],
     "state": "front"
    },
@@ -433,7 +433,7 @@
     "prop": "desk",
     "at": [
      1068,
-     84
+     71
     ],
     "state": "front"
    },
@@ -441,7 +441,7 @@
     "prop": "desk",
     "at": [
      1124,
-     84
+     71
     ],
     "state": "front"
    },
@@ -481,7 +481,7 @@
     "prop": "desk",
     "at": [
      1196,
-     84
+     71
     ],
     "state": "front"
    },
@@ -489,7 +489,7 @@
     "prop": "desk",
     "at": [
      1252,
-     84
+     71
     ],
     "state": "front"
    },
@@ -529,7 +529,7 @@
     "prop": "desk",
     "at": [
      1324,
-     84
+     71
     ],
     "state": "front"
    },
@@ -537,7 +537,7 @@
     "prop": "desk",
     "at": [
      1380,
-     84
+     71
     ],
     "state": "front"
    },
@@ -577,7 +577,7 @@
     "prop": "desk",
     "at": [
      1452,
-     84
+     71
     ],
     "state": "front"
    },
@@ -585,7 +585,7 @@
     "prop": "desk",
     "at": [
      1508,
-     84
+     71
     ],
     "state": "front"
    },
@@ -625,7 +625,7 @@
     "prop": "desk",
     "at": [
      1580,
-     84
+     71
     ],
     "state": "front"
    },
@@ -633,7 +633,7 @@
     "prop": "desk",
     "at": [
      1636,
-     84
+     71
     ],
     "state": "front"
    },
@@ -673,7 +673,7 @@
     "prop": "desk",
     "at": [
      1708,
-     84
+     71
     ],
     "state": "front"
    },
@@ -681,7 +681,7 @@
     "prop": "desk",
     "at": [
      1764,
-     84
+     71
     ],
     "state": "front"
    },
@@ -721,7 +721,7 @@
     "prop": "desk",
     "at": [
      1836,
-     84
+     71
     ],
     "state": "front"
    },
@@ -729,7 +729,7 @@
     "prop": "desk",
     "at": [
      1892,
-     84
+     71
     ],
     "state": "front"
    },
@@ -769,7 +769,7 @@
     "prop": "desk",
     "at": [
      300,
-     420
+     407
     ],
     "state": "front"
    },
@@ -777,7 +777,7 @@
     "prop": "desk",
     "at": [
      356,
-     420
+     407
     ],
     "state": "front"
    },
@@ -817,7 +817,7 @@
     "prop": "desk",
     "at": [
      428,
-     420
+     407
     ],
     "state": "front"
    },
@@ -825,7 +825,7 @@
     "prop": "desk",
     "at": [
      484,
-     420
+     407
     ],
     "state": "front"
    },
@@ -865,7 +865,7 @@
     "prop": "desk",
     "at": [
      1964,
-     420
+     407
     ],
     "state": "front"
    },
@@ -873,7 +873,7 @@
     "prop": "desk",
     "at": [
      2020,
-     420
+     407
     ],
     "state": "front"
    },
@@ -913,7 +913,7 @@
     "prop": "desk",
     "at": [
      2092,
-     420
+     407
     ],
     "state": "front"
    },
@@ -921,7 +921,7 @@
     "prop": "desk",
     "at": [
      2148,
-     420
+     407
     ],
     "state": "front"
    },
@@ -1946,48 +1946,48 @@
    {
     "prop": "shower_stall_central",
     "at": [
-     1572,
-     400
+     1573,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     1612,
-     400
+     1616,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     1652,
-     400
+     1659,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     1532,
-     544
+     1525,
+     512
     ],
     "state": "south"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     1572,
-     544
+     1568,
+     512
     ],
     "state": "south"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     1612,
-     544
+     1611,
+     512
     ],
     "state": "south"
    },
@@ -2122,48 +2122,48 @@
    {
     "prop": "shower_stall_central",
     "at": [
-     876,
-     400
+     875,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     836,
-     400
+     832,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     796,
-     400
+     789,
+     367
     ],
     "state": "north"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     916,
-     544
+     923,
+     512
     ],
     "state": "south"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     876,
-     544
+     880,
+     512
     ],
     "state": "south"
    },
    {
     "prop": "shower_stall_central",
     "at": [
-     836,
-     544
+     837,
+     512
     ],
     "state": "south"
    }

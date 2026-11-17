@@ -1,5 +1,5 @@
 {
-  "next": 42,
+  "next": 47,
   "critiques": [
     {
       "id": 1,
@@ -714,6 +714,95 @@
       "created": "2026-11-14T18:47:55+00:00",
       "updated": "2026-11-14T18:49:25+00:00",
       "note": "Mirrored the finished east bathroom fixtures, showers, sink dividers, and privacy screens into the west bathroom, with its top entrance in the middle-right and bottom entrance in the middle-left; checked matching layouts and player routes."
+    },
+    {
+      "id": 42,
+      "status": "fixed",
+      "text": "put these desks against the wall",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          844,
+          11,
+          66,
+          63
+        ]
+      },
+      "created": "2026-11-17T01:52:13+00:00",
+      "updated": "2026-11-17T01:54:30+00:00",
+      "note": "Moved the desks flush against the north wall in every dorm room (8px up)."
+    },
+    {
+      "id": 43,
+      "status": "working",
+      "text": "Put these on the bottom against the wall",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          860,
+          679,
+          55,
+          78
+        ]
+      },
+      "created": "2026-11-17T01:52:40+00:00",
+      "updated": "2026-11-17T01:52:41+00:00"
+    },
+    {
+      "id": 44,
+      "status": "fixed",
+      "text": "put these showers against the wall. you should be able to walk into them",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          765,
+          345,
+          147,
+          63
+        ]
+      },
+      "created": "2026-11-17T01:52:58+00:00",
+      "updated": "2026-11-17T02:10:19+00:00",
+      "note": "Widened the shower stalls to 44px so each row of three fills its alcove wall to wall in both bathrooms, and made them walk-in: only the partition walls are solid now, and the player draws in front of the stall when inside it."
+    },
+    {
+      "id": 45,
+      "status": "fixed",
+      "text": "Make the rug a solid blue, it hurts the eyes when players walk on it",
+      "target": {
+        "asset": "dorm",
+        "map": true,
+        "region": [
+          50,
+          46,
+          20,
+          16
+        ]
+      },
+      "created": "2026-11-17T01:53:52+00:00",
+      "updated": "2026-11-17T01:57:50+00:00",
+      "note": "Made the rug a flat dark blue (dark_slate) with no pattern; I used it instead of navy so the blue beds still stand out from the floor."
+    },
+    {
+      "id": 46,
+      "status": "fixed",
+      "text": "It should be sitting up against the wall, not just on the floor",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          591,
+          21,
+          55,
+          46
+        ]
+      },
+      "created": "2026-11-17T01:56:01+00:00",
+      "updated": "2026-11-17T02:13:06+00:00",
+      "note": "Moved every front-facing desk up 5px so its back edge covers the baseboard and meets the window sill, so the desks read as pushed against the wall."
     }
   ]
 }

@@ -3,17 +3,17 @@
  "type": "prop",
  "view": "topdown",
  "size": [
-  40,
+  44,
   32
  ],
  "origin": [
-  20,
-  32
+  22,
+  0
  ],
  "footprint": [
   0,
   0,
-  40,
+  4,
   32
  ],
  "palette": {
