@@ -3,13 +3,18 @@ import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixe
          spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../game.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
-import { ATTACKS } from '../combat/rules.js';
+import { ATTACKS, BLOCK } from '../combat/rules.js';
+import { releaseTouch } from '../combat/touch.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
+import { HeadBar, headroom } from '../objects/HeadBar.js';
 import { net, WORLD_ROOM } from '../net/session.js';
 import { RemotePlayers } from '../net/remotes.js';
 import { FIGHTER_IDS, fighter } from '../fighters.js';
 import { enableCornerSlide } from '../cornerSlide.js';
+import { hud, actions } from '../ui/bridge.ts';
+import { showLobby, mountHud } from '../ui/mount.tsx';
+import { currentSession } from '../ui/session.ts';
 
 // Object type (a level object's "type") → the class that gives it behaviour. Add yours here.
 const TYPES = { enemy: Walker };
@@ -25,7 +30,10 @@ const TYPES = { enemy: Walker };
 // Hits land with this.feel (pixelforgeFeel): a hit stop, a small shake, a flash, knockback, and the
 // 'fx_hit' effect when the art has one.
 // Multiplayer (src/net/): the other players in this level are drawn from `net`, and this player's state is
-// sent to them every frame; the room code and head count show top right.
+// sent to them every frame.
+// The HUD is React (src/ui/Hud.tsx) over the canvas: this scene tells it, through src/ui/bridge.ts, who's
+// online and when Block and the Super come back, and gives its menu Change fighter and Leave game.
+// Health is a bar over every fighter's head (objects/HeadBar.js), drawn here in the world.
 // Dev only: B toggles the hit/hurt boxes, and window.pixelforgePlay drives the game for `pixelforge play`.
 export class Level extends Phaser.Scene {
   constructor() { super('level'); }
@@ -40,7 +48,7 @@ export class Level extends Phaser.Scene {
 
   create() {
     this.combat = null;
-    this.combatText = null;
+    this.inLobby = false;
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
     const level = (this.level = pixelforgeLevel(this, this.levelName, {
       spawn: this.spawnName, player: this.character,
@@ -50,32 +58,20 @@ export class Level extends Phaser.Scene {
     if (player && this.playerPosition) player.body.reset(...this.playerPosition);
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);
-    // Both fighters remain playable; switching keeps the player's position and inventory.
-    const select = (character) => {
-      if (character === this.character || !player?.active || state.health <= 0) return;
-      this.scene.restart({ level: this.levelName, spawn: this.spawnName, character,
-        playerPosition: [player.x, player.y] });
-    };
-    ['titus', 'mason'].forEach((character, index) => {
-      const selected = character === this.character;
-      this.add.text(8 + index * 105, 8, `${index + 1} ${character === 'mason' ? 'Mason' : 'Titus'}${selected ? ' *' : ''}`, {
-        fontFamily: 'monospace', fontSize: '12px', color: selected ? '#f0bb7e' : '#ecedf0',
-        backgroundColor: '#24232a', padding: { x: 6, y: 5 },
-      }).setScrollFactor(0).setDepth(200001).setInteractive({ useHandCursor: true })
-        .on('pointerdown', () => select(character));
-    });
-    const switchTitus = () => select('titus'), switchMason = () => select('mason');
-    this.input.keyboard.on('keydown-ONE', switchTitus);
-    this.input.keyboard.on('keydown-TWO', switchMason);
-    this.events.once('shutdown', () => {
-      this.input.keyboard.off('keydown-ONE', switchTitus);
-      this.input.keyboard.off('keydown-TWO', switchMason);
-    });
+    mountHud();
+    this.superMove = superMove(this.character);
+    hud.set({ visible: true, character: this.character, shield: { phase: 'ready' },
+              super: { ...this.superMove, endsAt: 0 } });
+    actions.changeFighter = () => this.openLobby({ session: currentSession() });
+    actions.leave = () => { net.end('left'); this.openLobby({}); };
+    this.events.once('shutdown', () => { hud.set({ visible: false }); releaseTouch(); });
+    this.selfBar = player ? new HeadBar(this) : null;
     this.actors = [];
     for (const s of level.sprites) {
       const Type = TYPES[s.pixelforgeObject?.type];
       if (Type) this.actors.push((s.actor = new Type(this, s, level)));
     }
+    for (const a of this.actors) if (a.hp) a.bar = new HeadBar(this);
     this.pickups = level.props.filter((p) => ['item', 'coin'].includes(p.pixelforgeObject?.type));
     for (const p of this.pickups) if (p.body) p.body.enable = false;   // walk through them, don't bump into them
     this.chests = level.props.filter((p) => p.pixelforgeObject?.type === 'chest');
@@ -88,16 +84,10 @@ export class Level extends Phaser.Scene {
     });
 
     this.remotes = new RemotePlayers(this, net);
-    const badge = this.add.text(0, 8, '', {
-      fontFamily: 'monospace', fontSize: '12px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 6, y: 5 },
-    }).setOrigin(1, 0).setScrollFactor(0).setDepth(200001);
-    const showRoom = () => {
-      badge.setText(net.room === WORLD_ROOM ? `${net.count} online` : `Room ${net.room}  ${net.count} here`).setVisible(net.active).setX(this.scale.width - 8);
-    };
+    const showRoom = () => hud.set({ net: { active: net.active, world: net.room === WORLD_ROOM, room: net.room, count: net.count } });
     showRoom();
     on(net, 'players', showRoom);
-    on(this.scale, 'resize', showRoom);
-    on(net, 'ended', (reason) => this.toast(reason));
+    on(net, 'ended', (reason) => { if (reason !== 'left') this.toast(reason); });
 
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
@@ -112,7 +102,7 @@ export class Level extends Phaser.Scene {
         const life = net.combatState.fighters[net.id]?.life ?? 0;
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
-          if (!self || !player.active) return;
+          if (!self || !player.active || this.inLobby) return;
           this.combat.rules.readyAt.takedown = this.time.now + (self.takedownCooldown ?? 0);
           if (self.life !== life) {
             reset();
@@ -127,7 +117,6 @@ export class Level extends Phaser.Scene {
             this.combat.applyHit(hit.from ?? {x:player.x-1,y:player.y}, hit);
           }
         });
-        this.combatText = this.add.text(8, 32, '', { fontFamily: 'monospace', fontSize: '10px', color: '#ecedf0', backgroundColor: '#24232a', padding: { x: 5, y: 4 } }).setScrollFactor(0).setDepth(200001);
       } else enablePixelforgeHits(this, player, hittable, (target) => {
         this.feel.hitStop(50).shake(80, 1);
         if (this.textures.exists('fx_hit')) spawnPixelforgeFx(this, (player.x + target.x) / 2, target.body.center.y, 'fx_hit');
@@ -149,18 +138,20 @@ export class Level extends Phaser.Scene {
 
   update(time, delta) {
     if (!net.active) playerHealth.update(delta);
-    if (this.combatText?.active) {
-      const remaining = this.combat.snapshot().cooldowns.takedown;
-      const special = this.character === 'titus' ? `  S Takedown ${remaining ? `${(remaining/1000).toFixed(1)}s` : 'Ready'}` : '';
-      this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block${special}`);
+    this.pushHud();
+    for (const a of this.actors) {
+      a.update?.(time);
+      if (!a.bar) continue;
+      if (a.sprite.active) a.bar.update(a.hp / a.maxHp, a.sprite.x, a.sprite.y - headroom(this, a.sprite.texture.key), delta);
+      else { a.bar.destroy(); a.bar = null; }
     }
-    for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
+    if (p?.active) this.selfBar?.update(state.health / state.maxHealth, p.x, p.y - headroom(this, this.character), delta);
     if (net.active && p?.active) {
       net.setLocal({ name: net.name, char: this.character, level: this.levelName, x: Math.round(p.x * 10) / 10,
                      y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX });
     }
-    this.remotes.update();
+    this.remotes.update(delta);
     if (p?.active) {
       const body = new Phaser.Geom.Rectangle(p.body.x, p.body.y, p.body.width, p.body.height);
       for (const item of this.pickups) {
@@ -187,10 +178,55 @@ export class Level extends Phaser.Scene {
 
   // A short message at the top of the screen (the game ended, the host left).
   toast(text) {
-    const t = this.add.text(this.scale.width / 2, 40, text, {
-      fontFamily: 'monospace', fontSize: '12px', color: '#ffffff', backgroundColor: '#24232a', padding: { x: 8, y: 6 },
-    }).setOrigin(0.5, 0).setScrollFactor(0).setDepth(200002);
-    this.tweens.add({ targets: t, alpha: 0, delay: 3500, duration: 500, onComplete: () => t.destroy() });
+    hud.toast(text);
+  }
+
+  // Block and the Super, for the HUD's keycaps: sent when a cooldown starts or a block goes up or down,
+  // as deadlines the HUD counts down by itself.
+  pushHud() {
+    const snap = this.combat?.snapshot();
+    if (!snap) return;
+    const now = performance.now();
+    const shield = snap.blocking ? { phase: 'holding', endsAt: now + snap.blockRemaining, duration: BLOCK.duration }
+      : snap.blockCooldown ? { phase: 'cooldown', endsAt: now + snap.blockCooldown, duration: BLOCK.cooldown }
+      : { phase: 'ready' };
+    const left = this.superMove.move ? snap.cooldowns[this.superMove.move] : 0;
+    const special = { ...this.superMove, endsAt: left ? now + left : 0 };
+    const shown = hud.get();
+    const moved = (a, b) => a.phase !== b.phase || Math.abs((a.endsAt ?? 0) - (b.endsAt ?? 0)) > 120;
+    if (moved(shown.shield, shield) || moved({ phase: 'cooldown', ...shown.super }, { phase: 'cooldown', ...special })) {
+      hud.set({ shield, super: special });
+    }
+  }
+
+  // The menu's Change fighter (with the game you're in) and Leave game (without one): the lobby opens over
+  // the paused level. Back from the fighter pick resumes as you were; a new fighter in the same game takes
+  // your place where you stood; a different game starts the level over.
+  async openLobby({ session }) {
+    const player = this.level.player;
+    if (this.inLobby || !player) return;
+    this.inLobby = true;
+    const room = net.room, at = [player.x, player.y];
+    hud.set({ visible: false });
+    releaseTouch();
+    net.setLocal(null);                          // the others stop seeing you while you choose
+    this.input.keyboard.disableGlobalCapture();  // so the lobby's fields can take C, X, Z, V, S and the arrows
+    this.scene.pause();
+    const { character, cancelled } = await showLobby({ level: this.levelName, character: this.character, session });
+    this.input.keyboard.enableGlobalCapture();
+    this.input.keyboard.resetKeys();
+    this.inLobby = false;
+    this.scene.resume();
+    if (cancelled) {
+      hud.set({ visible: true });
+      return;
+    }
+    const sameGame = !!session && net.room === room;
+    if (sameGame) this.scene.restart({ level: this.levelName, spawn: this.spawnName, character, playerPosition: at });
+    else {
+      reset();
+      this.scene.restart({ level: this.levelName, spawn: this.spawnName, character });
+    }
   }
 
   trigger(obj) {
@@ -236,4 +272,15 @@ export class Level extends Phaser.Scene {
     else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
     this.tweens.add({ targets: p, alpha: 0.3, duration: 100, yoyo: true, repeat: 4, onComplete: () => p.setAlpha(1) });
   }
+}
+
+// The fighter's Super for the HUD: the special move rules.js gives them (Titus's Takedown), or the design
+// doc's special, locked, until it's built (Mason's Grapple).
+function superMove(character) {
+  const built = Object.entries(ATTACKS).find(([, spec]) => spec.character === character);
+  if (built) {
+    const [move, spec] = built;
+    return { move, name: move[0].toUpperCase() + move.slice(1), key: spec.key, locked: false, duration: spec.cooldown };
+  }
+  return { move: null, name: fighter(character).special.name, key: '', locked: true, duration: 1 };
 }

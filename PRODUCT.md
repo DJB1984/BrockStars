@@ -40,7 +40,8 @@ A fighting game made by and about one friend group. The roster is real people wi
   - Planned specials (`Brocktopia/Davis Brock Fighter Game…pdf`): Mason, Grapple (slow choke hold, massive damage, long cooldown); Titus, Leg Sweep (knocks the opponent down, medium damage). Neither is built.
   - Mason's design doc profile: "Russian spy/agent". His sprite is a cowboy agent.
 - Fighter sprites are pixelforge exports (`export/mason.png|json`, `export/titus.png|json`; top-down class, 64×64, idle/walk/attack in down/up/side). The pick screen should show these real sprites.
-- Combat controls are keyboard only. The login screens must work on phones; **phone combat (touch controls) is out of scope for now** (decided 2026-11-14).
+- **Phone combat is in scope** (decided 2026-11-17, reversing 2026-11-14): touch screens get a Brawl Stars movement circle on the left (it appears wherever the left thumb lands) and the five moves on the right; keyboards keep the arrows and C X Z V S.
+- **In-game HUD** (React over the canvas, `src/ui/Hud.tsx`, decided 2026-11-17): a Menu button (Esc) top left with Resume, Controls, Change fighter and Leave game; the online / room count top right; only Block and the Super show cooldowns (desktop: two keycaps at the bottom); health is a bar over every fighter's head, never a number, with names over other players. Switching fighter only happens through the menu's Change fighter, which reopens the pick screen in the same game.
 - **Two players may pick the same fighter** (decided 2026-11-14). The pick screen never locks a fighter because someone else has it.
 - Hosting is static files plus one PHP script on shared hosting: no Node server, no database.
 

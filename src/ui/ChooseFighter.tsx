@@ -219,6 +219,14 @@ function Meter({ cells, tone = 'gold' }: { cells: number; tone?: 'gold' | 'green
 }
 
 function RoomBadge({ session, count }: { session: Session; count: number }) {
+  if (session.mode === 'solo') {
+    return (
+      <div className="room-badge">
+        <span className="room-badge-label">Playing</span>
+        <span className="room-badge-code">Solo</span>
+      </div>
+    );
+  }
   if (session.mode === 'world') {
     return (
       <div className="room-badge">

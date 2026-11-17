@@ -105,10 +105,17 @@ try {
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='brock3');
   assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health),100);
   assert.ok(await page.evaluate(()=>window.pixelforgePlay.player.combat));
-  await page.keyboard.press('2');
-  await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='mason');
-  await page.keyboard.press('1');
-  await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='titus');
+  await switchFighter(page,'mason');
+  await switchFighter(page,'titus');
   assert.deepEqual(errors,[]);
   console.log(JSON.stringify({passed:true,directionalAttackChecks:results.length,mechanicsChecks:checks.checks.length,ranges:checks.reaches,keyboard:true,characterSwitching:true,browserErrors:errors},null,2));
 } finally {await browser.close();}
+
+// Switches fighter the way a player does: Esc, Change fighter, pick them, Fight!
+async function switchFighter(page, id) {
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Change fighter' }).click();
+  await page.getByRole('button', { name: id[0].toUpperCase() + id.slice(1), exact: true }).click();
+  await page.getByRole('button', { name: 'Fight!' }).click();
+  await page.waitForFunction((id) => window.pixelforgePlay?.player?.texture.key === id && document.querySelector('.hud:not([hidden])'), id);
+}

@@ -1,0 +1,383 @@
+/* The in-game HUD: the lobby's world (lobby.css tokens, pixel nine-slices from pixel.ts, Jersey 10 for
+   lettering, DotGothic16 for reading) laid over the level. The overlay itself lets every click through;
+   only its controls catch the pointer. */
+
+.hud {
+  --gx: max(14px, env(safe-area-inset-right));
+  --gy: max(14px, env(safe-area-inset-bottom));
+  --gl: max(14px, env(safe-area-inset-left));
+  --gt: max(12px, env(safe-area-inset-top));
+  /* the badge's sunset rising in a cooling keycap: brick first, amber last, split by pine rules */
+  --charge: linear-gradient(0deg,
+    var(--brick) 0 30%, var(--pine) 30% calc(30% + var(--px)),
+    var(--ember) calc(30% + var(--px)) 62%, var(--pine) 62% calc(62% + var(--px)),
+    var(--amber) calc(62% + var(--px)));
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  color: var(--white);
+  font: 400 16px/1.4 var(--ui);
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+.hud[hidden] { display: none; }
+.hud *, .hud *::before, .hud *::after { box-sizing: border-box; }
+.hud h2, .hud h3, .hud p, .hud ul { margin: 0; padding: 0; }
+.hud ul { list-style: none; }
+.hud button { font: inherit; color: inherit; }
+.hud .btn { color: var(--white); }
+.hud :focus-visible { outline: var(--px) solid var(--amber); outline-offset: var(--px); }
+
+/* ---- top bar ------------------------------------------------------------------------------------ */
+.hud-top {
+  position: absolute;
+  top: var(--gt);
+  left: var(--gl);
+  right: var(--gx);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.hud-menu, .hud-online { pointer-events: auto; }
+.hud-menu .btn-face { gap: 10px; padding: 3px 12px 5px; font-size: 24px; }
+.hud-menu svg { filter: drop-shadow(0 2px 0 var(--ink)); }
+
+.hud-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 3px 10px 5px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.hud-online b { font: 400 26px/0.8 var(--display); color: var(--amber); }
+.hud-online .hud-code { margin-right: 4px; letter-spacing: 0.14em; color: var(--white); }
+
+.hud-toast {
+  position: absolute;
+  top: calc(var(--gt) + 62px);
+  left: 50%;
+  max-width: min(480px, calc(100% - 32px));
+  padding: 6px 14px 8px;
+  text-align: center;
+  translate: -50% 0;
+  animation: toast-in 240ms steps(4) both, toast-out 400ms steps(4) 3.6s forwards;
+}
+@keyframes toast-in { from { transform: translateY(-14px); opacity: 0; } }
+@keyframes toast-out { to { transform: translateY(-14px); opacity: 0; } }
+
+/* ---- keycaps ------------------------------------------------------------------------------------ */
+.mk {
+  --size: 54px;
+  --on: var(--white);
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.mk-ember { --tone: var(--frame-button-ember); --tone-down: var(--frame-pressed-ember); }
+.mk-brick { --tone: var(--frame-button-brick); --tone-down: var(--frame-pressed-brick); }
+.mk-amber { --tone: var(--frame-button-amber); --tone-down: var(--frame-pressed-amber); --on: var(--ink); }
+.mk-cream { --tone: var(--frame-button-cream); --tone-down: var(--frame-pressed-cream); --on: var(--ink); }
+.mk-pine { --tone: var(--frame-button-pine); --tone-down: var(--frame-pressed-pine); }
+/* used up: the cap goes dark, so the charge filling it is what you see */
+.mk.is-cooldown, .mk.is-holding, .mk.is-locked { --tone-down: var(--frame-pressed-deep); --on: var(--white); }
+
+.mk-cap {
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: content-box !important;
+  width: var(--size);
+  height: var(--size);
+  border-style: solid;
+  border-color: transparent;
+  border-width: calc(var(--px) * 3) calc(var(--px) * 3) calc(var(--px) * 5);
+  border-image: var(--tone) 3 3 5 3 fill / calc(var(--px) * 3) calc(var(--px) * 3) calc(var(--px) * 5) stretch;
+  image-rendering: pixelated;
+  color: var(--on);
+}
+.mk.is-down .mk-cap {
+  transform: translateY(calc(var(--px) * 2));
+  border-bottom-width: calc(var(--px) * 3);
+  border-image: var(--tone-down) 3 fill / calc(var(--px) * 3) stretch;
+}
+.mk-icon { position: relative; z-index: 1; width: min(calc(var(--size) * 0.64), 40px); height: auto; }
+/* white ink gets the outline every lobby letter has */
+.mk-ember .mk-icon, .mk-brick .mk-icon, .mk-pine .mk-icon, .mk.is-cooldown .mk-icon, .mk.is-holding .mk-icon {
+  filter: drop-shadow(var(--px) 0 0 var(--ink)) drop-shadow(calc(var(--px) * -1) 0 0 var(--ink))
+          drop-shadow(0 var(--px) 0 var(--ink)) drop-shadow(0 calc(var(--px) * -1) 0 var(--ink));
+}
+.mk.is-locked .mk-icon { color: var(--sage); filter: none; }
+.mk-amber.is-ready .mk-icon { animation: glint 1.8s steps(1) infinite; }
+@keyframes glint { 0%, 84% { filter: none; } 85%, 92% { filter: drop-shadow(0 0 0 var(--white)) brightness(1.6); } }
+
+.mk-fill, .mk-drain { position: absolute; inset: 0; }
+.mk-fill { background: var(--charge); animation: charge var(--dur) steps(18, end) var(--delay) both; }
+@keyframes charge { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+.mk-drain {
+  background: linear-gradient(0deg, var(--cream) 0 calc(100% - var(--px)), #ffffff calc(100% - var(--px)));
+  animation: drain var(--dur) steps(18, end) var(--delay) both;
+}
+@keyframes drain { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(100% 0 0 0); } }
+.mk.is-cooldown:has(.mk-count) .mk-icon { opacity: 0.3; }
+.mk-count {
+  position: absolute;
+  z-index: 2;
+  font: 400 calc(var(--size) * 0.7)/1 var(--display);
+  color: var(--white);
+  text-shadow: var(--outline-3), 0 4px 0 var(--ink);
+  margin-top: -4px;
+}
+
+/* back: the cap springs up past its rest, flashes white and throws two sparks */
+.mk-cap.is-pop { animation: pop 280ms steps(4) both; }
+@keyframes pop {
+  0% { transform: translateY(calc(var(--px) * 2)); }
+  45% { transform: translateY(calc(var(--px) * -3)); }
+  100% { transform: none; }
+}
+.mk-flash { position: absolute; inset: 0; z-index: 3; background: var(--white); pointer-events: none; animation: flash-out 360ms steps(3) forwards; }
+@keyframes flash-out { from { opacity: 0.95; } to { opacity: 0; } }
+.mk-cap.is-pop::before, .mk-cap.is-pop::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--px) * -4);
+  width: calc(var(--px) * 5);
+  height: calc(var(--px) * 5);
+  background:
+    linear-gradient(var(--amber), var(--amber)) center / var(--px) var(--px) no-repeat,
+    linear-gradient(var(--white), var(--white)) center / var(--px) 100% no-repeat,
+    linear-gradient(var(--white), var(--white)) center / 100% var(--px) no-repeat;
+  animation: spark-l 420ms steps(4) forwards;
+}
+.mk-cap.is-pop::before { left: calc(var(--px) * -4); }
+.mk-cap.is-pop::after { right: calc(var(--px) * -4); animation-name: spark-r; }
+@keyframes spark-l { to { transform: translate(-10px, -12px) scale(0.6); opacity: 0; } }
+@keyframes spark-r { to { transform: translate(10px, -12px) scale(0.6); opacity: 0; } }
+
+.mk-key { position: absolute; z-index: 2; top: -10px; left: -10px; }
+.mk-label {
+  font: 400 21px/0.9 var(--display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-shadow: var(--outline-2), 0 3px 0 var(--ink);
+  white-space: nowrap;
+}
+.mk-soon {
+  position: absolute;
+  z-index: 2;
+  top: -9px;
+  right: -16px;
+  padding: 0 6px 1px;
+  font: 400 18px/1 var(--display);
+  text-transform: uppercase;
+  color: var(--amber);
+  border: var(--px) solid var(--ember);
+  background: var(--pine-deep);
+  transform: rotate(-8deg);
+}
+
+/* desktop: the two cooldowns worth watching, side by side at the bottom */
+.hud-keys {
+  position: absolute;
+  left: 50%;
+  bottom: var(--gy);
+  display: flex;
+  align-items: end;
+  gap: 26px;
+  translate: -50% 0;
+}
+
+/* ---- touch controls ----------------------------------------------------------------------------- */
+.touch {
+  --u: clamp(42px, 12.5vmin, 64px);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+/* the movement circle: the left half takes a thumb anywhere; the ring rests faint bottom left */
+.stick-zone {
+  position: absolute;
+  left: 0;
+  top: calc(var(--gt) + 64px);
+  bottom: 0;
+  width: 50%;
+  pointer-events: auto;
+  touch-action: none;
+}
+.stick-ring {
+  --ring: 120px;   /* 40 cells of 3px: the disc stays on the pixel grid */
+  position: absolute;
+  left: calc(var(--gl) + var(--ring) / 2);
+  top: calc(100% - var(--gy) - var(--ring) / 2);
+  display: grid;
+  place-items: center;
+  width: var(--ring);
+  height: var(--ring);
+  translate: -50% -50%;
+  opacity: 0.5;
+  transition: opacity 120ms steps(2);
+}
+.stick-ring.is-active { opacity: 1; }
+.stick-ring > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.stick-knob { position: relative; display: block; width: calc(var(--ring) * 0.4); height: calc(var(--ring) * 0.4); }
+.stick-knob svg { display: block; width: 100%; height: 100%; }
+
+.arc {
+  position: absolute;
+  right: var(--gx);
+  bottom: var(--gy);
+  width: calc(var(--u) * 4.1);
+  height: calc(var(--u) * 3);
+}
+/* each move sits at (--cx, --cy) button units from Punch's centre, and is --s units wide */
+.arc-key {
+  --size: calc(var(--s) * var(--u) - var(--px) * 6);
+  position: absolute;
+  right: calc((0.72 - var(--cx) - var(--s) / 2) * var(--u));
+  bottom: calc((0.72 - var(--cy) - var(--s) / 2) * var(--u));
+  pointer-events: auto;
+  touch-action: none;
+  cursor: pointer;
+}
+.arc-key .mk-label { display: none; }
+/* touch caps carry their move's name under the icon */
+.mk.has-tag .mk-cap { align-content: center; gap: 3px; }
+.mk.has-tag .mk-icon { width: min(calc(var(--size) * 0.5), 30px); }
+.mk-tag {
+  position: relative;
+  z-index: 1;
+  font: 400 14px/0.75 var(--display);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--on);
+}
+.mk-ember .mk-tag, .mk-brick .mk-tag, .mk.is-cooldown .mk-tag, .mk.is-holding .mk-tag {
+  text-shadow: -1px 0 0 var(--ink), 1px 0 0 var(--ink), 0 -1px 0 var(--ink), 0 2px 0 var(--ink);
+}
+.arc-key .mk-soon { font-size: 15px; right: -10px; }
+
+/* ---- the menu ----------------------------------------------------------------------------------- */
+.hud-scrim {
+  position: fixed;
+  inset: 0;
+  pointer-events: auto;
+  background:
+    repeating-linear-gradient(0deg, rgb(18 33 42 / 0.3) 0 3px, rgb(18 33 42 / 0) 3px 6px),
+    rgb(12 23 28 / 0.62);
+  z-index: 10;
+  animation: fade-in 160ms steps(3) both;
+}
+@keyframes fade-in { from { opacity: 0; } }
+.hud-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  gap: 16px;
+  width: min(400px, calc(100% - 32px));
+  max-height: calc(100% - 32px);
+  padding: 14px 18px 20px;
+  overflow-y: auto;
+  pointer-events: auto;
+  translate: -50% -50%;
+  z-index: 11;
+  animation: dialog-in 200ms steps(4) both;
+}
+.hud-dialog.is-controls { width: min(780px, calc(100% - 32px)); }
+@keyframes dialog-in { from { transform: scale(0.9); opacity: 0; } }
+.hud-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hud-title {
+  font: 400 60px/0.85 var(--display);
+  text-transform: uppercase;
+  text-shadow: var(--outline-2), 0 4px 0 var(--ink);
+}
+.hud-close .btn-face { padding: 7px 9px 8px; }
+.hud-close svg { filter: drop-shadow(0 2px 0 var(--ink)); }
+.hud-nav { display: grid; gap: 12px; }
+.hud-nav .btn { width: 100%; }
+.hud-back { justify-self: start; }
+
+.controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; }
+.controls.is-touch-first .controls-touch { order: -1; }
+.controls-sub {
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--mist);
+  border-bottom: var(--px) solid var(--pine-lit);
+}
+.keymap { display: grid; gap: 9px; }
+.keymap-row { display: grid; grid-template-columns: 118px minmax(0, 1fr); align-items: center; column-gap: 12px; }
+.keymap-keys { display: inline-flex; }
+.keymap-arrows { display: inline-flex; gap: 3px; }
+.keymap-arrows .key { min-width: 24px; padding: 0 3px 3px; }
+.keymap-name { display: inline-flex; align-items: center; gap: 9px; }
+.keymap-name svg { flex: none; color: var(--amber); }
+.keymap-note { grid-column: 2; font-size: 12px; color: var(--mist); text-transform: uppercase; letter-spacing: 0.06em; }
+.keymap-soon {
+  padding: 0 6px 1px;
+  font: 400 18px/1 var(--display);
+  text-transform: uppercase;
+  color: var(--amber);
+  border: var(--px) solid var(--ember);
+  background: var(--pine-deep);
+  transform: rotate(-6deg);
+}
+
+/* the touch layout, drawn small on a phone-shaped well */
+.phone {
+  position: relative;
+  aspect-ratio: 2.1;
+  border: calc(var(--px) * 3) solid transparent;
+  border-image: var(--frame-field-well) 3 fill / calc(var(--px) * 3) stretch;
+  overflow: hidden;
+}
+.touch.is-demo { --u: 10cqw; --px: 1px; --gx: 4cqw; --gy: 4cqw; --gl: 4cqw; }
+.phone { container-type: inline-size; }
+.touch.is-demo .mk-label, .touch.is-demo .mk-key, .touch.is-demo .mk-tag { display: none; }
+.touch.is-demo .stick-zone { top: 0; }
+.touch.is-demo .stick-ring { --ring: 30cqw; opacity: 1; }
+.touch.is-demo .mk-soon { font-size: 10px; top: -5px; right: -8px; padding: 0 3px; }
+.controls-note { margin-top: 10px; font-size: 13px; color: var(--mist); }
+
+/* ---- name tags over other players (objects/HeadBar.js places them every frame) ---------------------- */
+.name-tags { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+.name-tag {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font: 400 16px/1 'DotGothic16', system-ui, sans-serif;
+  color: #f8f8f8;
+  white-space: nowrap;
+  -webkit-font-smoothing: none;
+  text-shadow: -2px 0 0 #12212a, 2px 0 0 #12212a, 0 -2px 0 #12212a, 0 2px 0 #12212a,
+               -2px -2px 0 #12212a, 2px -2px 0 #12212a, -2px 2px 0 #12212a, 2px 2px 0 #12212a;
+}
+.name-tag[hidden] { display: none; }
+
+/* ---- narrow screens ----------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .controls { grid-template-columns: 1fr; gap: 18px; }
+  .hud-title { font-size: 48px; }
+  .hud-menu .btn-face { font-size: 22px; padding: 2px 10px 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hud .mk-cap.is-pop, .hud .mk-flash, .hud .mk-cap::before, .hud .mk-cap::after, .hud .mk-icon,
+  .hud-toast, .hud-dialog, .hud-scrim { animation: none !important; }
+  .hud .mk-flash, .hud .mk-cap.is-pop::before, .hud .mk-cap.is-pop::after { display: none; }
+}

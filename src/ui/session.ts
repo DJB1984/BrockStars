@@ -25,7 +25,15 @@ export const worldPlayers = async () => ((await call('world')) as { players: num
 export type Session =
   | { mode: 'world'; room: string }
   | { mode: 'host'; room: string }
-  | { mode: 'join'; room: string };
+  | { mode: 'join'; room: string }
+  | { mode: 'solo' };   // changing fighter in a game played alone (?solo)
+
+// The game the player is in right now, for reopening the fighter pick from inside a level.
+export function currentSession(): Session {
+  if (!net.active || !net.room) return { mode: 'solo' };
+  if (net.room === WORLD_ROOM) return { mode: 'world', room: net.room };
+  return { mode: net.role === 'host' ? 'host' : 'join', room: net.room };
+}
 
 export const remembered = (key: string, fallback: string) => {
   try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; }

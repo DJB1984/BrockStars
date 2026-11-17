@@ -40,16 +40,120 @@ const ICONS = {
     '.xxx.',
     '.x.x.',
   ],
+  // the moves, for the HUD and the touch buttons (o is a half-tone shade of the ink)
+  // a fist seen from the front: four knuckles, the thumb folded across, the wrist
+  punch: [
+    '.xx.xx.xx.x.',
+    'xxxxxxxxxxxx',
+    'xxxxxxxxxxxx',
+    'x..x..x..xxx',
+    'xxxxxxxxxxxx',
+    'xxx......xxx',
+    '.xxxxxxxxxx.',
+    '..xxxxxxxx..',
+    '...xxxxxx...',
+    '...xxxxxx...',
+  ],
+  kick: [
+    '.xxxo....',
+    '.xxxo....',
+    '.xxxo....',
+    '.xxxo....',
+    '.xxxxx...',
+    '.xxxxxxx.',
+    '.xxxxxxxx',
+    'oooooooo.',
+  ],
+  // a head in profile, forehead first into a bonk
+  headbutt: [
+    '..xxxxx.....x',
+    '.xxxxxxx..x..',
+    'xxxxxxxxx....',
+    'xxxxxx.xx.xxx',
+    'xxxxxxxxx....',
+    'xxxxxxxx..x..',
+    '.xxxxxxx....x',
+    '..xxxxx......',
+    '...xxx.......',
+    '...xxx.......',
+  ],
+  block: [
+    'xxxxxxxxx',
+    'xxxxoxxxx',
+    'xxxxoxxxx',
+    'xoooooooo',
+    'xxxxoxxxo',
+    '.xxxoxxo.',
+    '..xxoxo..',
+    '...xoo...',
+    '....o....',
+  ],
+  // the Super: a lightning bolt
+  takedown: [
+    '.....xxx',
+    '....xxx.',
+    '...xxx..',
+    '..xxx...',
+    '.xxxxxxx',
+    'xxxxxxx.',
+    '...xxx..',
+    '..xxx...',
+    '.xxx....',
+    '.xx.....',
+    'x.......',
+  ],
+  grapple: [
+    '..xxxxx..',
+    '.x.....x.',
+    'x.......x',
+    'x.......x',
+    '.x.....x.',
+    '..xxxxx..',
+    '....x....',
+    '.....x...',
+    '......xx.',
+  ],
+  lock: [
+    '..xxxxx..',
+    '.xx...xx.',
+    '.x.....x.',
+    '.x.....x.',
+    'xxxxxxxxx',
+    'xxxxxxxxx',
+    'xxxxoxxxx',
+    'xxxxoxxxx',
+    'xxxxxxxxx',
+  ],
+  menu: [
+    'xxxxxxx',
+    'xxxxxxx',
+    '.......',
+    'xxxxxxx',
+    'xxxxxxx',
+    '.......',
+    'xxxxxxx',
+    'xxxxxxx',
+  ],
+  close: [
+    'xx...xx',
+    'xxx.xxx',
+    '.xxxxx.',
+    '..xxx..',
+    '.xxxxx.',
+    'xxx.xxx',
+    'xx...xx',
+  ],
 } as const;
 
 export type IconName = keyof typeof ICONS;
 
-type Props = { name: IconName; size: number; flip?: boolean; className?: string };
+type Props = { name: IconName; size: number; flip?: boolean; rotate?: number; className?: string };
 
 // `size` is the screen size of one grid pixel
-export function Icon({ name, size, flip, className }: Props) {
-  const rows = ICONS[name];
+export function Icon({ name, size, flip, rotate, className }: Props) {
+  const rows: readonly string[] = ICONS[name];
   const w = rows[0].length, h = rows.length;
+  const transform = [flip && 'scaleX(-1)', rotate && `rotate(${rotate}deg)`].filter(Boolean).join(' ');
   return (
     <svg
       className={className}
@@ -58,10 +162,10 @@ export function Icon({ name, size, flip, className }: Props) {
       viewBox={`0 0 ${w} ${h}`}
       shapeRendering="crispEdges"
       aria-hidden="true"
-      style={flip ? { transform: 'scaleX(-1)' } : undefined}
+      style={transform ? { transform } : undefined}
     >
-      {rows.flatMap((row, y) => [...row].map((c, x) => (c === 'x'
-        ? <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill="currentColor" />
+      {rows.flatMap((row, y) => [...row].map((c, x) => (c === 'x' || c === 'o'
+        ? <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill="currentColor" opacity={c === 'o' ? 0.5 : undefined} />
         : null)))}
     </svg>
   );

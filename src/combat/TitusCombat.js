@@ -1,5 +1,6 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
 import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets, extendPath } from './rules.js';
+import { touch } from './touch.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
 export class TitusCombat {
@@ -16,19 +17,20 @@ export class TitusCombat {
     this.controller = c;
     const read = c.readInput.bind(c), move = c.updateTopdown.bind(c);
     const keys = scene.input.keyboard.addKeys('C,X,Z,V,S');
+    // The HUD's touch controls (touch.js) count as keys: a held touch button is a held key.
     c.readInput = () => {
       const input = read();
       return { ...input, attack: false,
         // Keep movement independent of the generated helper's default WASD bindings.
-        left: c.override ? input.left : c.keys.LEFT.isDown,
-        right: c.override ? input.right : c.keys.RIGHT.isDown,
-        up: c.override ? input.up : c.keys.UP.isDown,
-        down: c.override ? input.down : c.keys.DOWN.isDown,
-        takedown: c.override ? !!c.override.takedown : keys.S.isDown,
-        punch: c.override ? !!c.override.punch : keys.C.isDown,
-        kick: c.override ? !!c.override.kick : keys.X.isDown,
-        headbutt: c.override ? !!c.override.headbutt : keys.Z.isDown,
-        block: c.override ? !!c.override.block : keys.V.isDown };
+        left: c.override ? input.left : c.keys.LEFT.isDown || touch.left,
+        right: c.override ? input.right : c.keys.RIGHT.isDown || touch.right,
+        up: c.override ? input.up : c.keys.UP.isDown || touch.up,
+        down: c.override ? input.down : c.keys.DOWN.isDown || touch.down,
+        takedown: c.override ? !!c.override.takedown : keys.S.isDown || touch.takedown,
+        punch: c.override ? !!c.override.punch : keys.C.isDown || touch.punch,
+        kick: c.override ? !!c.override.kick : keys.X.isDown || touch.kick,
+        headbutt: c.override ? !!c.override.headbutt : keys.Z.isDown || touch.headbutt,
+        block: c.override ? !!c.override.block : keys.V.isDown || touch.block };
     };
     const update = c.update.bind(c);
     c.update = (time) => {
