@@ -72,6 +72,8 @@ export class Level extends Phaser.Scene {
       if (Type) this.actors.push((s.actor = new Type(this, s, level)));
     }
     for (const a of this.actors) if (a.hp) a.bar = new HeadBar(this);
+    this.events.on('postupdate', this.placeBars, this);
+    this.events.once('shutdown', () => this.events.off('postupdate', this.placeBars, this));
     this.pickups = level.props.filter((p) => ['item', 'coin'].includes(p.pixelforgeObject?.type));
     for (const p of this.pickups) if (p.body) p.body.enable = false;   // walk through them, don't bump into them
     this.chests = level.props.filter((p) => p.pixelforgeObject?.type === 'chest');
@@ -139,14 +141,8 @@ export class Level extends Phaser.Scene {
   update(time, delta) {
     if (!net.active) playerHealth.update(delta);
     this.pushHud();
-    for (const a of this.actors) {
-      a.update?.(time);
-      if (!a.bar) continue;
-      if (a.sprite.active) a.bar.update(a.hp / a.maxHp, a.sprite.x, a.sprite.y - headroom(this, a.sprite.texture.key), delta);
-      else { a.bar.destroy(); a.bar = null; }
-    }
+    for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
-    if (p?.active) this.selfBar?.update(state.health / state.maxHealth, p.x, p.y - headroom(this, this.character), delta);
     if (net.active && p?.active) {
       net.setLocal({ name: net.name, char: this.character, level: this.levelName, x: Math.round(p.x * 10) / 10,
                      y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX });
@@ -174,6 +170,18 @@ export class Level extends Phaser.Scene {
         p.combat?.drawReach(this.debug);
       }
     }
+  }
+
+  // Health bars over the player and the enemies. Run on postupdate: Arcade only moves a sprite to its body
+  // there, after update(), so a bar placed in update() trailed a frame behind a walking fighter.
+  placeBars(time, delta) {
+    for (const a of this.actors) {
+      if (!a.bar) continue;
+      if (a.sprite.active) a.bar.update(a.hp / a.maxHp, a.sprite.x, a.sprite.y - headroom(this, a.sprite.texture.key), delta);
+      else { a.bar.destroy(); a.bar = null; }
+    }
+    const p = this.level.player;
+    if (p?.active) this.selfBar?.update(state.health / state.maxHealth, p.x, p.y - headroom(this, this.character), delta);
   }
 
   // A short message at the top of the screen (the game ended, the host left).
