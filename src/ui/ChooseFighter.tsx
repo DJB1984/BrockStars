@@ -30,7 +30,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
   const [dir, setDir] = useState<'left' | 'right' | 'none'>('none');
   const [fighting, setFighting] = useState(false);
   const [count, setCount] = useState(net.count);
-  const narrow = useNarrow();
+  const { scale, sideways } = useStageScale();
   const f: Fighter = FIGHTERS[index];
 
   useEffect(() => { FIGHTERS.forEach((x) => preloadSprite(x.id)); }, []);
@@ -91,7 +91,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
 
         <div className="stage-spot">
           <div className="stage-floor" aria-hidden="true">
-            <Platform w={44} h={10} size={narrow ? 4 : 6} top="#304048" fill="#182830" rim="#12212a" />
+            <Platform w={44} h={10} size={scale} top="#304048" fill="#182830" rim="#12212a" />
           </div>
           <div key={`${f.id}-${fighting}`} className={`stage-fighter enter-${dir}`}>
             <Sprite
@@ -99,7 +99,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
               anim={fighting ? 'punch_down' : 'idle_down'}
               loop={!fighting}
               onEnd={() => onFight(f.id)}
-              scale={narrow ? 4 : 6}
+              scale={scale}
               className="stage-sprite"
               label={f.fullName}
             />
@@ -125,7 +125,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
                 onClick={() => pick(i)}
                 disabled={fighting}
               >
-                <Sprite id={x.id} scale={2} crop={[16, 2, 32, 26]} />
+                <Sprite id={x.id} scale={sideways ? 1 : 2} crop={[16, 2, 32, 26]} />
                 {i === index && <span className="roster-cursor" aria-hidden="true">P1</span>}
               </button>
             </li>
@@ -156,7 +156,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
             </div>
           </dl>
 
-          <h3 className="card-sub">Moves</h3>
+          <h3 className="card-sub moves-sub">Moves</h3>
           <ul className="moves">
             {MOVES.map((m) => (
               <li key={m.name} className="move">
@@ -171,7 +171,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
             <li className="move">
               <kbd className="key">V</kbd>
               <span className="move-name">Block <small>hold</small></span>
-              <span className="move-note">Takes {Math.round(BLOCK.reduction * 100)}% less damage</span>
+              <span className="move-note"><span className="long">Takes </span>{Math.round(BLOCK.reduction * 100)}% less<span className="long"> damage</span></span>
             </li>
           </ul>
 
@@ -196,16 +196,22 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
   );
 }
 
+// The fighter on the stage, at a whole-number scale so the pixels stay square: big on a desktop, smaller on
+// a phone, and on a phone held sideways whatever fits the screen's height, so nothing has to scroll.
 const NARROW = '(max-width: 860px)';
-function useNarrow() {
-  const [narrow, setNarrow] = useState(() => matchMedia(NARROW).matches);
+const SIDEWAYS = '(orientation: landscape) and (max-height: 500px)';   // lobby.css's sideways-phone layout
+const stageScale = () => {
+  if (matchMedia(SIDEWAYS).matches) return { scale: innerHeight < 340 ? 2 : innerHeight < 420 ? 3 : 4, sideways: true };
+  return { scale: matchMedia(NARROW).matches ? 4 : 6, sideways: false };
+};
+function useStageScale() {
+  const [stage, setStage] = useState(stageScale);
   useEffect(() => {
-    const mq = matchMedia(NARROW);
-    const update = () => setNarrow(mq.matches);
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
+    const update = () => setStage(stageScale());
+    addEventListener('resize', update);
+    return () => removeEventListener('resize', update);
   }, []);
-  return narrow;
+  return stage;
 }
 
 function Meter({ cells, tone = 'gold' }: { cells: number; tone?: 'gold' | 'green' }) {

@@ -376,6 +376,41 @@
   .hud-menu .btn-face { font-size: 22px; padding: 2px 10px 4px; }
 }
 
+/* ---- phones on their side: the menu and the controls fit the screen, nothing to scroll ------------- */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hud-dialog { gap: 10px; max-height: calc(100% - 16px); padding: 8px 14px 12px; }
+  .hud-title { font-size: clamp(36px, 11vh, 48px); }
+  .hud-close .btn-face { padding: 3px 6px 4px; }
+
+  /* Resume across the top, the rest two by two under it (three in a row without the full screen switch) */
+  .hud-dialog.is-main { width: min(600px, calc(100% - 32px)); }
+  .hud-nav { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .hud-nav:has(.hud-fullscreen) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hud-nav .hud-resume { grid-column: 1 / -1; }
+  .hud-nav .btn-big .btn-face { padding: 6px 18px; font-size: 34px; }
+  .hud-nav .btn:not(.btn-big) .btn-face { padding: 4px 6px 6px; font-size: 22px; white-space: nowrap; }
+
+  /* Back beside the title; only the controls you're holding (touch on a phone, keys on a keyboard) */
+  .hud-dialog.is-controls {
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas: "back head" "body body";
+    column-gap: 14px;
+    width: min(820px, calc(100% - 32px));
+  }
+  .is-controls .hud-dialog-head { grid-area: head; }
+  .is-controls .controls { grid-area: body; display: block; }
+  .is-controls .hud-back { grid-area: back; align-self: center; }
+  .controls-sub { display: none; }
+  .controls.is-touch-first .controls-keys, .controls:not(.is-touch-first) .controls-touch { display: none; }
+
+  .controls-touch { display: flex; align-items: center; gap: 18px; }
+  .phone { flex: none; width: min(56%, calc((100vh - 120px) * 2.1)); }
+  .controls-note { margin: 0; font-size: 13px; line-height: 1.5; }
+
+  .keymap { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 8px 24px; }
+  .keymap-row { grid-template-columns: 112px minmax(0, 1fr); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hud .mk-cap.is-pop, .hud .mk-flash, .hud .mk-cap::before, .hud .mk-cap::after, .hud .mk-icon,
   .hud-toast, .hud-dialog, .hud-scrim { animation: none !important; }

@@ -3,9 +3,11 @@ import { ATTACKS, BLOCK } from '../combat/rules.js';
 import { hud, touch, actions, releaseTouch, type HudState, type NetBadge, type TouchInput } from './bridge';
 import { installFrames } from './pixel';
 import { Icon, type IconName } from './Icon';
+import { canFullscreen, toggleFullscreen, useFullscreen } from './fullscreen';
 
-// The HUD over a level: the menu button (Esc) top left, who's online top right, and at the bottom the two
-// cooldowns worth watching, Block and the Super, as keycaps that stay pushed down until the move is back.
+// The HUD over a level: the menu button (Esc) top left (Resume, Controls, Full screen on and off, Change
+// fighter, Leave game), who's online top right, and at the bottom the two cooldowns worth watching, Block
+// and the Super, as keycaps that stay pushed down until the move is back.
 // On touch screens the bottom becomes the controls: a Brawl Stars movement circle on the left, the five
 // moves on the right, with the same two keycaps among them.
 
@@ -398,6 +400,7 @@ type MenuProps = {
 
 function Menu({ view, onView, onClose, superName, superLocked, superKey, superIconName, touchFirst }: MenuProps) {
   const first = useRef<HTMLButtonElement>(null);
+  const fullscreen = useFullscreen();
   useEffect(() => { first.current?.focus(); }, [view]);
 
   return (
@@ -419,6 +422,11 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
             <button type="button" className="btn btn-pine" onClick={() => onView('controls')}>
               <span className="btn-face">Controls</span>
             </button>
+            {canFullscreen() && (
+              <button type="button" className="btn btn-pine hud-fullscreen" onClick={toggleFullscreen} aria-pressed={fullscreen}>
+                <span className="btn-face">{fullscreen ? 'Exit full screen' : 'Full screen'}</span>
+              </button>
+            )}
             <button type="button" className="btn btn-pine" onClick={() => { onClose(); actions.changeFighter(); }}>
               <span className="btn-face">Change fighter</span>
             </button>
