@@ -12,6 +12,7 @@ import { net, WORLD_ROOM } from '../net/session.js';
 import { RemotePlayers } from '../net/remotes.js';
 import { FIGHTER_IDS, fighter } from '../fighters.js';
 import { enableCornerSlide } from '../cornerSlide.js';
+import { RoomShadows } from '../roomShadows.js';
 import { hud, actions } from '../ui/bridge.ts';
 import { showLobby, mountHud } from '../ui/mount.tsx';
 import { currentSession } from '../ui/session.ts';
@@ -34,6 +35,7 @@ const TYPES = { enemy: Walker };
 // The HUD is React (src/ui/Hud.tsx) over the canvas: this scene tells it, through src/ui/bridge.ts, who's
 // online and when Block and the Super come back, and gives its menu Change fighter and Leave game.
 // Health is a bar over every fighter's head (objects/HeadBar.js), drawn here in the world.
+// Rooms (roomShadows.js) are dark from the hall, with whoever's inside hidden; from a room you see out.
 // Dev only: B toggles the hit/hurt boxes, and window.pixelforgePlay drives the game for `pixelforge play`.
 export class Level extends Phaser.Scene {
   constructor() { super('level'); }
@@ -56,6 +58,7 @@ export class Level extends Phaser.Scene {
     }));
     const player = level.player;
     if (player && this.playerPosition) player.body.reset(...this.playerPosition);
+    this.rooms = new RoomShadows(this, level, player ? [player.x, player.y] : undefined);
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);
     mountHud();
@@ -147,7 +150,14 @@ export class Level extends Phaser.Scene {
       net.setLocal({ name: net.name, char: this.character, level: this.levelName, x: Math.round(p.x * 10) / 10,
                      y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX });
     }
+    if (p?.active) this.rooms.update(p.x, p.y);
     this.remotes.update(delta);
+    for (const a of this.actors) {
+      if (!a.sprite.active) continue;
+      const seen = this.rooms.canSee(a.sprite.x, a.sprite.y);
+      a.sprite.setVisible(seen);
+      a.bar?.setVisible(seen);
+    }
     if (p?.active) {
       const body = new Phaser.Geom.Rectangle(p.body.x, p.body.y, p.body.width, p.body.height);
       for (const item of this.pickups) {

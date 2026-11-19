@@ -7,7 +7,8 @@ const DELAY_MS = 110;
 const TELEPORT = 160;   // farther than this between updates (a respawn, a door) jumps instead of sliding
 
 // The other players in this scene's level, drawn from net.players: a sprite each, playing what they play,
-// with their name and health bar over the head. Make one in create and call update(delta) every frame.
+// with their name and health bar over the head (hidden while they're in a room you can't see into: the
+// scene's `rooms`). Make one in create and call update(delta) every frame.
 export class RemotePlayers {
   constructor(scene, net) {
     this.scene = scene;
@@ -68,6 +69,9 @@ export class RemotePlayers {
       sprite.setPosition(x, y).setFlipX(facing ? facing === 'left' : !!p.flip).setDepth(y - 0.5);
       r.bar.setName(p.name || 'Player');
       r.bar.update((combat?.health ?? 100) / 100, x, y - headroom(scene, p.char), delta);
+      const seen = scene.rooms?.canSee(x, y) ?? true;   // hidden in a room you aren't in
+      sprite.setVisible(seen);
+      r.bar.setVisible(seen);
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);
   }
