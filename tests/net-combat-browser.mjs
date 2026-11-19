@@ -75,6 +75,17 @@ try {
   await place();await input(guest,{takedown:true});await wait(650);
   assert.equal(await health(host),66.5);
   await input(guest,{});
+  // Two rooms side by side, 32px apart through the 16px wall between them: in punch and kick range, but
+  // walls block hits.
+  await host.evaluate(()=>{const p=window.pixelforgePlay.player;p.controller.override={};p.body.reset(632,106);p.controller.facing='right';});
+  await guest.evaluate(()=>{const p=window.pixelforgePlay.player;p.controller.override={};p.body.reset(664,106);p.controller.facing='left';});
+  await wait(300);
+  const beforeWall=await health(guest);
+  await input(host,{punch:true});await wait(150);await input(host,{});await wait(500);
+  await input(host,{kick:true});await wait(150);await input(host,{});await wait(700);
+  assert.equal(await health(guest),beforeWall);
+  assert.equal((await snap(host)).fighters[guestId].health,beforeWall);
+  console.log('No hits through walls');
   // Put the guest one punch from knockout, then verify the real death/scene restart path.
   await host.evaluate(id=>brockNet.arena.fighters.get(id).rules.health.take(82),guestId);
   await guest.waitForFunction(()=>window.pixelforgePlay.state().health===4);

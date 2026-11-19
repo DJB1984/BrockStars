@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { loadPixelforgeAll, createPixelforgeAll, PIXELFORGE_INDEX } from '../../export/pixelforge.js';
 import { showLobby } from '../ui/mount.tsx';
 import { net } from '../net/session.js';
+import { registerLevelWalls } from '../combat/walls.js';
 
 // The room every tab of the local test server (`npm run local`) shares.
 const QUICK_ROOM = 'LOCAL';
@@ -27,11 +28,13 @@ export class Boot extends Phaser.Scene {
 
   async create() {
     createPixelforgeAll(this);
+    const levels = this.cache.json.get(PIXELFORGE_INDEX)?.levels ?? [];
+    // every level's walls, for hits: the host resolves fights in levels it isn't standing in
+    for (const name of levels) registerLevelWalls(name, this.cache.tilemap.get(name)?.data);
     if (new URLSearchParams(location.search).get('practice') === '1') {
       this.scene.start('combat-practice');
       return;
     }
-    const levels = this.cache.json.get(PIXELFORGE_INDEX)?.levels ?? [];
     const params = new URLSearchParams(location.search);
     const asked = params.get('level');
     const first = [asked, 'start'].find((n) => levels.includes(n)) ?? levels[0];
