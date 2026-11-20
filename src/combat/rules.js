@@ -16,6 +16,14 @@ export const BLOCK = Object.freeze({ duration: 3000, cooldown: 1000, reduction: 
 export const REGEN = Object.freeze({ delay: 45000, perSecond: 2 });
 export const DIRECTIONS = Object.freeze({ up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] });
 
+// The animation key for an attack. Facing up or down, every other punch (odd `count`) is thrown
+// with the other hand, if the character has it (`<char>_punch_alt_<dir>`).
+export function attackAnim(char, name, facing, count, exists) {
+  const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
+  const alt = `${char}_${name}_alt_${dir}`;
+  return name === 'punch' && dir !== 'side' && count % 2 === 1 && exists(alt) ? alt : `${char}_${name}_${dir}`;
+}
+
 export function directionTo(dx, dy) {
   if (!dx && !dy) return null;
   return Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');

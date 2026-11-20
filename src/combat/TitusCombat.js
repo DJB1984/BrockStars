@@ -1,5 +1,5 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets, extendPath } from './rules.js';
+import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, attackAnim, directionTo, attackTargets, extendPath } from './rules.js';
 import { touch } from './touch.js';
 import { levelWalls } from './walls.js';
 
@@ -13,6 +13,7 @@ export class TitusCombat {
     this.onHit = onHit;
     this.struck = new Set();
     this.path = [];
+    this.punches = 0;   // alternates hands facing up and down
     this.walls = levelWalls(scene.levelName);   // nobody is hit through a wall
     sprite.combat = this;
     const c = sprite.controller;
@@ -73,8 +74,9 @@ export class TitusCombat {
         }
         this.struck.clear();
         this.path = [{ x: sprite.x, y: sprite.y }];
-        c.busy = `${sprite.texture.key}_${this.rules.attack.name}_${this.rules.attack.facing === 'left' || this.rules.attack.facing === 'right' ? 'side' : this.rules.attack.facing}`;
-        playFacing(sprite, this.rules.attack.name, this.rules.attack.facing);
+        const { name, facing } = this.rules.attack;
+        c.busy = attackAnim(sprite.texture.key, name, facing, name === 'punch' ? this.punches++ : 0, key => scene.anims.exists(key));
+        sprite.setFlipX(facing === 'left').play(c.busy, true);
         sprite.emit('pixelforge-attack', sprite);
       }
       const action = this.rules.attack ?? this.rules.block;

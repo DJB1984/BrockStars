@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ATTACKS, BODY, DIRECTIONS, attackTargets, extendPath } from '../src/combat/rules.js';
+import { ATTACKS, BODY, DIRECTIONS, attackAnim, attackTargets, extendPath } from '../src/combat/rules.js';
 import { RoomCombat } from '../src/net/combat.js';
 import { TitusCombat } from '../src/combat/TitusCombat.js';
 
@@ -224,4 +224,14 @@ test('local: a swing that would whiff turns toward an opponent in range and stil
   while (combat.rules.attack) step({ down: true });
   assert.ok(sprite.y - target.y > BODY, 'lunged down past them');
   assert.deepEqual(hits.map(s => s.damage), [ATTACKS.headbutt.damage]);
+});
+
+test('punches alternate hands facing up and down, when the character has the other hand', () => {
+  const has = key => key.startsWith('titus_punch_alt_');
+  assert.deepEqual([0, 1, 2, 3].map(n => attackAnim('titus', 'punch', 'down', n, has)),
+    ['titus_punch_down', 'titus_punch_alt_down', 'titus_punch_down', 'titus_punch_alt_down']);
+  assert.equal(attackAnim('titus', 'punch', 'up', 1, has), 'titus_punch_alt_up');
+  assert.equal(attackAnim('titus', 'punch', 'left', 1, has), 'titus_punch_side', 'side punches keep the near hand');
+  assert.equal(attackAnim('titus', 'kick', 'down', 1, has), 'titus_kick_down');
+  assert.equal(attackAnim('mason', 'punch', 'down', 1, () => false), 'mason_punch_down', 'no alt art: same punch');
 });
