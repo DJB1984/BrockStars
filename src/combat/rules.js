@@ -1,13 +1,15 @@
 import { characterStats } from '../characters.js';
 
 // frames = [windup, active, return, recovery] ms; the build scripts bake them into both sprites'
-// animations, so a frames change needs `node scripts/build-titus-combat.mjs`, the Mason patch and a re-export.
+// animations; rebuild Grapple with scripts/build-mason-grapple.mjs and re-export after timing changes.
 // lunge = px/s added toward the attack's facing through windup+active, closing the gap mid-swing.
 export const ATTACKS = Object.freeze({
   punch: { key: 'C', damage: 4, cooldown: 300, frames: [70, 90, 60, 100], reach: 34, width: 20, lunge: 60, knockback: 25, stagger: 0 },
   kick: { key: 'X', damage: 9, cooldown: 5000, frames: [110, 120, 80, 150], reach: 50, width: 22, lunge: 80, knockback: 45, stagger: 0 },
   headbutt: { key: 'Z', damage: 10, cooldown: 10000, frames: [150, 110, 90, 200], reach: 30, width: 20, lunge: 110, knockback: 140, stagger: 350 },
-  takedown: { key: 'S', character: 'titus', damage: 25, cooldown: 20000, frames: [500, 100, 180, 320], reach: 24, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 1500, knockdown: 1500 },
+  bellow: { key: 'S', character: 'james', damage: 10, cooldown: 25000, frames: [350, 120, 180, 250], radial: true, reach: 10 * 16, speed: 0, knockback: 0, stagger: 5000, stun: 5000, unblockable: true },
+  grapple: { key: 'S', character: 'mason', damage: 25, cooldown: 20000, frames: [450, 120, 2000, 300], reach: 22, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 250, hold: true },
+  takedown: { key: 'S', character: 'titus', damage: 30, cooldown: 20000, frames: [500, 100, 180, 320], reach: 24, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 1500, knockdown: 1500 },
 });
 // Positions are body centres, but people are hit on their body, not at their centre: every
 // attack zone is credited the defender's half-width on all sides.
@@ -49,6 +51,8 @@ function zoneAlong(a, b, target, fx, fy, spec) {
 // the attacker through someone before the strike comes out, so the zone sweeps that whole path:
 // anyone the swing passed over is hit, not only whoever is still in front at the active frame.
 export function attackTargets(source, targets, facing, spec, path = []) {
+  if (spec.radial) return targets.filter(t => Math.hypot(t.x-source.x, t.y-source.y) <= spec.reach)
+    .sort((a,b) => Math.hypot(a.x-source.x,a.y-source.y)-Math.hypot(b.x-source.x,b.y-source.y));
   const [fx, fy] = DIRECTIONS[facing], points = [...path, source];
   return targets.filter(target => points.some((point, i) => zoneAlong(points[i - 1] ?? point, point, target, fx, fy, spec)))
     .sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
@@ -71,7 +75,7 @@ export class HealthPool {
     this.max = max;
     this.onChange(this.value);
   }
-  reset() { this.value = this.max; this.quiet = 0; for (const name of Object.keys(this.readyAt ?? {})) delete this.readyAt[name]; this.onChange(this.value); }
+  reset() { this.value = this.max; this.quiet = 0; this.stunUntil = 0; this.healingBlockedFor = 0; for (const name of Object.keys(this.readyAt ?? {})) delete this.readyAt[name]; this.onChange(this.value); }
   take(amount) {
     if (amount <= 0 || this.value <= 0) return 0;
     const before = this.value;
@@ -80,14 +84,19 @@ export class HealthPool {
     this.onChange(this.value);
     return before - this.value;
   }
+  heal(amount) {
+    if (amount <= 0 || this.healingBlockedFor > 0 || this.value <= 0) return 0;
+    const before = this.value;
+    this.value = Math.min(this.max, this.value + amount);
+    if (this.value !== before) this.onChange(this.value);
+    return this.value - before;
+  }
   update(delta) {
-    const before = Math.max(0, this.quiet - REGEN.delay);
+    const before = this.quiet, blocked = Math.min(delta, this.healingBlockedFor ?? 0);
+    this.healingBlockedFor = Math.max(0, (this.healingBlockedFor ?? 0) - delta);
     this.quiet += delta;
-    const healingTime = Math.max(0, this.quiet - REGEN.delay) - before;
-    if (healingTime && this.value > 0 && this.value < this.max) {
-      this.value = Math.min(this.max, this.value + healingTime * REGEN.perSecond / 1000);
-      this.onChange(this.value);
-    }
+    const healingTime = Math.max(0, this.quiet - Math.max(REGEN.delay, before + blocked));
+    if (healingTime) this.heal(healingTime * REGEN.perSecond / 1000);
   }
 }
 
@@ -107,10 +116,11 @@ export class CombatRules {
     this.character = character;
     this.health.setMax(characterStats(character).health);
   }
+  get stunUntil() { return this.health.stunUntil ?? 0; }
   attackSpec(name) { return characterAttack(this.character, name); }
   update(now, input, facing) {
     if (this.block && (!input.block || now >= this.block.until)) this.endBlock(now);
-    const available = !this.attack && !this.block && now >= this.staggerUntil && this.health.value > 0;
+    const available = !this.heldBy && !this.attack && !this.block && now >= this.staggerUntil && now >= this.stunUntil && this.health.value > 0;
     if (available && input.block && !this.previous.block && now >= this.blockReadyAt) {
       this.block = { facing, until: now + characterStats(this.character).blockDuration };
     } else if (available) {
@@ -129,10 +139,17 @@ export class CombatRules {
   }
   finishAttack() { this.attack = null; }
   endBlock(now) { this.block = null; this.blockReadyAt = now + BLOCK.cooldown; }
+  blocks(incomingSide, now) { return !!this.block && now < this.block.until && this.block.facing === incomingSide; }
   receive(spec, incomingSide, now) {
-    const blocked = !!this.block && now < this.block.until && this.block.facing === incomingSide;
+    const blocked = !spec.unblockable && this.blocks(incomingSide, now);
     const damage = this.health.take(spec.damage * (blocked ? 1 - BLOCK.reduction : 1));
-    const stagger = blocked ? 0 : spec.stagger;
+    const stun = blocked ? 0 : (spec.stun ?? 0);
+    if (damage && stun) {
+      this.health.stunUntil = Math.max(this.stunUntil, now + stun);
+      this.health.stunFacing = incomingSide ?? 'down';
+      this.health.healingBlockedFor = Math.max(this.health.healingBlockedFor ?? 0, stun);
+    }
+    const stagger = blocked ? 0 : Math.max(spec.stagger ?? 0, stun);
     const knockdown = blocked ? 0 : (spec.knockdown ?? 0);
     if (damage && stagger) {
       this.attack = null;
@@ -141,6 +158,6 @@ export class CombatRules {
       this.knockedDownUntil = Math.max(this.knockedDownUntil, now + knockdown);
       if (knockdown) this.knockdownFacing = incomingSide;
     }
-    return { damage, blocked, stagger, knockdown, knockdownFacing: knockdown ? incomingSide : null, knockback: spec.knockback * (blocked ? 0.25 : 1) };
+    return { damage, blocked, stagger, stun, knockdown, knockdownFacing: knockdown ? incomingSide : null, knockback: spec.knockback * (blocked ? 0.25 : 1) };
   }
 }

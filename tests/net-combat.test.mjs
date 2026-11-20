@@ -71,7 +71,7 @@ test('Takedown has a 500ms wind-up, narrow reach, and hits only the nearest oppo
   room.tick(p,0); cmd(room,'a','takedown','right',1,0);
   assert.equal(room.tick(p,499).fighters.b.health,125);
   const hit=room.tick(p,510);
-  assert.equal(hit.fighters.b.health,100); assert.equal(hit.fighters.b.knockdown,1500);
+  assert.equal(hit.fighters.b.health,95); assert.equal(hit.fighters.b.knockdown,1500);
   assert.equal(hit.fighters.b.knockdownFacing,'left');
   assert.equal(hit.hits[0].knockdownFacing,'left');
   assert.equal(hit.fighters.c.health,125); assert.equal(hit.hits.length,1);
@@ -85,7 +85,7 @@ test('Takedown has a 500ms wind-up, narrow reach, and hits only the nearest oppo
 
 test('host blocks Takedown, consumes its cooldown on misses, and rejects Mason using it',()=>{
   const {room,p}=setup(); cmd(room,'b','block','left',1,0);cmd(room,'a','takedown','right',1,0);
-  const hit=room.tick(p,520); assert.equal(hit.fighters.b.health,118.75); assert.equal(hit.fighters.b.knockdown,0);
+  const hit=room.tick(p,520); assert.equal(hit.fighters.b.health,117.5); assert.equal(hit.fighters.b.knockdown,0);
   room.tick(p,1100);cmd(room,'a','takedown','right',2,1101);assert.equal(room.fighters.get('a').action,null);
   p.b.x=200;room.tick(p,20000);cmd(room,'a','takedown','right',3,20000);room.tick(p,21100);
   cmd(room,'a','takedown','right',4,22000);assert.equal(room.fighters.get('a').action,null);
@@ -112,4 +112,53 @@ test('host switching characters and respawning retain the correct health ceiling
   room.damage('a',null,{damage:45,knockback:0,stagger:0},null,2);
   assert.equal(room.tick(p,402).fighters.a.health,90);
   p.a.level='other';assert.equal(room.tick(p,403).fighters.a.health,90);
+});
+
+
+function grappleSetup(facing='right') {
+  const room=new RoomCombat(),d={right:[20,0],left:[-20,0],up:[0,-20],down:[0,20]}[facing];
+  const p={a:{x:100,y:100,char:'mason',level:'brock3'},b:{x:100+d[0],y:100+d[1],char:'titus',level:'brock3'}};
+  room.tick(p,0);cmd(room,'a','grapple',facing,1,0);return {room,p};
+}
+
+test('host Grapple holds one opponent in all directions, rejects captive inputs/movement, and deals 25 damage once at release',()=>{
+  for(const facing of ['right','left','up','down']) {
+    const {room,p}=grappleSetup(facing);p.c={...p.b,x:100+(p.b.x-100)*1.2,y:100+(p.b.y-100)*1.2};
+    assert.equal(room.tick(p,449).fighters.b.held,null);
+    const grab=room.tick(p,460);assert.equal(grab.fighters.b.health,125);assert.equal(grab.fighters.b.held.source,'a');
+    assert.equal(grab.fighters.c.held,null);assert.equal(grab.hits.length,0);
+    p.a.x=600;p.b.x=800;room.tick(p,1000);cmd(room,'b','punch','left',1,1001);
+    const captive=room.tick(p,2000);assert.equal(captive.fighters.b.attack,null);
+    assert.equal(captive.fighters.a.grapple.x,100);assert.ok(captive.fighters.b.held.x<120);
+    assert.equal(captive.fighters.b.health,125);
+    const done=room.tick(p,2571);assert.equal(done.fighters.b.held,null);assert.equal(done.fighters.b.health,100);
+    assert.equal(done.hits.length,1);assert.equal(done.fighters.c.health,125);
+    assert.equal(room.tick(p,3000).hits.length,0);
+    cmd(room,'a','grapple',facing,2,3001);assert.equal(room.fighters.get('a').action,null);
+  }
+});
+
+test('host: front block prevents a headlock and reduces Grapple to 6.25 damage; misses still cost 20s',()=>{
+  const {room,p}=grappleSetup();cmd(room,'b','block','left',1,1);
+  const s=room.tick(p,460);assert.equal(s.fighters.b.health,118.75);assert.equal(s.fighters.b.held,null);
+  const miss=grappleSetup();miss.p.b.x=200;assert.equal(miss.room.tick(miss.p,460).fighters.b.health,125);
+  assert.equal(miss.room.tick(miss.p,3000).fighters.a.grappleCooldown,17000);
+});
+
+test('host: interruption, knockout, doors, character changes, and disconnects release Grapple without choke damage',()=>{
+  for(const change of ['interrupt','victim-interrupt','death','door','victim-door','switch','victim-switch','disconnect','victim-disconnect','quiet']) {
+    const {room,p}=grappleSetup();room.tick(p,460);
+    if(change==='interrupt')room.damage('a',null,{damage:1,stagger:350,knockback:0},null,500);
+    if(change==='victim-interrupt')room.damage('b',null,{damage:1,stagger:350,knockback:0},null,500);
+    if(change==='death')room.damage('a',null,{damage:90,stagger:350,knockback:0},null,500);
+    if(change==='door')p.a.level='other';if(change==='victim-door')p.b.level='other';
+    if(change==='switch')p.a.char='james';if(change==='victim-switch')p.b.char='james';
+    if(change==='disconnect'||change==='quiet')delete p.a;
+    if(change==='victim-disconnect')delete p.b;
+    const s=room.tick(p,600,change==='quiet'?['a','b']:undefined);
+    if(s.fighters.b)assert.equal(s.fighters.b.held,null,change);
+    assert.equal(room.fighters.get('a')?.hold??null,null,change);
+    room.tick(p,3000,change==='quiet'?['a','b']:undefined);
+    if(p.b)assert.ok(room.fighters.get('b').rules.health.value>=124,change);
+  }
 });

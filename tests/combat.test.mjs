@@ -60,13 +60,13 @@ test('Takedown is Titus-only, requires a fresh press, and consumes 20s cooldown 
 test('Takedown knocks down for 1.5s and interrupts attacks; a front block prevents the knockdown', () => {
   const c=new CombatRules(); c.update(0,{kick:true},'right');
   const hit=c.receive(ATTACKS.takedown,'left',500);
-  assert.equal(hit.damage,25); assert.equal(hit.knockdown,1500); assert.equal(c.attack,null);
+  assert.equal(hit.damage,30); assert.equal(hit.knockdown,1500); assert.equal(c.attack,null);
   c.update(1999,{punch:true},'right'); assert.equal(c.attack,null);
   c.update(2000,{},'right'); c.update(2001,{punch:true},'right'); assert.equal(c.attack.name,'punch');
   for(const facing of ['left','right','up','down']) {
     const defender=new CombatRules(); defender.update(0,{block:true},facing);
     const blocked=defender.receive(ATTACKS.takedown,facing,500);
-    assert.equal(blocked.damage,6.25); assert.equal(blocked.knockdown,0); assert.equal(blocked.stagger,0);
+    assert.equal(blocked.damage,7.5); assert.equal(blocked.knockdown,0); assert.equal(blocked.stagger,0);
     assert.ok(defender.block);
   }
 });
@@ -103,4 +103,17 @@ test('character switches preserve health percentage, knockout, regen delay, and 
   health.update(45000);health.update(100000);assert.equal(health.value,200);
   health.take(200);r.setCharacter('titus');assert.equal(health.value,0);
   health.reset();assert.equal(health.value,125);
+});
+
+
+test('Grapple is Mason-only, consumes a 20s cooldown on misses, and survives scene/fighter changes', () => {
+  for (const character of ['titus','james']) {
+    const r=new CombatRules(undefined,character);r.update(0,{grapple:true},'right');assert.equal(r.attack,null);
+  }
+  const health=new HealthPool(),r=new CombatRules(health,'mason');
+  r.update(100,{grapple:true},'right');assert.equal(r.attack.name,'grapple');r.finishAttack();
+  const next=new CombatRules(health,'titus');next.setCharacter('mason');
+  next.update(20099,{grapple:true},'right');assert.equal(next.attack,null);
+  next.update(20100,{grapple:true},'right');assert.equal(next.attack,null,'held input never repeats');
+  next.update(20101,{},'right');next.update(20102,{grapple:true},'right');assert.equal(next.attack.name,'grapple');
 });

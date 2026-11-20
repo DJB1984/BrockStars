@@ -15,7 +15,7 @@ const toward = (facing, forward, across = 0) => {
 // ---- geometry -------------------------------------------------------------------------------------
 
 test('the zone credits the defender body on every side, in every facing', () => {
-  for (const [name, spec] of Object.entries(ATTACKS)) for (const facing of Object.keys(DIRECTIONS)) {
+  for (const [name, spec] of Object.entries(ATTACKS).filter(([, spec]) => !spec.radial)) for (const facing of Object.keys(DIRECTIONS)) {
     const width = (spec.width ?? 18) + BODY, source = at(100, 100);
     const hit = (forward, across) => attackTargets(source, [at(...toward(facing, forward, across))], facing, spec).length === 1;
     const label = `${name} ${facing}`;

@@ -92,7 +92,15 @@ export class Level extends Phaser.Scene {
     const showRoom = () => hud.set({ net: { active: net.active, world: net.room === WORLD_ROOM, room: net.room, count: net.count } });
     showRoom();
     on(net, 'players', showRoom);
-    on(net, 'ended', (reason) => { if (reason !== 'left') this.toast(reason); });
+    on(net, 'ended', (reason) => {
+      if (this.combat) {
+        this.combat.networkStunPosition = null;
+        this.combat.networkHeld = null;
+        this.combat.networkGrapple = null;
+        if (!player?.grappledBy) this.combat.rules.heldBy = null;
+      }
+      if (reason !== 'left') this.toast(reason);
+    });
 
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
@@ -108,6 +116,17 @@ export class Level extends Phaser.Scene {
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
           if (!self || !player.active || this.inLobby) return;
+          this.combat.rules.readyAt.bellow = this.time.now + (self.bellowCooldown ?? 0);
+          this.combat.networkStunPosition = self.stunPosition;
+          playerHealth.stunUntil = this.time.now + (self.stun ?? 0);
+          playerHealth.stunFacing = self.stunFacing;
+          playerHealth.healingBlockedFor = self.healingBlockedFor ?? 0;
+          if (self.stun) { this.combat.rules.attack = null; this.combat.controller.busy = null; }
+          this.combat.rules.readyAt.grapple = this.time.now + (self.grappleCooldown ?? 0);
+          this.combat.networkHeld = self.held;
+          this.combat.networkGrapple = self.grapple;
+          this.combat.rules.heldBy = self.held ? { attack: { facing: self.held.facing } } : null;
+          if (self.held) { this.combat.rules.attack = null; this.combat.controller.busy = null; }
           this.combat.rules.readyAt.takedown = this.time.now + (self.takedownCooldown ?? 0);
           if (self.life !== life) {
             reset();
@@ -128,7 +147,7 @@ export class Level extends Phaser.Scene {
         target.actor.hit(player);
       });
       this.physics.add.overlap(player, this.actors.map((a) => a.sprite), (_, enemy) => {
-        if (enemy.body.enable) this.hurt(enemy);
+        if (enemy.body.enable && !enemy.grappledBy) this.hurt(enemy);
       });
       // clipping a corner by a few pixels slides you around it instead of stopping you
       if (level.info?.view !== 'side') enableCornerSlide(player, { layers: Object.values(level.layers), props: level.props });
@@ -292,8 +311,8 @@ export class Level extends Phaser.Scene {
   }
 }
 
-// The fighter's Super for the HUD: the special move rules.js gives them (Titus's Takedown), or the design
-// doc's special, locked, until it's built (Mason's Grapple).
+// The fighter's Super for the HUD: their implemented special move, or the design
+// doc's special, locked, until it's built.
 function superMove(character) {
   const built = Object.entries(ATTACKS).find(([, spec]) => spec.character === character);
   if (built) {

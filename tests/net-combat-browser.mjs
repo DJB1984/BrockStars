@@ -8,7 +8,7 @@ const hostCharacter=process.env.HOST_CHARACTER ?? 'mason';
 const hostStats=characterStats(hostCharacter), guestStats=characterStats('titus');
 const guestAfterHits=guestStats.health-hostStats.punch-hostStats.headbutt;
 const hostAfterHits=hostStats.health-guestStats.headbutt*0.25-guestStats.kick;
-const hostAfterTakedown=hostAfterHits-25;
+const hostAfterTakedown=hostAfterHits-30;
 const baseUrl=process.env.TEST_BASE_URL ?? 'http://127.0.0.1:5173';
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 try {

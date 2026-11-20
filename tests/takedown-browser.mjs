@@ -29,21 +29,21 @@ try {
     for(const facing of ['right','left','up','down']) {
       resetTakedown(facing);
       play.step(450,{takedown:true});check('wind-up '+facing,s.partnerHealth.value===125);
-      play.step(150,{takedown:true});check('25 damage '+facing,s.partnerHealth.value===100);
+      play.step(150,{takedown:true});check('30 damage '+facing,s.partnerHealth.value===95);
       check('knockdown animation '+facing,s.partner.anims.currentAnim.key.includes('knockdown'));
       check('knockdown duration '+facing,s.partnerCombat.snapshot().knockdownRemaining>1300);
       const victimFacing={right:'left',left:'right',up:'down',down:'up'}[facing];
       check('victim faces impact '+facing,s.partner.controller.facing===victimFacing);
       const victimView=['left','right'].includes(victimFacing)?'side':victimFacing;
       check('directional knockdown pose '+facing,s.partner.anims.currentAnim.key==='titus_knockdown_'+victimView && s.partner.flipX===(victimFacing==='left'));
-      play.step(1700,{takedown:true});check('held S never repeats '+facing,s.combat.rules.attack===null && s.partnerHealth.value===100);
+      play.step(1700,{takedown:true});check('held S never repeats '+facing,s.combat.rules.attack===null && s.partnerHealth.value===95);
       check('automatic recovery '+facing,s.partnerCombat.snapshot().knockdownRemaining===0 && !s.partner.anims.currentAnim.key.includes('knockdown'));
     }
     resetTakedown();s.partner.controller.facing='left';
     const readPartner=s.partner.controller.readInput;
     s.partner.controller.readInput=()=>({...readPartner(),block:true});
     play.step(17,{});play.step(650,{takedown:true});
-    check('block reduces damage',s.partnerHealth.value===118.75);
+    check('block reduces damage',s.partnerHealth.value===117.5);
     check('block prevents knockdown',s.partnerCombat.snapshot().knockdownRemaining===0);
     s.partner.controller.readInput=readPartner;
     resetTakedown('right',40);play.step(1200,{takedown:true});

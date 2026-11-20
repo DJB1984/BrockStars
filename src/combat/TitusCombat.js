@@ -1,5 +1,8 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
 import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets, extendPath } from './rules.js';
+import { GrappleHold, grapplePosition } from './grapple.js';
+import { showGrappleOverlay } from './grappleVisuals.js';
+import { updateBellowVisuals } from './bellowVisuals.js';
 import { touch } from './touch.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
@@ -26,7 +29,9 @@ export class TitusCombat {
         right: c.override ? input.right : c.keys.RIGHT.isDown || touch.right,
         up: c.override ? input.up : c.keys.UP.isDown || touch.up,
         down: c.override ? input.down : c.keys.DOWN.isDown || touch.down,
-        takedown: c.override ? !!c.override.takedown : keys.S.isDown || touch.takedown,
+        takedown: c.override ? !!c.override.takedown : sprite.texture.key === 'titus' && (keys.S.isDown || touch.takedown),
+        bellow: c.override ? !!c.override.bellow : sprite.texture.key === 'james' && (keys.S.isDown || touch.takedown),
+        grapple: c.override ? !!c.override.grapple : sprite.texture.key === 'mason' && (keys.S.isDown || touch.takedown),
         punch: c.override ? !!c.override.punch : keys.C.isDown || touch.punch,
         kick: c.override ? !!c.override.kick : keys.X.isDown || touch.kick,
         headbutt: c.override ? !!c.override.headbutt : keys.Z.isDown || touch.headbutt,
@@ -34,6 +39,29 @@ export class TitusCombat {
     };
     const update = c.update.bind(c);
     c.update = (time) => {
+      this.updateGrapple();
+      if (time < this.rules.stunUntil) {
+        this.rules.previous = { ...c.readInput() };
+        this.rules.attack = null;
+        if (this.rules.block) this.rules.endBlock(time);
+        c.busy = null;
+        if (this.networkStunPosition) sprite.body.reset(this.networkStunPosition.x, this.networkStunPosition.y);
+        sprite.body.setVelocity(0, 0);
+        sprite.setDepth(sprite.y);
+        playFacing(sprite, 'stunned', this.rules.health.stunFacing ?? c.facing);
+        return;
+      }
+      if (this.networkHeld) sprite.body.reset(this.networkHeld.x, this.networkHeld.y);
+      if (this.rules.heldBy) {
+        this.rules.previous = { ...c.readInput() };
+        c.busy = null;
+        c.facing = this.rules.heldBy.attack.facing;
+        sprite.body.setVelocity(0, 0);
+        sprite.setDepth(sprite.y);
+        playFacing(sprite, 'grappled', c.facing);
+        return;
+      }
+      if (this.networkGrapple) sprite.body.reset(this.networkGrapple.x, this.networkGrapple.y);
       if (time < (c.stunnedUntil ?? 0)) {
         // Presses during knockback are consumed too, so held keys cannot become queued attacks.
         const input = c.readInput();
@@ -110,36 +138,91 @@ export class TitusCombat {
     sprite.on('animationupdate', hit);
     scene.events.on('postupdate', hit);
     scene.events.once('shutdown', () => {
+      this.cancelGrapple();
       scene.events.off('postupdate', hit);
       sprite.off('animationcomplete', complete);
       sprite.off('animationupdate', hit);
     });
   }
   checkHits() {
+    this.updateGrapple();
+    const heldFacing = this.grapple?.hold.attack.facing ?? this.networkGrapple?.facing;
+    showGrappleOverlay(this.sprite, heldFacing, !!heldFacing);
     const attack = this.rules.attack;
+    updateBellowVisuals(this.scene, this.sprite, attack, Math.max(0, this.rules.stunUntil-this.scene.time.now));
     if (!attack || !this.sprite.active || this.rules.health.value <= 0) return;
     // Track the lunge from the wind-up on, so the strike covers everyone the swing carried us over.
     extendPath(this.path, this.sprite);
-    const hits = pixelforgeBoxes(this.sprite, 'hit');
-    if (!hits.length) return;
     const spec = this.rules.attackSpec(attack.name);
-    const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (target.combat ? target.combat.rules.health.value > 0 : true));
+    if (spec.radial) {
+      const elapsed = this.scene.time.now - attack.start;
+      if (elapsed < spec.frames[0] || elapsed >= spec.frames[0] + spec.frames[1]) return;
+    } else if (!pixelforgeBoxes(this.sprite, 'hit').length) return;
+    const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (!spec.hold || (!target.grappledBy && !target.combat?.rules.heldBy)) && (target.combat ? target.combat.rules.health.value > 0 : true));
     for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path)) {
       // In this three-quarter view a head and boot have different drawn heights. Combat range
       // lives on the ground plane so rotating the same move never changes its reach.
       // The exported art still determines the active frames, never the wind-up or recovery.
       if (this.struck.size >= (spec.maxTargets ?? Infinity)) break;
       this.struck.add(target);
+      if (spec.hold && !target.combat?.rules.blocks(directionTo(this.sprite.x-target.x, this.sprite.y-target.y), this.scene.time.now)) {
+        const rules = target.combat?.rules ?? (target.actor ? { health: { get value() { return target.actor.hp; } } } : null);
+        if (rules) {
+          const hold = new GrappleHold(this.rules, rules, attack, this.scene.time.now);
+          this.grapple = { hold, target, anchor: { x: this.sprite.x, y: this.sprite.y } };
+          target.grappledBy = this;
+          this.updateGrapple();
+          continue;
+        }
+      }
       const result = target.combat ? target.combat.receive(this.sprite, spec) : target.actor?.hit(this.sprite, spec);
       this.onHit(target, attack.name, result);
       this.sprite.emit('pixelforge-hit', target);
     }
+  }
+  cancelGrapple() {
+    if (!this.grapple) return;
+    const { hold, target } = this.grapple;
+    hold.cancel();
+    if (target.grappledBy === this) delete target.grappledBy;
+    if (target.combat) {
+      target.combat.controller.busy = null;
+      if (target.active && target.combat.rules.health.value > 0) playFacing(target, 'idle', target.combat.controller.facing);
+    }
+    this.grapple = null;
+  }
+  updateGrapple() {
+    if (!this.grapple) return;
+    const { hold, target, anchor } = this.grapple;
+    if (!target.active || !this.sprite.active) { this.cancelGrapple(); return; }
+    const state = hold.update(this.scene.time.now);
+    if (state !== 'holding') {
+      this.cancelGrapple();
+      if (state === 'damage') {
+        const spec = this.rules.attackSpec('grapple');
+        const result = target.combat ? target.combat.receive(this.sprite, spec) : target.actor?.hit(this.sprite, spec);
+        this.onHit(target, 'grapple', result);
+        this.sprite.emit('pixelforge-hit', target);
+      }
+      return;
+    }
+    this.sprite.body.reset(anchor.x, anchor.y);
+    const p = grapplePosition(anchor, hold.attack.facing);
+    target.body.reset(p.x, p.y);
+    if (target.combat) {
+      target.combat.controller.busy = null;
+      target.combat.controller.facing = hold.attack.facing;
+      playFacing(target, 'grappled', hold.attack.facing);
+    }
+    target.setDepth(p.y);
+    this.sprite.setDepth(anchor.y - 0.5);
   }
   drawReach(graphics) {
     const attack = this.rules.attack;
     if (!attack || !pixelforgeBoxes(this.sprite, 'hit').length) return;
     // Draw the zone a body centre actually hits in: the spec's rect credited BODY on every side,
     // swept over the lunge so far.
+    if (ATTACKS[attack.name].radial) { graphics.lineStyle(1,0xffcc77).strokeCircle(this.sprite.x,this.sprite.y,ATTACKS[attack.name].reach); return; }
     const spec=ATTACKS[attack.name], reach=spec.reach+BODY, width=(spec.width??18)+BODY, [fx,fy]=DIRECTIONS[attack.facing];
     const corners=[...this.path,this.sprite].flatMap(({x,y})=>[[x-fx*BODY,y-fy*BODY],[x+fx*reach,y+fy*reach]])
       .flatMap(([x,y])=>[[x+fy*width,y+fx*width],[x-fy*width,y-fx*width]]);
@@ -153,9 +236,16 @@ export class TitusCombat {
   // Network damage is already resolved by the host; apply its visual/physics result once.
   applyHit(from, result) {
     if (!result.damage) return result;
+    if (result.stun) {
+      this.rules.health.stunUntil = Math.max(this.rules.stunUntil, this.scene.time.now + result.stun);
+      this.rules.health.healingBlockedFor = Math.max(this.rules.health.healingBlockedFor ?? 0, result.stun);
+      this.rules.health.stunFacing = directionTo(from.x-this.sprite.x, from.y-this.sprite.y) ?? this.controller.facing;
+    }
     if (!result.knockdown) this.scene.feel?.flash(this.sprite, 90, result.blocked ? 0x77bbff : 0xffffff);
     if (result.stagger) {
       this.rules.attack = null;
+      this.cancelGrapple();
+      this.sprite.grappledBy?.cancelGrapple();
       this.rules.staggerUntil = Math.max(this.rules.staggerUntil, this.scene.time.now + result.stagger);
       if (this.rules.block) this.rules.endBlock(this.scene.time.now);
       this.controller.busy = null;
@@ -170,15 +260,16 @@ export class TitusCombat {
     const pushTime = result.knockdown ? 80 : (result.stagger || 80);
     this.controller.stun(result.stagger || pushTime);
     const dx = this.sprite.x - from.x, dy = this.sprite.y - from.y, length = Math.hypot(dx, dy) || 1;
-    this.sprite.body.setVelocity(dx / length * result.knockback, dy / length * result.knockback);
+    this.sprite.body.setVelocity(this.scene.time.now < this.rules.stunUntil ? 0 : dx / length * result.knockback, this.scene.time.now < this.rules.stunUntil ? 0 : dy / length * result.knockback);
     this.scene.time.delayedCall(pushTime, () => { if (this.sprite.active) this.sprite.body.setVelocity(0, 0); });
     return result;
   }
   snapshot() {
     const now = this.scene.time.now;
-    return { attack: this.rules.attack?.name ?? null, blocking: !!this.rules.block,
+    return { held: !!this.rules.heldBy, holding: !!this.grapple || !!this.networkGrapple, attack: this.rules.attack?.name ?? null, blocking: !!this.rules.block,
       blockFacing: this.rules.block?.facing ?? null, blockRemaining: Math.max(0, (this.rules.block?.until ?? 0) - now),
       blockCooldown: Math.max(0, this.rules.blockReadyAt - now), staggerRemaining: Math.max(0, this.rules.staggerUntil - now),
+      stunRemaining: Math.max(0, this.rules.stunUntil-now), healingBlockedFor: this.rules.health.healingBlockedFor ?? 0,
       knockdownRemaining: Math.max(0, this.rules.knockedDownUntil - now),
       cooldowns: Object.fromEntries(Object.keys(ATTACKS).map(name => [name, Math.max(0, (this.rules.readyAt[name] ?? 0) - now)])) };
   }

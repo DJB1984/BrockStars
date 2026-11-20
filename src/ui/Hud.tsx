@@ -79,7 +79,7 @@ export function Hud() {
   );
 }
 
-const superIcon = (s: HudState): IconName => (s.character === 'mason' ? 'grapple' : 'takedown');
+const superIcon = (s: HudState): IconName => (s.character === 'mason' ? 'grapple' : s.character === 'james' ? 'bellow' : 'takedown');
 
 function shieldTimer(s: HudState): Timer {
   return s.shield.phase === 'ready' ? { phase: 'ready', endsAt: 0, duration: 1 } : s.shield;

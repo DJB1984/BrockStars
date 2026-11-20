@@ -1,4 +1,6 @@
+import { updateBellowVisuals } from '../combat/bellowVisuals.js';
 import { characterStats } from '../characters.js';
+import { showGrappleOverlay } from '../combat/grappleVisuals.js';
 import { ATTACKS } from '../combat/rules.js';
 import { HeadBar, headroom } from '../objects/HeadBar.js';
 
@@ -52,10 +54,15 @@ export class RemotePlayers {
       const sprite = r.sprite;
       if (sprite.texture.key !== p.char) sprite.setTexture(p.char);
       const combat = this.net.combatState.fighters[id];
-      const facing = (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block;
+      if (combat?.stunPosition) ({x, y} = combat.stunPosition);
+      if (combat?.held) ({x, y} = combat.held);
+      if (combat?.grapple) ({x, y} = combat.grapple);
+      const facing = (combat?.stun ? combat.stunFacing : null) ?? combat?.held?.facing ?? (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block;
       const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
       let anim = p.anim;
-      if (combat?.knockdown) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
+      if (combat?.stun) anim = `${p.char}_stunned_${dir ?? 'down'}`;
+      else if (combat?.held) anim = `${p.char}_grappled_${dir ?? 'down'}`;
+      else if (combat?.knockdown) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
       else if (combat?.attack) anim = `${p.char}_${combat.attack.name}_${dir}`;
       else if (combat?.block) anim = `${p.char}_block_${dir}`;
       else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
@@ -72,6 +79,8 @@ export class RemotePlayers {
       r.bar.update((combat?.health ?? characterStats(p.char).health) / (combat?.maxHealth ?? characterStats(p.char).health), x, y - headroom(scene, p.char), delta);
       const seen = scene.rooms?.canSee(x, y) ?? true;   // hidden in a room you aren't in
       sprite.setVisible(seen);
+      updateBellowVisuals(scene, sprite, combat?.attack ? { ...combat.attack, start:scene.time.now-combat.attack.elapsed } : null, combat?.stun ?? 0);
+      showGrappleOverlay(sprite, combat?.grapple?.facing, !!combat?.grapple);
       r.bar.setVisible(seen);
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);

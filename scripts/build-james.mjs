@@ -246,3 +246,6 @@ for(const name of used){if(!grids[name])throw new Error(`Missing James layer: ${
 fs.writeFileSync(path.join(root,'sprite.json'),JSON.stringify(spec,null,2)+'\n');
 console.log(`James: ${used.size} editable layers, ${Object.keys(spec.animations).length} animations.`);
 
+
+// Restore James's special and the shared stun poses after rebuilding the base rig.
+await import('./build-bellow.mjs');

@@ -1252,6 +1252,393 @@
      "duration": 150
     }
    ]
+  },
+  "grappled_down": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      {
+       "from": "front_torso",
+       "offset": [
+        0,
+        3
+       ]
+      },
+      {
+       "from": "front_arms",
+       "offset": [
+        0,
+        3
+       ]
+      },
+      {
+       "from": "front_head",
+       "offset": [
+        0,
+        10
+       ]
+      }
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "grapple_down": {
+   "loop": false,
+   "frames": [
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_head",
+      "grapple_front_reach"
+     ],
+     "duration": 450
+    },
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_head",
+      "hit_front_grapple"
+     ],
+     "duration": 120,
+     "active": true
+    },
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_head",
+      "grapple_front_lock"
+     ],
+     "duration": 2000
+    },
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_head",
+      "combat_front_other_arm",
+      "combat_front_guard_arm",
+      "combat_front_guard_fist"
+     ],
+     "duration": 300
+    }
+   ]
+  },
+  "grappled_up": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      {
+       "from": "back_torso",
+       "offset": [
+        0,
+        3
+       ]
+      },
+      {
+       "from": "back_arms",
+       "offset": [
+        0,
+        3
+       ]
+      },
+      {
+       "from": "back_head",
+       "offset": [
+        0,
+        10
+       ]
+      }
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "grapple_up": {
+   "loop": false,
+   "frames": [
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_head",
+      "grapple_back_reach"
+     ],
+     "duration": 450
+    },
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_head",
+      "hit_back_grapple"
+     ],
+     "duration": 120,
+     "active": true
+    },
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_head",
+      "grapple_back_lock"
+     ],
+     "duration": 2000
+    },
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_head",
+      "combat_back_other_arm",
+      "combat_back_guard_arm",
+      "combat_back_guard_fist"
+     ],
+     "duration": 300
+    }
+   ]
+  },
+  "grappled_side": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      {
+       "from": "side_torso",
+       "offset": [
+        2,
+        3
+       ]
+      },
+      {
+       "from": "side_arm",
+       "offset": [
+        2,
+        3
+       ]
+      },
+      {
+       "from": "side_head",
+       "offset": [
+        3,
+        10
+       ]
+      }
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "grapple_side": {
+   "loop": false,
+   "frames": [
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_head",
+      "grapple_side_reach"
+     ],
+     "duration": 450
+    },
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_head",
+      "hit_side_grapple"
+     ],
+     "duration": 120,
+     "active": true
+    },
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_head",
+      "grapple_side_lock"
+     ],
+     "duration": 2000
+    },
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_head",
+      "combat_side_other_arm",
+      "combat_side_guard_arm",
+      "combat_side_guard_fist"
+     ],
+     "duration": 300
+    }
+   ]
+  },
+  "grapple_overlay_down": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "grapple_front_lock"
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "grapple_overlay_up": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "grapple_back_lock"
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "grapple_overlay_side": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "grapple_side_lock"
+     ],
+     "duration": 180
+    }
+   ]
+  },
+  "stunned_down": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_arms",
+      {
+       "from": "front_head",
+       "offset": [
+        1,
+        1
+       ]
+      }
+     ],
+     "duration": 220
+    },
+    {
+     "layers": [
+      "front_shadow",
+      "front_legs_stand",
+      "front_torso",
+      "front_arms",
+      {
+       "from": "front_head",
+       "offset": [
+        -1,
+        2
+       ]
+      }
+     ],
+     "duration": 220
+    }
+   ]
+  },
+  "stunned_up": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_arms",
+      {
+       "from": "back_head",
+       "offset": [
+        1,
+        1
+       ]
+      }
+     ],
+     "duration": 220
+    },
+    {
+     "layers": [
+      "back_shadow",
+      "back_legs_stand",
+      "back_torso",
+      "back_arms",
+      {
+       "from": "back_head",
+       "offset": [
+        -1,
+        2
+       ]
+      }
+     ],
+     "duration": 220
+    }
+   ]
+  },
+  "stunned_side": {
+   "loop": true,
+   "frames": [
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_arm",
+      {
+       "from": "side_head",
+       "offset": [
+        1,
+        1
+       ]
+      }
+     ],
+     "duration": 220
+    },
+    {
+     "layers": [
+      "side_shadow",
+      "side_legs_stand",
+      "side_torso",
+      "side_arm",
+      {
+       "from": "side_head",
+       "offset": [
+        -1,
+        2
+       ]
+      }
+     ],
+     "duration": 220
+    }
+   ]
   }
  },
  "hit_pad": 1

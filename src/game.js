@@ -31,9 +31,7 @@ export function damage(n = 1) {
 }
 
 export function heal(n = 1) {
-  state.health = Math.min(state.maxHealth, state.health + n);
-  playerHealth.value = state.health;
-  changed('health');
+  return playerHealth.heal(n);
 }
 
 export function addCoins(n = 1) {

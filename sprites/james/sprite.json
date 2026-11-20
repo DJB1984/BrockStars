@@ -1255,6 +1255,372 @@
           "duration": 150
         }
       ]
+    },
+    "grappled_down": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "from": "front_torso",
+              "offset": [
+                0,
+                3
+              ]
+            },
+            {
+              "from": "front_arms",
+              "offset": [
+                0,
+                3
+              ]
+            },
+            {
+              "from": "front_head",
+              "offset": [
+                0,
+                17
+              ]
+            }
+          ],
+          "duration": 180
+        }
+      ]
+    },
+    "grappled_up": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "from": "back_torso",
+              "offset": [
+                0,
+                3
+              ]
+            },
+            {
+              "from": "back_arms",
+              "offset": [
+                0,
+                3
+              ]
+            },
+            {
+              "from": "back_head",
+              "offset": [
+                0,
+                17
+              ]
+            }
+          ],
+          "duration": 180
+        }
+      ]
+    },
+    "grappled_side": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            {
+              "from": "side_torso",
+              "offset": [
+                2,
+                3
+              ]
+            },
+            {
+              "from": "side_arm",
+              "offset": [
+                2,
+                3
+              ]
+            },
+            {
+              "from": "side_head",
+              "offset": [
+                3,
+                17
+              ]
+            }
+          ],
+          "duration": 180
+        }
+      ]
+    },
+    "stunned_down": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            "front_arms",
+            {
+              "from": "front_head",
+              "offset": [
+                1,
+                1
+              ]
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            "front_arms",
+            {
+              "from": "front_head",
+              "offset": [
+                -1,
+                2
+              ]
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    "bellow_down": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            {
+              "from": "front_head",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            "combat_front_guard_arm",
+            "combat_front_guard_fist"
+          ],
+          "duration": 350
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            "bellow_front_head",
+            "bellow_front_arms"
+          ],
+          "duration": 120
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            "bellow_front_head",
+            "bellow_front_arms"
+          ],
+          "duration": 180
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            "front_torso",
+            "front_arms",
+            "front_head"
+          ],
+          "duration": 250
+        }
+      ]
+    },
+    "stunned_up": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            "back_arms",
+            {
+              "from": "back_head",
+              "offset": [
+                1,
+                1
+              ]
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            "back_arms",
+            {
+              "from": "back_head",
+              "offset": [
+                -1,
+                2
+              ]
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    "bellow_up": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            {
+              "from": "back_head",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            "combat_back_guard_arm",
+            "combat_back_guard_fist"
+          ],
+          "duration": 350
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            "bellow_back_head",
+            "bellow_back_arms"
+          ],
+          "duration": 120
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            "bellow_back_head",
+            "bellow_back_arms"
+          ],
+          "duration": 180
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            "back_torso",
+            "back_arms",
+            "back_head"
+          ],
+          "duration": 250
+        }
+      ]
+    },
+    "stunned_side": {
+      "loop": true,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            "side_arm",
+            {
+              "from": "side_head",
+              "offset": [
+                1,
+                1
+              ]
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            "side_arm",
+            {
+              "from": "side_head",
+              "offset": [
+                -1,
+                2
+              ]
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    "bellow_side": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            {
+              "from": "side_head",
+              "offset": [
+                -1,
+                1
+              ]
+            },
+            "combat_side_guard_arm",
+            "combat_side_guard_fist"
+          ],
+          "duration": 350
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            "bellow_side_head",
+            "bellow_side_arms"
+          ],
+          "duration": 120
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            "bellow_side_head",
+            "bellow_side_arms"
+          ],
+          "duration": 180
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            "side_torso",
+            "side_arm",
+            "side_head"
+          ],
+          "duration": 250
+        }
+      ]
     }
   },
   "hit_pad": 1

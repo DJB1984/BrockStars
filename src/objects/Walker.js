@@ -31,7 +31,8 @@ export class Walker {
 
   update(time) {
     const s = this.sprite, b = s.body;
-    if (!s.active || time < this.recoverAt) return;
+    if (time < (this.stunUntil ?? 0)) { b.setVelocity(0, 0); return; }
+    if (!s.active || s.grappledBy || time < this.recoverAt) return;
     const front = s.x + this.dir * (b.width / 2 + 1);
     const wall = this.solidAt(front, b.bottom - 4);
     const ledge = this.side && !this.solidAt(front, b.bottom + 1);
@@ -46,8 +47,11 @@ export class Walker {
   hit(from, spec = { damage: 4, stagger: 250, knockback: 120 }) {
     const s = this.sprite;
     this.hp -= spec.damage;
-    this.recoverAt = this.scene.time.now + Math.max(80, spec.stagger);
-    this.scene.feel.flash(s).knockback(s, from, spec.knockback);
+    this.recoverAt = Math.max(this.recoverAt, this.scene.time.now + Math.max(80, spec.stagger));
+    if (spec.stun) this.stunUntil = Math.max(this.stunUntil ?? 0, this.scene.time.now + spec.stun);
+    this.scene.feel.flash(s);
+    if (spec.stun) s.body.setVelocity(0, 0);
+    else this.scene.feel.knockback(s, from, spec.knockback);
     if (this.hp <= 0) {
       s.body.enable = false;
       this.scene.tweens.add({ targets: s, alpha: 0, duration: 200, onComplete: () => s.destroy() });
