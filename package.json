@@ -11,6 +11,7 @@
     "package": "vite build && node tools/package-site.mjs",
     "test": "node --test tests/combat.test.mjs tests/net-combat.test.mjs",
     "test:browser": "node tests/combat-browser.mjs",
+    "test:takedown": "node tests/takedown-browser.mjs",
     "test:multiplayer": "node tests/net-combat-browser.mjs"
   },
   "dependencies": {

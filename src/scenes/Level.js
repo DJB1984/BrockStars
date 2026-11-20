@@ -3,6 +3,7 @@ import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixe
          spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../game.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
+import { CHARACTERS, isCharacter } from '../characters.js';
 import { ATTACKS } from '../combat/rules.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
@@ -32,7 +33,7 @@ export class Level extends Phaser.Scene {
     this.levelName = data.level;
     this.spawnName = data.spawn;
     const requested = data.character ?? this.character ?? new URLSearchParams(location.search).get('character');
-    this.character = ['mason', 'titus'].includes(requested) ? requested : 'mason';
+    this.character = isCharacter(requested) ? requested : 'mason';
     this.playerPosition = data.playerPosition;
   }
 
@@ -42,32 +43,32 @@ export class Level extends Phaser.Scene {
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
     const level = (this.level = pixelforgeLevel(this, this.levelName, {
       spawn: this.spawnName, player: this.character,
-      playerOptions: { speed: this.character === 'mason' ? 180 : 140 },
+      playerOptions: { speed: CHARACTERS[this.character].speed },
     }));
     const player = level.player;
     if (player && this.playerPosition) player.body.reset(...this.playerPosition);
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);
-    // Both fighters remain playable; switching keeps the player's position and inventory.
+    // Switching fighters keeps the player's position and inventory.
     const select = (character) => {
       if (character === this.character || !player?.active || state.health <= 0) return;
       this.scene.restart({ level: this.levelName, spawn: this.spawnName, character,
         playerPosition: [player.x, player.y] });
     };
-    ['titus', 'mason'].forEach((character, index) => {
+    const characters = Object.keys(CHARACTERS);
+    characters.forEach((character, index) => {
       const selected = character === this.character;
-      this.add.text(8 + index * 105, 8, `${index + 1} ${character === 'mason' ? 'Mason' : 'Titus'}${selected ? ' *' : ''}`, {
+      this.add.text(8 + index * 105, 8, `${index + 1} ${CHARACTERS[character].name}${selected ? ' *' : ''}`, {
         fontFamily: 'monospace', fontSize: '12px', color: selected ? '#f0bb7e' : '#ecedf0',
         backgroundColor: '#24232a', padding: { x: 6, y: 5 },
       }).setScrollFactor(0).setDepth(200001).setInteractive({ useHandCursor: true })
         .on('pointerdown', () => select(character));
     });
-    const switchTitus = () => select('titus'), switchMason = () => select('mason');
-    this.input.keyboard.on('keydown-ONE', switchTitus);
-    this.input.keyboard.on('keydown-TWO', switchMason);
-    this.events.once('shutdown', () => {
-      this.input.keyboard.off('keydown-ONE', switchTitus);
-      this.input.keyboard.off('keydown-TWO', switchMason);
+    characters.forEach((character, index) => {
+      const event = `keydown-${['ONE', 'TWO', 'THREE'][index]}`;
+      const switchCharacter = () => select(character);
+      this.input.keyboard.on(event, switchCharacter);
+      this.events.once('shutdown', () => this.input.keyboard.off(event, switchCharacter));
     });
     this.actors = [];
     for (const s of level.sprites) {
@@ -99,7 +100,7 @@ export class Level extends Phaser.Scene {
 
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
-      if (['titus', 'mason'].includes(this.character)) {
+      if (isCharacter(this.character)) {
         this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable });
         on(player, 'pixelforge-attack', () => {
           const attack = this.combat.rules.attack;
@@ -111,6 +112,7 @@ export class Level extends Phaser.Scene {
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
           if (!self || !player.active) return;
+          this.combat.rules.readyAt.takedown = this.time.now + (self.takedownCooldown ?? 0);
           if (self.life !== life) {
             reset();
             this.scene.restart({level:this.levelName,spawn:this.spawnName,character:this.character});
@@ -144,7 +146,11 @@ export class Level extends Phaser.Scene {
 
   update(time, delta) {
     if (!net.active) playerHealth.update(delta);
-    if (this.combatText?.active) this.combatText.setText(`HP ${Math.ceil(state.health)}/100  C Punch  X Kick  Z Headbutt  Hold V Block`);
+    if (this.combatText?.active) {
+      const remaining = this.combat.snapshot().cooldowns.takedown;
+      const special = this.character === 'titus' ? `  S Takedown ${remaining ? `${(remaining/1000).toFixed(1)}s` : 'Ready'}` : '';
+      this.combatText.setText(`HP ${Math.ceil(state.health)}/${state.maxHealth}  C Punch  X Kick  Z Headbutt  Hold V Block${special}`);
+    }
     for (const a of this.actors) a.update?.(time);
     const p = this.level.player;
     if (net.active && p?.active) {

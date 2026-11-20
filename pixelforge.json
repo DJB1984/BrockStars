@@ -64,6 +64,20 @@
         16
       ],
       "anchor": "center"
+    },
+    "tall_topdown": {
+      "size": [
+        64,
+        80
+      ],
+      "origin": [
+        32,
+        68
+      ],
+      "body": [
+        24,
+        60
+      ]
     }
   },
   "pixelforge": {

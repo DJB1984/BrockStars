@@ -1,4 +1,4 @@
-import { ATTACKS, CombatRules, DIRECTIONS, directionTo } from '../combat/rules.js';
+import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets } from '../combat/rules.js';
 
 // Only the host runs this clock. Clients send actions, never damage or hit claims.
 export class RoomCombat {
@@ -13,10 +13,11 @@ export class RoomCombat {
     for (const [id, position] of Object.entries(players)) {
       let f = this.fighters.get(id);
       if (!f) {
-        f = { rules: new CombatRules(), life: 0, respawnAt: null, action: null, lastCommand: 0 };
+        f = { rules: new CombatRules(undefined, position.char ?? 'titus'), life: 0, respawnAt: null, action: null, lastCommand: 0 };
         this.fighters.set(id, f);
       }
       f.position = position;
+      f.rules.setCharacter(position.char ?? 'titus');
       f.present = true;
       if (f.level !== position.level) {
         f.rules.attack = null; f.action = null; f.rules.block = null;
@@ -38,7 +39,7 @@ export class RoomCombat {
       }
       return;
     }
-    if (!DIRECTIONS[command.facing] || !['punch', 'kick', 'headbutt', 'block'].includes(command.action)) return;
+    if (!DIRECTIONS[command.facing] || ![...Object.keys(ATTACKS), 'block'].includes(command.action)) return;
     this.expire(f, now);
     r.previous = {}; // these are distinct key presses, not a held input stream
     r.update(now, { [command.action]: true }, command.facing);
@@ -69,21 +70,21 @@ export class RoomCombat {
     for (const f of this.fighters.values()) {
       f.rules.health.update(delta);
       if (f.respawnAt !== null && now >= f.respawnAt) {
-        f.rules = new CombatRules(); f.action = null; f.respawnAt = null; f.life++;
+        f.rules = new CombatRules(undefined, f.position.char ?? 'titus'); f.action = null; f.respawnAt = null; f.life++;
       }
     }
     for (const [id, f] of this.fighters) {
       const a = f.action;
       if (a && f.present && f.rules.health.value > 0) {
-        const spec = ATTACKS[a.name], begin = a.start+spec.frames[0], end = begin+spec.frames[1];
+        const spec = f.rules.attackSpec(a.name), begin = a.start+spec.frames[0], end = begin+spec.frames[1];
         // Intersect the whole tick interval so a 60ms punch cannot fall between 66ms snapshots.
         if (now >= begin && a.checked <= end) {
-          const [fx, fy] = DIRECTIONS[a.facing], p = f.position;
-          for (const [target, other] of this.fighters) {
-            if (target===id || !other.present || a.struck.has(target) || other.level!==f.level || !other.rules.health.value) continue;
-            const dx = other.position.x-p.x, dy = other.position.y-p.y;
-            const forward = dx*fx+dy*fy, across = Math.abs(dx*fy-dy*fx);
-            if (forward < 0 || forward > spec.reach || across > 18) continue;
+          const p = f.position;
+          const candidates = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0)
+            .map(([id, other]) => ({id, ...other.position}));
+          for (const other of attackTargets(p, candidates, a.facing, spec)) {
+            if (a.struck.size >= (spec.maxTargets ?? Infinity)) break;
+            const target = other.id;
             a.struck.add(target);
             this.damage(target, id, spec, {x:p.x,y:p.y}, now);
           }
@@ -93,10 +94,13 @@ export class RoomCombat {
       this.expire(f, now);
     }
     const fighters = Object.fromEntries([...this.fighters].map(([id,f]) => [id, {
-      health: f.rules.health.value, life: f.life,
+      health: f.rules.health.value, maxHealth: f.rules.health.max, life: f.life,
       attack: f.action ? {name:f.action.name, facing:f.action.facing, elapsed:now-f.action.start} : null,
       block: f.rules.block?.facing ?? null,
       stagger: Math.max(0, f.rules.staggerUntil-now),
+      knockdown: Math.max(0, f.rules.knockedDownUntil-now),
+      knockdownFacing: f.rules.knockdownFacing ?? null,
+      takedownCooldown: Math.max(0, (f.rules.readyAt.takedown ?? 0)-now),
     }]));
     return { fighters, hits: this.events.splice(0) };
   }

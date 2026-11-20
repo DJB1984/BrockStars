@@ -1,11 +1,12 @@
 import './lobby.css';
+import { CHARACTERS } from './characters.js';
 import { net } from './net/session.js';
 import { call } from './net/signal.js';
 
 // The screen before the game: a name, a character, then host a game, join one (by code, or from the
 // list of games on this network), or play solo. Resolves with { character } once the game is set up.
 
-const CHARACTERS = [['mason', 'Mason'], ['titus', 'Titus']];
+const CHOICES = ['mason', 'titus', 'james'].map(id => [id, CHARACTERS[id].name]);
 const REFRESH_MS = 3000;
 
 const remembered = (key, fallback) => { try { return localStorage.getItem(key) ?? fallback; } catch { return fallback; } };
@@ -19,7 +20,7 @@ export function showLobby({ level }) {
       <h1>BrockStars</h1>
       <label class="field"><span>Your name</span><input name="name" maxlength="16" required></label>
       <fieldset class="chars"><legend>Play as</legend>
-        ${CHARACTERS.map(([id, label]) => `<label><input type="radio" name="char" value="${id}"><span>${label}</span></label>`).join('')}
+        ${CHOICES.map(([id, label]) => `<label><input type="radio" name="char" value="${id}"><span>${label}</span></label>`).join('')}
       </fieldset>
       <button type="button" class="primary" data-act="host">Host a game</button>
       <div class="join">
@@ -40,7 +41,7 @@ export function showLobby({ level }) {
   const $ = (sel) => root.querySelector(sel);
   f.name.value = remembered('brockstars.name', '');
   const char = remembered('brockstars.char', 'mason');
-  f.char.value = CHARACTERS.some(([id]) => id === char) ? char : 'mason';
+  f.char.value = CHOICES.some(([id]) => id === char) ? char : 'mason';
   if (!f.name.value) f.name.focus();
 
   return new Promise((resolve) => {

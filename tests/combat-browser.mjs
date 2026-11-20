@@ -27,7 +27,7 @@ try {
     for(const direction of ['right','left','up','down']) for(const name of ['punch','kick','headbutt']) {
       setupFight(direction,name==='kick'?28:20);
       play.step(1000,{[name]:true});
-      out.push({direction,name,health:scene.partnerHealth.value,expected:100-ATTACKS[name].damage,player:play.state(),targetX:scene.partner.x,targetY:scene.partner.y});
+      out.push({direction,name,health:scene.partnerHealth.value,expected:scene.partnerHealth.max-scene.combat.rules.attackSpec(name).damage,player:play.state(),targetX:scene.partner.x,targetY:scene.partner.y});
     }
     return out;
   });
@@ -69,9 +69,9 @@ try {
     }
     setupFight();s.partner.body.reset(500,220);
     s.health.take(20);play.step(44900,{});
-    check('no early regeneration',s.health.value===80,s.health.value);
-    play.step(1100,{});check('regen is two HP per second',Math.abs(s.health.value-82)<0.04,s.health.value);
-    s.health.take(1);play.step(44900,{});check('new damage restarts the wait',Math.abs(s.health.value-81)<0.04,s.health.value);
+    check('no early regeneration',s.health.value===s.health.max-20,s.health.value);
+    play.step(1100,{});check('regen is two HP per second',Math.abs(s.health.value-(s.health.max-18))<0.04,s.health.value);
+    s.health.take(1);play.step(44900,{});check('new damage restarts the wait',Math.abs(s.health.value-(s.health.max-19))<0.04,s.health.value);
     const reaches=[];
     for(const direction of ['right','left','up','down']) {
       const range={direction};
@@ -79,7 +79,7 @@ try {
         let farthest=0;
         for(let distance=10;distance<=60;distance+=2) {
           setupFight(direction,distance);play.step(850,{[name]:true});
-          if(s.partnerHealth.value<100) farthest=distance;
+          if(s.partnerHealth.value<s.partnerHealth.max) farthest=distance;
         }
         range[name]=farthest;
       }
@@ -103,7 +103,7 @@ try {
   await page.screenshot({path:`previews/${character}-combat-practice.png`});
   await page.goto(`http://127.0.0.1:5173/?character=${character}&solo`);
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='brock3');
-  assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health),100);
+  assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health), (await import('../src/characters.js')).CHARACTERS[character].health);
   assert.ok(await page.evaluate(()=>window.pixelforgePlay.player.combat));
   await page.keyboard.press('2');
   await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='mason');

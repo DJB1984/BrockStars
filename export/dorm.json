@@ -11,7 +11,7 @@
   "margin": 0,
   "spacing": 1,
   "columns": 8,
-  "tilecount": 46,
+  "tilecount": 47,
   "tiles": [
     {
       "id": 0,
@@ -612,6 +612,16 @@
           "value": true
         }
       ]
+    },
+    {
+      "id": 46,
+      "properties": [
+        {
+          "name": "name",
+          "type": "string",
+          "value": "bathroom_floor"
+        }
+      ]
     }
   ],
   "pixelforge": {
@@ -662,7 +672,8 @@
       "wall_cap_nw_je",
       "wall_cap_ne_jw",
       "wall_cap_w_je",
-      "wall_cap_e_jw"
+      "wall_cap_e_jw",
+      "bathroom_floor"
     ],
     "properties": [
       {},
@@ -766,7 +777,8 @@
       },
       {
         "collides": true
-      }
+      },
+      {}
     ],
     "animations": {},
     "sample": [

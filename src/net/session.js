@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { call, beacon, pack, unpack, SignalError } from './signal.js';
+import { isCharacter } from '../characters.js';
 import { RoomCombat } from './combat.js';
 
 // One multiplayer game, kept across level restarts (doors, character switches). The host's browser is the
@@ -136,7 +137,7 @@ class NetSession extends Phaser.Events.EventEmitter {
     }
     if (msg.type !== 'me' || !this.peers.has(from)) return;
     if (!msg.p || !Number.isSafeInteger(msg.p.n) || !Number.isFinite(msg.p.x) || !Number.isFinite(msg.p.y)
-        || !['mason','titus'].includes(msg.p.char) || typeof msg.p.level !== 'string') return;
+        || !isCharacter(msg.p.char) || typeof msg.p.level !== 'string') return;
     const last = this.players[from];
     if (last && msg.p.n <= last.n) return;
     this.players[from] = { ...msg.p, heard: performance.now() };

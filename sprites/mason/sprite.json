@@ -991,6 +991,267 @@
           "duration": 280
         }
       ]
+    },
+    "knockdown_down": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "combat_front_takedown_fall_lean"
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "combat_front_takedown_fall_collapse"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            "takedown_on_back_down"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "takedown_on_back_down"
+              ],
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "takedown_on_back_down"
+          ],
+          "duration": 900
+        },
+        {
+          "layers": [
+            {
+              "from": {
+                "layers": [
+                  "front_shadow",
+                  "front_legs_stand",
+                  {
+                    "layers": [
+                      "front_torso",
+                      "front_arms",
+                      "front_head"
+                    ]
+                  }
+                ],
+                "duration": 450
+              },
+              "offset": [
+                0,
+                9
+              ]
+            }
+          ],
+          "duration": 150
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "front_shadow",
+                "front_legs_stand",
+                {
+                  "layers": [
+                    "front_torso",
+                    "front_arms",
+                    "front_head"
+                  ]
+                }
+              ],
+              "duration": 450
+            }
+          ],
+          "duration": 150
+        }
+      ]
+    },
+    "knockdown_up": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "combat_back_takedown_fall_lean"
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "combat_back_takedown_fall_collapse"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            "takedown_on_back"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "takedown_on_back"
+              ],
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "takedown_on_back"
+          ],
+          "duration": 900
+        },
+        {
+          "layers": [
+            {
+              "from": {
+                "layers": [
+                  "back_shadow",
+                  "back_legs_stand",
+                  {
+                    "layers": [
+                      "back_torso",
+                      "back_arms",
+                      "back_head"
+                    ]
+                  }
+                ],
+                "duration": 450
+              },
+              "offset": [
+                0,
+                9
+              ]
+            }
+          ],
+          "duration": 150
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "back_shadow",
+                "back_legs_stand",
+                {
+                  "layers": [
+                    "back_torso",
+                    "back_arms",
+                    "back_head"
+                  ]
+                }
+              ],
+              "duration": 450
+            }
+          ],
+          "duration": 150
+        }
+      ]
+    },
+    "knockdown_side": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "combat_side_takedown_fall_lean"
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "combat_side_takedown_fall_collapse"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            "takedown_on_back_side"
+          ],
+          "duration": 70
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "takedown_on_back_side"
+              ],
+              "offset": [
+                0,
+                -1
+              ]
+            }
+          ],
+          "duration": 80
+        },
+        {
+          "layers": [
+            "takedown_on_back_side"
+          ],
+          "duration": 900
+        },
+        {
+          "layers": [
+            {
+              "from": {
+                "layers": [
+                  "side_shadow",
+                  "side_legs_stand",
+                  {
+                    "layers": [
+                      "side_torso",
+                      "side_head",
+                      "side_arm"
+                    ]
+                  }
+                ],
+                "duration": 450
+              },
+              "offset": [
+                0,
+                9
+              ]
+            }
+          ],
+          "duration": 150
+        },
+        {
+          "layers": [
+            {
+              "layers": [
+                "side_shadow",
+                "side_legs_stand",
+                {
+                  "layers": [
+                    "side_torso",
+                    "side_head",
+                    "side_arm"
+                  ]
+                }
+              ],
+              "duration": 450
+            }
+          ],
+          "duration": 150
+        }
+      ]
     }
   },
   "hit_pad": 1

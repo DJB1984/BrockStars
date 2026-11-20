@@ -1,12 +1,12 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, CombatRules, directionTo, DIRECTIONS } from './rules.js';
+import { ATTACKS, BLOCK, CombatRules, directionTo, attackTargets } from './rules.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
 export class TitusCombat {
   constructor(scene, sprite, { health, targets = () => [], onHit = () => {} } = {}) {
     this.scene = scene;
     this.sprite = sprite;
-    this.rules = new CombatRules(health);
+    this.rules = new CombatRules(health, sprite.texture.key);
     this.targets = targets;
     this.onHit = onHit;
     this.struck = new Set();
@@ -14,10 +14,16 @@ export class TitusCombat {
     const c = sprite.controller;
     this.controller = c;
     const read = c.readInput.bind(c), move = c.updateTopdown.bind(c);
-    const keys = scene.input.keyboard.addKeys('C,X,Z,V');
+    const keys = scene.input.keyboard.addKeys('C,X,Z,V,S');
     c.readInput = () => {
       const input = read();
       return { ...input, attack: false,
+        // Keep movement independent of the generated helper's default WASD bindings.
+        left: c.override ? input.left : c.keys.LEFT.isDown,
+        right: c.override ? input.right : c.keys.RIGHT.isDown,
+        up: c.override ? input.up : c.keys.UP.isDown,
+        down: c.override ? input.down : c.keys.DOWN.isDown,
+        takedown: c.override ? !!c.override.takedown : keys.S.isDown,
         punch: c.override ? !!c.override.punch : keys.C.isDown,
         kick: c.override ? !!c.override.kick : keys.X.isDown,
         headbutt: c.override ? !!c.override.headbutt : keys.Z.isDown,
@@ -60,7 +66,7 @@ export class TitusCombat {
         if (this.rules.block) playFacing(sprite, 'block', action.facing);
         const dx = Number(input.right) - Number(input.left), dy = Number(input.down) - Number(input.up);
         const length = Math.hypot(dx, dy) || 1;
-        const speed = c.opts.speed * (this.rules.block ? BLOCK.speed : 0.6);
+        const speed = c.opts.speed * (this.rules.block ? BLOCK.speed : (ATTACKS[action.name].speed ?? 0.6));
         sprite.body.setVelocity(dx / length * speed, dy / length * speed);
         sprite.setDepth(sprite.y);
       } else {
@@ -90,16 +96,13 @@ export class TitusCombat {
     if (!attack || !this.sprite.active || this.rules.health.value <= 0) return;
     const hits = pixelforgeBoxes(this.sprite, 'hit');
     if (!hits.length) return;
-    const spec = ATTACKS[attack.name];
-    for (const target of this.targets()) {
-      if (!target.active || target === this.sprite || this.struck.has(target)) continue;
-      const dx = target.x - this.sprite.x, dy = target.y - this.sprite.y;
-      const [fx, fy] = DIRECTIONS[attack.facing];
-      const forward = dx * fx + dy * fy, across = Math.abs(dx * fy - dy * fx);
+    const spec = this.rules.attackSpec(attack.name);
+    const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (target.combat ? target.combat.rules.health.value > 0 : true));
+    for (const target of attackTargets(this.sprite, candidates, attack.facing, spec)) {
       // In this three-quarter view a head and boot have different drawn heights. Combat range
       // lives on the ground plane so rotating the same move never changes its reach.
       // The exported art still determines the active frames, never the wind-up or recovery.
-      if (forward < 0 || forward > spec.reach || across > 18) continue;
+      if (this.struck.size >= (spec.maxTargets ?? Infinity)) break;
       this.struck.add(target);
       const result = target.combat ? target.combat.receive(this.sprite, spec) : target.actor?.hit(this.sprite, spec);
       this.onHit(target, attack.name, result);
@@ -109,8 +112,8 @@ export class TitusCombat {
   drawReach(graphics) {
     const attack = this.rules.attack;
     if (!attack || !pixelforgeBoxes(this.sprite, 'hit').length) return;
-    const reach=ATTACKS[attack.name].reach, [x,y]=[this.sprite.x,this.sprite.y];
-    const boxes={right:[x,y-18,reach,36],left:[x-reach,y-18,reach,36],up:[x-18,y-reach,36,reach],down:[x-18,y,36,reach]};
+    const {reach,width=18}=ATTACKS[attack.name], [x,y]=[this.sprite.x,this.sprite.y];
+    const boxes={right:[x,y-width,reach,width*2],left:[x-reach,y-width,reach,width*2],up:[x-width,y-reach,width*2,reach],down:[x-width,y,width*2,reach]};
     graphics.lineStyle(1,0xff5577).strokeRect(...boxes[attack.facing]);
   }
   receive(from, spec) {
@@ -120,17 +123,22 @@ export class TitusCombat {
   // Network damage is already resolved by the host; apply its visual/physics result once.
   applyHit(from, result) {
     if (!result.damage) return result;
-    this.scene.feel?.flash(this.sprite, 90, result.blocked ? 0x77bbff : 0xffffff);
+    if (!result.knockdown) this.scene.feel?.flash(this.sprite, 90, result.blocked ? 0x77bbff : 0xffffff);
     if (result.stagger) {
       this.rules.attack = null;
-      this.rules.staggerUntil = this.scene.time.now + result.stagger;
+      this.rules.staggerUntil = Math.max(this.rules.staggerUntil, this.scene.time.now + result.stagger);
       if (this.rules.block) this.rules.endBlock(this.scene.time.now);
       this.controller.busy = null;
-      playFacing(this.sprite, 'idle', this.controller.facing);
+      if (result.knockdown) {
+        this.rules.knockedDownUntil = this.scene.time.now + result.knockdown;
+        this.rules.knockdownFacing = result.knockdownFacing ?? directionTo(from.x-this.sprite.x, from.y-this.sprite.y) ?? this.controller.facing;
+        this.controller.facing = this.rules.knockdownFacing;
+        playFacing(this.sprite, 'knockdown', this.controller.facing);
+      } else if (this.scene.time.now >= this.rules.knockedDownUntil) playFacing(this.sprite, 'idle', this.controller.facing);
     }
     // A brief push for light attacks; headbutt holds the victim in recovery longer.
-    const pushTime = result.stagger || 80;
-    this.controller.stun(pushTime);
+    const pushTime = result.knockdown ? 80 : (result.stagger || 80);
+    this.controller.stun(result.stagger || pushTime);
     const dx = this.sprite.x - from.x, dy = this.sprite.y - from.y, length = Math.hypot(dx, dy) || 1;
     this.sprite.body.setVelocity(dx / length * result.knockback, dy / length * result.knockback);
     this.scene.time.delayedCall(pushTime, () => { if (this.sprite.active) this.sprite.body.setVelocity(0, 0); });
@@ -141,6 +149,7 @@ export class TitusCombat {
     return { attack: this.rules.attack?.name ?? null, blocking: !!this.rules.block,
       blockFacing: this.rules.block?.facing ?? null, blockRemaining: Math.max(0, (this.rules.block?.until ?? 0) - now),
       blockCooldown: Math.max(0, this.rules.blockReadyAt - now), staggerRemaining: Math.max(0, this.rules.staggerUntil - now),
+      knockdownRemaining: Math.max(0, this.rules.knockedDownUntil - now),
       cooldowns: Object.fromEntries(Object.keys(ATTACKS).map(name => [name, Math.max(0, (this.rules.readyAt[name] ?? 0) - now)])) };
   }
 }

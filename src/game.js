@@ -11,6 +11,7 @@ const START = { health: 100, maxHealth: 100, coins: 0, inventory: [] };
 export const state = structuredClone(START);
 export const playerHealth = new HealthPool((value) => {
   const wasAlive = state.health > 0;
+  state.maxHealth = playerHealth.max;
   state.health = value;
   changed('health');
   if (wasAlive && value === 0) bus.emit('dead');
@@ -20,6 +21,7 @@ function changed(key) { bus.emit('change', state, key); }
 
 export function reset() {
   Object.assign(state, structuredClone(START));
+  state.maxHealth = playerHealth.max;
   playerHealth.reset();
   changed('all');
 }
