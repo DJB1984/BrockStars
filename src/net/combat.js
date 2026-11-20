@@ -1,10 +1,12 @@
 import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets, extendPath } from '../combat/rules.js';
+import { levelWalls } from '../combat/walls.js';
 
 import { GrappleHold, grapplePosition } from '../combat/grapple.js';
 
 // Only the host runs this clock. Clients send actions, never damage or hit claims.
+// walls(level) gives a level's wall grid (walls.js), so nobody is hit through a wall.
 export class RoomCombat {
-  constructor() { this.fighters = new Map(); this.last = null; this.events = []; }
+  constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.walls = walls; }
 
   sync(players, now, connected = Object.keys(players)) {
     const members = new Set(connected);
@@ -115,7 +117,7 @@ export class RoomCombat {
           const p = f.position;
           const candidates = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || !other.rules.heldBy))
             .map(([id, other]) => ({id, ...other.position}));
-          for (const other of attackTargets(p, candidates, a.facing, spec, a.path)) {
+          for (const other of attackTargets(p, candidates, a.facing, spec, a.path, this.walls(f.level))) {
             if (a.struck.size >= (spec.maxTargets ?? Infinity)) break;
             const target = other.id;
             a.struck.add(target);

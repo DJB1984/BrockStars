@@ -1,9 +1,10 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, directionTo, attackTargets, extendPath } from './rules.js';
+import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, attackAnim, directionTo, attackTargets, extendPath } from './rules.js';
 import { GrappleHold, grapplePosition } from './grapple.js';
 import { showGrappleOverlay } from './grappleVisuals.js';
 import { updateBellowVisuals } from './bellowVisuals.js';
 import { touch } from './touch.js';
+import { levelWalls } from './walls.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
 export class TitusCombat {
@@ -15,6 +16,8 @@ export class TitusCombat {
     this.onHit = onHit;
     this.struck = new Set();
     this.path = [];
+    this.punches = 0;   // alternates hands facing up and down
+    this.walls = levelWalls(scene.levelName);   // nobody is hit through a wall
     sprite.combat = this;
     const c = sprite.controller;
     this.controller = c;
@@ -89,18 +92,19 @@ export class TitusCombat {
         // another side, so "roughly facing them" is enough. The chosen facing is what goes to the host.
         const spec = ATTACKS[this.rules.attack.name];
         const live = this.targets().filter(t => t.active && t !== sprite && (t.combat ? t.combat.rules.health.value > 0 : true));
-        if (!attackTargets(sprite, live, this.rules.attack.facing, spec).length) {
+        if (!attackTargets(sprite, live, this.rules.attack.facing, spec, [], this.walls).length) {
           let best = null;
           for (const dir of Object.keys(DIRECTIONS)) {
-            const [t] = dir === this.rules.attack.facing ? [] : attackTargets(sprite, live, dir, spec);
+            const [t] = dir === this.rules.attack.facing ? [] : attackTargets(sprite, live, dir, spec, [], this.walls);
             if (t) { const d = Math.hypot(t.x - sprite.x, t.y - sprite.y); if (!best || d < best.d) best = { dir, d }; }
           }
           if (best) { this.rules.attack.facing = best.dir; c.facing = best.dir; }
         }
         this.struck.clear();
         this.path = [{ x: sprite.x, y: sprite.y }];
-        c.busy = `${sprite.texture.key}_${this.rules.attack.name}_${this.rules.attack.facing === 'left' || this.rules.attack.facing === 'right' ? 'side' : this.rules.attack.facing}`;
-        playFacing(sprite, this.rules.attack.name, this.rules.attack.facing);
+        const { name, facing } = this.rules.attack;
+        c.busy = attackAnim(sprite.texture.key, name, facing, name === 'punch' ? this.punches++ : 0, key => scene.anims.exists(key));
+        sprite.setFlipX(facing === 'left').play(c.busy, true);
         sprite.emit('pixelforge-attack', sprite);
       }
       const action = this.rules.attack ?? this.rules.block;
@@ -159,7 +163,7 @@ export class TitusCombat {
       if (elapsed < spec.frames[0] || elapsed >= spec.frames[0] + spec.frames[1]) return;
     } else if (!pixelforgeBoxes(this.sprite, 'hit').length) return;
     const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (!spec.hold || (!target.grappledBy && !target.combat?.rules.heldBy)) && (target.combat ? target.combat.rules.health.value > 0 : true));
-    for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path)) {
+    for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path, this.walls)) {
       // In this three-quarter view a head and boot have different drawn heights. Combat range
       // lives on the ground plane so rotating the same move never changes its reach.
       // The exported art still determines the active frames, never the wind-up or recovery.

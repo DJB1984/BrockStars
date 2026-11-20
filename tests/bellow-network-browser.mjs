@@ -11,7 +11,7 @@ try {
   const room=await host.evaluate(async()=>{await brockNet.host({name:'James Bellow',level:'brock3'});return brockNet.room;});
   for(const p of [mason,titus])await p.evaluate(async room=>{await brockNet.join({name:'Bellow partner',room});},room);
   for(const p of pages)await p.waitForFunction(()=>brockNet.count===3);
-  for(let i=0;i<pages.length;i++)await pages[i].evaluate(i=>{const p=pixelforgePlay.player;p.controller.override={};p.body.reset(1200+(i===1?70:0),650+(i===2?70:0));p.controller.facing='right';},i);
+  for(let i=0;i<pages.length;i++)await pages[i].evaluate(i=>{const p=pixelforgePlay.player;p.controller.override={};p.body.reset(1200+(i===1?70:0),650-(i===2?30:0));p.controller.facing='right';},i);
   await host.waitForTimeout(300);
   await host.evaluate(()=>{pixelforgePlay.player.controller.override=null;});await host.keyboard.down('s');await host.waitForTimeout(100);await host.keyboard.up('s');
   for(const p of [mason,titus])await p.waitForFunction(()=>pixelforgePlay.scene.combat.snapshot().stunRemaining>4000);

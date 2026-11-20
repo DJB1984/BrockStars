@@ -1,4 +1,5 @@
 import { characterStats } from '../characters.js';
+import { wallBetween } from './walls.js';
 
 // frames = [windup, active, return, recovery] ms; the build scripts bake them into both sprites'
 // animations; rebuild Grapple with scripts/build-mason-grapple.mjs and re-export after timing changes.
@@ -23,6 +24,14 @@ export function characterAttack(character, name) {
 export const BLOCK = Object.freeze({ duration: 3000, cooldown: 1000, reduction: 0.75, speed: 0.5 });
 export const REGEN = Object.freeze({ delay: 45000, perSecond: 2 });
 export const DIRECTIONS = Object.freeze({ up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] });
+
+// The animation key for an attack. Facing up or down, every other punch (odd `count`) is thrown
+// with the other hand, if the character has it (`<char>_punch_alt_<dir>`).
+export function attackAnim(char, name, facing, count, exists) {
+  const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
+  const alt = `${char}_${name}_alt_${dir}`;
+  return name === 'punch' && dir !== 'side' && count % 2 === 1 && exists(alt) ? alt : `${char}_${name}_${dir}`;
+}
 
 export function directionTo(dx, dy) {
   if (!dx && !dy) return null;
@@ -50,11 +59,13 @@ function zoneAlong(a, b, target, fx, fy, spec) {
 // `path` is where the attacker has been since the swing started (oldest first). A lunge can carry
 // the attacker through someone before the strike comes out, so the zone sweeps that whole path:
 // anyone the swing passed over is hit, not only whoever is still in front at the active frame.
-export function attackTargets(source, targets, facing, spec, path = []) {
-  if (spec.radial) return targets.filter(t => Math.hypot(t.x-source.x, t.y-source.y) <= spec.reach)
+// `walls` (walls.js) is the level's wall grid: nobody is hit through a wall, from any point on the path.
+export function attackTargets(source, targets, facing, spec, path = [], walls = null) {
+  if (spec.radial) return targets.filter(t => Math.hypot(t.x-source.x, t.y-source.y) <= spec.reach && !wallBetween(walls, source, t))
     .sort((a,b) => Math.hypot(a.x-source.x,a.y-source.y)-Math.hypot(b.x-source.x,b.y-source.y));
   const [fx, fy] = DIRECTIONS[facing], points = [...path, source];
-  return targets.filter(target => points.some((point, i) => zoneAlong(points[i - 1] ?? point, point, target, fx, fy, spec)))
+  return targets.filter(target => points.some((point, i) => zoneAlong(points[i - 1] ?? point, point, target, fx, fy, spec)
+      && !wallBetween(walls, point, target)))
     .sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
 }
 
