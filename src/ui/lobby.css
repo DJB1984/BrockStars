@@ -279,6 +279,118 @@ kbd, .key {
 .find.is-busy .status::after { content: ''; display: inline-block; width: 6px; height: 6px; margin-left: 6px; background: currentColor; animation: blink 600ms steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
+/* ---- heading to Brock: the loading screen after Play ---------------------------------------------- */
+.trip {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 18px;
+  padding: 24px 16px;
+  background-color: var(--pine);
+  background-image:
+    repeating-linear-gradient(0deg, rgb(18 33 42 / 0.16) 0 3px, rgb(18 33 42 / 0) 3px 6px),
+    var(--sunset);
+  animation: trip-in 300ms steps(6) both;
+}
+@keyframes trip-in { from { clip-path: inset(50% 0 50% 0); } to { clip-path: inset(0); } }
+
+.trip-title { display: grid; justify-items: center; transform: rotate(-4deg); }
+.trip-heading {
+  font-size: 18px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cream);
+  text-shadow: var(--outline-2), 0 4px 0 var(--ink);
+}
+.trip-word { display: flex; font: 400 clamp(96px, 20vw, 200px)/0.8 var(--display); }
+.trip-letter {
+  color: var(--amber);
+  text-shadow: 0 -4px 0 #f8d890, var(--outline-3), 0 7px 0 var(--brick), 0 10px 0 var(--ink), 0 13px 0 var(--ink);
+  animation: trip-drop 360ms steps(4) both, trip-hop 1200ms steps(1) infinite;
+  animation-delay: calc(var(--i) * 70ms), calc(400ms + var(--i) * 90ms);
+}
+@keyframes trip-drop { from { transform: translateY(-0.6em); opacity: 0; } 50% { opacity: 1; } }
+@keyframes trip-hop { 0%, 55% { transform: none; } 62% { transform: translateY(-0.08em); } 70% { transform: translateY(-0.04em); } }
+
+/* a little scene in a frame: sunset, the treeline scrolling past, the fighter walking down the road */
+.trip-road {
+  position: relative;
+  width: min(480px, calc(100vw - 32px));
+  height: 240px;
+  overflow: hidden;
+  border: calc(var(--px) * 3) solid transparent;
+  border-image: var(--frame-panel-badge) 3 / calc(var(--px) * 3) stretch;
+  box-shadow: 0 calc(var(--px) * 2) 0 rgb(12 23 28 / 0.55);
+  background: linear-gradient(180deg,
+    var(--brick) 0 24px, var(--ember) 24px 27px, var(--brick) 27px 45px,
+    var(--ember) 45px 78px, var(--amber) 78px 84px, var(--ember) 84px 90px,
+    var(--amber) 90px 186px, var(--pine-deep) 186px);
+}
+/* the sun, setting behind the trees */
+.trip-road::before {
+  content: '';
+  position: absolute;
+  left: 62%;
+  top: 98px;
+  width: 54px;
+  height: 54px;
+  background: #f8d890;
+  clip-path: polygon(33% 0, 67% 0, 67% 6%, 83% 6%, 83% 17%, 94% 17%, 94% 33%, 100% 33%, 100% 67%, 94% 67%,
+    94% 83%, 83% 83%, 83% 94%, 67% 94%, 67% 100%, 33% 100%, 33% 94%, 17% 94%, 17% 83%, 6% 83%, 6% 67%,
+    0 67%, 0 33%, 6% 33%, 6% 17%, 17% 17%, 17% 6%, 33% 6%);
+}
+.trip-trees {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 90px;
+  height: 96px;
+  background: var(--trees) 0 0 / 240px 96px repeat-x;
+  animation: trip-scroll-trees 4s steps(80) infinite;
+}
+@keyframes trip-scroll-trees { to { background-position: -240px 0; } }
+.trip-walker { position: absolute; left: 50%; transform: translateX(-50%); z-index: 1; }
+.trip-lane {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  height: 6px;
+  background: repeating-linear-gradient(90deg, var(--cream) 0 24px, transparent 24px 48px);
+  animation: trip-scroll-lane 600ms steps(16) infinite;
+}
+@keyframes trip-scroll-lane { to { background-position: -48px 0; } }
+
+/* 12 segments that fill one at a time, then start over */
+.trip-bar {
+  position: relative;
+  width: 252px;
+  height: 12px;
+  background: repeating-linear-gradient(90deg, var(--pine-deep) 0 18px, transparent 18px 21px);
+  filter: drop-shadow(0 var(--px) 0 var(--ink));
+}
+.trip-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, #f8d890 0 18px, transparent 18px 21px) 0 0 / 100% 3px no-repeat,
+    repeating-linear-gradient(90deg, var(--amber) 0 18px, transparent 18px 21px);
+  animation: trip-fill 1800ms steps(13, jump-none) infinite;
+}
+@keyframes trip-fill { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0); } }
+.trip-line {
+  min-height: 1.4em;
+  font-size: 16px;
+  color: var(--cream);
+  text-shadow: var(--outline-2);
+  animation: trip-line-in 180ms steps(3) both;
+}
+@keyframes trip-line-in { from { transform: translateY(6px); opacity: 0; } }
+
 /* ---- phase 2: choose your fighter --------------------------------------------------------------- */
 .pick {
   --accent: var(--amber);
@@ -337,7 +449,8 @@ kbd, .key {
   opacity: 0.3;
   transition: background 200ms steps(2);
 }
-.stage-spot { grid-area: spot; position: relative; display: grid; justify-items: center; align-items: end; width: 100%; height: 420px; }
+/* one row as tall as the spot: a fighter taller than it (James) stands on the floor and overflows upward */
+.stage-spot { grid-area: spot; position: relative; display: grid; grid-template-rows: minmax(0, 1fr); justify-items: center; align-items: end; width: 100%; height: 420px; }
 .stage-floor { position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%); }
 .stage-fighter { position: relative; z-index: 1; margin-bottom: 0; }
 .enter-right { animation: enter-right 260ms steps(5) both; }
@@ -379,18 +492,6 @@ kbd, .key {
 }
 .roster-slot.is-on { border-image-source: var(--frame-panel-amber); }
 .roster-slot:not(.is-on):hover { border-image-source: var(--frame-panel-pine); }
-.roster-cursor {
-  position: absolute;
-  bottom: -16px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 0 6px;
-  font: 400 22px/1 var(--display);
-  color: var(--ink);
-  background: var(--amber);
-  box-shadow: 0 var(--px) 0 var(--brick);
-  animation: blink 900ms steps(1) infinite;
-}
 
 .card { grid-area: card; align-self: start; padding: 18px 18px 20px; }
 .card-body { display: grid; gap: 14px; animation: card-in 220ms steps(4) both; }
@@ -579,7 +680,6 @@ kbd, .key {
   .stage-name-big { font-size: clamp(36px, 12vh, 56px); text-shadow: 0 -3px 0 rgb(255 255 255 / 0.4), var(--outline-3), 0 5px 0 var(--ink), 0 7px 0 var(--ink); }
   .roster { gap: 10px; margin-top: 8px; }
   .roster-slot { padding: 3px 6px; }
-  .roster-cursor { bottom: -10px; font-size: 16px; }
 
   /* the card says the same in less height: no repeated name, moves two by two, the special on one line */
   .card { container-type: inline-size; align-self: stretch; min-width: 0; margin: 0; padding: 4px 10px 6px; overflow: hidden; }

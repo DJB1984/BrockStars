@@ -6,7 +6,11 @@ import { useEffect, useState, type CSSProperties } from 'react';
 type Rect = { x: number; y: number; w: number; h: number };
 type Sheet = {
   frames: Record<string, { frame: Rect; duration: number }>;
-  meta: { size: { w: number; h: number }; frameTags: { name: string; from: number; to: number }[] };
+  meta: {
+    size: { w: number; h: number };
+    frameTags: { name: string; from: number; to: number }[];
+    pixelforge?: { origin: [number, number]; body: Rect };   // feet, and the box the character stands in
+  };
 };
 
 const sheets = new Map<string, Promise<Sheet>>();
@@ -18,6 +22,36 @@ const loadSheet = (id: string) => {
       return r.json() as Promise<Sheet>;
     });
     sheets.set(id, p);
+  }
+  return p;
+};
+
+// Where the character stands in its frame: the feet (origin) and the body box.
+export const spriteFrame = (id: string) => loadSheet(id).then((s) => s.meta.pixelforge);
+
+// The first row with solid pixels in a frame of `anim` (the top of the head): where to start a headshot.
+const tops = new Map<string, Promise<number>>();
+export const spriteTop = (id: string, anim = 'idle_down') => {
+  const key = `${id}_${anim}`;
+  let p = tops.get(key);
+  if (!p) {
+    p = Promise.all([loadSheet(id), new Promise<HTMLImageElement>((done, fail) => {
+      const img = new Image();
+      img.onload = () => done(img);
+      img.onerror = () => fail(new Error(`${id}.png`));
+      img.src = `${import.meta.env.BASE_URL}${id}.png`;
+    })]).then(([sheet, img]) => {
+      const tag = sheet.meta.frameTags.find((t) => t.name === key);
+      const { x, y, w, h } = sheet.frames[String(tag?.from ?? 0)].frame;
+      const ctx = Object.assign(document.createElement('canvas'), { width: w, height: h }).getContext('2d')!;
+      ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+      const alpha = ctx.getImageData(0, 0, w, h).data;
+      for (let row = 0; row < h; row++) {
+        for (let col = 0; col < w; col++) if (alpha[(row * w + col) * 4 + 3] > 128) return row;
+      }
+      return 0;
+    });
+    tops.set(key, p);
   }
   return p;
 };

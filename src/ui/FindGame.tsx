@@ -1,14 +1,21 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { FIGHTER_IDS } from '../fighters.js';
 import { listRooms, net, remember, worldPlayers, WORLD_ROOM, type RoomInfo, type Session } from './session';
+import { HeadingToBrock } from './HeadingToBrock';
 
 // Phase one: a name, then Play: everyone is in one shared game.
 // (Solo play skips the lobby: ?solo in the URL.)
 
 const REFRESH_MS = 3000;
 const MAX_PLAYERS = 8;
+// The trip to Brock stays up at least this long, so a fast connection doesn't just flash it.
+const TRIP_MIN_MS = 1800;
 // Private games (Host, Join by code, Games on your Wi-Fi) still work in src/net; their controls are hidden
 // while everyone plays together. true brings them back.
 const PRIVATE_GAMES = false;
+
+// A random fighter walks you there, a different one each time you load in.
+const tripFighter = () => FIGHTER_IDS[Math.floor(Math.random() * FIGHTER_IDS.length)];
 
 type Props = { level: string; initialName: string; onReady: (session: Session) => void };
 
@@ -19,6 +26,7 @@ export function FindGame({ level, initialName, onReady }: Props) {
   const [online, setOnline] = useState<number | null>(null);   // in the shared game; null until known
   const [status, setStatus] = useState<{ text: string; error?: boolean }>({ text: '' });
   const [busy, setBusy] = useState(false);
+  const [trip, setTrip] = useState<string | null>(null);   // the fighter walking, while heading to Brock
   const nameRef = useRef<HTMLInputElement>(null);
   const codeRef = useRef<HTMLInputElement>(null);
 
@@ -63,11 +71,14 @@ export function FindGame({ level, initialName, onReady }: Props) {
     } catch (e) {
       setStatus({ text: e instanceof Error ? e.message : String(e), error: true });
       setBusy(false);
+      setTrip(null);
     }
   };
 
   const play = () => run('Heading to Brock…', async (player) => {
-    await net.stay({ name: player, level, room: WORLD_ROOM });
+    setTrip(tripFighter());
+    const minimum = new Promise((done) => setTimeout(done, TRIP_MIN_MS));
+    await Promise.all([net.stay({ name: player, level, room: WORLD_ROOM }), minimum]);
     return { mode: 'world', room: net.room ?? WORLD_ROOM };
   });
 
@@ -180,6 +191,8 @@ export function FindGame({ level, initialName, onReady }: Props) {
 
         <p className={`status${status.error ? ' is-error' : ''}`} role="status">{status.text}</p>
       </section>
+
+      {trip && <HeadingToBrock fighter={trip} />}
     </main>
   );
 }

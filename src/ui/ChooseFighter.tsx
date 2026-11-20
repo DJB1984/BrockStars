@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { FIGHTERS } from '../fighters.js';
 import { characterAttack, BLOCK, REGEN } from '../combat/rules.js';
 import { net, type Session } from './session';
-import { Sprite, preloadSprite } from './Sprite';
+import { Sprite, preloadSprite, spriteTop } from './Sprite';
 import { Icon, Platform } from './Icon';
 
 // Phase two: the fighter stands on the left (arrows or ← → to switch), their stats sit on a card on the
@@ -122,8 +122,7 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
                 onClick={() => pick(i)}
                 disabled={fighting}
               >
-                <Sprite id={x.id} scale={sideways ? 1 : 2} crop={[16, 2, 32, 26]} />
-                {i === index && <span className="roster-cursor" aria-hidden="true">P1</span>}
+                <RosterFace id={x.id} scale={sideways ? 1 : 2} />
               </button>
             </li>
           ))}
@@ -201,6 +200,19 @@ const stageScale = () => {
   if (matchMedia(SIDEWAYS).matches) return { scale: innerHeight < 340 ? 2 : innerHeight < 420 ? 3 : 4, sideways: true };
   return { scale: matchMedia(NARROW).matches ? 4 : 6, sideways: false };
 };
+// A fighter's head and shoulders for the roster, from 2px above the top of their head, so a taller fighter
+// (James is 64x80, with a bigger head) is framed the same way as the 64x64 ones.
+function RosterFace({ id, scale }: { id: string; scale: number }) {
+  const [top, setTop] = useState<number | null>(null);
+  useEffect(() => {
+    let live = true;
+    spriteTop(id).then((row) => live && setTop(Math.max(0, row - 2))).catch(() => live && setTop(2));
+    return () => { live = false; };
+  }, [id]);
+  if (top === null) return <div style={{ width: 32 * scale, height: 26 * scale }} />;
+  return <Sprite id={id} scale={scale} crop={[16, top, 32, 26]} />;
+}
+
 function useStageScale() {
   const [stage, setStage] = useState(stageScale);
   useEffect(() => {
