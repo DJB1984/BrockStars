@@ -46,7 +46,7 @@ try {
     check('block reduces damage',s.partnerHealth.value===118.75);
     check('block prevents knockdown',s.partnerCombat.snapshot().knockdownRemaining===0);
     s.partner.controller.readInput=readPartner;
-    resetTakedown('right',30);play.step(1200,{takedown:true});
+    resetTakedown('right',40);play.step(1200,{takedown:true});
     check('miss consumes cooldown',s.partnerHealth.value===125 && s.combat.snapshot().cooldowns.takedown>18000);
     play.step(17,{});play.step(1200,{takedown:true});check('cooldown prevents retry',s.combat.rules.attack===null);
     resetTakedown('right',50);play.step(650,{takedown:true});s.partner.body.reset(320,220);
@@ -66,15 +66,18 @@ try {
   await page.waitForFunction(()=>!!window.pixelforgePlay?.player?.combat);
   await page.keyboard.down('s');await pause(100);await page.keyboard.up('s');
   assert.ok(await evaluate('pixelforgePlay.scene.combat.snapshot().cooldowns.takedown>19000'));
-  await page.keyboard.press('2');await page.waitForFunction(()=>pixelforgePlay.player.texture.key==='mason');
-  await page.keyboard.press('1');await page.waitForFunction(()=>pixelforgePlay.player.texture.key==='titus');
-  assert.ok(await evaluate('pixelforgePlay.scene.combat.snapshot().cooldowns.takedown>18000'));
+  // Switching through the fighter pick takes real time (Fight! plays a punch first): what must survive is
+  // the cooldown minus that time, not a fresh 20 s or zero.
+  const usedAt=Date.now();
+  await switchFighter(page,'mason');
+  await switchFighter(page,'titus');
+  const left=await evaluate('pixelforgePlay.scene.combat.snapshot().cooldowns.takedown'), spent=Date.now()-usedAt;
+  assert.ok(left>0 && Math.abs(left-(20000-spent))<800,`takedown cooldown ${left}ms left after ${spent}ms of switching`);
   await page.keyboard.down('ArrowDown');await pause(100);
   assert.ok(await evaluate('pixelforgePlay.player.body.velocity.y>0'));
   await page.keyboard.up('ArrowDown');
   for(const character of ['mason','titus']) {
-    await page.keyboard.press(character==='mason'?'2':'1');
-    await page.waitForFunction(character=>pixelforgePlay.player.texture.key===character,character);
+    if(await evaluate('pixelforgePlay.player.texture.key')!==character) await switchFighter(page,character);
     for(const key of ['w','a','s','d']) {
       await page.keyboard.down(key);await pause(50);
       const input=await evaluate('pixelforgePlay.player.controller.readInput()');
@@ -90,3 +93,12 @@ try {
   assert.deepEqual(errors,[]);
   console.log(JSON.stringify({passed:true,checks:result,keyboard,cooldownSurvivesCharacterSwitch:true,arrowOnlyMovementBothCharacters:true},null,2));
 } finally {await browser.close();}
+
+// Switches fighter the way a player does: Esc, Change fighter, pick them, Fight!
+async function switchFighter(page, id) {
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Change fighter' }).click();
+  await page.getByRole('button', { name: id[0].toUpperCase() + id.slice(1), exact: true }).click();
+  await page.getByRole('button', { name: 'Fight!' }).click();
+  await page.waitForFunction((id) => window.pixelforgePlay?.player?.texture.key === id && document.querySelector('.hud:not([hidden])'), id);
+}

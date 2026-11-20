@@ -6,7 +6,7 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.BR
 const page=await browser.newPage({viewport:{width:1280,height:760}}), errors=[];
 page.on('pageerror',e=>errors.push(e.message));
 try {
-  await page.goto(`http://127.0.0.1:5173/?practice=1&character=${character}`);
+  await page.goto(`${process.env.TEST_BASE_URL ?? 'http://127.0.0.1:5173'}/?practice=1&character=${character}`);
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='combat-practice');
   assert.equal(await page.evaluate(()=>window.pixelforgePlay.player.texture.key),character);
   const results=await page.evaluate(async()=>{
@@ -40,7 +40,7 @@ try {
     const check=(label,ok,detail)=>{checks.push({label,ok,detail});};
     setupFight(); s.partner.body.reset(500,220);
     let st=play.step(100,{punch:true,right:true});
-    check('attack slows movement to 60%',Math.abs(st.vx-s.player.controller.opts.speed*0.6)<0.01,st.vx);
+    check('attacks keep momentum and lunge forward',Math.abs(st.vx-(s.player.controller.opts.speed*0.8+ATTACKS.punch.lunge))<0.01,st.vx);
     st=play.step(100,{kick:true,headbutt:true});
     check('cannot cancel punch with another attack',st.combat.attack==='punch',st.combat);
     st=play.step(600,{kick:true,headbutt:true});
@@ -101,14 +101,21 @@ try {
   await page.waitForTimeout(80);
   assert.deepEqual(errors,[]);
   await page.screenshot({path:`previews/${character}-combat-practice.png`});
-  await page.goto(`http://127.0.0.1:5173/?character=${character}&solo`);
+  await page.goto(`${process.env.TEST_BASE_URL ?? 'http://127.0.0.1:5173'}/?character=${character}&solo`);
   await page.waitForFunction(()=>window.pixelforgePlay?.state().level==='brock3');
   assert.equal(await page.evaluate(()=>window.pixelforgePlay.state().health), (await import('../src/characters.js')).CHARACTERS[character].health);
   assert.ok(await page.evaluate(()=>window.pixelforgePlay.player.combat));
-  await page.keyboard.press('2');
-  await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='mason');
-  await page.keyboard.press('1');
-  await page.waitForFunction(()=>window.pixelforgePlay?.player.texture.key==='titus');
+  await switchFighter(page,'mason');
+  await switchFighter(page,'titus');
   assert.deepEqual(errors,[]);
   console.log(JSON.stringify({passed:true,directionalAttackChecks:results.length,mechanicsChecks:checks.checks.length,ranges:checks.reaches,keyboard:true,characterSwitching:true,browserErrors:errors},null,2));
 } finally {await browser.close();}
+
+// Switches fighter the way a player does: Esc, Change fighter, pick them, Fight!
+async function switchFighter(page, id) {
+  await page.keyboard.press('Escape');
+  await page.getByRole('button', { name: 'Change fighter' }).click();
+  await page.getByRole('button', { name: id[0].toUpperCase() + id.slice(1), exact: true }).click();
+  await page.getByRole('button', { name: 'Fight!' }).click();
+  await page.waitForFunction((id) => window.pixelforgePlay?.player?.texture.key === id && document.querySelector('.hud:not([hidden])'), id);
+}

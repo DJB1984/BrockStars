@@ -5,3 +5,4 @@ __pycache__/
 server/net-data/
 brockstars-site.zip
 deploy.config.json
+server/net.config.php

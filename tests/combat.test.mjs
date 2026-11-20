@@ -13,7 +13,7 @@ test('attacks require a fresh press after the animation ends and respect their o
   assert.equal(c.attack,null); // a held/queued key cannot trigger
   c.update(401,{},'right'); c.update(402,{kick:true},'right');
   assert.equal(c.attack.name,'kick');
-  c.finishAttack(); c.update(1000,{},'right'); c.update(1001,{kick:true},'right');
+  c.finishAttack(); c.update(900,{},'right'); c.update(901,{kick:true},'right');
   assert.equal(c.attack,null);
   c.update(5402,{},'right'); c.update(5403,{kick:true},'right');
   assert.equal(c.attack.name,'kick');
@@ -46,7 +46,7 @@ test('regen waits 45 seconds, heals 2 HP/s, restarts after damage and caps at 10
 test('Takedown is Titus-only, requires a fresh press, and consumes 20s cooldown on a miss across scene changes', () => {
   const health=new HealthPool(), c=new CombatRules(health);
   c.update(100,{takedown:true},'left');
-  assert.deepEqual(c.attack,{name:'takedown',facing:'left'});
+  assert.deepEqual(c.attack,{name:'takedown',facing:'left',start:100});
   c.finishAttack();
   const next=new CombatRules(health);
   next.update(1200,{takedown:true},'right'); assert.equal(next.attack,null);
@@ -71,7 +71,6 @@ test('Takedown knocks down for 1.5s and interrupts attacks; a front block preven
   }
 });
 
-
 test('every balance profile supplies health, damage, speed, and basic cooldowns', async () => {
   const { CHARACTER_STATS, CHARACTERS } = await import('../src/characters.js');
   const expected = {
@@ -83,7 +82,7 @@ test('every balance profile supplies health, damage, speed, and basic cooldowns'
     const r = new CombatRules(undefined,id), stats=CHARACTER_STATS[id];
     assert.equal(r.health.value,hp);assert.equal(r.health.max,hp);
     assert.equal(stats.speed,Math.round(140*speed));
-    for (const [name,damage,cooldown] of [['punch',p,400],['kick',k,5000],['headbutt',h,10000]]) {
+    for (const [name,damage,cooldown] of [['punch',p,300],['kick',k,5000],['headbutt',h,10000]]) {
       assert.equal(r.attackSpec(name).damage,damage);
       r.update(0,{[name]:true},'right');r.finishAttack();r.update(1,{},'right');
       r.update(cooldown-1,{[name]:true},'right');assert.equal(r.attack,null);

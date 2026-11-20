@@ -112,10 +112,10 @@
       ],
       "anchor": "feet",
       "body": {
-        "x": 0,
-        "y": 0,
-        "w": 20,
-        "h": 24
+        "x": 5,
+        "y": 1,
+        "w": 13,
+        "h": 26
       },
       "animations": {
         "urinal_north": {
@@ -136,10 +136,10 @@
         "scroll": 1.0,
         "solid": true,
         "footprint": [
-          0,
-          0,
-          20,
-          24
+          5,
+          1,
+          13,
+          26
         ],
         "ysort": true,
         "tiles": null

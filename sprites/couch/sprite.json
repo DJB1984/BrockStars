@@ -12,9 +12,9 @@
  ],
  "footprint": [
   0,
-  8,
+  16,
   96,
-  36
+  28
  ],
  "palette": {
   "k": "outline",

@@ -1,6 +1,6 @@
-import { pixelforgeBody } from '../../export/pixelforge.js';
 import { characterStats } from '../characters.js';
 import { ATTACKS } from '../combat/rules.js';
+import { HeadBar, headroom } from '../objects/HeadBar.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
 // past, between the two updates around that moment: smooth walking instead of hops.
@@ -8,7 +8,8 @@ const DELAY_MS = 110;
 const TELEPORT = 160;   // farther than this between updates (a respawn, a door) jumps instead of sliding
 
 // The other players in this scene's level, drawn from net.players: a sprite each, playing what they play,
-// with a name tag over the head. Make one in create and call update(delta) every frame.
+// with their name and health bar over the head (hidden while they're in a room you can't see into: the
+// scene's `rooms`). Make one in create and call update(delta) every frame.
 export class RemotePlayers {
   constructor(scene, net) {
     this.scene = scene;
@@ -25,7 +26,7 @@ export class RemotePlayers {
     scene.events.once('shutdown', () => { for (const id of [...this.shown.keys()]) this.remove(id); });
   }
 
-  update() {
+  update(delta) {
     const { scene } = this, now = performance.now();
     const here = new Set();
     for (const [id, p] of Object.entries(this.net.players)) {
@@ -67,18 +68,19 @@ export class RemotePlayers {
         }
       }
       sprite.setPosition(x, y).setFlipX(facing ? facing === 'left' : !!p.flip).setDepth(y - 0.5);
-      r.label.setText(`${p.name || 'Player'}${combat ? ` ${Math.ceil(combat.health)}/${combat.maxHealth ?? characterStats(p.char).health}` : ''}`)
-        .setPosition(Math.round(x), Math.round(y - this.headroom(p.char))).setDepth(1e5 + 1);
+      r.bar.setName(p.name || 'Player');
+      r.bar.update((combat?.health ?? characterStats(p.char).health) / (combat?.maxHealth ?? characterStats(p.char).health), x, y - headroom(scene, p.char), delta);
+      const seen = scene.rooms?.canSee(x, y) ?? true;   // hidden in a room you aren't in
+      sprite.setVisible(seen);
+      r.bar.setVisible(seen);
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);
   }
 
   add(id, p) {
     const sprite = this.scene.add.sprite(p.x, p.y, p.char);
-    const label = this.scene.add.text(p.x, p.y, '', {
-      fontFamily: 'monospace', fontSize: '11px', color: '#ffffff', backgroundColor: '#181425bb', padding: { x: 3, y: 1 },
-    }).setOrigin(0.5, 1);
-    const r = { sprite, label, n: null, samples: [] };
+    const bar = new HeadBar(this.scene, { name: p.name || 'Player' });
+    const r = { sprite, bar, n: null, samples: [] };
     this.shown.set(id, r);
     return r;
   }
@@ -86,13 +88,7 @@ export class RemotePlayers {
   remove(id) {
     const r = this.shown.get(id);
     r.sprite.destroy();
-    r.label.destroy();
+    r.bar.destroy();
     this.shown.delete(id);
-  }
-
-  // From the feet (the origin) up to just over the head: the top of the body box.
-  headroom(char) {
-    const origin = this.scene.cache.json.get(char)?.meta?.pixelforge?.origin?.[1] ?? 52;
-    return origin - (pixelforgeBody(this.scene, char)?.y ?? 6) + 2;
   }
 }

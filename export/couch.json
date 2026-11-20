@@ -70,9 +70,9 @@
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 8,
+        "y": 16,
         "w": 96,
-        "h": 36
+        "h": 28
       },
       "animations": {
         "couch_idle": {
@@ -88,9 +88,9 @@
         "solid": true,
         "footprint": [
           0,
-          8,
+          16,
           96,
-          36
+          28
         ],
         "ysort": true,
         "tiles": null

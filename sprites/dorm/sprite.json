@@ -248,14 +248,28 @@
     "o_w_lo"
    ]
   },
-  "bathroom_floor"
+  "bathroom_floor",
+  {
+   "name": "hall",
+   "from": "rug"
+  }
  ],
  "properties": {
   "wall*": {
-   "collides": true
+   "collides": true,
+   "wall": true
+  },
+  "wall_cap*": {
+   "top": 16
+  },
+  "wall_face_hi*": {
+   "top": 3
   },
   "stairs": {
    "collides": true
+  },
+  "hall": {
+   "hall": true
   }
  },
  "sample": {

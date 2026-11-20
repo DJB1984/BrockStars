@@ -4,24 +4,24 @@
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 40,
-        "h": 32
+        "w": 44,
+        "h": 50
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 40,
-        "h": 32
+        "w": 44,
+        "h": 50
       },
       "sourceSize": {
-        "w": 40,
-        "h": 32
+        "w": 44,
+        "h": 50
       },
       "pivot": {
         "x": 0.5,
-        "y": 1.0
+        "y": 0.36
       },
       "duration": 125,
       "pixelforge": {
@@ -29,8 +29,8 @@
           [
             0,
             0,
-            40,
-            32
+            44,
+            50
           ]
         ],
         "hit": []
@@ -39,34 +39,34 @@
     "1": {
       "frame": {
         "x": 0,
-        "y": 33,
-        "w": 40,
-        "h": 32
+        "y": 51,
+        "w": 44,
+        "h": 50
       },
       "rotated": false,
       "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
         "y": 0,
-        "w": 40,
-        "h": 32
+        "w": 44,
+        "h": 50
       },
       "sourceSize": {
-        "w": 40,
-        "h": 32
+        "w": 44,
+        "h": 50
       },
       "pivot": {
         "x": 0.5,
-        "y": 1.0
+        "y": 0.36
       },
       "duration": 125,
       "pixelforge": {
         "hurt": [
           [
             0,
-            0,
-            40,
-            32
+            2,
+            44,
+            48
           ]
         ],
         "hit": []
@@ -79,8 +79,8 @@
     "image": "shower_stall_central.png",
     "format": "RGBA8888",
     "size": {
-      "w": 40,
-      "h": 65
+      "w": 44,
+      "h": 101
     },
     "scale": "1",
     "frameTags": [
@@ -107,14 +107,14 @@
       "view": "topdown",
       "class": null,
       "origin": [
-        20,
-        32
+        22,
+        18
       ],
       "anchor": "feet",
       "body": {
         "x": 0,
-        "y": 0,
-        "w": 40,
+        "y": 18,
+        "w": 4,
         "h": 32
       },
       "animations": {
@@ -137,8 +137,8 @@
         "solid": true,
         "footprint": [
           0,
-          0,
-          40,
+          18,
+          4,
           32
         ],
         "ysort": true,

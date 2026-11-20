@@ -9,15 +9,24 @@
     "build": "vite build",
     "preview": "vite build && php -S 0.0.0.0:8002 -t dist",
     "package": "vite build && node tools/package-site.mjs",
-    "test": "node --test tests/combat.test.mjs tests/net-combat.test.mjs",
+    "test": "node --test tests/combat.test.mjs tests/net-combat.test.mjs tests/attack.test.mjs",
     "test:browser": "node tests/combat-browser.mjs",
     "test:takedown": "node tests/takedown-browser.mjs",
-    "test:multiplayer": "node tests/net-combat-browser.mjs"
+    "test:multiplayer": "node tests/net-combat-browser.mjs",
+    "test:rooms": "node tests/rooms-browser.mjs"
   },
   "dependencies": {
-    "phaser": "3.90.0"
+    "@fontsource/dotgothic16": "^5.3.1",
+    "@fontsource/jersey-10": "^5.3.0",
+    "phaser": "3.90.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   },
   "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "typescript": "^5.9.3",
     "vite": "8.3.5"
   }
 }

@@ -10,7 +10,7 @@ Movement: 110 px/s (Titus 140, Mason 180). Basic attacks, block, health, and coo
 use the shared rules unchanged. James has no special move assigned yet. Incoming
 Titus takedowns use James's own fall, knockdown, and recovery poses.
 
-- Select James in the lobby or press **3** in the level.
+- Select James in the lobby, or use the in-game menu’s **Change fighter** option.
 - Solo: `http://localhost:5173/?solo&character=james`
 - Practice: `http://localhost:5173/?practice=1&character=james`
 

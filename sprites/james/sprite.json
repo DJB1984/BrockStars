@@ -377,7 +377,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 100
+          "duration": 70
         },
         {
           "layers": [
@@ -389,7 +389,7 @@
             "combat_front_punch_arm",
             "hit_front_punch"
           ],
-          "duration": 60,
+          "duration": 90,
           "active": true
         },
         {
@@ -402,7 +402,7 @@
             "combat_front_return_arm",
             "combat_front_return_fist"
           ],
-          "duration": 90
+          "duration": 60
         },
         {
           "layers": [
@@ -414,7 +414,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 150
+          "duration": 100
         }
       ]
     },
@@ -450,7 +450,7 @@
             "combat_front_raised_leg",
             "combat_front_raised_shoe"
           ],
-          "duration": 160
+          "duration": 110
         },
         {
           "layers": [
@@ -464,7 +464,7 @@
             "combat_front_kick_leg",
             "hit_front_kick"
           ],
-          "duration": 100,
+          "duration": 120,
           "active": true
         },
         {
@@ -479,7 +479,7 @@
             "combat_front_raised_leg",
             "combat_front_raised_shoe"
           ],
-          "duration": 120
+          "duration": 80
         },
         {
           "layers": [
@@ -491,7 +491,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 220
+          "duration": 150
         }
       ]
     },
@@ -514,7 +514,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 220
+          "duration": 150
         },
         {
           "layers": [
@@ -532,7 +532,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 80,
+          "duration": 110,
           "active": true
         },
         {
@@ -551,7 +551,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 120
+          "duration": 90
         },
         {
           "layers": [
@@ -569,7 +569,7 @@
             "combat_front_guard_arm",
             "combat_front_guard_fist"
           ],
-          "duration": 280
+          "duration": 200
         }
       ]
     },
@@ -586,7 +586,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 100
+          "duration": 70
         },
         {
           "layers": [
@@ -598,7 +598,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 60,
+          "duration": 90,
           "active": true
         },
         {
@@ -611,7 +611,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 90
+          "duration": 60
         },
         {
           "layers": [
@@ -623,7 +623,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 150
+          "duration": 100
         }
       ]
     },
@@ -659,7 +659,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 160
+          "duration": 110
         },
         {
           "layers": [
@@ -673,7 +673,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 100,
+          "duration": 120,
           "active": true
         },
         {
@@ -688,7 +688,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 120
+          "duration": 80
         },
         {
           "layers": [
@@ -700,7 +700,7 @@
             "back_torso",
             "back_head"
           ],
-          "duration": 220
+          "duration": 150
         }
       ]
     },
@@ -724,7 +724,7 @@
               ]
             }
           ],
-          "duration": 220
+          "duration": 150
         },
         {
           "layers": [
@@ -743,7 +743,7 @@
               ]
             }
           ],
-          "duration": 80,
+          "duration": 110,
           "active": true
         },
         {
@@ -763,7 +763,7 @@
               ]
             }
           ],
-          "duration": 120
+          "duration": 90
         },
         {
           "layers": [
@@ -782,7 +782,7 @@
               ]
             }
           ],
-          "duration": 280
+          "duration": 200
         }
       ]
     },
@@ -799,7 +799,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 100
+          "duration": 70
         },
         {
           "layers": [
@@ -811,7 +811,7 @@
             "combat_side_punch_arm",
             "hit_side_punch"
           ],
-          "duration": 60,
+          "duration": 90,
           "active": true
         },
         {
@@ -824,7 +824,7 @@
             "combat_side_return_arm",
             "combat_side_return_fist"
           ],
-          "duration": 90
+          "duration": 60
         },
         {
           "layers": [
@@ -836,7 +836,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 150
+          "duration": 100
         }
       ]
     },
@@ -872,7 +872,7 @@
             "combat_side_raised_leg",
             "combat_side_raised_shoe"
           ],
-          "duration": 160
+          "duration": 110
         },
         {
           "layers": [
@@ -886,7 +886,7 @@
             "combat_side_kick_leg",
             "hit_side_kick"
           ],
-          "duration": 100,
+          "duration": 120,
           "active": true
         },
         {
@@ -901,7 +901,7 @@
             "combat_side_raised_leg",
             "combat_side_raised_shoe"
           ],
-          "duration": 120
+          "duration": 80
         },
         {
           "layers": [
@@ -913,7 +913,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 220
+          "duration": 150
         }
       ]
     },
@@ -936,7 +936,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 220
+          "duration": 150
         },
         {
           "layers": [
@@ -954,7 +954,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 80,
+          "duration": 110,
           "active": true
         },
         {
@@ -973,7 +973,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 120
+          "duration": 90
         },
         {
           "layers": [
@@ -991,7 +991,7 @@
             "combat_side_guard_arm",
             "combat_side_guard_fist"
           ],
-          "duration": 280
+          "duration": 200
         }
       ]
     },

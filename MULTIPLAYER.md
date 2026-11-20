@@ -5,12 +5,18 @@ it, send where they are ~15 times a second, and get everyone back. The web host 
 `net.php`, a small PHP script that lists rooms and passes the connection handshake. No game traffic goes
 through it, so it runs on HostGator's Hatchling plan with nothing else to pay for.
 
+Everyone plays one shared game: the lobby's **Play** button joins room `BROCK` (`WORLD_ROOM`), and whichever
+browser gets there first is its hub. When the hub's tab closes, the others reconnect within a second or two
+and one of them takes over (`net.stay`). Private games still work (`net.host`, `net.join`), but their
+controls (Host, Join by code, Games on your Wi-Fi) are hidden: set `PRIVATE_GAMES` in `src/ui/FindGame.tsx`
+to bring them back. The home screen shows how many are in the shared game (`net.php?action=world`).
+
 | | |
 |---|---|
 | `server/net.php` | matchmaking: rooms, join codes, games on your network, the handshake |
-| `src/net/session.js` | `net`: host / join / quick, the WebRTC connections, everyone's state |
+| `src/net/session.js` | `net`: host / join / quick / stay, the WebRTC connections, everyone's state |
 | `src/net/remotes.js` | draws the other players in the level (smoothed, with name tags) |
-| `src/lobby.js` | the start screen: name, character, host, join by code or from the list, solo |
+| `src/ui/` | the start screen: name and Play (the shared game), then the fighter |
 
 ## Running it
 
@@ -46,8 +52,26 @@ The live site is https://brockstars.brookslanding.com, a subdomain whose documen
 
 Players find each other with free STUN servers (Google, Cloudflare). That works on most home networks. Some
 networks (campus Wi-Fi especially) block direct connections between devices; the joiner then sees "This
-network may block direct connections between devices." The fix is a TURN relay: create
-`net.config.php` next to `net.php` on the server (it isn't overwritten by deploys) returning its details:
+network may block direct connections between devices." The fix is a TURN relay: when two players can't
+reach each other, their traffic goes through it instead (the relay is tried only after a direct connection
+fails, so home games stay direct).
+
+Cloudflare's TURN is free for the first 1,000 GB a month, which is far more than this game uses, and it
+listens on port 443 over TLS, which campus firewalls let through like ordinary HTTPS:
+
+1. In the Cloudflare dashboard, open **Realtime → TURN Server** and create a TURN key. Copy its
+   **Turn Token ID** and **API Token** (the token is shown once).
+2. On the server, create `net.config.php` next to `net.php` (deploys don't overwrite it):
+   ```php
+   <?php return ['cloudflare' => ['key_id' => 'TURN_TOKEN_ID', 'token' => 'API_TOKEN']];
+   ```
+`net.php` asks Cloudflare for credentials that last a day and gives them to players for 12 hours (cached
+in `net-data/turn.json`), so the API token never reaches a browser. If Cloudflare can't be reached it logs
+`[net] Cloudflare TURN: ...` to the PHP error log and waits 5 minutes before trying again. Players still get
+STUN in the meantime. To check it, host a game and run `brockNet.ice` in the browser console: it should
+list `turn.cloudflare.com`.
+
+Any other TURN server works too, with fixed credentials:
 
 ```php
 <?php return [['urls' => 'turn:relay.example.com:3478', 'username' => 'user', 'credential' => 'pass']];
@@ -55,9 +79,10 @@ network may block direct connections between devices." The fix is a TURN relay: 
 
 ## Limits
 
-- The host's tab is the game: when it closes, the game ends for everyone (on `npm run local`, another
-  tab takes over). A hidden host tab gets throttled by the browser, so others see it update slowly.
-- Up to 8 players per room. Players walk through each other; items aren't shared yet.
+- The host's tab is the game. In the shared game and on `npm run local`, another tab takes over when it
+  closes (everyone blinks out for a second or two); a private hosted game ends for everyone. A hidden host tab gets throttled by the browser, so others see it update slowly.
+- Up to 16 players in the shared game and 8 in a private one. The hub sends every player to every other
+  player, so its upload grows with the square of the players: past ~16 it needs a real game server. Players walk through each other; items aren't shared yet.
 - Rooms close 15 seconds after the host stops checking in.
 
 ## Shared combat

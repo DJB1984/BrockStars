@@ -8,13 +8,13 @@
  ],
  "origin": [
   24,
-  52
+  50
  ],
  "footprint": [
-  0,
-  12,
-  48,
-  36
+  9,
+  40,
+  39,
+  10
  ],
  "palette": {
   "k": "outline",
@@ -32,24 +32,14 @@
   "R": "red"
  },
  "animations": {
-  "front_lamp": {
+  "front": {
    "frames": [
-    "front_lamp"
+    "front"
    ]
   },
-  "back_lamp": {
+  "back": {
    "frames": [
-    "back_lamp"
-   ]
-  },
-  "front_books": {
-   "frames": [
-    "front_books"
-   ]
-  },
-  "back_books": {
-   "frames": [
-    "back_books"
+    "back"
    ]
   }
  }

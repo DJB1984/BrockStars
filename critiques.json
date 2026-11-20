@@ -1,5 +1,5 @@
 {
-  "next": 35,
+  "next": 59,
   "critiques": [
     {
       "id": 1,
@@ -389,6 +389,155 @@
     {
       "id": 23,
       "status": "fixed",
+      "text": "remove the props from the top of the desks",
+      "target": {
+        "asset": "desk"
+      },
+      "created": "2026-11-14T16:14:17+00:00",
+      "updated": "2026-11-14T16:37:16+00:00",
+      "note": "Removed the lamp and book stack from every desk, so all four states now show a bare desktop."
+    },
+    {
+      "id": 24,
+      "status": "fixed",
+      "text": "the desks only have drawers on the right side, just have a leg here.",
+      "target": {
+        "asset": "desk",
+        "anim": "front_lamp",
+        "frame": 0,
+        "region": [
+          0,
+          7,
+          15,
+          31
+        ]
+      },
+      "created": "2026-11-14T16:14:34+00:00",
+      "updated": "2026-11-14T16:37:16+00:00",
+      "note": "Replaced the left drawer pedestal with a single shaded leg on both views; drawers stay on the right only."
+    },
+    {
+      "id": 25,
+      "status": "fixed",
+      "text": "he's not a woman, make his chest a little less prominent",
+      "target": {
+        "asset": "titus",
+        "anim": "walk_side",
+        "frame": 3,
+        "region": [
+          35,
+          17,
+          6,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:25:16+00:00",
+      "updated": "2026-11-14T16:38:19+00:00",
+      "note": "Flattened Titus's side-view chest to a 1px step so the torso reads straight from shoulder to waist in idle, walk and punch."
+    },
+    {
+      "id": 26,
+      "status": "fixed",
+      "text": "move the chair under the desk",
+      "target": {
+        "asset": "desk",
+        "anim": "front_lamp",
+        "frame": 0,
+        "region": [
+          14,
+          26,
+          20,
+          25
+        ]
+      },
+      "created": "2026-11-14T16:40:59+00:00",
+      "updated": "2026-11-14T16:43:03+00:00",
+      "note": "Tucked the chair under the desk: on the front view it now sits in the kneehole, and on the back view it slides in behind the desktop."
+    },
+    {
+      "id": 27,
+      "status": "fixed",
+      "text": "Shrink in the left leg the chair the inside is about as wide as the chair.",
+      "target": {
+        "asset": "desk",
+        "anim": "front_books",
+        "frame": 0,
+        "region": [
+          0,
+          7,
+          14,
+          32
+        ]
+      },
+      "created": "2026-11-14T16:44:52+00:00",
+      "updated": "2026-11-14T16:45:40+00:00",
+      "note": "Moved the left leg in to x 9-13 so the kneehole is just the chair's width plus 2px each side, on both views; the desktop keeps its full width."
+    },
+    {
+      "id": 28,
+      "status": "fixed",
+      "text": "the back actually looks horrible. flip it around people don't face the fall when they work at a desk.",
+      "target": {
+        "asset": "desk",
+        "anim": "back_lamp"
+      },
+      "created": "2026-11-14T16:45:39+00:00",
+      "updated": "2026-11-14T16:47:08+00:00",
+      "note": "Redrew the back view as the desk seen from behind: plain pedestal back on the left, a recessed modesty panel, and the leg on the right, with the chair facing the camera."
+    },
+    {
+      "id": 29,
+      "status": "fixed",
+      "text": "Remove the hanging chunk of desk",
+      "target": {
+        "asset": "desk",
+        "anim": "back_lamp",
+        "frame": 0,
+        "region": [
+          0,
+          21,
+          10,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:46:26+00:00",
+      "updated": "2026-11-14T16:49:13+00:00",
+      "note": "Undone at your request: the back view is back to the full desktop slab from #28."
+    },
+    {
+      "id": 30,
+      "status": "fixed",
+      "text": "Remove this hanging chunk of desk.",
+      "target": {
+        "asset": "desk",
+        "anim": "front",
+        "frame": 0,
+        "region": [
+          1,
+          7,
+          9,
+          13
+        ]
+      },
+      "created": "2026-11-14T16:50:10+00:00",
+      "updated": "2026-11-14T16:52:20+00:00",
+      "note": "Trimmed the desktop so it ends at the leg on the front view (and at the matching edge on the back), so nothing overhangs; the footprint now covers just the desk."
+    },
+    {
+      "id": 31,
+      "status": "fixed",
+      "text": "The wall should be on the other side, it should kinda just look like a slab in the back. test your work to make sure it actually looks good.",
+      "target": {
+        "asset": "desk",
+        "anim": "back"
+      },
+      "created": "2026-11-14T16:50:50+00:00",
+      "updated": "2026-11-14T16:52:21+00:00",
+      "note": "Rebuilt the back view as a solid slab from behind with the drawer side on the right, matching the front's outline, and checked it in brock3."
+    },
+    {
+      "id": 32,
+      "status": "fixed",
       "text": "Ok so the bathroom entrances are actually in reality reversed. They currently should have the top door on the east side of the top and the bottom door should be on the west side.",
       "target": {
         "asset": "brock3",
@@ -405,7 +554,7 @@
       "note": "Moved the north entrance to the east and the south entrance to the west, closed the old openings, and checked the rendered level."
     },
     {
-      "id": 24,
+      "id": 33,
       "status": "fixed",
       "text": "Ok same thing with this bathroom, the top entrance should be on the west side and the bottom entrance should be on the east side. Also I have to pictures of what the bathroom should actually look like on the inside.",
       "target": {
@@ -423,7 +572,7 @@
       "note": "Corrected the entrances and rebuilt both mirrored bathroom interiors from the photos, with six central showers, cream toilet stalls, urinals, sinks, and gray tile; checked the renders and player routes."
     },
     {
-      "id": 25,
+      "id": 34,
       "status": "fixed",
       "text": "OK hold up lets just focus on the left side right now. Between the stairs and the doorway are the two stalls and the 2 urinals, then the door/ entrance. The sinks are on the south side wall and there is 4. You can delete the sinks you have behind and infront of the showers because those don't belong there. Then you can push the showers back against the wall so that they aren't in the middle",
       "target": {
@@ -441,7 +590,7 @@
       "note": "Refined only the marked east bathroom: two stalls then two urinals then the north entrance, four sinks on the south wall, and six showers against the north and south walls; checked the render and both entrance routes."
     },
     {
-      "id": 26,
+      "id": 35,
       "status": "fixed",
       "text": "OK so we need to squish the stalls closer to the wall and the urinals. The sinks also need to be a different size and upagainst the wall. The top door needs to be closer to the left and there also is a little wall the comes accross infront of the door as you come in that makes an backwards L so you can't see into the shower area",
       "target": {
@@ -459,7 +608,7 @@
       "note": "Packed two narrower stalls and two urinals against the stairwell end, resized the four sinks to 24px counters flush with the south wall, shifted the north entrance west, and added a backward-L privacy screen with a verified walkable route."
     },
     {
-      "id": 27,
+      "id": 36,
       "status": "fixed",
       "text": "Ok so now the left side looks good, the right side now needs to mirror the left side, but with the perspective from the south obviously. Ask me any clarifying questions if needed",
       "target": {
@@ -477,7 +626,7 @@
       "note": "Mirrored the approved left half into the right half with south-facing stalls and urinals, four north-wall sinks, and a rotated privacy screen at the south entrance; retained six wall-backed showers and verified the player route."
     },
     {
-      "id": 28,
+      "id": 37,
       "status": "fixed",
       "text": "ok theL wall needs to be shorter, and not take up so much space. The middle of the bathroom should have the 6 showers facing each other and should have a central space in the bathroom",
       "target": {
@@ -495,7 +644,7 @@
       "note": "Shortened both L screens to two-tile returns and placed all six showers in two facing rows in the middle with a 32px central aisle; verified both entrances remain walkable."
     },
     {
-      "id": 29,
+      "id": 38,
       "status": "fixed",
       "text": "OK I think we are going to need to expand the bathroom to have the showers sit against the wall flat. I think we need to expand it over about 3 tiles to the left and make the stair room smaller so we can fit the bathroom the way I want it",
       "target": {
@@ -513,7 +662,7 @@
       "note": "Expanded the bathroom three tiles west, narrowed and refit the stair room, shifted the left fixtures and entrance west, and placed the six facing showers flat against the north and south walls with an open central floor; checked the render and player routes."
     },
     {
-      "id": 30,
+      "id": 39,
       "status": "fixed",
       "text": "Ok I think we might reduce the amount of shower stalls to two so that the fomatting looks better. There also is a short wall between the sinks and the showers",
       "target": {
@@ -531,7 +680,7 @@
       "note": "Reduced the showers to two per wall (four total), widened the cubicles, and added a short divider between each sink counter and shower area; checked the render and both entrance routes."
     },
     {
-      "id": 31,
+      "id": 40,
       "status": "fixed",
       "text": "Actually if you shift the short wall over one tile we can fit a third shower on each side",
       "target": {
@@ -549,7 +698,7 @@
       "note": "Moved both short sink dividers one tile toward the sinks and restored three full-width showers on each wall, retaining the open center and verified entrance routes."
     },
     {
-      "id": 32,
+      "id": 41,
       "status": "fixed",
       "text": "Ok can you mirror exacly what you did with the east bathrooms and make the interior the same as on this one, but keep the top entrance on the middle right, and the bottom entrance in the middle left",
       "target": {
@@ -567,42 +716,286 @@
       "note": "Mirrored the finished east bathroom fixtures, showers, sink dividers, and privacy screens into the west bathroom, with its top entrance in the middle-right and bottom entrance in the middle-left; checked matching layouts and player routes."
     },
     {
-      "id": 33,
+      "id": 42,
       "status": "fixed",
-      "text": "OK I like what you did with his our fit and overall costume. My major issue is with how fat he currently is. James in real life is about 6 ft 4\" so he isn't short by any means, he should be the tallest character in the game. \n\nSo long story short make sure he is taller and is less fat, he still isn't skinny but make him a little less pudgy",
+      "text": "put these desks against the wall",
       "target": {
-        "asset": "james",
-        "anim": "idle_down",
-        "frame": 0,
+        "asset": "brock3",
+        "level": true,
         "region": [
-          14,
-          6,
-          37,
-          48
+          844,
+          11,
+          66,
+          63
         ]
       },
-      "created": "2026-11-20T03:31:53+00:00",
-      "updated": "2026-11-20T03:37:11+00:00",
-      "note": "Made James taller than Titus and Mason with longer legs and a narrower torso while keeping his hoodie, Dragons cap, and existing mechanics."
+      "created": "2026-11-17T01:52:13+00:00",
+      "updated": "2026-11-17T01:54:30+00:00",
+      "note": "Moved the desks flush against the north wall in every dorm room (8px up)."
     },
     {
-      "id": 34,
+      "id": 44,
       "status": "fixed",
-      "text": "Ok his upperbody looks great, but right now his legs are too skinny still. His legs should be proportioned to how big of a dude he is. they should be closer to the size of Titus's legs but I like the gap between the legs",
+      "text": "put these showers against the wall. you should be able to walk into them",
       "target": {
-        "asset": "james",
-        "anim": "idle_down",
-        "frame": 0,
+        "asset": "brock3",
+        "level": true,
         "region": [
-          23,
-          50,
-          22,
-          21
+          765,
+          345,
+          147,
+          63
         ]
       },
-      "created": "2026-11-20T03:38:07+00:00",
-      "updated": "2026-11-20T03:44:38+00:00",
-      "note": "Thickened James\u2019s thighs and calves to proportions closer to Titus while preserving the gap between his legs and the approved upper body."
+      "created": "2026-11-17T01:52:58+00:00",
+      "updated": "2026-11-17T02:10:19+00:00",
+      "note": "Widened the shower stalls to 44px so each row of three fills its alcove wall to wall in both bathrooms, and made them walk-in: only the partition walls are solid now, and the player draws in front of the stall when inside it."
+    },
+    {
+      "id": 45,
+      "status": "fixed",
+      "text": "Make the rug a solid blue, it hurts the eyes when players walk on it",
+      "target": {
+        "asset": "dorm",
+        "map": true,
+        "region": [
+          50,
+          46,
+          20,
+          16
+        ]
+      },
+      "created": "2026-11-17T01:53:52+00:00",
+      "updated": "2026-11-17T01:57:50+00:00",
+      "note": "Made the rug a flat dark blue (dark_slate) with no pattern; I used it instead of navy so the blue beds still stand out from the floor."
+    },
+    {
+      "id": 46,
+      "status": "fixed",
+      "text": "It should be sitting up against the wall, not just on the floor",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          591,
+          21,
+          55,
+          46
+        ]
+      },
+      "created": "2026-11-17T01:56:01+00:00",
+      "updated": "2026-11-17T02:13:06+00:00",
+      "note": "Moved every front-facing desk up 5px so its back edge covers the baseboard and meets the window sill, so the desks read as pushed against the wall."
+    },
+    {
+      "id": 47,
+      "status": "fixed",
+      "text": "We're having an issue which can be seen with the desks (and other places like the sinks and showers) assests should be able to go flush up against the walls, rather than sitting infront of them like so. Although this looks alright in reality there is space between the desk and the wall it just gets muddled with perspective. design it so that items can be pushed right up to walls like in reall life, they should be able to over lap. ask any questions you've got",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          719,
+          5,
+          54,
+          58
+        ]
+      },
+      "created": "2026-11-17T02:21:37+00:00",
+      "updated": "2026-11-17T02:34:59+00:00",
+      "note": "Furniture now stands flush against walls and overlaps the wall face: desks sit in the room corners either side of the window (re-anchored to their floor contact), and the couch, bottom-room wardrobes, wall sinks, urinals, toilets and shower backs moved up onto the wall, with collision boxes on the floor so you can walk right up to them."
+    },
+    {
+      "id": 48,
+      "status": "fixed",
+      "text": "move the beds back a bit, they're too far down right now, double check your work.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          523,
+          80,
+          43,
+          86
+        ]
+      },
+      "created": "2026-11-17T02:38:42+00:00",
+      "updated": "2026-11-17T02:40:42+00:00",
+      "note": "Moved all 64 beds up 20px, so they no longer run into the wardrobes and still leave room in front of the desks (bottom-row rooms too, giving the desk chairs space)."
+    },
+    {
+      "id": 49,
+      "status": "fixed",
+      "text": "Showers should take up the whole wall, not have brick above them, you may need to rework this section of the wall completely",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          762,
+          334,
+          56,
+          73
+        ]
+      },
+      "created": "2026-11-17T02:39:13+00:00",
+      "updated": "2026-11-17T02:46:49+00:00",
+      "note": "The north shower stalls now have a full-height tiled back wall (with the shower head up high), so the showers fill the whole wall under its top edge with no brick above, in both bathrooms."
+    },
+    {
+      "id": 50,
+      "status": "fixed",
+      "text": "This chunk of wall looks quite aqward",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          893,
+          335,
+          21,
+          58
+        ]
+      },
+      "created": "2026-11-17T02:39:50+00:00",
+      "updated": "2026-11-17T02:46:55+00:00",
+      "note": "Reworked the divider wall beside the showers: its wall top now runs from the top of the north wall down to the L, and the L's foot got its own wall top, so no brick chunk hangs off it (mirrored in the east bathroom)."
+    },
+    {
+      "id": 51,
+      "status": "fixed",
+      "text": "fix this wall",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          799,
+          496,
+          21,
+          31
+        ]
+      },
+      "created": "2026-11-17T03:05:28+00:00",
+      "updated": "2026-11-17T03:08:24+00:00",
+      "note": "Rebuilt the L wall by the bottom door: it now has a wall top over the whole L, brick only on the stub's south face, and the wall end outline on the doorway side (mirrored in the east bathroom)."
+    },
+    {
+      "id": 52,
+      "status": "fixed",
+      "text": "These three as a group look really goofy, fix them",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          762,
+          331,
+          134,
+          63
+        ]
+      },
+      "created": "2026-11-17T03:05:46+00:00",
+      "updated": "2026-11-17T03:12:21+00:00",
+      "note": "Redrew the shower stalls: white tiled back wall with a shower head and valve, cream side panels like the toilet stalls, a blue curtain bunched at the side, a light mosaic floor with a drain and a curb (the south-facing row matches)."
+    },
+    {
+      "id": 53,
+      "status": "fixed",
+      "text": "Make this bottom feel like the end of a wall, it looks like a floor board rn.",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          853,
+          357,
+          43,
+          14
+        ]
+      },
+      "created": "2026-11-17T03:17:57+00:00",
+      "updated": "2026-11-17T03:18:55+00:00",
+      "note": "The shower's tiled back wall now ends in the same baseboard as the brick walls (gray line, slate band, dark edge, outline), so it reads as the foot of a wall instead of a floorboard."
+    },
+    {
+      "id": 54,
+      "status": "fixed",
+      "text": "The curtain shouldn't go from the floor to the back of the ceilling, it should be a box kinda if you know what i'm talking about",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          797,
+          337,
+          27,
+          57
+        ]
+      },
+      "created": "2026-11-17T03:19:41+00:00",
+      "updated": "2026-11-17T03:21:58+00:00",
+      "note": "The curtain now hangs from a rod across the front of each stall down to the curb, and the side panels change shade where their front edge starts, so the stall reads as a box instead of a strip running up the back wall."
+    },
+    {
+      "id": 55,
+      "status": "fixed",
+      "text": "remove the curtain",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          883,
+          351,
+          19,
+          47
+        ]
+      },
+      "created": "2026-11-17T03:23:40+00:00",
+      "updated": "2026-11-17T03:25:26+00:00",
+      "note": "Removed the curtain from the north-facing showers; the rod across the front stays so each stall still reads as a box."
+    },
+    {
+      "id": 56,
+      "status": "fixed",
+      "text": "Remove the top bar",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          765,
+          354,
+          141,
+          8
+        ]
+      },
+      "created": "2026-11-17T03:26:27+00:00",
+      "updated": "2026-11-17T03:27:50+00:00",
+      "note": "Removed the bar across the front of the north-facing showers, leaving clean tiled stalls between the cream side panels."
+    },
+    {
+      "id": 57,
+      "status": "fixed",
+      "text": "Remove the curtain",
+      "target": {
+        "asset": "brock3",
+        "level": true,
+        "region": [
+          843,
+          489,
+          26,
+          37
+        ]
+      },
+      "created": "2026-11-17T03:26:37+00:00",
+      "updated": "2026-11-17T03:28:58+00:00",
+      "note": "Removed the curtain from the south-facing showers."
+    },
+    {
+      "id": 58,
+      "status": "fixed",
+      "text": "remove the bar",
+      "target": {
+        "asset": "brock3",
+        "level": true
+      },
+      "created": "2026-11-17T03:26:44+00:00",
+      "updated": "2026-11-17T03:29:04+00:00",
+      "note": "Removed the curtain rod from the south-facing showers, so both rows are plain stalls between the cream side panels."
     }
   ]
 }

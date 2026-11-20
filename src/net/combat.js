@@ -1,4 +1,4 @@
-import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets } from '../combat/rules.js';
+import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets, extendPath } from '../combat/rules.js';
 
 // Only the host runs this clock. Clients send actions, never damage or hit claims.
 export class RoomCombat {
@@ -43,7 +43,7 @@ export class RoomCombat {
     this.expire(f, now);
     r.previous = {}; // these are distinct key presses, not a held input stream
     r.update(now, { [command.action]: true }, command.facing);
-    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set() };
+    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }] };
   }
 
   expire(f, now) {
@@ -77,12 +77,14 @@ export class RoomCombat {
       const a = f.action;
       if (a && f.present && f.rules.health.value > 0) {
         const spec = f.rules.attackSpec(a.name), begin = a.start+spec.frames[0], end = begin+spec.frames[1];
+        // Every snapshot from the wind-up on, so a lunge through someone between checks still lands.
+        if (a.checked <= end) extendPath(a.path, f.position);
         // Intersect the whole tick interval so a 60ms punch cannot fall between 66ms snapshots.
         if (now >= begin && a.checked <= end) {
           const p = f.position;
           const candidates = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0)
             .map(([id, other]) => ({id, ...other.position}));
-          for (const other of attackTargets(p, candidates, a.facing, spec)) {
+          for (const other of attackTargets(p, candidates, a.facing, spec, a.path)) {
             if (a.struck.size >= (spec.maxTargets ?? Infinity)) break;
             const target = other.id;
             a.struck.add(target);

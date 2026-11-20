@@ -11,7 +11,7 @@ export class Walker {
     this.scene = scene;
     this.sprite = sprite;
     this.level = level;
-    this.hp = props.hp ?? 100;
+    this.hp = this.maxHp = props.hp ?? 100;
     this.speed = props.speed ?? 30;
     this.range = (props.range ?? 3) * level.map.tileWidth;
     this.home = sprite.x;
