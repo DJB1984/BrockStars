@@ -1,5 +1,5 @@
 {
-  "next": 59,
+  "next": 65,
   "critiques": [
     {
       "id": 1,
@@ -996,6 +996,83 @@
       "created": "2026-11-17T03:26:44+00:00",
       "updated": "2026-11-17T03:29:04+00:00",
       "note": "Removed the curtain rod from the south-facing showers, so both rows are plain stalls between the cream side panels."
+    },
+    {
+      "id": 59,
+      "status": "fixed",
+      "text": "Improve the walk up and down animations, he just kind floats right now, base it off of how titus walks up and down.",
+      "target": {
+        "asset": "mason",
+        "anim": "walk_up"
+      },
+      "created": "2026-11-17T16:07:36+00:00",
+      "updated": "2026-11-17T16:21:13+00:00",
+      "note": "Rebuilt walk_up and walk_down on titus's 4-pose cycle at 8fps: hips stay fixed, the planted foot holds the ground, the trailing foot lifts 2px and the passing leg bends with its foot up 4px while the body rises 1px."
+    },
+    {
+      "id": 60,
+      "status": "fixed",
+      "text": "Remove the womanly chest from mason",
+      "target": {
+        "asset": "mason",
+        "anim": "idle_side",
+        "frame": 1,
+        "region": [
+          32,
+          23,
+          8,
+          11
+        ]
+      },
+      "created": "2026-11-17T16:07:48+00:00",
+      "updated": "2026-11-17T16:21:25+00:00",
+      "note": "Flattened the side-view chest into a straight jacket front with a 1px waist taper (shared by idle, walk and knockdown side frames)."
+    },
+    {
+      "id": 61,
+      "status": "fixed",
+      "text": "When titus punches and kicks his hands and arms expand, keep them the size size as when he's walking.",
+      "target": {
+        "asset": "titus"
+      },
+      "created": "2026-11-20T03:53:13+00:00",
+      "updated": "2026-11-20T03:57:51+00:00",
+      "note": "Redrew Titus's guard, punch, return and off-hand arms in all three views at walking size (5px sleeves, 5x4 fists) and moved the punch hit fists to match."
+    },
+    {
+      "id": 62,
+      "status": "fixed",
+      "text": "The arm punch is so wimpy rn make his hands a little bigger and improve his punch. rn it's very wimpy. test your work",
+      "target": {
+        "asset": "titus",
+        "anim": "punch_side"
+      },
+      "created": "2026-11-20T04:04:34+00:00",
+      "updated": "2026-11-20T04:13:58+00:00",
+      "note": "Bigger 6x5 fists, and the punch now cocks back, leans the upper body into a full extension with speed lines, holds the impact, then recoils (same 320ms timing, tested landing in game in all 3 directions)."
+    },
+    {
+      "id": 63,
+      "status": "fixed",
+      "text": "the kick still expands the leg and it looks real strange, test your work.",
+      "target": {
+        "asset": "titus",
+        "anim": "kick_side"
+      },
+      "created": "2026-11-20T04:05:35+00:00",
+      "updated": "2026-11-20T04:28:21+00:00",
+      "note": "Kick legs are now the standing leg's width with the normal shoe in all three views (side kick also leans back, up kick swings out where you can see it); tested landing in game."
+    },
+    {
+      "id": 64,
+      "status": "fixed",
+      "text": "Titus's punches should alternate sides when punching up and down.",
+      "target": {
+        "asset": "titus"
+      },
+      "created": "2026-11-20T04:11:51+00:00",
+      "updated": "2026-11-20T04:28:34+00:00",
+      "note": "Added left-hand punch_alt_down/up and the game now alternates right/left punches facing up and down (local and remote players); tested in game."
     }
   ]
 }

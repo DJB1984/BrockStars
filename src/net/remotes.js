@@ -1,5 +1,5 @@
 import { characterStats } from '../characters.js';
-import { ATTACKS } from '../combat/rules.js';
+import { ATTACKS, attackAnim } from '../combat/rules.js';
 import { HeadBar, headroom } from '../objects/HeadBar.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
@@ -56,7 +56,12 @@ export class RemotePlayers {
       const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
       let anim = p.anim;
       if (combat?.knockdown) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
-      else if (combat?.attack) anim = `${p.char}_${combat.attack.name}_${dir}`;
+      else if (combat?.attack) {
+        // A new attack (none before, or its clock restarted) counts toward alternating punch hands.
+        const started = !r.attack || combat.attack.elapsed < r.attack.elapsed;
+        if (started && combat.attack.name === 'punch') r.punches = (r.punches ?? -1) + 1;
+        anim = attackAnim(p.char, combat.attack.name, combat.attack.facing, r.punches ?? 0, key => scene.anims.exists(key));
+      }
       else if (combat?.block) anim = `${p.char}_block_${dir}`;
       else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
       if (anim && scene.anims.exists(anim)) {
@@ -67,6 +72,7 @@ export class RemotePlayers {
           sprite.anims.setProgress(Math.min(0.99, combat.attack.elapsed/duration));
         }
       }
+      r.attack = combat?.attack ?? null;
       sprite.setPosition(x, y).setFlipX(facing ? facing === 'left' : !!p.flip).setDepth(y - 0.5);
       r.bar.setName(p.name || 'Player');
       r.bar.update((combat?.health ?? characterStats(p.char).health) / (combat?.maxHealth ?? characterStats(p.char).health), x, y - headroom(scene, p.char), delta);
