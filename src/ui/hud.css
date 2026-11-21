@@ -58,6 +58,71 @@
 .hud-online b { font: 400 26px/0.8 var(--display); color: var(--amber); }
 .hud-online .hud-code { margin-right: 4px; letter-spacing: 0.14em; color: var(--white); }
 
+/* ---- the match: kill feed, KO screen, scores ------------------------------------------------------ */
+.hud-side { display: grid; justify-items: end; gap: 8px; }
+
+/* Under the online count, newest on top: ink strips with outlined names, each fading out at the end of its life. */
+.kill-feed { display: grid; justify-items: end; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.kf-line {
+  padding: 1px 8px 3px;
+  font-size: 15px;
+  white-space: nowrap;
+  color: var(--mist);
+  background: rgb(18 33 42 / 0.88);
+  box-shadow: 0 var(--px) 0 rgb(18 33 42 / 0.5);
+  animation: kf-in 200ms steps(4) both, kf-out 400ms steps(4) calc(var(--life) - 400ms) forwards;
+  animation-delay: 0ms, calc(var(--life) - 400ms + var(--age));
+}
+.kf-line b { font-weight: 400; color: var(--white); }
+.kf-line.is-mine b { color: var(--amber); }
+.kf-ended { color: var(--ember); }
+@keyframes kf-in { from { transform: translateX(14px); opacity: 0; } }
+@keyframes kf-out { to { opacity: 0; } }
+
+/* KO'd: the level dims once the KO's freeze is over, and says who did it. */
+.hud-ko {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 6px;
+  padding-top: 21vh;   /* over your body, which you watch go down */
+  background: rgb(18 33 42 / 0.55);
+  animation: ko-in 300ms steps(5) var(--delay) both;
+}
+.ko-title { font: 400 64px/0.9 var(--display); text-transform: uppercase; text-shadow: var(--outline-3), 0 5px 0 var(--ink); }
+.ko-title b { font-weight: 400; color: var(--amber); }
+.ko-back { font-size: 18px; color: var(--mist); text-shadow: var(--outline-2); }
+.ko-secs { color: var(--white); }
+@keyframes ko-in { from { opacity: 0; } }
+
+/* The scores: in the menu, and over the level while Tab is held. */
+.hud-board {
+  position: absolute;
+  top: calc(var(--gt) + 62px);
+  left: 50%;
+  width: min(420px, calc(100% - 32px));
+  max-height: calc(100% - var(--gt) - 92px);
+  padding: 10px 16px 14px;
+  overflow-y: auto;
+  translate: -50% 0;
+}
+.board { width: 100%; border-collapse: collapse; font-size: 16px; }
+.board thead th { padding: 0 6px 6px; font: 400 18px/1 var(--display); color: var(--mist); text-transform: uppercase; text-align: right; }
+.board thead th:first-child { text-align: left; }
+.board tbody th, .board td { padding: 3px 6px; border-top: 2px solid var(--pine-deep); }
+.board tbody th { font-weight: 400; text-align: left; }
+.board-who { display: flex; align-items: center; gap: 6px; }
+.board td { width: 56px; text-align: right; font: 400 24px/0.9 var(--display); }
+.board tr.is-me .board-name, .board tr.is-me td { color: var(--amber); }
+.board-crown { flex: none; display: flex; width: 14px; }
+.board-crown svg { width: 14px; height: 10px; }
+.board-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.board-streak { display: inline-flex; align-items: center; gap: 2px; font: 400 15px/1 var(--display); color: var(--cream); opacity: 0.75; }
+.board-streak svg { width: 8px; height: 8px; }
+.hud-dialog .board { margin-top: -4px; }
+
 .hud-toast {
   position: absolute;
   top: calc(var(--gt) + 62px);
@@ -364,6 +429,15 @@
                -2px -2px 0 #12212a, 2px -2px 0 #12212a, -2px 2px 0 #12212a, 2px 2px 0 #12212a;
 }
 .name-tag[hidden] { display: none; }
+/* Badges sit outside the name's box, so the name stays centred over the head: the leader's crown just above it,
+   a KO streak small and dim just after it (there to be noticed, not to shout). */
+.nt-crown, .nt-streak { position: absolute; display: flex; align-items: center; }
+.nt-crown[hidden], .nt-streak[hidden] { display: none; }
+.nt-crown { bottom: calc(100% + 2px); left: 50%; translate: -50% 0; }
+.nt-crown svg { width: 14px; height: 10px; }
+.nt-streak { left: calc(100% + 5px); top: 50%; translate: 0 -50%; gap: 2px; opacity: 0.8; }
+.nt-streak svg { width: 8px; height: 8px; }
+.nt-streak b { font: 400 15px/1 'Jersey 10', monospace; color: #f8d890; text-shadow: 1px 1px 0 #12212a, -1px 0 0 #12212a, 0 -1px 0 #12212a; }
 
 /* ---- narrow screens ----------------------------------------------------------------------------- */
 @media (max-width: 640px) {
@@ -409,6 +483,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hud .mk-cap.is-pop, .hud .mk-flash, .hud .mk-cap::before, .hud .mk-cap::after, .hud .mk-icon,
-  .hud-toast, .hud-dialog, .hud-scrim { animation: none !important; }
+  .hud-toast, .hud-dialog, .hud-scrim, .kf-line, .hud-ko { animation: none !important; }
   .hud .mk-flash, .hud .mk-cap.is-pop::before, .hud .mk-cap.is-pop::after { display: none; }
 }

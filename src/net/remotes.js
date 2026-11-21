@@ -4,6 +4,7 @@ import { showGrappleOverlay } from '../combat/grappleVisuals.js';
 import { ATTACKS, DODGE, attackAnim } from '../combat/rules.js';
 import { dodgeTrail } from '../combat/dodge.js';
 import { HeadBar, headroom } from '../objects/HeadBar.js';
+import { KO, holdLying, koAlpha, safeAlpha } from '../combat/match.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
 // past, between the two updates around that moment: smooth walking instead of hops. Each update also
@@ -15,6 +16,8 @@ const TELEPORT = 160;   // farther than this between updates (a respawn, a door)
 // The other players in this scene's level, drawn from net.players: a sprite each, playing what they play,
 // with their name and health bar over the head (hidden while they're in a room you can't see into: the
 // scene's `rooms`). Make one in create and call update(delta) every frame.
+// KO'd (match.js), a player lies in the knockdown pose and fades out until they respawn; back, they blink while
+// they can't be hit. Their name tag carries a small crown for the session's leader, and their KO streak.
 export class RemotePlayers {
   constructor(scene, net) {
     this.scene = scene;
@@ -65,10 +68,12 @@ export class RemotePlayers {
       if (combat?.held) ({x, y} = combat.held);
       if (combat?.grapple) ({x, y} = combat.grapple);
       const hurt = combat?.stagger && !combat.knockdown && !combat.stun && combat.health ? combat.hurtFacing : null;
-      const facing = (combat?.stun ? combat.stunFacing : null) ?? combat?.held?.facing ?? (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block ?? hurt;
+      const ko = combat?.ko && !combat.health ? combat.ko : null;
+      const facing = (ko ? ko.facing : null) ?? (combat?.stun ? combat.stunFacing : null) ?? combat?.held?.facing ?? (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block ?? hurt;
       const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
       let anim = p.anim;
-      if (combat?.stun) anim = `${p.char}_stunned_${dir ?? 'down'}`;
+      if (ko) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
+      else if (combat?.stun) anim = `${p.char}_stunned_${dir ?? 'down'}`;
       else if (combat?.held) anim = `${p.char}_grappled_${dir ?? 'down'}`;
       else if (combat?.knockdown) anim = `${p.char}_knockdown_${dir ?? 'down'}`;
       else if (combat?.attack) {
@@ -106,6 +111,9 @@ export class RemotePlayers {
         if (frozen) {
           // Change pose (into the hurt pose, say), but stay paused on it until the freeze ends.
           if (sprite.anims.currentAnim?.key !== anim) sprite.play(anim).anims.pause();
+        } else if (ko) {
+          if (sprite.anims.currentAnim?.key !== anim) sprite.play(anim);
+          holdLying(sprite);
         } else {
           sprite.play(anim, true);
           if (combat?.knockdown) sprite.anims.setProgress(Math.min(0.99, 1-combat.knockdown/1500));
@@ -116,14 +124,20 @@ export class RemotePlayers {
         }
       }
       if (!frozen) sprite.setPosition(x, y).setDepth(y - 0.5);
+      // Down: lying there, then fading (timed from the KO, however late this screen heard of it). Back: blinking.
+      if (ko) r.koStart ??= now - (KO.respawn - ko.left);
+      else r.koStart = undefined;
+      sprite.setAlpha(ko ? koAlpha(now - r.koStart) : combat?.safe ? safeAlpha(now) : 1);
+      sprite.safe = !!combat?.safe;
       sprite.setFlipX(facing ? facing === 'left' : !!p.flip);
       r.bar.setName(p.name || 'Player');
+      r.bar.setBadges({ crown: this.net.combatState.leader === id, streak: (combat?.score?.streak ?? 0) >= KO.streak ? combat.score.streak : 0 });
       r.bar.update((combat?.health ?? characterStats(p.char).health) / (combat?.maxHealth ?? characterStats(p.char).health), x, y - headroom(scene, p.char), delta);
       const seen = scene.rooms?.canSee(x, y) ?? true;   // hidden in a room you aren't in
       sprite.setVisible(seen);
       updateBellowVisuals(scene, sprite, combat?.attack ? { ...combat.attack, start:scene.time.now-combat.attack.elapsed } : null, combat?.stun ?? 0);
       showGrappleOverlay(sprite, combat?.grapple?.facing, !!combat?.grapple);
-      r.bar.setVisible(seen);
+      r.bar.setVisible(seen && !(ko && koAlpha(now - r.koStart) <= 0));   // the tag goes with the body
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);
   }

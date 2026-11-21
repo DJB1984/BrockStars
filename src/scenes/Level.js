@@ -7,6 +7,7 @@ import { TitusCombat } from '../combat/TitusCombat.js';
 import { HitFeel } from '../combat/hitFeel.js';
 import { FightMarks } from '../combat/fightMarks.js';
 import { ATTACKS, BLOCK, DODGE, OPPOSITE, characterAttack, directionTo } from '../combat/rules.js';
+import { KO, koAlpha, safeAlpha } from '../combat/match.js';
 import { dudClick } from '../sound.js';
 import { releaseTouch } from '../combat/touch.js';
 import { showHud } from './Hud.js';
@@ -23,6 +24,10 @@ import { currentSession } from '../ui/session.ts';
 
 // Object type (a level object's "type") → the class that gives it behaviour. Add yours here.
 const TYPES = { enemy: Walker };
+
+// Kill feed line ids, and the names of players seen this session: both outlive a scene's restart (a door).
+let feedLines = 0;
+const NAMES = new Map();
 
 // One scene plays every level: pixelforgeLevel builds it from export/levels/<name>.json (map, props,
 // sprites, the player at the spawn, the camera), and this scene adds the rules:
@@ -46,6 +51,11 @@ const TYPES = { enemy: Walker };
 // online and when each move comes back, and gives its menu Change fighter and Leave game. A move pressed
 // while it's still cooling down wiggles its keycap and clicks (combat-dud).
 // Health is a bar over every fighter's head (objects/HeadBar.js), drawn here in the world.
+// A KO (combat/match.js) lands harder (hitFeel.js), and the fighter goes down in the knockdown pose and fades
+// out while the screen dims and says who did it; KO.respawn later they're back at the level's spawn, in this
+// same scene (camera, HUD and rooms as they were), blinking and untouchable for KO.safe or until they swing.
+// Online the host credits each KO: a kill feed under the online count, and the session's scores in the menu
+// and on a held Tab (the HUD), with a crown and KO streaks on the name tags (net/remotes.js).
 // Rooms (roomShadows.js) are dark from the hall, with whoever's inside hidden; from a room you see out.
 // Dev only: B toggles the hit/hurt boxes, and window.pixelforgePlay drives the game for `pixelforge play`.
 export class Level extends Phaser.Scene {
@@ -62,6 +72,8 @@ export class Level extends Phaser.Scene {
   create() {
     this.combat = null;
     this.inLobby = false;
+    this.koed = null;        // { at }: down after a KO, until respawn()
+    this.safeUntil = 0;      // back from a KO: blinking, untouchable
     // the world is drawn at 2x (characters ~48px tall), so walk twice pixelforge's default 70 px/s
     const level = (this.level = pixelforgeLevel(this, this.levelName, {
       spawn: this.spawnName, player: this.character,
@@ -98,7 +110,8 @@ export class Level extends Phaser.Scene {
     const on = (emitter, event, fn) => { emitter.on(event, fn); this.events.once('shutdown', () => emitter.off(event, fn)); };
     on(this.events, 'pixelforge-trigger', (obj) => this.trigger(obj));
     on(bus, 'dead', () => {
-      if (!net.active) this.time.delayedCall(400, () => { reset(); this.scene.restart({ level: this.levelName, spawn: this.spawnName }); });
+      // After this hit's own pose and freeze are set (the call that emptied the health is still running).
+      if (!net.active) this.time.delayedCall(0, () => this.knockedOut(null, null));
     });
 
     this.remotes = new RemotePlayers(this, net);
@@ -128,6 +141,7 @@ export class Level extends Phaser.Scene {
           onPredict: (other, move) => this.predictHit(other, move) });
         this.marks.follow(this.combat);
         on(player, 'pixelforge-attack', () => {
+          this.safeUntil = 0;   // swinging gives up the spawn safety (the host does the same)
           const attack = this.combat.rules.attack;
           if (attack) net.combatCommand(attack.name, attack.facing, this.remotes.seenTime());
         });
@@ -139,7 +153,7 @@ export class Level extends Phaser.Scene {
         on(player, 'combat-release', () => net.combatCommand('release'));
         on(player, 'combat-dodge', (facing) => net.combatCommand('dodge', facing));
         on(player, 'combat-mash', () => net.combatCommand('mash'));
-        const life = net.combatState.fighters[net.id]?.life ?? 0;
+        let life = net.combatState.fighters[net.id]?.life ?? 0;
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
           if (!self || !player.active || this.inLobby) return;
@@ -166,11 +180,12 @@ export class Level extends Phaser.Scene {
           this.combat.rules.heldBy = self.held ? { attack: { facing: self.held.facing } } : null;
           if (self.held) { this.combat.rules.attack = null; this.combat.controller.busy = null; }
           this.combat.rules.readyAt.takedown = this.time.now + (self.takedownCooldown ?? 0);
-          if (self.life !== life) {
-            reset();
-            this.scene.restart({level:this.levelName,spawn:this.spawnName,character:this.character});
-            return;
+          // Back from a KO (or a new host that never saw it: up, with health, and no KO).
+          if (self.life !== life || (this.koed && !self.ko && self.health > 0)) {
+            life = self.life;
+            this.respawn();
           }
+          if (!this.koed) this.safeUntil = Math.min(this.safeUntil, now + (self.safe ?? 0));   // only ever shortened (by your swing)
           if (playerHealth.value !== self.health) {
             playerHealth.value = self.health;
             playerHealth.onChange(self.health);
@@ -178,6 +193,7 @@ export class Level extends Phaser.Scene {
           for (const hit of hits) if (hit.target === net.id) {
             this.combat.applyHit(hit.from ?? {x:player.x-1,y:player.y}, hit);
           }
+          if (self.ko && !self.health && !this.koed) this.knockedOut(self.ko.by ? this.nameOf(self.ko.by) : null, self.ko.facing);
         });
       } else enablePixelforgeHits(this, player, hittable, (target) => {
         this.feel.hitStop(50).shake(80, 1);
@@ -192,8 +208,10 @@ export class Level extends Phaser.Scene {
     }
     // Every hit the host resolved in this level, felt here. This player's own hits were applied just above,
     // so their hurt pose is already playing when the freeze holds it.
-    on(net, 'combat', ({ hits }) => {
+    on(net, 'combat', ({ hits, kos, fighters, leader }) => {
       if (this.inLobby) return;
+      for (const k of kos ?? []) this.feedKo(k);
+      this.pushScores(fighters, leader);
       for (const hit of hits) {
         const victim = hit.target === net.id ? player : this.remotes.sprite(hit.target);
         const attacker = hit.source === net.id ? player : this.remotes.sprite(hit.source);
@@ -201,7 +219,7 @@ export class Level extends Phaser.Scene {
         // Already felt the moment your swing reached them: the host's answer only brings the damage.
         // A perfect block always shows: it couldn't be predicted.
         const felt = hit.source === net.id && !hit.perfect && this.predicted.get(hit.target);
-        if (felt && felt.move === hit.move && this.time.now - felt.at < 700) { this.predicted.delete(hit.target); continue; }
+        if (felt && felt.move === hit.move && felt.ko === !!hit.ko && this.time.now - felt.at < 700) { this.predicted.delete(hit.target); continue; }
         // The host answered before this screen saw the swing connect (a fast connection): don't feel it again then.
         const swing = this.combat?.swing;
         if (hit.source === net.id && victim && swing && this.combat.rules.attack?.name === hit.move) swing.predicted.add(victim);
@@ -229,6 +247,12 @@ export class Level extends Phaser.Scene {
     }
     if (this.combat) this.combat.online = net.active;   // the host shortens holds and stuns you mash out of
     if (p?.active) this.rooms.update(p.x, p.y);
+    if (p?.active && this.koed) {
+      const alpha = koAlpha(time - this.koed.at);
+      p.setAlpha(alpha);
+      this.selfBar?.setVisible(alpha > 0);
+    } else if (p?.active && time < this.safeUntil) { p.setAlpha(safeAlpha(time)); this.blinking = true; }
+    else if (p?.active && this.blinking) { p.setAlpha(1); this.blinking = false; }
     this.remotes.update(delta);
     this.showers.update(time, delta);
     for (const a of this.actors) {
@@ -277,11 +301,68 @@ export class Level extends Phaser.Scene {
   // almost certainly agree (it judges against the same moment). If it doesn't, only the damage is missing.
   predictHit(other, move) {
     const player = this.level.player, state = net.combatState.fighters[other.netId], spec = ATTACKS[move];
-    if (!player?.active || !state?.health || state.held) return;
+    if (!player?.active || !state?.health || state.held || state.safe) return;
     // Their block covers every side but behind them.
     const blocked = !spec.unblockable && !!state.block && directionTo(player.x - other.x, player.y - other.y) !== OPPOSITE[state.block];
-    this.hitFeel.land(player, other, move, { damage: 1, blocked, knockdown: blocked ? 0 : spec.knockdown ?? 0 });
-    this.predicted.set(other.netId, { move, at: this.time.now });
+    // The last of their health: the KO is felt now too.
+    const ko = characterAttack(this.character, move).damage * (blocked ? 1 - BLOCK.reduction : 1) >= state.health;
+    this.hitFeel.land(player, other, move, { damage: 1, blocked, knockdown: blocked ? 0 : spec.knockdown ?? 0, ...(ko ? { ko } : {}) });
+    this.predicted.set(other.netId, { move, at: this.time.now, ko });
+  }
+
+  // KO'd: down in the knockdown pose (toward `facing`), fading out, the screen dimmed with who did it (`by`, a
+  // name, or null). Online the host says when you're back; alone, it's KO.respawn from now.
+  knockedOut(by, facing) {
+    const p = this.level.player;
+    if (this.koed || !p?.active) return;
+    this.koed = { at: this.time.now };
+    this.safeUntil = 0;
+    this.combat?.knockOut(facing);
+    hud.set({ ko: { by, endsAt: performance.now() + KO.respawn } });
+    if (!net.active) this.time.delayedCall(KO.respawn, () => this.respawn());
+  }
+
+  // Back on your feet at the level's spawn, with full health, in this same scene: the camera, the HUD and the
+  // rooms carry on. You blink, untouchable, for KO.safe.
+  respawn() {
+    const p = this.level.player;
+    this.koed = null;
+    hud.set({ ko: null });
+    if (!p?.active) return;
+    reset();
+    const spawns = this.level.spawns, at = spawns[this.spawnName] ?? spawns.player ?? Object.values(spawns)[0];
+    if (at) p.body.reset(at.x, at.y);
+    p.setAlpha(1);
+    this.selfBar?.setVisible(true);
+    this.combat?.revive();
+    this.predicted.clear();
+    this.safeUntil = this.invulnerableUntil = this.time.now + KO.safe;
+    this.cameras.main.fadeIn(220, 18, 33, 42);
+  }
+
+  // Someone's name: yours, or the other player's as their updates carry it (remembered after they leave).
+  nameOf(id) {
+    const name = id === net.id ? net.name : net.players[id]?.name;
+    if (name) NAMES.set(id, name);
+    return name || NAMES.get(id) || 'Player';
+  }
+
+  // A KO the host credited: a kill feed line, and another when it ended a streak (KO.streak or more).
+  feedKo(k) {
+    const at = performance.now(), mine = k.victim === net.id || k.by === net.id;
+    const victim = k.victimName || this.nameOf(k.victim), by = k.by ? k.byName || this.nameOf(k.by) : null;
+    const lines = [{ id: ++feedLines, at, kind: 'ko', by, victim, mine }];
+    if (k.ended && by) lines.push({ id: ++feedLines, at, kind: 'streak', by, victim, mine });
+    hud.set({ feed: [...hud.get().feed.filter((l) => at - l.at < KO.feed), ...lines].slice(-5) });
+  }
+
+  // The session's scores for the HUD's board, best first; sent only when they change.
+  pushScores(fighters = {}, leader = null) {
+    const rows = Object.entries(fighters).filter(([, f]) => f.score).map(([id, f]) => ({ id, name: this.nameOf(id),
+      kos: f.score.kos, falls: f.score.falls, streak: f.score.streak, me: id === net.id, leader: id === leader }))
+      .sort((a, b) => b.kos - a.kos || a.falls - b.falls || a.name.localeCompare(b.name));
+    const key = JSON.stringify(rows);
+    if (key !== this.scoresKey) { this.scoresKey = key; hud.set({ scores: rows }); }
   }
 
   // Hit by someone you can't see (off the screen, or in a dark room): an arrow at the screen's edge points

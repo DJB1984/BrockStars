@@ -2,6 +2,7 @@ import { spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { ATTACKS, DIRECTIONS } from './rules.js';
 import { headroom } from '../objects/HeadBar.js';
 import { parryTing } from '../sound.js';
+import { KO } from './match.js';
 
 // How a connecting hit feels, per move: the freeze on contact (ms; Smash's hitlag, longer for heavier
 // hits), the camera shake for the two fighters involved ([ms, px]) and the spark at the contact point.
@@ -29,6 +30,8 @@ export function freezeTime(move, crowd = 2, blocked = false) {
 // land() freezes both fighters (only those two: the rest of the brawl keeps moving), shakes the victim
 // in place, flashes them, sparks at the contact point and shakes the camera, but only on the screen of
 // someone in the fight. A frozen sprite carries `hitFreeze`: TitusCombat and RemotePlayers leave it alone.
+// The hit that KOs (result.ko) lands harder whatever the move: KO.freeze for both, the heavy spark, a bigger
+// shake, and "KO!" popping over the body.
 export class HitFeel {
   constructor(scene, { me = () => null, crowd = () => 2 } = {}) {
     this.scene = scene;
@@ -48,13 +51,15 @@ export class HitFeel {
     if (!victim?.active || !result?.damage) return;
     const blocked = !!result.blocked, feel = HIT_FEEL[move];
     if (!result.knockdown) this.scene.feel?.flash(victim, 90, blocked ? 0x77bbff : 0xffffff);
+    const ko = !!result.ko;
+    if (ko) this.scene.marks?.pop(victim, 'KO!', 0xe43b44, 24);   // a shower's KO too
     if (!feel || !attacker?.active) return;
-    const ms = freezeTime(move, this.crowd(), blocked);
+    const ms = ko ? KO.freeze : freezeTime(move, this.crowd(), blocked);
     this.freeze(victim, ms, !blocked);
     if (freezeAttacker) this.freeze(attacker, ms);
-    this.spark(attacker, victim, blocked ? 'fx_block' : feel.spark);
+    this.spark(attacker, victim, ko ? 'fx_hit_heavy' : blocked ? 'fx_block' : feel.spark);
     const me = this.me();
-    if (!blocked && me && (attacker === me || victim === me)) this.scene.feel?.shake(...feel.shake);
+    if (!blocked && me && (attacker === me || victim === me)) this.scene.feel?.shake(...(ko ? [160, 3] : feel.shake));
   }
 
   // A perfect block: the attacker is caught in a longer, shaking freeze than the blocker's,

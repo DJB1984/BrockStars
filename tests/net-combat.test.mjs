@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { RoomCombat } from '../src/net/combat.js';
+import { KO } from '../src/combat/match.js';
 
 const positions = () => ({a:{x:100,y:100,level:'brock3'}, b:{x:120,y:100,level:'brock3'}});
 function setup() { const room=new RoomCombat(), p=positions(); room.tick(p,0); return {room,p}; }
@@ -45,16 +46,16 @@ test('host enforces cooldowns, block timeout, and stagger interruption',()=>{
 });
 
 test('health regenerates on host and knockout respawns exactly once',()=>{
-  const {room,p}=setup();
+  const {room,p}=setup(),R=KO.respawn,S=R+KO.safe;
   room.damage('b','a',{damage:125,knockback:0,stagger:0},null,0);
-  assert.equal(room.tick(p,399).fighters.b.health,0);
-  const respawn=room.tick(p,400).fighters.b;
+  assert.equal(room.tick(p,R-1).fighters.b.health,0);
+  const respawn=room.tick(p,R).fighters.b;
   assert.equal(respawn.life,1);assert.equal(respawn.health,125);
-  assert.equal(room.tick(p,500).fighters.b.life,1);
-  cmd(room,'a','punch','right',1,501);room.tick(p,620);
-  assert.equal(room.tick(p,45620).fighters.b.health,121);
-  assert.equal(room.tick(p,46620).fighters.b.health,123);
-  delete p.b;assert.equal(room.tick(p,47000).fighters.b,undefined);
+  assert.equal(room.tick(p,R+100).fighters.b.life,1);
+  cmd(room,'a','punch','right',1,S+1);room.tick(p,S+120);
+  assert.equal(room.tick(p,S+45120).fighters.b.health,121);
+  assert.equal(room.tick(p,S+46120).fighters.b.health,123);
+  delete p.b;assert.equal(room.tick(p,S+47000).fighters.b,undefined);
 });
 
 test('a connected player becoming temporarily quiet cannot reset their health',()=>{
@@ -110,8 +111,8 @@ test('host switching characters and respawning retain the correct health ceiling
   room.tick(p,0);room.damage('a',null,{damage:100,knockback:0,stagger:0},null,0);
   p.a.char='mason';assert.equal(room.tick(p,1).fighters.a.health,45);
   room.damage('a',null,{damage:45,knockback:0,stagger:0},null,2);
-  assert.equal(room.tick(p,402).fighters.a.health,90);
-  p.a.level='other';assert.equal(room.tick(p,403).fighters.a.health,90);
+  assert.equal(room.tick(p,KO.respawn+2).fighters.a.health,90);
+  p.a.level='other';assert.equal(room.tick(p,KO.respawn+3).fighters.a.health,90);
 });
 
 

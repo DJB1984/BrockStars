@@ -269,7 +269,8 @@ export class CombatRules {
       if (knockdown) this.knockdownFacing = incomingSide;
       else this.hurtFacing = incomingSide;
     }
+    // `ko`: this hit emptied their health (match.js says what happens next).
     return { damage, blocked, stagger, stun, knockdown, knockdownFacing: knockdown ? incomingSide : null,
-      knockback: (spec.knockback ?? 0) * (blocked ? 0.25 : 1), slide: spec.slide ?? 0 };
+      knockback: (spec.knockback ?? 0) * (blocked ? 0.25 : 1), slide: spec.slide ?? 0, ...(damage && !this.health.value ? { ko: true } : {}) };
   }
 }

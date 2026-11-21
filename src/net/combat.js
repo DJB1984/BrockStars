@@ -3,6 +3,7 @@ import { ATTACKS, CombatRules, DIRECTIONS, MASH, directionTo, attackTargets, ext
 import { levelWalls } from '../combat/walls.js';
 
 import { GrappleHold, grapplePosition, grabbable } from '../combat/grapple.js';
+import { KO, newScore, leaderOf } from '../combat/match.js';
 
 // Lag compensation. Everyone draws the other players a little in the past (remotes.js), so the host keeps
 // HISTORY_MS of each fighter's positions and judges an attack against where its victims stood at the moment
@@ -24,8 +25,13 @@ export function positionAt(history, t, current) {
 
 // Only the host runs this clock. Clients send actions (with when they saw the world), never damage.
 // walls(level) gives a level's wall grid (walls.js), so nobody is hit through a wall.
+// A KO (match.js): the fighter lies there for KO.respawn ms, then comes back with full health and KO.safe ms
+// untouchable (an attack of their own ends that early). The last player to damage them within KO.credit ms
+// gets the KO, even if a hazard finished it. Each fighter keeps the session's tally (KOs, falls, the streak
+// of KOs since their last fall); ending a streak of KO.streak or more is worth a bonus KO. Every snapshot
+// carries the tallies, each fighter's KO and safe time, and the leader; `kos` lists the KOs since the last one.
 export class RoomCombat {
-  constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.walls = walls; this.showers = new ShowerWorld(); }
+  constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.kos = []; this.walls = walls; this.showers = new ShowerWorld(); }
 
   sync(players, now, connected = Object.keys(players)) {
     const members = new Set(connected);
@@ -36,7 +42,7 @@ export class RoomCombat {
     for (const [id, position] of Object.entries(players)) {
       let f = this.fighters.get(id);
       if (!f) {
-        f = { rules: new CombatRules(undefined, position.char ?? 'titus'), life: 0, respawnAt: null, action: null, lastCommand: 0 };
+        f = { rules: new CombatRules(undefined, position.char ?? 'titus'), life: 0, respawnAt: null, action: null, lastCommand: 0, score: newScore(), safeUntil: 0 };
         this.fighters.set(id, f);
       }
       f.position = { ...position };
@@ -90,7 +96,10 @@ export class RoomCombat {
   act(f, input, now) {
     const r = f.rules;
     r.update(now, { ...input, block: !!input.block || !!f.blockHeld }, f.want?.facing ?? 'down');
-    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }], rewind: f.want?.rewind ?? 0 };
+    if (r.attack && !f.action) {
+      f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }], rewind: f.want?.rewind ?? 0 };
+      f.safeUntil = 0;   // swinging gives up the spawn safety
+    }
   }
 
   // A press from someone held or stunned: the hold or the stun ends sooner (MASH). Presses closer than MASH.gap
@@ -113,6 +122,7 @@ export class RoomCombat {
   // `contact`: the earliest moment in this tick the swing could have connected (for the perfect-block window).
   damage(targetId, sourceId, spec, from, now, move = null, contact = now) {
     const f = this.fighters.get(targetId);
+    if (now < f.safeUntil) return;   // just back from a KO
     const p = f.position;
     const result = f.rules.receive(spec, from ? directionTo(from.x-p.x, from.y-p.y) : null, now, contact);
     // A perfect block: no damage, and the attacker is staggered (both told, so both screens feel it).
@@ -128,7 +138,29 @@ export class RoomCombat {
     if (result.stun) f.stunAnchor = { x:p.x, y:p.y, level:f.level };
     if (result.stagger) { f.action = null; f.rules.heldBy?.cancel(now); }
     this.events.push({ target: targetId, source: sourceId, from, move, ...result });
-    if (!f.rules.health.value) f.respawnAt = now + 400;
+    if (sourceId && sourceId !== targetId && this.fighters.has(sourceId)) f.lastHit = { by: sourceId, at: now };
+    if (result.ko) this.knockOut(targetId, from ? directionTo(from.x-p.x, from.y-p.y) : null, move, now);
+  }
+
+  // Credit the KO, keep the tally and start the respawn clock. The last player to hurt them within KO.credit
+  // (the one who just hit them, or before a hazard finished them) gets it; ending a long streak earns one more.
+  knockOut(id, facing, move, now) {
+    const f = this.fighters.get(id);
+    if (f.respawnAt !== null) return;
+    const byId = f.lastHit && now - f.lastHit.at <= KO.credit && this.fighters.has(f.lastHit.by) ? f.lastHit.by : null;
+    const by = byId && this.fighters.get(byId);
+    const ended = f.score.streak >= KO.streak ? f.score.streak : 0;
+    f.score.falls++;
+    f.score.streak = 0;
+    if (by) {
+      by.score.kos += ended ? 2 : 1;
+      by.score.streak++;
+      by.score.at = now;
+    }
+    f.respawnAt = now + KO.respawn;
+    f.ko = { by: byId, facing: facing ?? 'down' };
+    f.lastHit = null;
+    this.kos.push({ victim: id, by: byId, move, ended, victimName: f.position?.name ?? '', byName: by?.position?.name ?? '' });
   }
 
   updateGrapples(now) {
@@ -170,6 +202,7 @@ export class RoomCombat {
       f.rules.health.update(delta);
       if (f.respawnAt !== null && now >= f.respawnAt) {
         f.rules = new CombatRules(undefined, f.position.char ?? 'titus'); f.action = null; f.blockHeld = false; f.respawnAt = null; f.life++;
+        f.ko = null; f.safeUntil = now + KO.safe;
       }
     }
     this.showers.update(delta);
@@ -199,7 +232,7 @@ export class RoomCombat {
         // Intersect the whole tick interval so a 60ms punch cannot fall between 66ms snapshots.
         if (now >= begin && a.checked <= end) {
           const p = f.position;
-          const others = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || grabbable(other.rules, now)));
+          const others = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && now >= other.safeUntil && (!spec.hold || grabbable(other.rules, now)));
           // Everyone where the attacker saw them (and a moment either side), or where they are now with no rewind.
           const found = new Map();
           for (const t of a.rewind ? [now - a.rewind, now - a.rewind - TOLERANCE, now - a.rewind + TOLERANCE] : [now]) {
@@ -242,7 +275,11 @@ export class RoomCombat {
       grapple: f.hold ? { target: f.hold.targetId, ...f.hold.anchor, facing: f.hold.hold.attack.facing } : null,
       held: f.rules.heldBy ? { source: f.heldSource, ...f.position, facing: f.rules.heldBy.attack.facing } : null,
       takedownCooldown: Math.max(0, (f.rules.readyAt.takedown ?? 0)-now),
+      ko: f.respawnAt !== null ? { ...f.ko, left: Math.max(0, f.respawnAt - now) } : null,
+      safe: Math.max(0, f.safeUntil - now),
+      score: { kos: f.score.kos, falls: f.score.falls, streak: f.score.streak },
     }]));
-    return { fighters, hits: this.events.splice(0), showers: this.showers.levels };
+    const leader = leaderOf([...this.fighters].map(([id, f]) => [id, f.score]));
+    return { fighters, hits: this.events.splice(0), kos: this.kos.splice(0), leader, showers: this.showers.levels };
   }
 }

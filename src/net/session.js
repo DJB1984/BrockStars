@@ -72,7 +72,7 @@ class NetSession extends Phaser.Events.EventEmitter {
     this.heard = 0;
     this.commandNumber = 0;
     this.arena = new RoomCombat();
-    this.combatState = { fighters: {}, hits: [] };
+    this.combatState = { fighters: {}, hits: [], kos: [], leader: null };
     this.snapTime = null;    // client: the host's clock at the latest snapshot
     this.rosterKey = '';
   }

@@ -1,11 +1,13 @@
 import { pixelforgeBody } from '../../export/pixelforge.js';
+import { CROWN, FLAME, badgeSvg } from '../ui/badges.js';
 
 // A pixel health bar over a fighter's head, in world pixels so it stays as crisp as the sprites: an ink
 // outline with notched corners, a lit top row, and the fill turning amber, then brick, as it runs low.
 // A hit leaves a white chunk where the lost health was, which drains a moment later. Other players carry
-// their name above it (a name tag on the page, placed over the canvas every frame).
+// their name above it (a name tag on the page, placed over the canvas every frame). The tag can carry two
+// badges: a small crown over the session's leader, and, quietly after the name, a KO streak (a flame and a count).
 //   const bar = new HeadBar(scene, { name: 'Davis' });
-//   every frame: bar.update(fraction, x, headY, delta);   when they leave: bar.destroy();
+//   every frame: bar.update(fraction, x, headY, delta);   bar.setBadges({ crown, streak });   when they leave: bar.destroy();
 
 const W = 22, H = 5;                          // outer size; the fill is (W - 2) x (H - 2)
 const INK = 0x12212a, EMPTY = 0x182830, EMPTY_LIT = 0x304048, CHIP = 0xf8f8f8;
@@ -35,7 +37,21 @@ export class HeadBar {
   }
 
   setName(name) {
-    if (this.label && this.label.textContent !== name) this.label.textContent = name;
+    const el = this.label?.querySelector('.nt-name');
+    if (el && el.textContent !== name) el.textContent = name;
+  }
+
+  // crown: true over the leader; streak: the count to show (0 hides it).
+  setBadges({ crown = false, streak = 0 } = {}) {
+    if (!this.label) return;
+    const key = `${crown}:${streak}`;
+    if (key === this.badges) return;
+    this.badges = key;
+    this.label.querySelector('.nt-crown').hidden = !crown;
+    const s = this.label.querySelector('.nt-streak');
+    s.hidden = !streak;
+    s.querySelector('b').textContent = streak || '';
+    s.setAttribute('title', `${streak} KO streak`);
   }
 
   placeTag() {
@@ -108,7 +124,8 @@ function nameTag(scene, name) {
   }
   const el = document.createElement('span');
   el.className = 'name-tag';
-  el.textContent = name;
+  el.innerHTML = `<span class="nt-crown" hidden>${badgeSvg(CROWN)}</span><span class="nt-name"></span><span class="nt-streak" hidden>${badgeSvg(FLAME)}<b></b></span>`;
+  el.querySelector('.nt-name').textContent = name;
   tagLayer.append(el);
   return el;
 }

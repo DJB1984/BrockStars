@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite build && php -S 0.0.0.0:8002 -t dist",
     "package": "vite build && node tools/package-site.mjs",
-    "test": "node --test tests/controls.test.mjs tests/combat.test.mjs tests/net-combat.test.mjs tests/attack.test.mjs tests/bellow.test.mjs tests/walls.test.mjs tests/showers.test.mjs tests/hit-feel.test.mjs tests/fight-readable.test.mjs",
+    "test": "node --test tests/controls.test.mjs tests/combat.test.mjs tests/net-combat.test.mjs tests/attack.test.mjs tests/bellow.test.mjs tests/walls.test.mjs tests/showers.test.mjs tests/hit-feel.test.mjs tests/fight-readable.test.mjs tests/match.test.mjs",
     "test:browser": "node tests/combat-browser.mjs",
     "test:takedown": "node tests/takedown-browser.mjs",
     "test:multiplayer": "node tests/net-combat-browser.mjs",

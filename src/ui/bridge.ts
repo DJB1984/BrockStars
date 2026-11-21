@@ -25,6 +25,16 @@ export type Dud = { move: Basic | 'block' | 'bellow' | 'grapple' | 'takedown'; i
 // the screen (fractions of its width and height).
 export type HitArrow = { id: number; angle: number; from: [number, number] };
 
+// Down after a KO: the screen dims and says who did it (`by`, or nobody for a hazard) until `endsAt`.
+export type KnockedOut = { by: string | null; endsAt: number };
+
+// One kill feed line (`id` counts up, `at` on performance.now()): `by` KO'd `victim` (`by` null: they just
+// went down), or `by` ended `victim`'s streak and earned a bonus KO. `mine` when you're in it.
+export type KillLine = { id: number; at: number; kind: 'ko' | 'streak'; by: string | null; victim: string; mine: boolean };
+
+// The session so far, one row a player, best first; `leader` holds the crown.
+export type ScoreRow = { id: string; name: string; kos: number; falls: number; streak: number; me: boolean; leader: boolean };
+
 export type HudState = {
   visible: boolean;            // only while a level is being played (not over the lobby or practice)
   character: string;
@@ -36,6 +46,9 @@ export type HudState = {
   hitArrow: HitArrow | null;
   net: NetBadge;
   toast: { id: number; text: string } | null;
+  ko: KnockedOut | null;
+  feed: KillLine[];            // the latest few lines, oldest first; each shows for KO.feed ms
+  scores: ScoreRow[];          // online only
 };
 
 let state: HudState = {
@@ -49,6 +62,9 @@ let state: HudState = {
   hitArrow: null,
   net: { active: false, world: false, room: null, count: 1 },
   toast: null,
+  ko: null,
+  feed: [],
+  scores: [],
 };
 
 const listeners = new Set<() => void>();

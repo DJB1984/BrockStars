@@ -7,6 +7,7 @@ import { dodgeTrail } from './dodge.js';
 import { touch } from './touch.js';
 import { levelWalls } from './walls.js';
 import { ALL_KEYS, layout } from '../controls.js';
+import { holdLying } from './match.js';
 
 // Everything a held or stunned fighter can press to mash out (MASH): any arrow or button.
 const MASH_KEYS = ['left', 'right', 'up', 'down', 'punch', 'kick', 'headbutt', 'block', 'dodge', 'takedown', 'bellow', 'grapple'];
@@ -24,6 +25,7 @@ const MASH_KEYS = ['left', 'right', 'up', 'down', 'punch', 'kick', 'headbutt', '
 // emitting 'combat-dodge' (its facing); and a held or stunned fighter's presses mash out, emitting
 // 'combat-mash' (the host shortens the hold or stun online; offline it happens here). Keys come from the
 // layout picked in the menu (controls.js). Set `online` while the host judges this fighter.
+// knockOut(facing) lays the fighter down after a KO (the knockdown pose held lying, no input) until revive().
 export class TitusCombat {
   constructor(scene, sprite, { health, targets = () => [], onHit = () => {}, onWhiff = () => {}, others = () => [], onPredict = () => {} } = {}) {
     this.scene = scene;
@@ -67,6 +69,11 @@ export class TitusCombat {
       // A hit's freeze (hitFeel.js) holds the fighter still: no movement, the pose paused. A press still buffers.
       if (sprite.hitFreeze) { this.rules.watch(time, c.readInput()); return; }
       this.updatePush(time);
+      if (this.knockedOut) {
+        if (!this.push) sprite.body.setVelocity(0, 0);
+        holdLying(sprite);
+        return;
+      }
       this.updateGrapple();
       if (time < this.rules.stunUntil) {
         const input = c.readInput();
@@ -191,7 +198,7 @@ export class TitusCombat {
   }
   // Everyone this fighter could swing at: the hittable targets here and the online players it can see.
   opponents() {
-    const alive = t => t.active && t !== this.sprite && t.visible !== false && (t.combat ? t.combat.rules.health.value > 0 : t.alive !== false);
+    const alive = t => t.active && t !== this.sprite && t.visible !== false && !t.safe && (t.combat ? t.combat.rules.health.value > 0 : t.alive !== false);
     return [...this.targets(), ...this.others()].filter(alive);
   }
   // Held or stunned: any fresh press (an arrow or a button) mashes. Online the host does the shortening; offline
@@ -228,7 +235,7 @@ export class TitusCombat {
     if (this.swing) {
       this.swing.live = true;
       // Online opponents this swing visibly reaches, as this screen draws them: each one's hit is felt now.
-      const seen = this.others().filter(o => o.active && o.visible !== false && o.alive !== false && !this.swing.predicted.has(o));
+      const seen = this.others().filter(o => o.active && o.visible !== false && o.alive !== false && !o.safe && !this.swing.predicted.has(o));
       for (const other of attackTargets(this.sprite, seen, attack.facing, spec, this.path, this.walls)) {
         if (this.swing.predicted.size >= (spec.maxTargets ?? Infinity)) break;
         this.swing.predicted.add(other);
@@ -315,6 +322,29 @@ export class TitusCombat {
       .flatMap(([x,y])=>[[x+fy*width,y+fx*width],[x-fy*width,y-fx*width]]);
     const xs=corners.map(c=>c[0]), ys=corners.map(c=>c[1]), x=Math.min(...xs), y=Math.min(...ys);
     graphics.lineStyle(1,0xff5577).strokeRect(x,y,Math.max(...xs)-x,Math.max(...ys)-y);
+  }
+  // A KO: down in the knockdown pose, toward `facing`, sliding out whatever knockback the hit gave, then still.
+  knockOut(facing) {
+    this.knockedOut = true;
+    this.cancelGrapple();
+    this.sprite.grappledBy?.cancelGrapple();
+    this.rules.attack = null;
+    if (this.rules.block) { this.rules.endBlock(this.scene.time.now); this.sprite.emit('combat-release'); }
+    this.swing = null;
+    this.controller.busy = null;
+    if (facing) this.controller.facing = facing;
+    playFacing(this.sprite, 'knockdown', this.controller.facing);
+  }
+  // Back on your feet (the scene has moved the body to the spawn).
+  revive() {
+    this.knockedOut = false;
+    Object.assign(this.rules, { attack: null, staggerUntil: 0, knockedDownUntil: 0, buffered: null, heldBy: null });
+    this.push = null;
+    this.controller.stunnedUntil = 0;
+    this.controller.busy = null;
+    this.networkStunPosition = this.networkHeld = this.networkGrapple = null;
+    this.sprite.body.setVelocity(0, 0);
+    playFacing(this.sprite, 'idle', this.controller.facing = 'down');
   }
   receive(from, spec) {
     const result = this.rules.receive(spec, directionTo(from.x - this.sprite.x, from.y - this.sprite.y), this.scene.time.now);

@@ -8,13 +8,13 @@ import { headroom } from '../objects/HeadBar.js';
 //   a white glint on the head as a heavy move winds up (headbutt and the Supers). Their hit zones stay hidden:
 //     the glint is the whole warning;
 //   "MASH!" bouncing over anyone held in a Grapple or stunned, who can press to get out sooner;
-//   a word popping up over a fighter ("PERFECT" on a perfect block).
+//   a word popping up over a fighter ("PERFECT" on a perfect block, a bigger "KO!" on a KO).
 // A block draws nothing of its own: its pose, and the blue flash and spark of a blocked hit, say it.
 //
 //   this.marks = new FightMarks(this, () => [{ sprite, mine, alive, superReady, mash }, ...]);   // every frame
 //   this.marks.follow(combat);              // a TitusCombat: its heavy moves telegraph as they start
 //   this.marks.telegraph(sprite, move, facing, elapsed, alive);   // a swing seen from the network
-//   this.marks.pop(sprite, 'PERFECT', color);
+//   this.marks.pop(sprite, 'PERFECT', color);   // or 'KO!' bigger: pop(sprite, 'KO!', color, 24)
 // Nothing is drawn for a sprite that's hidden (a dark room you aren't in).
 
 export const GLINT = ['headbutt', 'bellow', 'grapple', 'takedown'];
@@ -73,11 +73,11 @@ export class FightMarks {
     this.telegraphs.push(t);
   }
 
-  // A word over the fighter's head that jumps up and fades.
-  pop(sprite, word, color = 0xffffff) {
+  // A word over the fighter's head that jumps up and fades; `size` in px (16, or bigger for a KO).
+  pop(sprite, word, color = 0xffffff, size = 16) {
     if (!sprite?.active || !sprite.visible) return;
     const y = sprite.y - headroom(this.scene, sprite.texture.key) - 10;
-    const t = this.scene.add.text(Math.round(sprite.x), Math.round(y), word, { ...WORD, color: `#${color.toString(16).padStart(6, '0')}` })
+    const t = this.scene.add.text(Math.round(sprite.x), Math.round(y), word, { ...WORD, fontSize: `${size}px`, strokeThickness: size > 16 ? 4 : 3, color: `#${color.toString(16).padStart(6, '0')}` })
       .setOrigin(0.5, 1).setDepth(2e5 - 1).setResolution(3);
     this.scene.tweens.add({ targets: t, y: y - 12, duration: 260, ease: 'Back.Out' });
     this.scene.tweens.add({ targets: t, alpha: 0, delay: 420, duration: 200, onComplete: () => t.destroy() });

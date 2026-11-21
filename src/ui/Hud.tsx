@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { BLOCK, DODGE } from '../combat/rules.js';
-import { hud, touch, actions, releaseTouch, type Basic, type HudState, type HitArrow, type NetBadge, type TouchButton } from './bridge';
+import { KO } from '../combat/match.js';
+import { hud, touch, actions, releaseTouch, type Basic, type HudState, type HitArrow, type KillLine, type KnockedOut, type NetBadge, type ScoreRow, type TouchButton } from './bridge';
+import { CROWN, FLAME, badgePixels } from './badges.js';
 import { installFrames } from './pixel';
 import { Icon, type IconName } from './Icon';
 import { canFullscreen, toggleFullscreen, useFullscreen } from './fullscreen';
@@ -16,6 +18,8 @@ const useLayout = (): [keyof typeof LAYOUTS, Layout] => {
 // fighter, Leave game), who's online top right, and at the bottom every move as a keycap (Punch, Kick,
 // Headbutt, Block, the Super) that stays pushed down until the move is back. A move pressed too early
 // wiggles its cap. A hit from someone you can't see flashes an arrow at the screen's edge, pointing at them.
+// Online, a kill feed runs under the online count, and the session's scores show in the menu and while Tab is
+// held. KO'd, the screen dims and says who did it until you're back.
 // On touch screens the bottom becomes the controls: a Brawl Stars movement circle on the left, the five
 // moves on the right, filling the same way as they come back.
 
@@ -29,6 +33,7 @@ export function Hud() {
   const root = useRef<HTMLDivElement>(null);
   const s = useSyncExternalStore(hud.subscribe, hud.get);
   const [menu, setMenu] = useState<null | 'main' | 'controls'>(null);
+  const [board, setBoard] = useState(false);   // Tab held
   const touchMode = useTouchScreen();
   const [, keys] = useLayout();
 
@@ -45,6 +50,18 @@ export function Hud() {
     return () => removeEventListener('keydown', onKey);
   }, [s.visible]);
 
+  // Hold Tab for the scores (online). Over the level Tab never moves the browser's focus; in the menu it does.
+  useEffect(() => {
+    if (!s.visible || !s.net.active || menu) { setBoard(false); return; }
+    const down = (e: KeyboardEvent) => { if (e.key === 'Tab') { e.preventDefault(); setBoard(true); } };
+    const up = (e: KeyboardEvent) => { if (e.key === 'Tab') setBoard(false); };
+    const off = () => setBoard(false);
+    addEventListener('keydown', down);
+    addEventListener('keyup', up);
+    addEventListener('blur', off);
+    return () => { removeEventListener('keydown', down); removeEventListener('keyup', up); removeEventListener('blur', off); };
+  }, [s.visible, s.net.active, menu]);
+
   const shield = shieldTimer(s);
   const special = superTimer(s);
   const moves = { punch: moveTimer(s, 'punch'), kick: moveTimer(s, 'kick'), headbutt: moveTimer(s, 'headbutt') };
@@ -60,11 +77,22 @@ export function Hud() {
             <button type="button" className="btn btn-pine btn-small hud-menu" onClick={() => setMenu('main')} aria-haspopup="dialog">
               <span className="btn-face"><Icon name="menu" size={3} /> Menu</span>
             </button>
-            {s.net.active && <Online net={s.net} />}
+            {s.net.active && (
+              <div className="hud-side">
+                <Online net={s.net} />
+                <KillFeed feed={s.feed} />
+              </div>
+            )}
           </header>
 
+          <KoScreen ko={s.ko} />
           <Toast toast={s.toast} />
           <HitArrows arrow={s.hitArrow} />
+          {board && !menu && s.net.active && (
+            <section className="hud-board px-panel" aria-label="Scores">
+              <Scoreboard rows={s.scores} />
+            </section>
+          )}
 
           {touchMode ? (
             <TouchControls shield={shield} special={special} moves={moves} dodge={dodge} dud={dud} superDud={superDud} superName={s.super.name} superIcon={superIcon(s)} />
@@ -89,6 +117,7 @@ export function Hud() {
               superKey={s.super.key}
               superIconName={superIcon(s)}
               touchFirst={touchMode}
+              scores={s.net.active ? s.scores : null}
             />
           )}
         </>
@@ -196,14 +225,14 @@ function Fill({ timer, className }: { timer: Timer; className: string }) {
   return <span className={className} style={style} aria-hidden="true" />;
 }
 
-function Seconds({ endsAt }: { endsAt: number }) {
+function Seconds({ endsAt, className = 'mk-count' }: { endsAt: number; className?: string }) {
   const left = () => Math.max(0, Math.ceil((endsAt - performance.now()) / 1000));
   const [n, setN] = useState(left);
   useEffect(() => {
     const t = setInterval(() => setN(left()), 100);
     return () => clearInterval(t);
   }, [endsAt]);
-  return <span className="mk-count">{n}</span>;
+  return <span className={className}>{n}</span>;
 }
 
 // Pointer handlers that hold a touch input down. Each button captures its own finger, so a thumb on the
@@ -453,6 +482,74 @@ const ARROW = [
   'kk.....',
 ];
 
+// ---- the match ------------------------------------------------------------------------------------
+
+// KO'd: the level dims (after the KO's freeze) and says who did it, with the seconds until you're back.
+function KoScreen({ ko }: { ko: KnockedOut | null }) {
+  if (!ko) return null;
+  return (
+    <div className="hud-ko" role="status" style={{ '--delay': `${KO.freeze}ms` } as CSSProperties}>
+      <p className="ko-title">{ko.by ? <>KO'd by <b>{ko.by}</b></> : <>KO'd!</>}</p>
+      <p className="ko-back">Back in <Seconds endsAt={ko.endsAt} className="ko-secs" /></p>
+    </div>
+  );
+}
+
+// "Mason KO'd Titus", newest on top, each fading out KO.feed after it came. Lines you're in are lit amber.
+function KillFeed({ feed }: { feed: KillLine[] }) {
+  const [, tick] = useState(0);
+  const now = performance.now();
+  const shown = feed.filter((l) => now - l.at < KO.feed);
+  useEffect(() => {
+    if (!shown.length) return;
+    const t = setTimeout(() => tick((n) => n + 1), Math.max(0, Math.min(...shown.map((l) => l.at + KO.feed - now))) + 16);
+    return () => clearTimeout(t);
+  });
+  if (!shown.length) return null;
+  return (
+    <ol className="kill-feed" aria-label="Knockouts" aria-live="polite">
+      {[...shown].reverse().map((l) => (
+        <li key={l.id} className={`kf-line${l.mine ? ' is-mine' : ''}`}
+          style={{ '--life': `${KO.feed}ms`, '--age': `${-(now - l.at)}ms` } as CSSProperties}>
+          {l.kind === 'streak' ? <><span className="kf-ended">Streak ended!</span> <b>{l.by}</b> +1</>
+            : l.by ? <><b>{l.by}</b> KO'd <b>{l.victim}</b></> : <><b>{l.victim}</b> was KO'd</>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+// The session's scores, best first: KOs and falls a player, the leader's crown, and a streak (dim, small)
+// once someone has KO.streak KOs without falling.
+function Scoreboard({ rows }: { rows: ScoreRow[] }) {
+  return (
+    <table className="board">
+      <thead><tr><th scope="col">Player</th><th scope="col">KOs</th><th scope="col">Falls</th></tr></thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr key={r.id} className={r.me ? 'is-me' : undefined}>
+            <th scope="row"><span className="board-who">
+              <span className="board-crown">{r.leader && <Badge rows={CROWN} label="Leader" />}</span>
+              <span className="board-name">{r.name}</span>
+              {r.streak >= KO.streak && <span className="board-streak" title={`${r.streak} KO streak`}><Badge rows={FLAME} />{r.streak}</span>}
+            </span></th>
+            <td>{r.kos}</td>
+            <td>{r.falls}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function Badge({ rows, label }: { rows: string[]; label?: string }) {
+  return (
+    <svg viewBox={`0 0 ${rows[0].length} ${rows.length}`} shapeRendering="crispEdges" role={label ? 'img' : undefined} aria-label={label} aria-hidden={label ? undefined : true}>
+      {badgePixels(rows).map(([x, y, fill]) => <rect key={`${x},${y}`} x={x} y={y} width={1} height={1} fill={fill} />)}
+    </svg>
+  );
+}
+
 function Toast({ toast }: { toast: HudState['toast'] }) {
   const [shown, setShown] = useState<HudState['toast']>(null);
   useEffect(() => {
@@ -476,9 +573,10 @@ type MenuProps = {
   superKey: string;
   superIconName: IconName;
   touchFirst: boolean;
+  scores: ScoreRow[] | null;   // online: the session's scores, over the buttons
 };
 
-function Menu({ view, onView, onClose, superName, superLocked, superKey, superIconName, touchFirst }: MenuProps) {
+function Menu({ view, onView, onClose, superName, superLocked, superKey, superIconName, touchFirst, scores }: MenuProps) {
   const first = useRef<HTMLButtonElement>(null);
   const fullscreen = useFullscreen();
   const [layout, keys] = useLayout();
@@ -495,6 +593,7 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
           </button>
         </div>
 
+        {view === 'main' && scores && <Scoreboard rows={scores} />}
         {view === 'main' ? (
           <nav className="hud-nav" aria-label="Menu">
             <button ref={first} type="button" className="btn btn-amber btn-big hud-resume" onClick={onClose}>
