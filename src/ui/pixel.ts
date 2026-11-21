@@ -41,6 +41,28 @@ const GRIDS = {
     'olllllllo',
     '.ooooooo.',
   ],
+  // the HUD's move keys: a button with no shaded right edge, so a row of them reads as clean caps
+  cap: [
+    '.ooooooo.',
+    'ohhhhhhho',
+    'ohffffffo',
+    'ohffffffo',
+    'ohffffffo',
+    'olllllllo',
+    'odddddddo',
+    'odddddddo',
+    '.ooooooo.',
+  ],
+  capDown: [
+    '.ooooooo.',
+    'ohhhhhhho',
+    'ohffffffo',
+    'ohffffffo',
+    'ohffffffo',
+    'ohffffffo',
+    'olllllllo',
+    '.ooooooo.',
+  ],
   // a field is cut into the surface: the shade sits top-left
   field: [
     '.ooooooo.',
@@ -59,6 +81,8 @@ export const SLICE: Record<keyof typeof GRIDS, [number, number, number, number]>
   panel: [3, 3, 3, 3],
   button: [3, 3, 5, 3],
   pressed: [3, 3, 3, 3],
+  cap: [3, 3, 5, 3],
+  capDown: [3, 3, 3, 3],
   field: [3, 3, 3, 3],
 };
 

@@ -85,13 +85,13 @@
   background: none;
   -webkit-tap-highlight-color: transparent;
 }
-.mk-ember { --tone: var(--frame-button-ember); --tone-down: var(--frame-pressed-ember); }
-.mk-brick { --tone: var(--frame-button-brick); --tone-down: var(--frame-pressed-brick); }
-.mk-amber { --tone: var(--frame-button-amber); --tone-down: var(--frame-pressed-amber); --on: var(--ink); }
-.mk-cream { --tone: var(--frame-button-cream); --tone-down: var(--frame-pressed-cream); --on: var(--ink); }
-.mk-pine { --tone: var(--frame-button-pine); --tone-down: var(--frame-pressed-pine); }
+.mk-ember { --tone: var(--frame-cap-ember); --tone-down: var(--frame-capDown-ember); }
+.mk-brick { --tone: var(--frame-cap-brick); --tone-down: var(--frame-capDown-brick); }
+.mk-amber { --tone: var(--frame-cap-amber); --tone-down: var(--frame-capDown-amber); --on: var(--ink); }
+.mk-cream { --tone: var(--frame-cap-cream); --tone-down: var(--frame-capDown-cream); --on: var(--ink); }
+.mk-pine { --tone: var(--frame-cap-pine); --tone-down: var(--frame-capDown-pine); }
 /* used up: the cap goes dark, so the charge filling it is what you see */
-.mk.is-cooldown, .mk.is-holding, .mk.is-locked { --tone-down: var(--frame-pressed-deep); --on: var(--white); }
+.mk.is-cooldown, .mk.is-holding, .mk.is-locked { --tone-down: var(--frame-capDown-deep); --on: var(--white); }
 
 .mk-cap {
   position: relative;
