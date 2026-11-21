@@ -133,7 +133,18 @@ test('the host judges the perfect window when the swing connected, not when its 
 
 // ---- P1: dodge --------------------------------------------------------------------------------------
 
-test('the dodge goes where the arrows point, is untouchable for 150 ms and cools down', () => {
+test('while the dodge is hidden, pressing it does nothing, here or on the host', { skip: DODGE.enabled && 'the dodge is on' }, () => {
+  const r = new CombatRules();
+  r.update(0, { dodge: true, left: true }, 'right');
+  assert.equal(r.dodge, null);
+  assert.equal(r.receive(ATTACKS.punch, 'right', 10).damage, 4);
+  const room = new RoomCombat(), p = { a: { x: 100, y: 100, level: 'brock3' } };
+  room.tick(p, 0);
+  room.command('a', { action: 'dodge', facing: 'down', n: 1 }, 0);
+  assert.equal(room.fighters.get('a').rules.dodge, null);
+});
+
+test('the dodge goes where the arrows point, is untouchable for 150 ms and cools down', { skip: !DODGE.enabled && 'the dodge is hidden (DODGE.enabled)' }, () => {
   const r = new CombatRules();
   r.update(0, { dodge: true, up: true, right: true }, 'down');
   assert.ok(Math.abs(r.dodge.dx - Math.SQRT1_2) < 1e-9 && Math.abs(r.dodge.dy + Math.SQRT1_2) < 1e-9);
@@ -148,7 +159,7 @@ test('the dodge goes where the arrows point, is untouchable for 150 ms and cools
   assert.equal(r.receive(ATTACKS.punch, 'left', DODGE.cooldown + DODGE.invulnerable + 2).damage, 4, 'hittable after the window');
 });
 
-test('a dodge gets you out of a block, and the host honours it', () => {
+test('a dodge gets you out of a block, and the host honours it', { skip: !DODGE.enabled && 'the dodge is hidden (DODGE.enabled)' }, () => {
   const r = new CombatRules();
   r.update(0, { block: true }, 'right');
   r.update(200, { block: true, dodge: true }, 'right');

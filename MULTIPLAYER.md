@@ -88,8 +88,8 @@ Any other TURN server works too, with fixed credentials:
 ## Shared combat
 
 Mason and Titus can fight other players in the same level: C punches, X kicks, Z headbutts,
-holding V blocks every side but the one behind you, and Shift dodges (or WASD with J, K, L, I and Space, picked in
-the menu's Controls). The host checks attack
+and holding V blocks every side but the one behind you (or WASD with J, K, L and I, picked in the menu's
+Controls). The host checks attack
 range, timing, cooldowns, and blocking, then shares damage, health, hit effects, and knockback.
 Each attack can hit each opponent once. Health regenerates after 45 seconds without damage;
 a knockout respawns the player after a short pause. Other players' name tags display their health.
@@ -120,24 +120,24 @@ isn't felt a second time. If the host disagrees, the damage just doesn't happen.
 
 **Reading the fight** (`src/combat/fightMarks.js`): a ring at everyone's feet (amber for you, red for the
 others) with a second, pulsing ring while their Super is ready (the snapshot's `<move>Cooldown`); a white glint
-as a headbutt or a Super winds up (their hit zones stay hidden); a shield arc on a block, flashing when it stops a
-hit. A hit from someone you can't see puts a red arrow on your screen's edge, pointing
+as a headbutt or a Super winds up (their hit zones stay hidden); a block shows only its pose, and a blocked hit flashes
+blue. A hit from someone you can't see puts a red arrow on your screen's edge, pointing
 at them. The HUD shows every move's cooldown, and a move pressed too early wiggles its keycap and clicks.
 
 **Controls that forgive** (`src/combat/rules.js`, `src/net/combat.js`): a press made up to `BUFFER_MS` (150 ms)
 before a fighter is free fires the moment it is, on the client and again on the host, which holds a command that
 arrives a moment before it thinks the last move ended. A tap with no arrow held turns toward the nearest opponent
 (`aimFacing`); the facing chosen is the one sent. A hit in the first 120 ms of a block (`BLOCK.perfect`) does no
-damage: the host sends that hit (`perfect`) and a `parry` hit that staggers the attacker. A `dodge` command makes
-the host ignore hits on that player for 150 ms; the movement itself stays the client's, and its snapshot carries
-`dodge` so the others draw the afterimages. A player held in a Grapple or stunned by a Bellow sends `mash` on each
+damage: the host sends that hit (`perfect`) and a `parry` hit that staggers the attacker. A dodge is built but
+hidden (`DODGE.enabled` in `src/combat/rules.js`): when on, a `dodge` command makes the host ignore hits on that
+player for 150 ms, and its snapshot carries `dodge` so the others draw the afterimages. A player held in a Grapple or stunned by a Bellow sends `mash` on each
 fresh press; the host takes 120 ms off the hold (never under 600 ms) or 150 ms off the stun (never under 1 s),
 counts presses no closer than 50 ms, and won't let anyone grab a freed player again for a second.
 
 Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against
 `npm run dev` to exercise two browser clients (Playwright and Chrome/Chromium required).
 `npm run test:hitfeel` and `npm run test:hitfeel:multiplayer` check that hits land and misses swish, solo and online.
-`npm run test:readable` and `npm run test:readable:multiplayer` check the rings, telegraphs, shields, keycaps and
+`npm run test:readable` and `npm run test:readable:multiplayer` check the rings, telegraphs, keycaps and
 dud presses, and online the `seen` time, the predicted hit felt once, and the off-screen arrow.
 `npm run test:controls` and `npm run test:controls:multiplayer` check the buffer, tap aim, perfect and three-sided
-blocks, the dodge, mashing out, both keyboard layouts and touch aiming, solo and online.
+blocks, mashing out, both keyboard layouts and touch taps, solo and online.

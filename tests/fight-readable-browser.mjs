@@ -1,6 +1,6 @@
 // Run against npm run dev: solo, every move has a keycap that goes down while it cools, a move pressed while
 // cooling is a dud (the cap wiggles, the HUD hears it), your feet have an amber ring with a second one while
-// the Super is ready, heavy moves glint (no Super shows its hit zone), and a block draws a shield.
+// the Super is ready, heavy moves glint (no Super shows its hit zone), and a block draws no shield.
 // Screenshots go to previews/fight-readable-*.png for a look.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 import assert from 'node:assert/strict';
@@ -23,9 +23,9 @@ try {
   const caps = await page.$$eval('.hud-keys .mk', els => els.map(e => ({ key: e.querySelector('.mk-key')?.textContent, text: e.innerText.replace(e.querySelector('.mk-key')?.textContent ?? '', '').trim() })));
   const marks = () => page.evaluate(() => {
     const s = window.pixelforgePlay.scene, me = window.pixelforgePlay.player;
-    return { fighters: s.marks.fighters().map(f => ({ mine: f.mine, superReady: f.superReady, block: f.block })),
+    return { fighters: s.marks.fighters().map(f => ({ mine: f.mine, superReady: f.superReady, block: me.combat.rules.block?.facing ?? null })),
       telegraphs: s.marks.telegraphs.map(t => ({ move: t.move, glint: !!t.glint?.active })),
-      shield: !!s.marks.shields.get(me)?.[0].visible, floorDrawn: s.marks.floor.commandBuffer.length };
+      shield: s.children.list.filter(o => o.type === 'Graphics' && o.visible).length, floorDrawn: s.marks.floor.commandBuffer.length };
   });
   const start = await marks();
 
@@ -52,7 +52,7 @@ try {
   await wait(1500);
   const spent = await marks();
 
-  // Block: a shield on the side covered.
+  // Block: the pose and nothing drawn around it.
   await page.evaluate(() => { window.pixelforgePlay.player.controller.override = { block: true }; });
   await wait(200);
   const block = await marks();
@@ -63,7 +63,7 @@ try {
 
   console.log(JSON.stringify({ caps, start, kickCap, dudBefore, dud, wiggling, headbutt, takedown, spent, block, released, errors }, null, 2));
   assert.deepEqual(errors, []);
-  assert.deepEqual(caps.map(c => c.key), ['C', 'X', 'Z', 'V', 'S', 'Shift'], 'a keycap per move, each with its key');
+  assert.deepEqual(caps.map(c => c.key), ['C', 'X', 'Z', 'V', 'S'], 'a keycap per move, each with its key');
   assert.ok(caps.every(c => !/[a-z]{3}/i.test(c.text.replace(c.key ?? '', ''))), 'no move names printed by the keys');
   assert.deepEqual(start.fighters[0], { mine: true, superReady: true, block: null }, 'my ring, with the Super-ready ring');
   assert.ok(start.floorDrawn > 0, 'rings drawn on the floor');
@@ -77,7 +77,6 @@ try {
   assert.equal(spent.telegraphs.length, 0, 'the telegraph ends with the wind-up');
   assert.equal(spent.fighters[0].superReady, false, 'no Super ring while it cools');
   assert.equal(block.fighters[0].block, 'right');
-  assert.ok(block.shield, 'a shield while blocking');
-  assert.ok(!released.shield, 'no shield after');
+  assert.equal(block.shield, released.shield, 'no shield drawn while blocking');
   console.log('passed');
 } finally { await browser.close(); }

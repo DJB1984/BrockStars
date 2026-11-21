@@ -47,7 +47,6 @@ export class HitFeel {
     if (result?.perfect) return this.parry(victim, attacker);
     if (!victim?.active || !result?.damage) return;
     const blocked = !!result.blocked, feel = HIT_FEEL[move];
-    if (blocked) this.scene.marks?.flashShield(victim);   // the shield arc that stopped it (fightMarks.js)
     if (!result.knockdown) this.scene.feel?.flash(victim, 90, blocked ? 0x77bbff : 0xffffff);
     if (!feel || !attacker?.active) return;
     const ms = freezeTime(move, this.crowd(), blocked);
@@ -58,11 +57,10 @@ export class HitFeel {
     if (!blocked && me && (attacker === me || victim === me)) this.scene.feel?.shake(...feel.shake);
   }
 
-  // A perfect block: the shield flashes, the attacker is caught in a longer, shaking freeze than the blocker's,
+  // A perfect block: the attacker is caught in a longer, shaking freeze than the blocker's,
   // a block spark pops, it tings, and "PERFECT" pops over the blocker. The attacker's stagger is the rules'.
   parry(blocker, attacker) {
     if (!blocker?.active) return;
-    this.scene.marks?.flashShield(blocker);
     this.scene.marks?.pop(blocker, 'PERFECT', 0x2ce8f5);
     this.scene.feel?.flash(blocker, 90, 0xffffff);
     parryTing(this.scene);

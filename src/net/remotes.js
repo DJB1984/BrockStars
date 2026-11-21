@@ -93,10 +93,9 @@ export class RemotePlayers {
       else if (hurt && scene.anims.exists(`${p.char}_hurt_${dir}`)) anim = `${p.char}_hurt_${dir}`;
       else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
       r.attack = combat?.attack ?? null;
-      // What fightMarks.js draws around them: a block's shield, the second ring when their Super is ready.
+      // What fightMarks.js draws around them: the second ring when their Super is ready, "MASH!" when held or stunned.
       const special = Object.keys(ATTACKS).find(name => ATTACKS[name].character === p.char);
       sprite.alive = (combat?.health ?? 1) > 0;
-      sprite.blockFacing = combat?.block ?? null;
       sprite.mash = !!(combat?.held || combat?.stun);   // fightMarks.js: "MASH!" over them
       // A new dodge (each carries its own start): the same afterimages as yours.
       if (p.dodge && p.dodge !== r.dodge) dodgeTrail(scene, sprite, DODGE.duration);

@@ -20,8 +20,8 @@ const MASH_KEYS = ['left', 'right', 'up', 'down', 'punch', 'kick', 'headbutt', '
 // 'combat-dud' (move) when a move is pressed while it's still cooling down.
 // Controls (the "controls that feel effortless" pass): a press made a moment early is buffered (rules.js
 // BUFFER_MS) and fires the first frame the fighter is free; a tap with no arrow held swings at the nearest
-// opponent (aimFacing), and a touch button dragged aims (touch.aimed); the dodge hops away, untouchable for a
-// moment, emitting 'combat-dodge' (its facing); and a held or stunned fighter's presses mash out, emitting
+// opponent (aimFacing); the dodge (hidden for now: DODGE.enabled) hops away, untouchable for a moment,
+// emitting 'combat-dodge' (its facing); and a held or stunned fighter's presses mash out, emitting
 // 'combat-mash' (the host shortens the hold or stun online; offline it happens here). Keys come from the
 // layout picked in the menu (controls.js). Set `online` while the host judges this fighter.
 export class TitusCombat {
@@ -124,14 +124,12 @@ export class TitusCombat {
         sprite.emit('combat-dodge', this.rules.dodge.facing);
       }
       if (!old && this.rules.attack) {
-        // Where the swing goes: a touch button dragged to aim; else the arrows held; else, for a tap, the
-        // nearest opponent (aimFacing). The chosen facing is what goes to the host.
-        const spec = ATTACKS[this.rules.attack.name], button = spec.character ? 'takedown' : this.rules.attack.name;
-        const aimed = touch.aimed?.move === button ? touch.aimed.facing : null;
-        if (touch.aimed?.move === button) touch.aimed = null;
+        // Where the swing goes: the arrows held, or for a tap, the nearest opponent (aimFacing). The chosen
+        // facing is what goes to the host.
+        const spec = ATTACKS[this.rules.attack.name];
         const dx = Number(input.right) - Number(input.left), dy = Number(input.down) - Number(input.up);
         const held = [dx > 0 ? 'right' : dx < 0 ? 'left' : null, dy > 0 ? 'down' : dy < 0 ? 'up' : null].filter(Boolean);
-        const aim = aimed ?? aimFacing(sprite, this.opponents(), spec, held, this.walls);
+        const aim = aimFacing(sprite, this.opponents(), spec, held, this.walls);
         if (aim) { this.rules.attack.facing = aim; c.facing = aim; }
         this.struck.clear();
         this.path = [{ x: sprite.x, y: sprite.y }];
@@ -170,9 +168,6 @@ export class TitusCombat {
         sprite.setDepth(sprite.y);
       } else {
         c.busy = null;
-        // Standing still while a thumb aims a touch move: turn to face where it will go.
-        const still = !input.left && !input.right && !input.up && !input.down;
-        if (still && touch.aim?.facing) c.facing = touch.aim.facing;
         move(input);
         // Keep diagonal movement at the same speed as cardinal movement.
         if (sprite.body.velocity.length() > c.opts.speed) sprite.body.velocity.normalize().scale(c.opts.speed);

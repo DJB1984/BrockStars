@@ -38,7 +38,7 @@ const TYPES = { enemy: Walker };
 // Online, your own swing that visibly reaches someone is felt at once (predictHit); the host's answer, judged
 // against what your screen showed (lag compensation, net/combat.js), only brings the damage.
 // this.marks (combat/fightMarks.js) keeps the fight readable: rings at everyone's feet, a second one while a
-// Super is ready, a glint and a floor zone as heavy moves wind up, a shield arc on a block. A hit from someone
+// Super is ready, a glint as heavy moves wind up, "MASH!" over anyone held or stunned. A hit from someone
 // you can't see points an arrow at them from the edge of the screen.
 // Multiplayer (src/net/): the other players in this level are drawn from `net`, and this player's state is
 // sent to them every frame.
@@ -293,16 +293,16 @@ export class Level extends Phaser.Scene {
       from: [(p.x - view.x) / view.width, (p.y - view.y) / view.height] } });
   }
 
-  // Who fightMarks.js draws rings, shields and Super rings around: you, the other players, the enemies.
+  // Who fightMarks.js draws rings, Super rings and "MASH!" around: you, the other players, the enemies.
   markedFighters() {
     const p = this.level.player, out = [];
     if (p?.active && this.combat) {
       const r = this.combat.rules, special = this.superMove.move, alive = r.health.value > 0;
-      out.push({ sprite: p, mine: true, alive, block: r.block?.facing ?? null,
+      out.push({ sprite: p, mine: true, alive,
         superReady: alive && !!special && this.time.now >= (r.readyAt[special] ?? 0),
         mash: !!r.heldBy || this.time.now < r.stunUntil });
     }
-    for (const s of this.remotes.sprites()) out.push({ sprite: s, mine: false, alive: s.alive, block: s.blockFacing, superReady: s.superReady, mash: s.mash });
+    for (const s of this.remotes.sprites()) out.push({ sprite: s, mine: false, alive: s.alive, superReady: s.superReady, mash: s.mash });
     for (const a of this.actors) if (a.hp !== undefined && a.sprite.active) out.push({ sprite: a.sprite, mine: false, alive: a.hp > 0 });
     return out;
   }

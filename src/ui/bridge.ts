@@ -72,10 +72,7 @@ export const hud = {
 // Held touch buttons, read by the combat controller (src/combat/TitusCombat.js) as if they were keys.
 // They live in plain JS (src/combat/touch.js) so the combat code still runs under node's tests.
 export type TouchButton = 'left' | 'right' | 'up' | 'down' | 'punch' | 'kick' | 'headbutt' | 'block' | 'takedown' | 'dodge';
-export type Facing = 'up' | 'down' | 'left' | 'right';
-// `aim`: the move being dragged and which way (null: back in the middle, cancelled); `aimed`: where the next one goes.
-export type TouchInput = Record<TouchButton, boolean> & { aim: { move: TouchButton; facing: Facing | null } | null;
-  aimed: { move: TouchButton; facing: Facing } | null };
+export type TouchInput = Record<TouchButton, boolean>;
 export const touch = rawTouch as TouchInput;
 export const releaseTouch = rawRelease as () => void;
 

@@ -1,6 +1,5 @@
 // Run against npm run dev, two players (host James, guest Mason), the controls pass online:
 //   the guest's perfect block stops the host's punch: no damage, the host is staggered, both screens say PERFECT;
-//   the guest dodges through the host's punch untouched, and the host's screen sees the dodge;
 //   the guest grabs the host, who mashes out sooner than the 2 s hold; the choke lands; "MASH!" on both screens;
 //   the host Bellows the guest, who shakes the 5 s stun off sooner and can walk again.
 // Screenshots go to previews/controls-net-*.png.
@@ -61,16 +60,6 @@ try {
   const perfect = { guestLost: guestBefore - await guest.evaluate(() => health()), hits: await host.evaluate(() => window.hits.map(h => ({ target: h.target, move: h.move, perfect: !!h.perfect, parried: !!h.parried }))) };
   await wait(1200);   // the block cooldown and the parry stagger run out
 
-  // Dodge: the guest hops through the host's punch.
-  await place(24);
-  const beforeDodge = await guest.evaluate(() => health());
-  await host.evaluate(() => { window.sawDodge = false; const id = Object.keys(brockNet.players)[0]; window.dodgeWatch = setInterval(() => { if (brockNet.players[id]?.dodge) window.sawDodge = true; }, 10); });
-  await hold(guest, { dodge: true, down: true });
-  await hold(host, { punch: true });
-  await wait(120); await hold(guest, {}); await wait(300); await hold(host, {});
-  const dodge = { lost: beforeDodge - await guest.evaluate(() => health()), sawDodge: await host.evaluate(() => { clearInterval(window.dodgeWatch); return window.sawDodge; }) };
-  await wait(800);
-
   // Grapple: the guest grabs the host; the host mashes.
   await place(18);
   const hostBefore = await host.evaluate(() => health());
@@ -100,14 +89,12 @@ try {
   await hold(guest, { right: true }); await wait(400); await hold(guest, {});
   const walked = (await guest.evaluate(() => window.pixelforgePlay.player.x)) - x0;
 
-  console.log(JSON.stringify({ perfectWords, perfect, dodge, mashShown, grapple, stunnedFor, walked, errors }, null, 2));
+  console.log(JSON.stringify({ perfectWords, perfect, mashShown, grapple, stunnedFor, walked, errors }, null, 2));
   assert.deepEqual(errors, []);
   assert.equal(perfect.guestLost, 0, 'a perfect block takes nothing');
   assert.ok(perfect.hits.some(h => h.target !== 'h' && h.perfect), 'the host saw a perfect block');
   assert.ok(perfect.hits.some(h => h.target === 'h' && h.parried), 'and staggered its own punch');
   assert.ok(perfectWords.host.includes('PERFECT') && perfectWords.guest.includes('PERFECT'), 'both screens say PERFECT');
-  assert.equal(dodge.lost, 0, 'the dodge goes through the punch');
-  assert.ok(dodge.sawDodge, 'the host hears about the dodge');
   assert.ok(mashShown.host && mashShown.guest, '"MASH!" over the held host on both screens');
   assert.ok(grapple.heldFor >= 600 && grapple.heldFor < 1800, `mashed out in ${Math.round(grapple.heldFor)} ms of a 2000 ms hold`);
   assert.equal(grapple.choke, 25, 'the choke still lands');

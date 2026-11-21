@@ -1,7 +1,7 @@
 // Run against npm run dev, two players (host James, guest Mason):
 //   the guest's attacks carry the host time its screen shows (`seen`) and the host rewinds to it;
 //   the guest's own punch is felt the moment it visibly lands, once, not again when the host confirms it;
-//   each screen draws the other's red ring (and Super ring), their block's shield and their heavy wind-up;
+//   each screen draws the other's red ring (and Super ring), their block (from the host's state; no shield is drawn) and their heavy wind-up;
 //   a Bellow from off the guest's (small) screen flashes an arrow at the edge pointing at the host.
 // Screenshots go to previews/fight-readable-net-*.png.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
@@ -45,7 +45,7 @@ try {
   const press = async (page, keys, ms = 120) => { await hold(page, keys); await wait(ms); await hold(page, {}); };
 
   // Rings and Super rings: each screen marks the other player red, with their Super ready.
-  const marked = page => page.evaluate(() => window.pixelforgePlay.scene.marks.fighters().map(f => ({ mine: f.mine, superReady: f.superReady, block: f.block })));
+  const marked = page => page.evaluate(() => window.pixelforgePlay.scene.marks.fighters().map(f => ({ mine: f.mine, superReady: f.superReady })));
   await place(24);
   const rings = { host: await marked(host), guest: await marked(guest) };
 
@@ -58,11 +58,10 @@ try {
     snap: brockNet.snapTime, predicted: [...window.pixelforgePlay.scene.predicted.keys()] }));
   const hostHealth = await host.evaluate(() => window.pixelforgePlay.scene.combat.rules.health.value);
 
-  // The guest blocks: the host's screen draws a shield on them.
+  // The guest blocks: the host knows which way.
   await hold(guest, { block: true });
   await wait(400);
-  const blockSeen = await host.evaluate(() => { const f = window.pixelforgePlay.scene.marks.fighters().find(f => !f.mine); return f && { block: f.block, superReady: f.superReady }; });
-  const shieldShown = await host.evaluate(() => [...window.pixelforgePlay.scene.marks.shields.values()].some(([g]) => g.visible));
+  const blockSeen = await host.evaluate(() => { const id = Object.keys(brockNet.combatState.fighters).find(i => i !== brockNet.id); return { block: brockNet.combatState.fighters[id]?.block ?? null }; });
   await host.screenshot({ path: 'previews/fight-readable-net-block.png' });
   await hold(guest, {});
   await wait(1200);
@@ -82,7 +81,7 @@ try {
   const bellowTelegraphs = { host: await host.evaluate(() => window.telegraphs), guest: await guest.evaluate(() => window.telegraphs) };
 
   console.log(JSON.stringify({ sent: punch.commands, arrow }, null, 1));
-  console.log(JSON.stringify({ rings, punch, hostHealth, blockSeen, shieldShown, arrow, bellowTelegraphs, errors }, null, 2));
+  console.log(JSON.stringify({ rings, punch, hostHealth, blockSeen, arrow, bellowTelegraphs, errors }, null, 2));
   assert.deepEqual(errors, []);
   assert.deepEqual(rings.host.map(f => f.mine), [true, false]);
   assert.deepEqual(rings.guest.map(f => f.mine), [true, false]);
@@ -97,7 +96,6 @@ try {
   assert.ok(felt[0].at < punch.hits[0].at, 'before the host\'s answer arrived');
   assert.deepEqual(punch.predicted, [], 'the confirmation matched the prediction');
   assert.equal(blockSeen?.block, 'left', 'the host sees the guest blocking toward it');
-  assert.ok(shieldShown, 'with a shield drawn');
   assert.ok(arrow.state && Math.abs(Math.abs(arrow.state.angle) - Math.PI) < 0.3, `the arrow points left, at the host (${arrow.state?.angle})`);
   assert.equal(arrow.shown, 1);
   assert.ok(bellowTelegraphs.host.some(t => t.move === 'bellow' && !t.remote), 'the host\'s Bellow telegraphs on its screen');

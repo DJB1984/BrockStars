@@ -34,7 +34,8 @@ export const PARRY = Object.freeze({ stagger: 450, knockback: 10, slide: 140 });
 // first frame it's free. Only the latest press is kept, so a held key still never repeats.
 export const BUFFER_MS = 150;
 // Shift (or Space): a quick hop of `distance` px over `duration` ms, untouchable for the first `invulnerable`.
-export const DODGE = Object.freeze({ distance: 40, duration: 160, invulnerable: 150, cooldown: 900 });
+// Hidden for now (`enabled: false`): no key or button presses it and the HUD leaves it out. true brings it back.
+export const DODGE = Object.freeze({ enabled: false, distance: 40, duration: 160, invulnerable: 150, cooldown: 900 });
 // Held in a Grapple or stunned by a Bellow, every press (an arrow or a button) takes time off: down to a hold of
 // `grappleFloor` ms, or a stun of `stunFloor`. Presses closer than `gap` count once. Let go, a fighter can't be
 // grabbed again for `regrab` ms.
@@ -180,7 +181,7 @@ export class CombatRules {
   // frame, also while the fighter can't act (frozen, staggered, held), so a press made a moment early still
   // counts. Returns what was freshly pressed this frame.
   watch(now, input) {
-    const fresh = ['block', ...this.moves(), 'dodge'].filter(name => input[name] && !this.previous[name]);
+    const fresh = ['block', ...this.moves(), ...(DODGE.enabled ? ['dodge'] : [])].filter(name => input[name] && !this.previous[name]);
     if (fresh.length) this.buffered = { name: fresh[0], at: now };
     else if (this.buffered && now - this.buffered.at > BUFFER_MS) this.buffered = null;
     this.previous = { ...input };

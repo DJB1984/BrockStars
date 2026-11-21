@@ -1,11 +1,11 @@
 // Run against npm run dev: the controls pass ("controls that feel effortless"), in real browsers.
 //   practice (Titus vs the partner): a tap aims at the partner, a held arrow overrides it; a press made a moment
 //     early is buffered, one made too early isn't; a perfect block takes nothing and staggers the partner, a late
-//     one covers the side; the dodge hops 40 px, can't be hit, and cools down;
+//     one covers the side; the dodge is hidden, so pressing it does nothing;
 //   practice (Mason): the grabbed partner mashes out of Grapple sooner, and the choke still lands; "MASH!" shows;
 //   practice (James): the stunned partner shakes off Bellow sooner;
-//   a level: six keycaps with the layout's keys, the Controls menu switches to WASD (and the keys follow);
-//   touch: Punch tapped fires at once on release, Punch dragged aims (its reach drawn on the floor) and fires that way.
+//   a level: five keycaps with the layout's keys, the Controls menu switches to WASD (and the keys follow);
+//   touch: Punch fires the moment it's pressed; dragging it does nothing more.
 // Screenshots go to previews/controls-*.png for a look.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 import assert from 'node:assert/strict';
@@ -96,26 +96,14 @@ try {
   await titus.screenshot({ path: 'previews/controls-block-side.png' });
   await titus.evaluate(() => { window.pixelforgePlay.step(400, {}); });
 
-  // Dodge: 40 px where the arrow points, untouchable meanwhile, then a short cooldown.
+  // The dodge is hidden: pressing it does nothing (no hop, no cooldown).
   const dodge = await titus.evaluate(() => {
     const play = window.pixelforgePlay, s = play.scene;
     reset(280, 220, 500, 220);
     const x0 = s.player.x;
-    play.step(17, { dodge: true, left: true }); play.step(80, {});
-    return { x0, mid: s.player.x, dodging: s.combat.rules.dodge !== null };
+    play.step(17, { dodge: true }); play.step(200, {});
+    return { moved: s.player.x - x0, dodged: !!s.combat.rules.dodge, cooldown: s.combat.snapshot().cooldowns.dodge };
   });
-  await titus.screenshot({ path: 'previews/controls-dodge.png' });
-  const dodged = await titus.evaluate(({ x0 }) => {
-    const play = window.pixelforgePlay, s = play.scene;
-    play.step(200, {});
-    const moved = s.player.x - x0;
-    play.step(17, { dodge: true, right: true }); play.step(17, {});
-    const again = !!s.combat.rules.dodge;
-    // The partner punches into a dodge: no damage.
-    reset(280, 220, 306, 220);
-    s.partnerKeys = { punch: true }; play.step(17, { dodge: true, down: true }); s.partnerKeys = {}; play.step(300, {});
-    return { moved, again, health: s.health.value, max: s.health.max };
-  }, dodge);
 
   // ---- Mason: the grabbed partner mashes out ------------------------------------------------------------
   const mason = await practice('mason');
@@ -183,7 +171,7 @@ try {
   await wait(100);
   const backKeys = await keys();
 
-  // ---- Touch: tap Punch, then drag it to aim ---------------------------------------------------------
+  // ---- Touch: Punch fires the moment it's pressed, at the nearest; there's no drag to aim -------------
   const phone = await (await browser.newContext({ viewport: { width: 844, height: 390 }, hasTouch: true })).newPage();
   phone.on('pageerror', e => errors.push(`phone: ${e.message}`));
   await phone.goto(`${baseUrl}/?solo&character=titus&touch=1`);
@@ -195,26 +183,16 @@ try {
   const buttons = await phone.$$eval('.arc .arc-key', els => els.map(e => { const r = e.getBoundingClientRect(); return { label: e.getAttribute('aria-label'), w: Math.round(r.width), x: r.x + r.width / 2, y: r.y + r.height / 2 }; }));
   const punchBtn = buttons.find(b => b.label === 'Punch');
   await phone.mouse.move(punchBtn.x, punchBtn.y); await phone.mouse.down(); await wait(80);
-  const beforeRelease = await phone.evaluate(() => window.attacks.length);
-  await phone.mouse.up(); await wait(120);
-  const tapped = await phone.evaluate(() => window.attacks.slice());
-  await wait(500);
+  const onPress = await phone.evaluate(() => window.attacks.length);
+  await phone.mouse.up(); await wait(500);
+  // Pressed and dragged up: still one punch, at the press, and no aim drawn.
   await phone.mouse.move(punchBtn.x, punchBtn.y); await phone.mouse.down();
-  await phone.mouse.move(punchBtn.x, punchBtn.y - 30, { steps: 3 }); await phone.mouse.move(punchBtn.x, punchBtn.y - 70, { steps: 4 });
-  await wait(100);
-  const aiming = await phone.evaluate(async () => ({ aim: (await import('/src/combat/touch.js')).touch.aim, attacks: window.attacks.length }));
-  await phone.screenshot({ path: 'previews/controls-touch-aim.png' });
-  await phone.mouse.up(); await wait(120);
-  const aimed = await phone.evaluate(() => window.attacks.slice());
-  // Dragged out and back to the middle: cancelled.
-  await wait(500);
-  await phone.mouse.move(punchBtn.x, punchBtn.y); await phone.mouse.down();
-  await phone.mouse.move(punchBtn.x - 70, punchBtn.y, { steps: 4 }); await phone.mouse.move(punchBtn.x, punchBtn.y, { steps: 4 });
+  await phone.mouse.move(punchBtn.x, punchBtn.y - 70, { steps: 4 }); await wait(80);
   await phone.mouse.up(); await wait(150);
-  const cancelled = await phone.evaluate(() => window.attacks.length);
+  const dragged = await phone.evaluate(() => window.attacks.slice());
 
-  console.log(JSON.stringify({ t, perfect, side, dodge, dodged, grab, mashed, stun, arrowsKeys, stored, wasdKeys, jPunch, cNothing, dWalks, backKeys,
-    buttons, beforeRelease, tapped, aiming, aimed, cancelled, errors }, null, 2));
+  console.log(JSON.stringify({ t, perfect, side, dodge, grab, mashed, stun, arrowsKeys, stored, wasdKeys, jPunch, cNothing, dWalks, backKeys,
+    buttons, onPress, dragged, errors }, null, 2));
   assert.deepEqual(errors, []);
   assert.deepEqual(t.tap, { facing: 'down', partnerHurt: true }, 'a tap punches the partner below');
   assert.deepEqual(t.held, { facing: 'left', partnerHurt: false }, 'a held arrow overrides the aim');
@@ -224,10 +202,7 @@ try {
   assert.equal(perfect.parries, 1); assert.ok(perfect.partnerStaggered, 'and staggers the attacker');
   assert.ok(perfect.words.includes('PERFECT'));
   assert.equal(side.parries, 0); assert.equal(side.max - side.health, 1, 'a late block from the side takes a quarter');
-  assert.ok(dodge.dodging && dodge.mid < dodge.x0 - 10, 'mid-hop');
-  assert.ok(Math.abs(dodged.moved + 40) <= 4, `the dodge goes 40 px (${dodged.moved})`);
-  assert.equal(dodged.again, false, 'the dodge cools down');
-  assert.equal(dodged.health, dodged.max, 'a punch into a dodge does nothing');
+  assert.deepEqual(dodge, { moved: 0, dodged: false, cooldown: 0 }, 'the hidden dodge does nothing');
   assert.ok(grab.held, 'Mason holds the partner');
   assert.ok(mashed.shown, '"MASH!" over the held partner');
   assert.ok(mashed.released >= 600 && mashed.released < 1700, `mashed out in ${mashed.released} ms of a 2000 ms hold`);
@@ -236,21 +211,18 @@ try {
   assert.ok(stun.natural >= 4900, 'Bellow stuns for 5 s');
   assert.ok(stun.lasted >= 1000 && stun.lasted < 3500, `shaken off in ${stun.lasted} ms`);
   assert.ok(stun.canMove, 'and free to move');
-  assert.deepEqual(arrowsKeys, ['C', 'X', 'Z', 'V', 'S', 'Shift']);
+  assert.deepEqual(arrowsKeys, ['C', 'X', 'Z', 'V', 'S'], 'five keycaps: no dodge');
   assert.equal(stored, 'wasd');
-  assert.deepEqual(wasdKeys, ['J', 'K', 'L', 'I', 'U', 'Space']);
+  assert.deepEqual(wasdKeys, ['J', 'K', 'L', 'I', 'U']);
   assert.equal(jPunch, 'punch', 'J punches in the WASD layout');
   assert.equal(cNothing, null, 'C does nothing in it');
   assert.ok(dWalks > 20, 'D walks right');
   assert.deepEqual(backKeys, arrowsKeys);
   const size = Object.fromEntries(buttons.map(b => [b.label, b.w]));
-  assert.ok(size.Punch > size.Kick && size.Kick > size.Headbutt && size.Headbutt > size.Dodge, `sized by use: ${JSON.stringify(size)}`);
-  assert.equal(beforeRelease, 0, 'a tap fires on release');
-  assert.equal(tapped.length, 1);
-  assert.deepEqual(aiming.aim, { move: 'punch', facing: 'up' }, 'dragging up aims up');
-  assert.equal(aiming.attacks, 1, 'nothing fires while aiming');
-  assert.deepEqual(aimed.slice(1), ['up'], 'released: it fires up');
-  assert.equal(cancelled, 2, 'dragged back to the middle: cancelled');
+  assert.ok(size.Punch > size.Kick && size.Kick > size.Headbutt, `sized by use: ${JSON.stringify(size)}`);
+  assert.ok(!('Dodge' in size), 'no dodge button');
+  assert.equal(onPress, 1, 'a press fires at once');
+  assert.deepEqual(dragged, ['right', 'right'], 'dragging changes nothing: one punch per press, facing as it was');
   console.log('controls ok');
 } finally {
   await browser.close();

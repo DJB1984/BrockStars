@@ -4,7 +4,7 @@ import { TitusCombat } from '../combat/TitusCombat.js';
 import { HitFeel } from '../combat/hitFeel.js';
 import { FightMarks } from '../combat/fightMarks.js';
 import { CHARACTERS, isCharacter } from '../characters.js';
-import { HealthPool, directionTo, ATTACKS } from '../combat/rules.js';
+import { HealthPool, directionTo, ATTACKS, DODGE } from '../combat/rules.js';
 
 export class CombatPractice extends Phaser.Scene {
   constructor() { super('combat-practice'); }
@@ -24,7 +24,7 @@ export class CombatPractice extends Phaser.Scene {
     text(24,14,`${this.characterLabel.toUpperCase()} / COMBAT PRACTICE`,16,'#f0bb7e');
     const stats = CHARACTERS[character];
     this.special = Object.entries(ATTACKS).find(([, spec]) => spec.character === character);
-    text(24,38,`C Punch ${stats.punch}  X Kick ${stats.kick}  Z Headbutt ${stats.headbutt}  Hold V Block${this.special ? `  S ${this.special[0]} ${this.special[1].damage}` : ''}  Shift Dodge`,10);
+    text(24,38,`C Punch ${stats.punch}  X Kick ${stats.kick}  Z Headbutt ${stats.headbutt}  Hold V Block${this.special ? `  S ${this.special[0]} ${this.special[1].damage}` : ''}${DODGE.enabled ? '  Shift Dodge' : ''}`,10);
     this.status=text(24,58,'',11);
     this.message=text(24,320,'Approach the partner to test your attacks.',11,'#aabbd1');
     text(24,340,'Arrows Move   P Sparring on/off   R Reset   B Hitboxes',10,'#aabbd1');
@@ -43,9 +43,9 @@ export class CombatPractice extends Phaser.Scene {
     const onWhiff=(sprite,move,facing)=>this.hitFeel.whiff(sprite,move,facing);
     this.combat=new TitusCombat(this,this.player,{health:this.health,targets:()=>[this.partner],onHit:landed(this.player),onWhiff});
     this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:landed(this.partner),onWhiff});
-    // Rings, shields and wind-up telegraphs for both fighters, as in a level.
+    // Rings, "MASH!" and wind-up telegraphs for both fighters, as in a level.
     const superReady=(c)=>{const move=Object.keys(ATTACKS).find(n=>ATTACKS[n].character===c.rules.character);return !!move&&c.rules.health.value>0&&this.time.now>=(c.rules.readyAt[move]??0);};
-    const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,block:c.rules.block?.facing??null,superReady:superReady(c),mash:!!c.rules.heldBy||this.time.now<c.rules.stunUntil});
+    const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,superReady:superReady(c),mash:!!c.rules.heldBy||this.time.now<c.rules.stunUntil});
     this.marks=new FightMarks(this,()=>[marked(this.combat,true),marked(this.partnerCombat,false)]);
     this.marks.follow(this.combat);this.marks.follow(this.partnerCombat);
     this.player.controller.facing='right';
