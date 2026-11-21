@@ -1,6 +1,7 @@
 import { spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { ATTACKS, DIRECTIONS } from './rules.js';
 import { headroom } from '../objects/HeadBar.js';
+import { parryTing } from '../sound.js';
 
 // How a connecting hit feels, per move: the freeze on contact (ms; Smash's hitlag, longer for heavier
 // hits), the camera shake for the two fighters involved ([ms, px]) and the spark at the contact point.
@@ -43,6 +44,7 @@ export class HitFeel {
   // (a burning shower) only flashes. freezeAttacker: false when the attacker has already moved on (a
   // confirmation from the host that arrives after the swing ended).
   land(attacker, victim, move, result, { freezeAttacker = true } = {}) {
+    if (result?.perfect) return this.parry(victim, attacker);
     if (!victim?.active || !result?.damage) return;
     const blocked = !!result.blocked, feel = HIT_FEEL[move];
     if (blocked) this.scene.marks?.flashShield(victim);   // the shield arc that stopped it (fightMarks.js)
@@ -54,6 +56,22 @@ export class HitFeel {
     this.spark(attacker, victim, blocked ? 'fx_block' : feel.spark);
     const me = this.me();
     if (!blocked && me && (attacker === me || victim === me)) this.scene.feel?.shake(...feel.shake);
+  }
+
+  // A perfect block: the shield flashes, the attacker is caught in a longer, shaking freeze than the blocker's,
+  // a block spark pops, it tings, and "PERFECT" pops over the blocker. The attacker's stagger is the rules'.
+  parry(blocker, attacker) {
+    if (!blocker?.active) return;
+    this.scene.marks?.flashShield(blocker);
+    this.scene.marks?.pop(blocker, 'PERFECT', 0x2ce8f5);
+    this.scene.feel?.flash(blocker, 90, 0xffffff);
+    parryTing(this.scene);
+    if (!attacker?.active) return;
+    this.freeze(blocker, 60);
+    this.freeze(attacker, 140, true);
+    this.spark(attacker, blocker, 'fx_block');
+    const me = this.me();
+    if (me && (attacker === me || blocker === me)) this.scene.feel?.shake(80, 1);
   }
 
   // A swing that missed: a puff of air in front of the fighter, and no freeze.

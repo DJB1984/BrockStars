@@ -6,7 +6,7 @@ import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../g
 import { TitusCombat } from '../combat/TitusCombat.js';
 import { HitFeel } from '../combat/hitFeel.js';
 import { FightMarks } from '../combat/fightMarks.js';
-import { ATTACKS, BLOCK, characterAttack, directionTo } from '../combat/rules.js';
+import { ATTACKS, BLOCK, DODGE, OPPOSITE, characterAttack, directionTo } from '../combat/rules.js';
 import { dudClick } from '../sound.js';
 import { releaseTouch } from '../combat/touch.js';
 import { showHud } from './Hud.js';
@@ -137,12 +137,25 @@ export class Level extends Phaser.Scene {
         });
         on(player, 'combat-block', (facing) => net.combatCommand('block', facing));
         on(player, 'combat-release', () => net.combatCommand('release'));
+        on(player, 'combat-dodge', (facing) => net.combatCommand('dodge', facing));
+        on(player, 'combat-mash', () => net.combatCommand('mash'));
         const life = net.combatState.fighters[net.id]?.life ?? 0;
         on(net, 'combat', ({fighters, hits}) => {
           const self = fighters[net.id];
           if (!self || !player.active || this.inLobby) return;
+          const r = this.combat.rules, now = this.time.now;
           this.combat.rules.readyAt.bellow = this.time.now + (self.bellowCooldown ?? 0);
           this.combat.networkStunPosition = self.stunPosition;
+          // Mashed out of a stun early (the host shortened it): the flinch that held it ends with it.
+          if (r.stunUntil > now + (self.stun ?? 0) + 100) {
+            r.staggerUntil = Math.min(r.staggerUntil, now + (self.stun ?? 0));
+            this.combat.controller.stunnedUntil = Math.min(this.combat.controller.stunnedUntil ?? 0, now + (self.stun ?? 0));
+          }
+          // The one you held mashed out: skip the rest of the choke, straight to the recovery.
+          if (this.combat.networkGrapple && !self.grapple && r.attack?.name === 'grapple') {
+            const frames = ATTACKS.grapple.frames, total = frames.reduce((a, b) => a + b, 0), recovery = (total - frames[3]) / total;
+            if (player.anims.getProgress() < recovery - 0.05) player.anims.setProgress(recovery);
+          }
           playerHealth.stunUntil = this.time.now + (self.stun ?? 0);
           playerHealth.stunFacing = self.stunFacing;
           playerHealth.healingBlockedFor = self.healingBlockedFor ?? 0;
@@ -186,7 +199,8 @@ export class Level extends Phaser.Scene {
         const attacker = hit.source === net.id ? player : this.remotes.sprite(hit.source);
         if (hit.target === net.id && hit.source && hit.source !== net.id) this.pointAtHitter(attacker, hit.from);
         // Already felt the moment your swing reached them: the host's answer only brings the damage.
-        const felt = hit.source === net.id && this.predicted.get(hit.target);
+        // A perfect block always shows: it couldn't be predicted.
+        const felt = hit.source === net.id && !hit.perfect && this.predicted.get(hit.target);
         if (felt && felt.move === hit.move && this.time.now - felt.at < 700) { this.predicted.delete(hit.target); continue; }
         // The host answered before this screen saw the swing connect (a fast connection): don't feel it again then.
         const swing = this.combat?.swing;
@@ -210,8 +224,10 @@ export class Level extends Phaser.Scene {
     const p = this.level.player;
     if (net.active && p?.active) {
       net.setLocal({ name: net.name, char: this.character, level: this.levelName, x: Math.round(p.x * 10) / 10,
-                     y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX });
+                     y: Math.round(p.y * 10) / 10, anim: p.anims.currentAnim?.key ?? null, flip: p.flipX,
+                     ...(this.combat?.rules.dodge ? { dodge: this.combat.rules.dodge.start } : {}) });
     }
+    if (this.combat) this.combat.online = net.active;   // the host shortens holds and stuns you mash out of
     if (p?.active) this.rooms.update(p.x, p.y);
     this.remotes.update(delta);
     this.showers.update(time, delta);
@@ -262,7 +278,8 @@ export class Level extends Phaser.Scene {
   predictHit(other, move) {
     const player = this.level.player, state = net.combatState.fighters[other.netId], spec = ATTACKS[move];
     if (!player?.active || !state?.health || state.held) return;
-    const blocked = !spec.unblockable && state.block === directionTo(player.x - other.x, player.y - other.y);
+    // Their block covers every side but behind them.
+    const blocked = !spec.unblockable && !!state.block && directionTo(player.x - other.x, player.y - other.y) !== OPPOSITE[state.block];
     this.hitFeel.land(player, other, move, { damage: 1, blocked, knockdown: blocked ? 0 : spec.knockdown ?? 0 });
     this.predicted.set(other.netId, { move, at: this.time.now });
   }
@@ -282,9 +299,10 @@ export class Level extends Phaser.Scene {
     if (p?.active && this.combat) {
       const r = this.combat.rules, special = this.superMove.move, alive = r.health.value > 0;
       out.push({ sprite: p, mine: true, alive, block: r.block?.facing ?? null,
-        superReady: alive && !!special && this.time.now >= (r.readyAt[special] ?? 0) });
+        superReady: alive && !!special && this.time.now >= (r.readyAt[special] ?? 0),
+        mash: !!r.heldBy || this.time.now < r.stunUntil });
     }
-    for (const s of this.remotes.sprites()) out.push({ sprite: s, mine: false, alive: s.alive, block: s.blockFacing, superReady: s.superReady });
+    for (const s of this.remotes.sprites()) out.push({ sprite: s, mine: false, alive: s.alive, block: s.blockFacing, superReady: s.superReady, mash: s.mash });
     for (const a of this.actors) if (a.hp !== undefined && a.sprite.active) out.push({ sprite: a.sprite, mine: false, alive: a.hp > 0 });
     return out;
   }
@@ -314,12 +332,13 @@ export class Level extends Phaser.Scene {
     const special = { ...this.superMove, endsAt: left ? now + left : 0 };
     const moves = Object.fromEntries(['punch', 'kick', 'headbutt'].map((name) => [name,
       { endsAt: snap.cooldowns[name] ? now + snap.cooldowns[name] : 0, duration: characterAttack(this.character, name).cooldown }]));
+    const dodge = { endsAt: snap.cooldowns.dodge ? now + snap.cooldowns.dodge : 0, duration: DODGE.cooldown };
     const shown = hud.get();
     const moved = (a, b) => a.phase !== b.phase || Math.abs((a.endsAt ?? 0) - (b.endsAt ?? 0)) > 120;
     const cooling = (t) => ({ phase: 'cooldown', ...t });
-    if (moved(shown.shield, shield) || moved(cooling(shown.super), cooling(special))
+    if (moved(shown.shield, shield) || moved(cooling(shown.super), cooling(special)) || moved(cooling(shown.dodge), cooling(dodge))
         || Object.keys(moves).some((name) => moved(cooling(shown.moves[name]), cooling(moves[name])))) {
-      hud.set({ shield, super: special, moves });
+      hud.set({ shield, super: special, moves, dodge });
     }
   }
 
@@ -392,8 +411,11 @@ export class Level extends Phaser.Scene {
     if (this.time.now < (this.invulnerableUntil ?? 0) || state.health <= 0) return;
     this.invulnerableUntil = this.time.now + 1000;
     if (net.active) { net.combatCommand('hazard'); return; }
-    if (p.combat) this.hitFeel.land(enemy, p, 'punch', p.combat.receive(enemy, ATTACKS.punch));
-    else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
+    if (p.combat) {
+      const result = p.combat.receive(enemy, ATTACKS.punch);
+      this.hitFeel.land(enemy, p, 'punch', result);
+      if (!result.damage) return;   // perfectly blocked or dodged: no blink
+    } else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
     this.tweens.add({ targets: p, alpha: 0.3, duration: 100, yoyo: true, repeat: 4, onComplete: () => p.setAlpha(1) });
   }
 }

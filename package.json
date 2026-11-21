@@ -9,7 +9,7 @@
     "build": "vite build",
     "preview": "vite build && php -S 0.0.0.0:8002 -t dist",
     "package": "vite build && node tools/package-site.mjs",
-    "test": "node --test tests/combat.test.mjs tests/net-combat.test.mjs tests/attack.test.mjs tests/bellow.test.mjs tests/walls.test.mjs tests/showers.test.mjs tests/hit-feel.test.mjs tests/fight-readable.test.mjs",
+    "test": "node --test tests/controls.test.mjs tests/combat.test.mjs tests/net-combat.test.mjs tests/attack.test.mjs tests/bellow.test.mjs tests/walls.test.mjs tests/showers.test.mjs tests/hit-feel.test.mjs tests/fight-readable.test.mjs",
     "test:browser": "node tests/combat-browser.mjs",
     "test:takedown": "node tests/takedown-browser.mjs",
     "test:multiplayer": "node tests/net-combat-browser.mjs",
@@ -22,7 +22,9 @@
     "test:hitfeel": "node tests/hit-feel-browser.mjs",
     "test:hitfeel:multiplayer": "node tests/hit-feel-network-browser.mjs",
     "test:readable": "node tests/fight-readable-browser.mjs",
-    "test:readable:multiplayer": "node tests/fight-readable-network-browser.mjs"
+    "test:readable:multiplayer": "node tests/fight-readable-network-browser.mjs",
+    "test:controls": "node tests/controls-browser.mjs",
+    "test:controls:multiplayer": "node tests/controls-network-browser.mjs"
   },
   "dependencies": {
     "@fontsource/dotgothic16": "^5.3.1",

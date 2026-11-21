@@ -263,7 +263,6 @@
   cursor: pointer;
 }
 .arc-key .mk-soon { font-size: 15px; right: -10px; }
-
 /* ---- the menu ----------------------------------------------------------------------------------- */
 .hud-scrim {
   position: fixed;
@@ -316,6 +315,7 @@
   color: var(--mist);
   border-bottom: var(--px) solid var(--pine-lit);
 }
+.layout-pick { display: flex; gap: 8px; margin-bottom: 14px; }
 .keymap { display: grid; gap: 9px; }
 .keymap-row { display: grid; grid-template-columns: 118px minmax(0, 1fr); align-items: center; column-gap: 12px; }
 .keymap-keys { display: inline-flex; }

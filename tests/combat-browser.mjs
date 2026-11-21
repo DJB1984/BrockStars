@@ -62,10 +62,12 @@ try {
     check('release allows a new guard direction',st.combat.blockFacing==='down',st.combat);
     for(const facing of ['up','down','left','right']) for(const incoming of ['up','down','left','right']) {
       setupFight(facing); s.partner.body.reset(500,220);
-      play.step(17,{block:true});
+      play.step(17,{block:true}); play.step(150,{block:true});   // past the perfect-block window
       const offset={up:[0,-20],down:[0,20],left:[-20,0],right:[20,0]}[incoming];
       const result=s.combat.receive({x:s.player.x+offset[0],y:s.player.y+offset[1]},ATTACKS.headbutt);
-      check(`guard ${facing}, hit ${incoming}`,result.damage===(facing===incoming?2.5:10)&&result.stagger===(facing===incoming?0:350),result);
+      // A block covers the front and both sides; only a hit from behind gets through.
+      const behind={up:'down',down:'up',left:'right',right:'left'}[facing]===incoming;
+      check(`guard ${facing}, hit ${incoming}`,result.damage===(behind?10:2.5)&&result.stagger===(behind?350:0),result);
     }
     setupFight();s.partner.body.reset(500,220);
     s.health.take(20);play.step(44900,{});

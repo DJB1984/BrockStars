@@ -125,6 +125,18 @@ const ICONS = {
     '.....x...',
     '......xx.',
   ],
+  // the dodge: a double chevron, fast forward
+  dodge: [
+    'xx...xx....',
+    '.xx...xx...',
+    '..xx...xx..',
+    '...xx...xx.',
+    '....xx...xx',
+    '...xx...xx.',
+    '..xx...xx..',
+    '.xx...xx...',
+    'xx...xx....',
+  ],
   lock: [
     '..xxxxx..',
     '.xx...xx.',

@@ -18,7 +18,7 @@ test('every hit interrupts: a clean punch or kick cancels the victim\'s own wind
   }
   const guard = new CombatRules();
   guard.update(0, { block: true }, 'right');
-  const blocked = guard.receive(ATTACKS.punch, 'right', 10);
+  const blocked = guard.receive(ATTACKS.punch, 'right', 200);
   assert.equal(blocked.stagger, 0, 'a blocked hit does not flinch');
   assert.equal(blocked.knockback, ATTACKS.punch.knockback * 0.25);
 });

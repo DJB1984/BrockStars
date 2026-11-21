@@ -58,4 +58,12 @@ export class Walker {
     }
     return { damage: spec.damage };
   }
+
+  // Its touch was stopped by a perfect block (`by` is the player): it reels back and stands still a moment.
+  parried(by, ms = 450) {
+    const s = this.sprite;
+    if (!s.active) return;
+    this.recoverAt = Math.max(this.recoverAt, this.scene.time.now + ms);
+    this.scene.feel.knockback(s, by, 20 * 1000 / ms);
+  }
 }

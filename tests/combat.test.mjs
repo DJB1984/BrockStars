@@ -26,12 +26,13 @@ test('block direction stays fixed, expires at 3s and needs release plus cooldown
   c.update(5001,{},'right'); c.update(5002,{block:true},'right'); assert.equal(c.block.facing,'right');
   c.update(5100,{},'right'); c.update(5101,{block:true},'right'); assert.equal(c.block,null);
 });
-test('only the guarded cardinal side reduces damage; headbutt staggers an unguarded defender', () => {
+test('a block guards the front and both sides, not behind; headbutt staggers from behind', () => {
+  const behind={up:'down',down:'up',left:'right',right:'left'};
   for (const facing of ['up','down','left','right']) for (const incoming of ['up','down','left','right']) {
     const c=new CombatRules(); c.update(0,{block:true},facing);
-    const r=c.receive(ATTACKS.headbutt,incoming,100);
-    assert.equal(r.damage,facing===incoming?2.5:10);
-    assert.equal(r.stagger,facing===incoming?0:350);
+    const r=c.receive(ATTACKS.headbutt,incoming,200);
+    assert.equal(r.damage,incoming===behind[facing]?10:2.5);
+    assert.equal(r.stagger,incoming===behind[facing]?350:0);
   }
   assert.equal(directionTo(-2,10),'down');
   assert.equal(directionTo(10,-2),'right');
@@ -113,7 +114,7 @@ test('Grapple is Mason-only, consumes a 20s cooldown on misses, and survives sce
   const health=new HealthPool(),r=new CombatRules(health,'mason');
   r.update(100,{grapple:true},'right');assert.equal(r.attack.name,'grapple');r.finishAttack();
   const next=new CombatRules(health,'titus');next.setCharacter('mason');
-  next.update(20099,{grapple:true},'right');assert.equal(next.attack,null);
+  next.update(19900,{grapple:true},'right');assert.equal(next.attack,null); // 200 ms early: past the buffer
   next.update(20100,{grapple:true},'right');assert.equal(next.attack,null,'held input never repeats');
   next.update(20101,{},'right');next.update(20102,{grapple:true},'right');assert.equal(next.attack.name,'grapple');
 });

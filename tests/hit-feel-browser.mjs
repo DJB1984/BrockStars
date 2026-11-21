@@ -87,6 +87,7 @@ try {
     const play = window.pixelforgePlay, s = play.scene, { ATTACKS } = await import('/src/combat/rules.js');
     setupFight(20);
     play.step(1000 / 60, { block: true });
+    play.step(150, { block: true });   // past the perfect-block window: an ordinary block
     const result = s.combat.receive(s.partner, ATTACKS.punch);
     s.hitFeel.land(s.partner, s.player, 'punch', result);
     return { blocked: result.blocked, blockSpark: effects('fx_block'), hitSpark: effects('fx_hit'), shaking: s.player.hitFreeze?.shake,

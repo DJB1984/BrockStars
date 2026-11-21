@@ -25,7 +25,7 @@ try {
     const s = window.pixelforgePlay.scene, me = window.pixelforgePlay.player;
     return { fighters: s.marks.fighters().map(f => ({ mine: f.mine, superReady: f.superReady, block: f.block })),
       telegraphs: s.marks.telegraphs.map(t => ({ move: t.move, glint: !!t.glint?.active })),
-      shield: !!s.marks.shields.get(me)?.visible, floorDrawn: s.marks.floor.commandBuffer.length };
+      shield: !!s.marks.shields.get(me)?.[0].visible, floorDrawn: s.marks.floor.commandBuffer.length };
   });
   const start = await marks();
 
@@ -63,8 +63,8 @@ try {
 
   console.log(JSON.stringify({ caps, start, kickCap, dudBefore, dud, wiggling, headbutt, takedown, spent, block, released, errors }, null, 2));
   assert.deepEqual(errors, []);
-  assert.deepEqual(caps.map(c => c.key), ['C', 'X', 'Z', 'V', 'S'], 'a keycap per move, each with its key');
-  assert.ok(caps.every(c => !/[a-z]{3}/i.test(c.text)), 'no move names printed by the keys');
+  assert.deepEqual(caps.map(c => c.key), ['C', 'X', 'Z', 'V', 'S', 'Shift'], 'a keycap per move, each with its key');
+  assert.ok(caps.every(c => !/[a-z]{3}/i.test(c.text.replace(c.key ?? '', ''))), 'no move names printed by the keys');
   assert.deepEqual(start.fighters[0], { mine: true, superReady: true, block: null }, 'my ring, with the Super-ready ring');
   assert.ok(start.floorDrawn > 0, 'rings drawn on the floor');
   assert.match(kickCap, /is-cooldown/, 'the kick cap goes down while it cools');

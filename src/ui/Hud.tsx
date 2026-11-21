@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { ATTACKS, BLOCK } from '../combat/rules.js';
-import { hud, touch, actions, releaseTouch, type Basic, type HudState, type HitArrow, type NetBadge, type TouchInput } from './bridge';
+import { hud, touch, actions, releaseTouch, type Basic, type Facing, type HudState, type HitArrow, type NetBadge, type TouchButton } from './bridge';
 import { installFrames } from './pixel';
 import { Icon, type IconName } from './Icon';
 import { canFullscreen, toggleFullscreen, useFullscreen } from './fullscreen';
+import { LAYOUTS, keyLabel, layoutId, onLayout, setLayout } from '../controls.js';
+
+type Layout = (typeof LAYOUTS)[keyof typeof LAYOUTS];
+const useLayout = (): [keyof typeof LAYOUTS, Layout] => {
+  const id = useSyncExternalStore(onLayout, layoutId) as keyof typeof LAYOUTS;
+  return [id, LAYOUTS[id]];
+};
 
 // The HUD over a level: the menu button (Esc) top left (Resume, Controls, Full screen on and off, Change
 // fighter, Leave game), who's online top right, and at the bottom every move as a keycap (Punch, Kick,
@@ -23,6 +30,7 @@ export function Hud() {
   const s = useSyncExternalStore(hud.subscribe, hud.get);
   const [menu, setMenu] = useState<null | 'main' | 'controls'>(null);
   const touchMode = useTouchScreen();
+  const [, keys] = useLayout();
 
   useEffect(() => { if (root.current) installFrames(root.current); }, []);
 
@@ -40,6 +48,7 @@ export function Hud() {
   const shield = shieldTimer(s);
   const special = superTimer(s);
   const moves = { punch: moveTimer(s, 'punch'), kick: moveTimer(s, 'kick'), headbutt: moveTimer(s, 'headbutt') };
+  const dodge: Timer = { phase: 'cooldown', endsAt: s.dodge.endsAt, duration: s.dodge.duration };
   const dud = (move: string) => (s.dud?.move === move ? s.dud.id : 0);
   const superDud = s.dud && !['punch', 'kick', 'headbutt', 'block'].includes(s.dud.move) ? s.dud.id : 0;
 
@@ -58,14 +67,15 @@ export function Hud() {
           <HitArrows arrow={s.hitArrow} />
 
           {touchMode ? (
-            <TouchControls shield={shield} special={special} moves={moves} dud={dud} superDud={superDud} superName={s.super.name} superIcon={superIcon(s)} />
+            <TouchControls shield={shield} special={special} moves={moves} dodge={dodge} dud={dud} superDud={superDud} superName={s.super.name} superIcon={superIcon(s)} />
           ) : (
             <div className="hud-keys">
-              <MoveKey icon="punch" tone="ember" label="Punch" keyLabel={ATTACKS.punch.key} timer={moves.punch} dud={dud('punch')} />
-              <MoveKey icon="kick" tone="ember" label="Kick" keyLabel={ATTACKS.kick.key} timer={moves.kick} dud={dud('kick')} count />
-              <MoveKey icon="headbutt" tone="brick" label="Headbutt" keyLabel={ATTACKS.headbutt.key} timer={moves.headbutt} dud={dud('headbutt')} count />
-              <MoveKey icon="block" tone="cream" label="Block" keyLabel="V" timer={shield} dud={dud('block')} />
-              <MoveKey icon={superIcon(s)} tone="amber" label={s.super.name} keyLabel={s.super.locked ? undefined : s.super.key} timer={special} dud={superDud} count />
+              <MoveKey icon="punch" tone="ember" label="Punch" keyLabel={keyLabel(keys.punch)} timer={moves.punch} dud={dud('punch')} />
+              <MoveKey icon="kick" tone="ember" label="Kick" keyLabel={keyLabel(keys.kick)} timer={moves.kick} dud={dud('kick')} count />
+              <MoveKey icon="headbutt" tone="brick" label="Headbutt" keyLabel={keyLabel(keys.headbutt)} timer={moves.headbutt} dud={dud('headbutt')} count />
+              <MoveKey icon="block" tone="cream" label="Block" keyLabel={keyLabel(keys.block)} timer={shield} dud={dud('block')} />
+              <MoveKey icon={superIcon(s)} tone="amber" label={s.super.name} keyLabel={s.super.locked ? undefined : keyLabel(keys.super)} timer={special} dud={superDud} count />
+              <MoveKey icon="dodge" tone="pine" label="Dodge" keyLabel={keyLabel(keys.dodge)} timer={dodge} />
             </div>
           )}
 
@@ -111,7 +121,8 @@ type MoveKeyProps = {
   keyLabel?: string;
   timer?: Timer;
   count?: boolean;            // show whole seconds while it cools (the long Super cooldown)
-  hold?: keyof TouchInput;    // a touch button: holding it holds this input down
+  hold?: TouchButton;         // a touch button: holding it holds this input down
+  aim?: boolean;              // ...or, for an attack, fires as the thumb lets go, the way it was dragged (useHold)
   dud?: number;               // counts up each time the move is pressed while cooling: the cap wiggles
   style?: CSSProperties;
   className?: string;
@@ -122,7 +133,7 @@ type MoveKeyProps = {
 // Block held up drains a cream bar instead, over the three seconds a block can last. Pressed while it's down,
 // it shakes its head: a quick side-to-side wiggle (the game clicks at the same time).
 // Short cooldowns (a punch's 300 ms) come back without the pop, which would flash on every mashed punch.
-function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, dud = 0, style, className = '' }: MoveKeyProps) {
+function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, aim, dud = 0, style, className = '' }: MoveKeyProps) {
   const phase = usePhase(timer);
   const [pops, setPops] = useState(0);
   const last = useRef(phase);
@@ -137,7 +148,7 @@ function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, dud = 0, sty
     cap?.animate([0, -3, 3, -2, 2, 0].map((x) => ({ translate: `${x}px 0` })), { duration: 240, easing: 'steps(6, end)' });
   }, [dud]);
 
-  const [pressed, handlers] = useHold(hold);
+  const [pressed, handlers] = useHold(hold, aim);
   const down = pressed || phase === 'cooldown' || phase === 'holding' || phase === 'locked';
   const Tag = (hold ? 'button' : 'div') as 'div';
 
@@ -199,15 +210,31 @@ function Seconds({ endsAt }: { endsAt: number }) {
 // Pointer handlers that hold a touch input down. Each button captures its own finger, so a thumb on the
 // movement circle and one on a move work together. A tap shorter than a frame or two is held a moment longer, so
 // the game still sees the press.
-function useHold(name?: keyof TouchInput) {
+// With `aim` (the attacks), as in Brawl Stars: a tap fires as the thumb lifts, at the nearest opponent; a drag
+// past AIM_DRAG aims instead (touch.aim: the game draws the move's reach on the floor that way) and fires that way
+// on release; dragged back to the middle, it's cancelled and lifting does nothing.
+const AIM_DRAG = 22;   // css px
+export const dragFacing = (dx: number, dy: number): Facing => Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
+
+function useHold(name?: TouchButton, aim?: boolean) {
   const [pressed, setPressed] = useState(false);
   const since = useRef(0);
   const finger = useRef<number | null>(null);
+  const start = useRef({ x: 0, y: 0, dragged: false });
   if (!name) return [false, {}] as const;
+  const pulse = () => { touch[name] = true; setTimeout(() => { if (finger.current === null) touch[name] = false; }, 60); };
   const end = (e: ReactPointerEvent<HTMLElement>) => {
     if (finger.current !== e.pointerId) return;
     finger.current = null;
     setPressed(false);
+    if (aim) {
+      const facing = touch.aim?.move === name ? touch.aim.facing : null;
+      touch.aim = null;
+      if (e.type !== 'pointerup') return;   // the finger was taken away (a call, a palm): nothing fires
+      if (!start.current.dragged) pulse();
+      else if (facing) { touch.aimed = { move: name, facing }; pulse(); }
+      return;
+    }
     setTimeout(() => { if (finger.current === null) touch[name] = false; }, Math.max(0, 60 - (performance.now() - since.current)));
   };
   return [pressed, {
@@ -217,8 +244,15 @@ function useHold(name?: keyof TouchInput) {
       finger.current = e.pointerId;
       e.currentTarget.setPointerCapture(e.pointerId);
       since.current = performance.now();
-      touch[name] = true;
+      start.current = { x: e.clientX, y: e.clientY, dragged: false };
+      if (!aim) touch[name] = true;
       setPressed(true);
+    },
+    onPointerMove: (e: ReactPointerEvent<HTMLElement>) => {
+      if (!aim || finger.current !== e.pointerId) return;
+      const dx = e.clientX - start.current.x, dy = e.clientY - start.current.y, far = Math.hypot(dx, dy) > AIM_DRAG;
+      if (far) start.current.dragged = true;
+      if (start.current.dragged) touch.aim = { move: name, facing: far ? dragFacing(dx, dy) : null };
     },
     onPointerUp: end,
     onPointerCancel: end,
@@ -229,25 +263,28 @@ function useHold(name?: keyof TouchInput) {
 
 // ---- touch controls --------------------------------------------------------------------------------
 
-type TouchProps = { shield: Timer; special: Timer; moves?: Record<Basic, Timer>; dud?: (move: string) => number; superDud?: number;
+type TouchProps = { shield: Timer; special: Timer; moves?: Record<Basic, Timer>; dodge?: Timer; dud?: (move: string) => number; superDud?: number;
   superName: string; superIcon: IconName; demo?: boolean };
 
-// Offsets from Punch (the right thumb's home), in button units: an arc of moves around it.
-const ARC: { name: keyof TouchInput; label: string; icon?: IconName; tone: Tone; cx: number; cy: number; s: number }[] = [
-  { name: 'punch', label: 'Punch', icon: 'punch', tone: 'ember', cx: 0, cy: 0, s: 1.35 },
-  { name: 'kick', label: 'Kick', icon: 'kick', tone: 'ember', cx: -1.5, cy: 0.05, s: 1 },
-  { name: 'headbutt', label: 'Headbutt', icon: 'headbutt', tone: 'brick', cx: -1.16, cy: -1.16, s: 1 },
-  { name: 'takedown', label: 'Super', tone: 'amber', cx: 0, cy: -1.55, s: 1 },
-  { name: 'block', label: 'Block', icon: 'block', tone: 'cream', cx: -2.78, cy: 0.12, s: 1 },
+// Offsets from Punch (the right thumb's home), in button units: an arc of moves around it, each sized by how
+// often it's pressed: Punch biggest, then Kick and the Super, Block, Headbutt, and the small Dodge tucked just
+// up-left of Punch, one short thumb roll away. `aim`: tap to fire at the nearest, drag to aim.
+const ARC: { name: TouchButton; label: string; icon?: IconName; tone: Tone; cx: number; cy: number; s: number; aim?: boolean }[] = [
+  { name: 'punch', label: 'Punch', icon: 'punch', tone: 'ember', cx: 0, cy: 0, s: 1.45, aim: true },
+  { name: 'dodge', label: 'Dodge', icon: 'dodge', tone: 'pine', cx: -0.95, cy: -0.85, s: 0.8 },
+  { name: 'kick', label: 'Kick', icon: 'kick', tone: 'ember', cx: -1.6, cy: 0.1, s: 1.1, aim: true },
+  { name: 'headbutt', label: 'Headbutt', icon: 'headbutt', tone: 'brick', cx: -1.95, cy: -1.15, s: 1, aim: true },
+  { name: 'takedown', label: 'Super', tone: 'amber', cx: 0.05, cy: -1.6, s: 1.1, aim: true },
+  { name: 'block', label: 'Block', icon: 'block', tone: 'cream', cx: -2.85, cy: 0.15, s: 1.05 },
 ];
 
-function TouchControls({ shield, special, moves, dud = () => 0, superDud = 0, superName, superIcon, demo }: TouchProps) {
+function TouchControls({ shield, special, moves, dodge, dud = () => 0, superDud = 0, superName, superIcon, demo }: TouchProps) {
   return (
     <div className={`touch${demo ? ' is-demo' : ''}`} aria-hidden={demo || undefined}>
       <Stick demo={demo} />
       <div className="arc" role={demo ? undefined : 'group'} aria-label={demo ? undefined : 'Moves'}>
         {ARC.map((b) => {
-          const timer = b.name === 'block' ? shield : b.name === 'takedown' ? special : moves?.[b.name as Basic];
+          const timer = b.name === 'block' ? shield : b.name === 'takedown' ? special : b.name === 'dodge' ? dodge : moves?.[b.name as Basic];
           const style = { '--cx': b.cx, '--cy': b.cy, '--s': b.s } as CSSProperties;
           return (
             <MoveKey
@@ -258,9 +295,10 @@ function TouchControls({ shield, special, moves, dud = () => 0, superDud = 0, su
               tone={b.tone}
               label={b.name === 'takedown' ? superName : b.label}
               timer={timer}
-              count={b.name !== 'punch' && b.name !== 'block'}
+              count={!['punch', 'block', 'dodge'].includes(b.name)}
               dud={b.name === 'takedown' ? superDud : dud(b.name)}
               hold={demo || timer?.phase === 'locked' ? undefined : b.name}
+              aim={b.aim}
             />
           );
         })}
@@ -467,6 +505,7 @@ type MenuProps = {
 function Menu({ view, onView, onClose, superName, superLocked, superKey, superIconName, touchFirst }: MenuProps) {
   const first = useRef<HTMLButtonElement>(null);
   const fullscreen = useFullscreen();
+  const [layout, keys] = useLayout();
   useEffect(() => { first.current?.focus(); }, [view]);
 
   return (
@@ -505,20 +544,31 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
             <div className={`controls${touchFirst ? ' is-touch-first' : ''}`}>
               <section className="controls-keys" aria-labelledby="controls-keys-title">
                 <h3 id="controls-keys-title" className="controls-sub">Keyboard</h3>
+                <div className="layout-pick" role="radiogroup" aria-label="Keyboard layout">
+                  {(Object.keys(LAYOUTS) as (keyof typeof LAYOUTS)[]).map((id) => (
+                    <button key={id} type="button" role="radio" aria-checked={id === layout} className={`btn btn-small ${id === layout ? 'btn-amber' : 'btn-pine'}`}
+                      onClick={() => setLayout(id)}>
+                      <span className="btn-face">{LAYOUTS[id].name}</span>
+                    </button>
+                  ))}
+                </div>
                 <ul className="keymap">
-                  <KeyRow keys={<span className="keymap-arrows">{(['up', 'left', 'down', 'right'] as const).map((d) => (
-                    <kbd key={d} className="key" aria-label={`${d} arrow`}><Icon name="right" size={2} rotate={{ up: -90, left: 180, right: 0, down: 90 }[d]} /></kbd>
-                  ))}</span>} name="Move" />
-                  <KeyRow keys={<kbd className="key">{ATTACKS.punch.key}</kbd>} icon="punch" name="Punch" />
-                  <KeyRow keys={<kbd className="key">{ATTACKS.kick.key}</kbd>} icon="kick" name="Kick" />
-                  <KeyRow keys={<kbd className="key">{ATTACKS.headbutt.key}</kbd>} icon="headbutt" name="Headbutt" />
-                  <KeyRow keys={<kbd className="key">V</kbd>} icon="block" name="Block" note={`Hold, up to ${BLOCK.duration / 1000}s`} />
+                  <KeyRow keys={layout === 'wasd'
+                    ? <span className="keymap-arrows">{(['W', 'A', 'S', 'D'] as const).map((k) => <kbd key={k} className="key">{k}</kbd>)}</span>
+                    : <span className="keymap-arrows">{(['up', 'left', 'down', 'right'] as const).map((d) => (
+                      <kbd key={d} className="key" aria-label={`${d} arrow`}><Icon name="right" size={2} rotate={{ up: -90, left: 180, right: 0, down: 90 }[d]} /></kbd>
+                    ))}</span>} name="Move" note={layout === 'wasd' ? 'Arrows too' : undefined} />
+                  <KeyRow keys={<kbd className="key">{keyLabel(keys.punch)}</kbd>} icon="punch" name="Punch" note="Tap: hits the nearest" />
+                  <KeyRow keys={<kbd className="key">{keyLabel(keys.kick)}</kbd>} icon="kick" name="Kick" />
+                  <KeyRow keys={<kbd className="key">{keyLabel(keys.headbutt)}</kbd>} icon="headbutt" name="Headbutt" />
+                  <KeyRow keys={<kbd className="key">{keyLabel(keys.block)}</kbd>} icon="block" name="Block" note={`Hold, up to ${BLOCK.duration / 1000}s`} />
                   <KeyRow
-                    keys={superLocked ? <span className="keymap-soon">Soon</span> : <kbd className="key">{superKey}</kbd>}
+                    keys={superLocked ? <span className="keymap-soon">Soon</span> : <kbd className="key">{keyLabel(keys.super)}</kbd>}
                     icon={superIconName}
                     name={superName}
                     note={superLocked ? 'Not built yet' : 'Super'}
                   />
+                  <KeyRow keys={<kbd className="key">{keyLabel(keys.dodge)}</kbd>} icon="dodge" name="Dodge" note="With a direction" />
                   <KeyRow keys={<kbd className="key">E</kbd>} name="Interact" note="Toggle nearest shower" />
                   <KeyRow keys={<kbd className="key">Esc</kbd>} icon="menu" name="Menu" />
                 </ul>
@@ -534,7 +584,7 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
                     superIcon={superIconName}
                   />
                 </div>
-                <p className="controls-note">Move: put your left thumb anywhere on the left half and drag. The circle follows your thumb. Fight: right thumb on the moves, with Punch in the corner.</p>
+                <p className="controls-note">Move: put your left thumb anywhere on the left half and drag. Fight: tap a move to hit the nearest fighter, or drag it to aim and let go. Dodge sits just above Punch.</p>
               </section>
             </div>
             <button ref={first} type="button" className="btn btn-pine hud-back" onClick={() => onView('main')}>

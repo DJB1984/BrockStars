@@ -31,6 +31,7 @@ export type HudState = {
   shield: Shield;
   super: Super;
   moves: Record<Basic, Timed>;
+  dodge: Timed;                // the dodge's short cooldown (0 = ready)
   dud: Dud | null;
   hitArrow: HitArrow | null;
   net: NetBadge;
@@ -43,6 +44,7 @@ let state: HudState = {
   shield: { phase: 'ready' },
   super: { name: '', key: 'S', locked: true, endsAt: 0, duration: 1 },
   moves: { punch: { endsAt: 0, duration: 1 }, kick: { endsAt: 0, duration: 1 }, headbutt: { endsAt: 0, duration: 1 } },
+  dodge: { endsAt: 0, duration: 1 },
   dud: null,
   hitArrow: null,
   net: { active: false, world: false, room: null, count: 1 },
@@ -69,7 +71,11 @@ export const hud = {
 
 // Held touch buttons, read by the combat controller (src/combat/TitusCombat.js) as if they were keys.
 // They live in plain JS (src/combat/touch.js) so the combat code still runs under node's tests.
-export type TouchInput = Record<'left' | 'right' | 'up' | 'down' | 'punch' | 'kick' | 'headbutt' | 'block' | 'takedown', boolean>;
+export type TouchButton = 'left' | 'right' | 'up' | 'down' | 'punch' | 'kick' | 'headbutt' | 'block' | 'takedown' | 'dodge';
+export type Facing = 'up' | 'down' | 'left' | 'right';
+// `aim`: the move being dragged and which way (null: back in the middle, cancelled); `aimed`: where the next one goes.
+export type TouchInput = Record<TouchButton, boolean> & { aim: { move: TouchButton; facing: Facing | null } | null;
+  aimed: { move: TouchButton; facing: Facing } | null };
 export const touch = rawTouch as TouchInput;
 export const releaseTouch = rawRelease as () => void;
 

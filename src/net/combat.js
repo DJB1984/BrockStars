@@ -1,8 +1,8 @@
 import { ShowerWorld, SHOWER } from '../showers.js';
-import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets, extendPath } from '../combat/rules.js';
+import { ATTACKS, CombatRules, DIRECTIONS, MASH, directionTo, attackTargets, extendPath } from '../combat/rules.js';
 import { levelWalls } from '../combat/walls.js';
 
-import { GrappleHold, grapplePosition } from '../combat/grapple.js';
+import { GrappleHold, grapplePosition, grabbable } from '../combat/grapple.js';
 
 // Lag compensation. Everyone draws the other players a little in the past (remotes.js), so the host keeps
 // HISTORY_MS of each fighter's positions and judges an attack against where its victims stood at the moment
@@ -59,7 +59,8 @@ export class RoomCombat {
     if (!f?.present || !command || !Number.isSafeInteger(command.n) || command.n <= f.lastCommand) return;
     f.lastCommand = command.n;
     const r = f.rules;
-    if (command.action === 'release') { if (r.block) r.endBlock(now); return; }
+    if (command.action === 'release') { f.blockHeld = false; if (r.block) r.endBlock(now); return; }
+    if (command.action === 'mash') { this.mash(f, now); return; }
     if (command.action === 'interact') {
       if (r.health.value > 0 && !r.heldBy && now >= r.stunUntil && now >= (f.interactReady ?? 0)) {
         if (this.showers.toggle(f.level, f.position)) f.interactReady = now + 250;
@@ -73,13 +74,32 @@ export class RoomCombat {
       }
       return;
     }
-    if (!DIRECTIONS[command.facing] || ![...Object.keys(ATTACKS), 'block'].includes(command.action)) return;
+    if (!DIRECTIONS[command.facing] || ![...Object.keys(ATTACKS), 'block', 'dodge'].includes(command.action)) return;
+    if (command.action === 'block') f.blockHeld = true;
     this.expire(f, now);
-    r.previous = {}; // these are distinct key presses, not a held input stream
-    r.update(now, { [command.action]: true }, command.facing);
     // How far back the attacker saw everyone else: judged against that moment, within MAX_REWIND.
     const rewind = Number.isFinite(command.seen) ? Math.min(MAX_REWIND, Math.max(0, now - command.seen)) : 0;
-    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }], rewind };
+    f.want = { facing: command.facing, rewind };
+    r.previous = {}; // these are distinct key presses, not a held input stream
+    this.act(f, { [command.action]: true }, now);
+  }
+
+  // Run the fighter's rules on a press (or none: a buffered one, retried each tick until BUFFER_MS runs out, as
+  // a press can arrive a moment before the host thinks the last move is over). A block counts as held until its
+  // release comes.
+  act(f, input, now) {
+    const r = f.rules;
+    r.update(now, { ...input, block: !!input.block || !!f.blockHeld }, f.want?.facing ?? 'down');
+    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }], rewind: f.want?.rewind ?? 0 };
+  }
+
+  // A press from someone held or stunned: the hold or the stun ends sooner (MASH). Presses closer than MASH.gap
+  // count once, so a key-repeat or a macro can't do better than fast fingers.
+  mash(f, now) {
+    if (now < (f.mashReady ?? 0)) return;
+    f.mashReady = now + MASH.gap;
+    if (f.rules.heldBy) f.rules.heldBy.mash(now);
+    else f.rules.shakeOff(now);
   }
 
   expire(f, now) {
@@ -90,13 +110,23 @@ export class RoomCombat {
   }
 
   // `move` names the attack (punch, grapple...) so clients can make the hit feel right; null for hazards.
-  damage(targetId, sourceId, spec, from, now, move = null) {
+  // `contact`: the earliest moment in this tick the swing could have connected (for the perfect-block window).
+  damage(targetId, sourceId, spec, from, now, move = null, contact = now) {
     const f = this.fighters.get(targetId);
     const p = f.position;
-    const result = f.rules.receive(spec, from ? directionTo(from.x-p.x, from.y-p.y) : null, now);
+    const result = f.rules.receive(spec, from ? directionTo(from.x-p.x, from.y-p.y) : null, now, contact);
+    // A perfect block: no damage, and the attacker is staggered (both told, so both screens feel it).
+    const attacker = sourceId && this.fighters.get(sourceId);
+    if (result.perfect && attacker) {
+      attacker.action = null;
+      const parry = attacker.rules.parried(now);
+      this.events.push({ target: targetId, source: sourceId, from, move, ...result });
+      this.events.push({ target: sourceId, source: targetId, from: { x: p.x, y: p.y }, move: 'parry', ...parry });
+      return;
+    }
     if (!result.damage) return;
     if (result.stun) f.stunAnchor = { x:p.x, y:p.y, level:f.level };
-    if (result.stagger) { f.action = null; f.rules.heldBy?.cancel(); }
+    if (result.stagger) { f.action = null; f.rules.heldBy?.cancel(now); }
     this.events.push({ target: targetId, source: sourceId, from, move, ...result });
     if (!f.rules.health.value) f.respawnAt = now + 400;
   }
@@ -107,7 +137,7 @@ export class RoomCombat {
       if (!f.hold) continue;
       const { hold, targetId, anchor, level, character } = f.hold;
       const victim = this.fighters.get(targetId);
-      if (!f.present || !victim?.present || f.level !== level || victim.level !== level || victim.rules !== hold.target || victim.rules.character !== character) hold.cancel();
+      if (!f.present || !victim?.present || f.level !== level || victim.level !== level || victim.rules !== hold.target || victim.rules.character !== character) hold.cancel(now);
       const state = hold.update(now);
       if (state === 'holding') {
         Object.assign(f.position, anchor);
@@ -115,11 +145,14 @@ export class RoomCombat {
       } else {
         f.hold = null;
         if (state === 'damage') this.damage(targetId, id, f.rules.attackSpec('grapple'), anchor, now, 'grapple');
+        // Mashed out early: the holder goes straight to the recovery instead of choking the air.
+        const frames = ATTACKS.grapple.frames, total = frames.reduce((a, b) => a + b, 0);
+        if (hold.mashed && f.action?.name === 'grapple') f.action.start = Math.min(f.action.start, now - (total - frames[3]));
       }
     }
     // A disconnected holder must not leave a surviving player permanently captured.
     for (const f of this.fighters.values()) {
-      if (f.rules.heldBy && !this.fighters.get(f.heldSource)?.hold) f.rules.heldBy.cancel();
+      if (f.rules.heldBy && !this.fighters.get(f.heldSource)?.hold) f.rules.heldBy.cancel(now);
     }
   }
 
@@ -136,11 +169,18 @@ export class RoomCombat {
     for (const f of this.fighters.values()) {
       f.rules.health.update(delta);
       if (f.respawnAt !== null && now >= f.respawnAt) {
-        f.rules = new CombatRules(undefined, f.position.char ?? 'titus'); f.action = null; f.respawnAt = null; f.life++;
+        f.rules = new CombatRules(undefined, f.position.char ?? 'titus'); f.action = null; f.blockHeld = false; f.respawnAt = null; f.life++;
       }
     }
     this.showers.update(delta);
     this.updateGrapples(now);
+    // A press that came in while the fighter was still busy here fires as soon as it's free.
+    for (const f of this.fighters.values()) {
+      if (!f.present || !f.rules.buffered) continue;
+      this.expire(f, now);
+      f.rules.previous = { block: !!f.blockHeld };
+      this.act(f, {}, now);
+    }
     for (const [id, f] of this.fighters) {
       if (f.present && f.rules.health.value > 0 && this.showers.burning(f.level, f.position)) {
         f.burn = (f.burn ?? 0) + delta;
@@ -159,7 +199,7 @@ export class RoomCombat {
         // Intersect the whole tick interval so a 60ms punch cannot fall between 66ms snapshots.
         if (now >= begin && a.checked <= end) {
           const p = f.position;
-          const others = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || !other.rules.heldBy));
+          const others = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || grabbable(other.rules, now)));
           // Everyone where the attacker saw them (and a moment either side), or where they are now with no rewind.
           const found = new Map();
           for (const t of a.rewind ? [now - a.rewind, now - a.rewind - TOLERANCE, now - a.rewind + TOLERANCE] : [now]) {
@@ -177,7 +217,7 @@ export class RoomCombat {
               victim.action = null;
               victim.heldSource = id;
               f.hold = { hold, targetId: target, anchor: { x:p.x, y:p.y }, level: f.level, character: victim.rules.character };
-            } else this.damage(target, id, spec, {x:p.x,y:p.y}, now, a.name);
+            } else this.damage(target, id, spec, {x:p.x,y:p.y}, now, a.name, Math.max(begin, a.checked));
           }
         }
         a.checked = now;

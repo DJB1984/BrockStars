@@ -28,10 +28,10 @@ test('range, facing, and level isolate hits',()=>{
 
 test('directional block reduces damage and release restores full damage',()=>{
   const {room,p}=setup();
-  cmd(room,'b','block','left',1,0);cmd(room,'a','punch','right',1,0);
-  assert.equal(room.tick(p,120).fighters.b.health,124);
-  cmd(room,'b','release',undefined,2,401);cmd(room,'a','punch','right',2,401);
-  assert.equal(room.tick(p,520).fighters.b.health,120);
+  cmd(room,'b','block','left',1,0);cmd(room,'a','punch','right',1,200);   // after the perfect-block window
+  assert.equal(room.tick(p,320).fighters.b.health,124);
+  cmd(room,'b','release',undefined,2,601);cmd(room,'a','punch','right',2,601);
+  assert.equal(room.tick(p,720).fighters.b.health,120);
 });
 
 test('host enforces cooldowns, block timeout, and stagger interruption',()=>{

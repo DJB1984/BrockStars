@@ -1,6 +1,24 @@
 // The game's sounds, synthesized on the spot with the Web Audio context Phaser already unlocked (the first
 // tap or key press), so nothing has to be loaded. Each one is a few milliseconds of an oscillator.
 //   dudClick(scene)   a soft, low click: a move pressed while it's still cooling down
+//   parryTing(scene)  a bright two-note ting: a perfect block
+
+export function parryTing(scene) {
+  const ctx = scene.sound?.context;
+  if (!ctx || ctx.state !== 'running' || scene.sound.mute) return;
+  const t = ctx.currentTime;
+  for (const [freq, at] of [[1320, 0], [1980, 0.05]]) {
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t + at);
+    gain.gain.setValueAtTime(0.0005, t);
+    gain.gain.setValueAtTime(0.08 * scene.sound.volume, t + at);
+    gain.gain.exponentialRampToValueAtTime(0.0005, t + at + 0.18);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t + at);
+    osc.stop(t + at + 0.2);
+  }
+}
 
 export function dudClick(scene) {
   const ctx = scene.sound?.context;

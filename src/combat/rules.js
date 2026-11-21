@@ -26,7 +26,20 @@ export function characterAttack(character, name) {
   if (!['punch', 'kick', 'headbutt'].includes(name)) return base;
   return { ...base, damage: stats[name], cooldown: stats[name + 'Cooldown'] ?? base.cooldown };
 }
-export const BLOCK = Object.freeze({ duration: 3000, cooldown: 1000, reduction: 0.75, speed: 0.5 });
+// A block covers every side but the one behind you (`facing` is its middle). A hit in its first `perfect` ms
+// does no damage and staggers the attacker for PARRY.stagger: a reward for reading the swing.
+export const BLOCK = Object.freeze({ duration: 3000, cooldown: 1000, reduction: 0.75, speed: 0.5, perfect: 120 });
+export const PARRY = Object.freeze({ stagger: 450, knockback: 10, slide: 140 });
+// A press made while the fighter can't act (mid-swing, mid-stagger) is remembered this long and fires on the
+// first frame it's free. Only the latest press is kept, so a held key still never repeats.
+export const BUFFER_MS = 150;
+// Shift (or Space): a quick hop of `distance` px over `duration` ms, untouchable for the first `invulnerable`.
+export const DODGE = Object.freeze({ distance: 40, duration: 160, invulnerable: 150, cooldown: 900 });
+// Held in a Grapple or stunned by a Bellow, every press (an arrow or a button) takes time off: down to a hold of
+// `grappleFloor` ms, or a stun of `stunFloor`. Presses closer than `gap` count once. Let go, a fighter can't be
+// grabbed again for `regrab` ms.
+export const MASH = Object.freeze({ grapple: 120, grappleFloor: 600, stun: 150, stunFloor: 1000, gap: 50, regrab: 1000 });
+export const OPPOSITE = Object.freeze({ up: 'down', down: 'up', left: 'right', right: 'left' });
 export const REGEN = Object.freeze({ delay: 45000, perSecond: 2 });
 export const DIRECTIONS = Object.freeze({ up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0] });
 
@@ -72,6 +85,31 @@ export function attackTargets(source, targets, facing, spec, path = [], walls = 
   return targets.filter(target => points.some((point, i) => zoneAlong(points[i - 1] ?? point, point, target, fx, fy, spec)
       && !wallBetween(walls, point, target)))
     .sort((a, b) => Math.hypot(a.x-source.x, a.y-source.y) - Math.hypot(b.x-source.x, b.y-source.y));
+}
+
+// A tap aims itself, as Brawl Stars' quick-fire does: the facing toward the nearest opponent within AIM_REACH of
+// the move's reach (by the stronger axis, for the four directions), or null when nobody's that close.
+// `held` (the directions the arrows hold) overrides it: one held direction is kept as it is, and a diagonal
+// keeps whichever of its two directions has someone in range, so aiming stays in the player's hands.
+export const AIM_REACH = 1.5;
+export function aimFacing(source, opponents, spec, held = [], walls = null) {
+  if (spec.radial) return null;
+  if (held.length === 1) return held[0];
+  if (held.length) {
+    // The nearest opponent either held direction reaches; the direction that points at them if both do.
+    const hit = held.map(dir => ({ dir, t: attackTargets(source, opponents, dir, spec, [], walls)[0] })).filter(o => o.t)
+      .sort((a, b) => Math.hypot(a.t.x - source.x, a.t.y - source.y) - Math.hypot(b.t.x - source.x, b.t.y - source.y));
+    if (!hit.length) return held[0];
+    const toward = directionTo(hit[0].t.x - source.x, hit[0].t.y - source.y);
+    return hit.some(o => o.dir === toward && o.t === hit[0].t) ? toward : hit[0].dir;
+  }
+  let best = null;
+  for (const o of opponents) {
+    const d = Math.hypot(o.x - source.x, o.y - source.y);
+    if (d > AIM_REACH * (spec.reach + BODY) || wallBetween(walls, source, o) || (best && d >= best.d)) continue;
+    best = { d, o };
+  }
+  return best ? directionTo(best.o.x - source.x, best.o.y - source.y) : null;
 }
 
 // Record the attacker's position for attackTargets' path, skipping samples where it stood still.
@@ -127,6 +165,8 @@ export class CombatRules {
     this.staggerUntil = 0;
     this.knockedDownUntil = 0;
     this.previous = {};
+    this.buffered = null;   // { name, at }: the latest press, waiting for the fighter to be free (BUFFER_MS)
+    this.dodge = null;
   }
   setCharacter(character) {
     this.character = character;
@@ -134,45 +174,85 @@ export class CombatRules {
   }
   get stunUntil() { return this.health.stunUntil ?? 0; }
   attackSpec(name) { return characterAttack(this.character, name); }
+  // The attacks this fighter has: the three basics and its own Super.
+  moves() { return Object.keys(ATTACKS).filter(name => !ATTACKS[name].character || ATTACKS[name].character === this.character); }
+  // Remember a fresh press for BUFFER_MS (block first, then the attacks in order, then the dodge). Run every
+  // frame, also while the fighter can't act (frozen, staggered, held), so a press made a moment early still
+  // counts. Returns what was freshly pressed this frame.
+  watch(now, input) {
+    const fresh = ['block', ...this.moves(), 'dodge'].filter(name => input[name] && !this.previous[name]);
+    if (fresh.length) this.buffered = { name: fresh[0], at: now };
+    else if (this.buffered && now - this.buffered.at > BUFFER_MS) this.buffered = null;
+    this.previous = { ...input };
+    return fresh;
+  }
   // `dud` is set to the move whose key was just pressed while it was still cooling down (null otherwise), so
   // the HUD can say no out loud instead of the press silently doing nothing. Only cooldowns of a second or
   // more count: a mashed punch isn't a dud.
   update(now, input, facing) {
     this.dud = null;
     if (this.block && (!input.block || now >= this.block.until)) this.endBlock(now);
+    if (this.dodge && now >= this.dodge.until) this.dodge = null;
+    const fresh = this.watch(now, input);
     if (this.health.value > 0 && !this.heldBy && now >= this.stunUntil) {
-      if (input.block && !this.previous.block && !this.block && now < this.blockReadyAt) this.dud = 'block';
-      for (const name of Object.keys(ATTACKS)) {
-        const spec = this.attackSpec(name);
-        if (spec.character && spec.character !== this.character) continue;
-        if (input[name] && !this.previous[name] && now < (this.readyAt[name] ?? 0) && spec.cooldown >= 1000) this.dud = name;
-      }
+      if (fresh.includes('block') && !this.block && now < this.blockReadyAt) this.dud = 'block';
+      for (const name of this.moves()) if (fresh.includes(name) && now < (this.readyAt[name] ?? 0) && this.attackSpec(name).cooldown >= 1000) this.dud = name;
     }
-    const available = !this.heldBy && !this.attack && !this.block && now >= this.staggerUntil && now >= this.stunUntil && this.health.value > 0;
-    if (available && input.block && !this.previous.block && now >= this.blockReadyAt) {
-      this.block = { facing, until: now + characterStats(this.character).blockDuration };
-    } else if (available) {
-      for (const name of Object.keys(ATTACKS)) {
-        const spec = this.attackSpec(name);
-        if (spec.character && spec.character !== this.character) continue;
-        if (input[name] && !this.previous[name] && now >= (this.readyAt[name] ?? 0)) {
-          this.attack = { name, facing, start: now };
-          this.readyAt[name] = now + spec.cooldown;
-          break;
-        }
-      }
+    // A dodge gets you out of a block.
+    if (this.block && this.buffered?.name === 'dodge' && now >= (this.readyAt.dodge ?? 0)) this.endBlock(now);
+    const available = !this.heldBy && !this.attack && !this.block && !this.dodge && now >= this.staggerUntil && now >= this.stunUntil && this.health.value > 0;
+    if (available && this.buffered && this.start(this.buffered.name, now, input, facing)) this.buffered = null;
+  }
+  // Start a move if it's ready; false if it isn't (it stays buffered). A block only goes up while its key is held.
+  start(name, now, input, facing) {
+    if (name === 'block') {
+      if (!input.block || now < this.blockReadyAt) return false;
+      this.block = { facing, start: now, until: now + characterStats(this.character).blockDuration };
+    } else if (name === 'dodge') {
+      if (now < (this.readyAt.dodge ?? 0)) return false;
+      // Where the arrows point (eight ways), or straight ahead.
+      const dx = Number(!!input.right) - Number(!!input.left), dy = Number(!!input.down) - Number(!!input.up);
+      const [fx, fy] = dx || dy ? [dx, dy] : DIRECTIONS[facing], length = Math.hypot(fx, fy);
+      this.dodge = { dx: fx / length, dy: fy / length, facing: directionTo(fx, fy) ?? facing, start: now, until: now + DODGE.duration };
+      this.invulnerableUntil = now + DODGE.invulnerable;
+      this.readyAt.dodge = now + DODGE.cooldown;
+    } else {
+      if (now < (this.readyAt[name] ?? 0)) return false;
+      this.attack = { name, facing, start: now };
+      this.readyAt[name] = now + this.attackSpec(name).cooldown;
     }
-    // Inputs pressed during another animation are consumed, never queued or auto-repeated.
-    this.previous = { ...input };
+    return true;
   }
   finishAttack() { this.attack = null; }
   endBlock(now) { this.block = null; this.blockReadyAt = now + BLOCK.cooldown; }
-  blocks(incomingSide, now) { return !!this.block && now < this.block.until && this.block.facing === incomingSide; }
-  receive(spec, incomingSide, now) {
+  // Every side but the one behind the block. A hit from no side (a hazard) isn't blocked.
+  blocks(incomingSide, now) { return !!this.block && now < this.block.until && !!incomingSide && incomingSide !== OPPOSITE[this.block.facing]; }
+  // A perfect block stopped this fighter's swing: it's interrupted and staggered, pushed back a little.
+  parried(now) {
+    this.attack = null;
+    this.staggerUntil = Math.max(this.staggerUntil, now + PARRY.stagger);
+    return { damage: 0, parried: true, blocked: false, stagger: PARRY.stagger, stun: 0, knockdown: 0, knockback: PARRY.knockback, slide: PARRY.slide };
+  }
+  // A press while stunned: the stun, and the stagger that holds it, end MASH.stun ms sooner, down to MASH.stunFloor.
+  shakeOff(now) {
+    if (now >= this.stunUntil) return false;
+    const until = Math.max(now, (this.health.stunSince ?? now) + MASH.stunFloor, this.stunUntil - MASH.stun);
+    this.health.stunUntil = until;
+    this.staggerUntil = Math.min(this.staggerUntil, until);
+    return true;
+  }
+  // `contact`: when the swing actually reached them, if earlier than now (the host only judges hits on its tick).
+  receive(spec, incomingSide, now, contact = now) {
+    // Mid-dodge: untouched.
+    if (Math.min(now, contact) < (this.invulnerableUntil ?? 0) && spec.damage) return { damage: 0, dodged: true, blocked: false, stagger: 0, stun: 0, knockdown: 0, knockback: 0, slide: 0 };
     const blocked = !spec.unblockable && this.blocks(incomingSide, now);
+    if (blocked && contact - this.block.start < BLOCK.perfect) {
+      return { damage: 0, blocked: true, perfect: true, stagger: 0, stun: 0, knockdown: 0, knockdownFacing: null, knockback: 0, slide: 0 };
+    }
     const damage = this.health.take(spec.damage * (blocked ? 1 - BLOCK.reduction : 1));
     const stun = blocked ? 0 : (spec.stun ?? 0);
     if (damage && stun) {
+      if (now >= this.stunUntil) this.health.stunSince = now;
       this.health.stunUntil = Math.max(this.stunUntil, now + stun);
       this.health.stunFacing = incomingSide ?? 'down';
       this.health.healingBlockedFor = Math.max(this.health.healingBlockedFor ?? 0, stun);
@@ -181,6 +261,7 @@ export class CombatRules {
     const knockdown = blocked ? 0 : (spec.knockdown ?? 0);
     if (damage && stagger) {
       this.attack = null;
+      this.dodge = null;
       if (this.block) this.endBlock(now);
       this.staggerUntil = Math.max(this.staggerUntil, now + stagger);
       this.knockedDownUntil = Math.max(this.knockedDownUntil, now + knockdown);

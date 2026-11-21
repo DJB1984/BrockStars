@@ -1,7 +1,8 @@
 import { updateBellowVisuals } from '../combat/bellowVisuals.js';
 import { characterStats } from '../characters.js';
 import { showGrappleOverlay } from '../combat/grappleVisuals.js';
-import { ATTACKS, attackAnim } from '../combat/rules.js';
+import { ATTACKS, DODGE, attackAnim } from '../combat/rules.js';
+import { dodgeTrail } from '../combat/dodge.js';
 import { HeadBar, headroom } from '../objects/HeadBar.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
@@ -96,6 +97,10 @@ export class RemotePlayers {
       const special = Object.keys(ATTACKS).find(name => ATTACKS[name].character === p.char);
       sprite.alive = (combat?.health ?? 1) > 0;
       sprite.blockFacing = combat?.block ?? null;
+      sprite.mash = !!(combat?.held || combat?.stun);   // fightMarks.js: "MASH!" over them
+      // A new dodge (each carries its own start): the same afterimages as yours.
+      if (p.dodge && p.dodge !== r.dodge) dodgeTrail(scene, sprite, DODGE.duration);
+      r.dodge = p.dodge;
       sprite.superReady = !!combat && sprite.alive && !!special && !combat[`${special}Cooldown`];
       const frozen = sprite.hitFreeze;   // a hit's freeze (hitFeel.js) holds the sprite's spot and pose
       if (anim && scene.anims.exists(anim)) {

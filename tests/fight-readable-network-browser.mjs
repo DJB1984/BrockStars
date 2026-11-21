@@ -62,7 +62,7 @@ try {
   await hold(guest, { block: true });
   await wait(400);
   const blockSeen = await host.evaluate(() => { const f = window.pixelforgePlay.scene.marks.fighters().find(f => !f.mine); return f && { block: f.block, superReady: f.superReady }; });
-  const shieldShown = await host.evaluate(() => [...window.pixelforgePlay.scene.marks.shields.values()].some(g => g.visible));
+  const shieldShown = await host.evaluate(() => [...window.pixelforgePlay.scene.marks.shields.values()].some(([g]) => g.visible));
   await host.screenshot({ path: 'previews/fight-readable-net-block.png' });
   await hold(guest, {});
   await wait(1200);

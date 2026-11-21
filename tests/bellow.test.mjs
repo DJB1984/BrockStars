@@ -17,7 +17,7 @@ test('Bellow is James-only, needs a new press, and preserves its 25s cooldown ac
   const health=new HealthPool(),r=new CombatRules(health,'james');
   r.update(0,{bellow:true},'left');assert.equal(r.attack.name,'bellow');r.finishAttack();
   const next=new CombatRules(health,'mason');next.setCharacter('james');
-  next.update(24999,{bellow:true},'down');assert.equal(next.attack,null);
+  next.update(24800,{bellow:true},'down');assert.equal(next.attack,null); // too early even for the 150 ms buffer
   next.update(25000,{bellow:true},'down');assert.equal(next.attack,null);
   next.update(25001,{},'down');next.update(25002,{bellow:true},'down');assert.equal(next.attack.name,'bellow');
 });

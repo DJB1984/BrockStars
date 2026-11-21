@@ -24,7 +24,7 @@ export class CombatPractice extends Phaser.Scene {
     text(24,14,`${this.characterLabel.toUpperCase()} / COMBAT PRACTICE`,16,'#f0bb7e');
     const stats = CHARACTERS[character];
     this.special = Object.entries(ATTACKS).find(([, spec]) => spec.character === character);
-    text(24,38,`C Punch ${stats.punch}  X Kick ${stats.kick}  Z Headbutt ${stats.headbutt}  Hold V Block${this.special ? `  S ${this.special[0]} ${this.special[1].damage}` : ''}`,10);
+    text(24,38,`C Punch ${stats.punch}  X Kick ${stats.kick}  Z Headbutt ${stats.headbutt}  Hold V Block${this.special ? `  S ${this.special[0]} ${this.special[1].damage}` : ''}  Shift Dodge`,10);
     this.status=text(24,58,'',11);
     this.message=text(24,320,'Approach the partner to test your attacks.',11,'#aabbd1');
     text(24,340,'Arrows Move   P Sparring on/off   R Reset   B Hitboxes',10,'#aabbd1');
@@ -35,6 +35,7 @@ export class CombatPractice extends Phaser.Scene {
     this.health=new HealthPool();
     this.partnerHealth=new HealthPool();
     const report=(target,attack,result) => {
+      if (result?.perfect) this.message.setText(`${target===this.player?this.characterLabel:'Partner'}: perfect block! The ${attack} bounced off.`);
       if (result?.damage) this.message.setText(`${target===this.player?this.characterLabel:'Partner'}: ${result.blocked?'blocked ':''}${attack}, -${result.damage} HP${result.stagger?' / staggered':''}`);
     };
     this.hitFeel=new HitFeel(this,{me:()=>this.player});
@@ -44,7 +45,7 @@ export class CombatPractice extends Phaser.Scene {
     this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:landed(this.partner),onWhiff});
     // Rings, shields and wind-up telegraphs for both fighters, as in a level.
     const superReady=(c)=>{const move=Object.keys(ATTACKS).find(n=>ATTACKS[n].character===c.rules.character);return !!move&&c.rules.health.value>0&&this.time.now>=(c.rules.readyAt[move]??0);};
-    const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,block:c.rules.block?.facing??null,superReady:superReady(c)});
+    const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,block:c.rules.block?.facing??null,superReady:superReady(c),mash:!!c.rules.heldBy||this.time.now<c.rules.stunUntil});
     this.marks=new FightMarks(this,()=>[marked(this.combat,true),marked(this.partnerCombat,false)]);
     this.marks.follow(this.combat);this.marks.follow(this.partnerCombat);
     this.player.controller.facing='right';
@@ -71,7 +72,7 @@ export class CombatPractice extends Phaser.Scene {
       input[['punch','kick','headbutt'][this.strikeIndex++%3]]=true;
       this.nextStrike=time+2000;
     }
-    this.partner.controller.override=input;
+    this.partner.controller.override=this.partnerKeys??input;   // a test drives the partner by setting partnerKeys
     const c=this.combat.snapshot();
     const block=c.blocking?`Blocking ${c.blockFacing} ${(c.blockRemaining/1000).toFixed(1)}s`:c.blockCooldown?`Block ready in ${(c.blockCooldown/1000).toFixed(1)}s`:'Block ready';
     const left = this.special ? c.cooldowns[this.special[0]] : 0;
