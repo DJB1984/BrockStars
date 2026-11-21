@@ -1,0 +1,40 @@
+{
+  "name": "fx_block",
+  "type": "fx",
+  "size": [
+    16,
+    16
+  ],
+  "origin": [
+    8,
+    8
+  ],
+  "palette": {
+    "w": "white",
+    "c": "cyan",
+    "b": "blue",
+    "n": "navy"
+  },
+  "animations": {
+    "play": {
+      "frames": [
+        {
+          "from": "fx_0",
+          "duration": 40
+        },
+        {
+          "from": "fx_1",
+          "duration": 50
+        },
+        {
+          "from": "fx_2",
+          "duration": 50
+        },
+        {
+          "from": "fx_3",
+          "duration": 60
+        }
+      ]
+    }
+  }
+}

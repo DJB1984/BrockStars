@@ -1,0 +1,39 @@
+{
+  "name": "fx_swish",
+  "type": "fx",
+  "size": [
+    32,
+    24
+  ],
+  "origin": [
+    16,
+    12
+  ],
+  "palette": {
+    "w": "white",
+    "l": "light_gray",
+    "g": "gray"
+  },
+  "animations": {
+    "play": {
+      "frames": [
+        {
+          "from": "fx_0",
+          "duration": 40
+        },
+        {
+          "from": "fx_1",
+          "duration": 50
+        },
+        {
+          "from": "fx_2",
+          "duration": 50
+        },
+        {
+          "from": "fx_3",
+          "duration": 50
+        }
+      ]
+    }
+  }
+}

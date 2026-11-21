@@ -3638,6 +3638,222 @@
         ],
         "hit": []
       }
+    },
+    "99": {
+      "frame": {
+        "x": 0,
+        "y": 2430,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 90,
+      "pixelforge": {
+        "hurt": [
+          [
+            12,
+            8,
+            41,
+            59
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "100": {
+      "frame": {
+        "x": 65,
+        "y": 2430,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 260,
+      "pixelforge": {
+        "hurt": [
+          [
+            15,
+            9,
+            35,
+            58
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "101": {
+      "frame": {
+        "x": 0,
+        "y": 2511,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 90,
+      "pixelforge": {
+        "hurt": [
+          [
+            12,
+            14,
+            41,
+            53
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "102": {
+      "frame": {
+        "x": 65,
+        "y": 2511,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 260,
+      "pixelforge": {
+        "hurt": [
+          [
+            15,
+            13,
+            35,
+            54
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "103": {
+      "frame": {
+        "x": 0,
+        "y": 2592,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 90,
+      "pixelforge": {
+        "hurt": [
+          [
+            22,
+            12,
+            19,
+            55
+          ]
+        ],
+        "hit": []
+      }
+    },
+    "104": {
+      "frame": {
+        "x": 65,
+        "y": 2592,
+        "w": 64,
+        "h": 80
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 64,
+        "h": 80
+      },
+      "sourceSize": {
+        "w": 64,
+        "h": 80
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.85
+      },
+      "duration": 260,
+      "pixelforge": {
+        "hurt": [
+          [
+            22,
+            12,
+            20,
+            55
+          ]
+        ],
+        "hit": []
+      }
     }
   },
   "meta": {
@@ -3647,7 +3863,7 @@
     "format": "RGBA8888",
     "size": {
       "w": 454,
-      "h": 2429
+      "h": 2672
     },
     "scale": "1",
     "frameTags": [
@@ -3860,6 +4076,27 @@
         "to": 98,
         "direction": "forward",
         "color": "#000000ff"
+      },
+      {
+        "name": "james_hurt_down",
+        "from": 99,
+        "to": 100,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "james_hurt_up",
+        "from": 101,
+        "to": 102,
+        "direction": "forward",
+        "color": "#000000ff"
+      },
+      {
+        "name": "james_hurt_side",
+        "from": 103,
+        "to": 104,
+        "direction": "forward",
+        "color": "#000000ff"
       }
     ],
     "layers": [],
@@ -4060,6 +4297,24 @@
           "loop": false,
           "fps": 8.0,
           "frames": 4
+        },
+        "james_hurt_down": {
+          "anim": "hurt_down",
+          "loop": false,
+          "fps": 8.0,
+          "frames": 2
+        },
+        "james_hurt_up": {
+          "anim": "hurt_up",
+          "loop": false,
+          "fps": 8.0,
+          "frames": 2
+        },
+        "james_hurt_side": {
+          "anim": "hurt_side",
+          "loop": false,
+          "fps": 8.0,
+          "frames": 2
         }
       },
       "groups": [
@@ -4117,6 +4372,9 @@
         {
           "name": "Reactions",
           "anims": [
+            "hurt_down",
+            "hurt_up",
+            "hurt_side",
             "knockdown_down",
             "knockdown_up",
             "knockdown_side",

@@ -1,0 +1,41 @@
+{
+  "name": "fx_hit_heavy",
+  "type": "fx",
+  "size": [
+    32,
+    32
+  ],
+  "origin": [
+    16,
+    16
+  ],
+  "palette": {
+    "w": "white",
+    "y": "yellow",
+    "a": "amber",
+    "o": "orange",
+    "r": "red"
+  },
+  "animations": {
+    "play": {
+      "frames": [
+        {
+          "from": "fx_0",
+          "duration": 40
+        },
+        {
+          "from": "fx_1",
+          "duration": 60
+        },
+        {
+          "from": "fx_2",
+          "duration": 60
+        },
+        {
+          "from": "fx_3",
+          "duration": 70
+        }
+      ]
+    }
+  }
+}

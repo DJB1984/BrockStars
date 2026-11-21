@@ -93,9 +93,16 @@ range, timing, cooldowns, and blocking, then shares damage, health, hit effects,
 Each attack can hit each opponent once. Health regenerates after 45 seconds without damage;
 a knockout respawns the player after a short pause. Other players' name tags display their health.
 
+Each hit the host shares names its move (`punch`, `grapple`...) and how far and how long the victim slides, and
+the snapshot says which way a staggered fighter flinched (`hurtFacing`). Every screen then makes the hit felt
+the same way (`src/combat/hitFeel.js`): the two fighters freeze for a moment, the victim shakes in its hurt pose,
+a spark pops at the contact point, and only the two people in the fight feel the camera shake. A swing that
+connects with nobody swishes instead.
+
 Combat commands and results use an ordered, reliable WebRTC channel. Movement still sends about
 15 snapshots a second. Both players need the updated game files; refresh older open tabs after deploying.
 The host validates combat against the latest reported positions; movement remains client-controlled.
 
 Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against
 `npm run dev` to exercise two browser clients (Playwright and Chrome/Chromium required).
+`npm run test:hitfeel` and `npm run test:hitfeel:multiplayer` check that hits land and misses swish, solo and online.

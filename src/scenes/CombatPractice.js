@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { addPixelforgePlayer, pixelforgeFeel, installPixelforgePlay, drawPixelforgeBoxes, playFacing } from '../../export/pixelforge.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
+import { HitFeel } from '../combat/hitFeel.js';
 import { CHARACTERS, isCharacter } from '../characters.js';
 import { HealthPool, directionTo, ATTACKS } from '../combat/rules.js';
 
@@ -35,8 +36,11 @@ export class CombatPractice extends Phaser.Scene {
     const report=(target,attack,result) => {
       if (result?.damage) this.message.setText(`${target===this.player?this.characterLabel:'Partner'}: ${result.blocked?'blocked ':''}${attack}, -${result.damage} HP${result.stagger?' / staggered':''}`);
     };
-    this.combat=new TitusCombat(this,this.player,{health:this.health,targets:()=>[this.partner],onHit:report});
-    this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:report});
+    this.hitFeel=new HitFeel(this,{me:()=>this.player});
+    const landed=(attacker)=>(target,attack,result)=>{report(target,attack,result);this.hitFeel.land(attacker,target,attack,result);};
+    const onWhiff=(sprite,move,facing)=>this.hitFeel.whiff(sprite,move,facing);
+    this.combat=new TitusCombat(this,this.player,{health:this.health,targets:()=>[this.partner],onHit:landed(this.player),onWhiff});
+    this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:landed(this.partner),onWhiff});
     this.player.controller.facing='right';
     this.partner.controller.facing='left';
     playFacing(this.player,'idle','right');

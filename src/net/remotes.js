@@ -17,10 +17,11 @@ export class RemotePlayers {
     this.scene = scene;
     this.net = net;
     this.shown = new Map();
+    // A remote swing that lands on anyone isn't a whiff (the scene's hitFeel makes the hit itself felt).
     const hits = ({hits}) => {
       for (const hit of hits) {
-        const sprite = this.shown.get(hit.target)?.sprite;
-        if (sprite && !hit.knockdown) scene.feel?.flash(sprite, 90, hit.blocked ? 0x77bbff : 0xffffff);
+        const r = this.shown.get(hit.source);
+        if (r) r.landedAt = performance.now();
       }
     };
     net.on('combat', hits);
@@ -57,7 +58,8 @@ export class RemotePlayers {
       if (combat?.stunPosition) ({x, y} = combat.stunPosition);
       if (combat?.held) ({x, y} = combat.held);
       if (combat?.grapple) ({x, y} = combat.grapple);
-      const facing = (combat?.stun ? combat.stunFacing : null) ?? combat?.held?.facing ?? (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block;
+      const hurt = combat?.stagger && !combat.knockdown && !combat.stun && combat.health ? combat.hurtFacing : null;
+      const facing = (combat?.stun ? combat.stunFacing : null) ?? combat?.held?.facing ?? (combat?.knockdown ? combat.knockdownFacing : null) ?? combat?.attack?.facing ?? combat?.block ?? hurt;
       const dir = facing === 'left' || facing === 'right' ? 'side' : facing;
       let anim = p.anim;
       if (combat?.stun) anim = `${p.char}_stunned_${dir ?? 'down'}`;
@@ -66,21 +68,36 @@ export class RemotePlayers {
       else if (combat?.attack) {
         // A new attack (none before, or its clock restarted) counts toward alternating punch hands.
         const started = !r.attack || combat.attack.elapsed < r.attack.elapsed;
+        if (started) { r.swingStart = now - combat.attack.elapsed; r.whiffed = false; }
         if (started && combat.attack.name === 'punch') r.punches = (r.punches ?? -1) + 1;
         anim = attackAnim(p.char, combat.attack.name, combat.attack.facing, r.punches ?? 0, key => scene.anims.exists(key));
-      }
-      else if (combat?.block) anim = `${p.char}_block_${dir}`;
-      else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
-      if (anim && scene.anims.exists(anim)) {
-        sprite.play(anim, true);
-        if (combat?.knockdown) sprite.anims.setProgress(Math.min(0.99, 1-combat.knockdown/1500));
-        else if (fresh && combat?.attack) {
-          const duration = ATTACKS[combat.attack.name].frames.reduce((a,b)=>a+b,0);
-          sprite.anims.setProgress(Math.min(0.99, combat.attack.elapsed/duration));
+        // Its active frames are over and it touched nobody since it started: a whiff.
+        const [windup, active] = ATTACKS[combat.attack.name].frames;
+        if (!r.whiffed && combat.attack.elapsed >= windup + active && !((r.landedAt ?? -Infinity) >= r.swingStart)) {
+          r.whiffed = true;
+          scene.hitFeel?.whiff(sprite, combat.attack.name, combat.attack.facing);
         }
       }
+      else if (combat?.block) anim = `${p.char}_block_${dir}`;
+      else if (hurt && scene.anims.exists(`${p.char}_hurt_${dir}`)) anim = `${p.char}_hurt_${dir}`;
+      else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
       r.attack = combat?.attack ?? null;
-      sprite.setPosition(x, y).setFlipX(facing ? facing === 'left' : !!p.flip).setDepth(y - 0.5);
+      const frozen = sprite.hitFreeze;   // a hit's freeze (hitFeel.js) holds the sprite's spot and pose
+      if (anim && scene.anims.exists(anim)) {
+        if (frozen) {
+          // Change pose (into the hurt pose, say), but stay paused on it until the freeze ends.
+          if (sprite.anims.currentAnim?.key !== anim) sprite.play(anim).anims.pause();
+        } else {
+          sprite.play(anim, true);
+          if (combat?.knockdown) sprite.anims.setProgress(Math.min(0.99, 1-combat.knockdown/1500));
+          else if (fresh && combat?.attack) {
+            const duration = ATTACKS[combat.attack.name].frames.reduce((a,b)=>a+b,0);
+            sprite.anims.setProgress(Math.min(0.99, combat.attack.elapsed/duration));
+          }
+        }
+      }
+      if (!frozen) sprite.setPosition(x, y).setDepth(y - 0.5);
+      sprite.setFlipX(facing ? facing === 'left' : !!p.flip);
       r.bar.setName(p.name || 'Player');
       r.bar.update((combat?.health ?? characterStats(p.char).health) / (combat?.maxHealth ?? characterStats(p.char).health), x, y - headroom(scene, p.char), delta);
       const seen = scene.rooms?.canSee(x, y) ?? true;   // hidden in a room you aren't in
@@ -90,6 +107,18 @@ export class RemotePlayers {
       r.bar.setVisible(seen);
     }
     for (const id of [...this.shown.keys()]) if (!here.has(id)) this.remove(id);
+  }
+
+  // The sprite drawn for a player id, if they're in this level.
+  sprite(id) { return this.shown.get(id)?.sprite ?? null; }
+
+  // Every remote player you can see.
+  sprites() { return [...this.shown.values()].map(r => r.sprite).filter(s => s.active && s.visible); }
+
+  // How many of them are on the camera right now.
+  onScreen() {
+    const view = this.scene.cameras.main.worldView;
+    return this.sprites().filter(s => view.contains(s.x, s.y)).length;
   }
 
   add(id, p) {

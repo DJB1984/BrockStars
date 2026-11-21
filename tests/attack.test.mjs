@@ -125,11 +125,12 @@ test('host: a swept hit lands once, and the path starts fresh each swing', () =>
 
 // ---- local client (TitusCombat on a fake scene, stepped one 60fps frame at a time) ---------------
 
-function arena(character, speed) {
+function arena(character, speed, options = {}) {
   const listeners = {}, sceneEvents = {}, now = { t: 0 };
   const on = (bag) => (event, fn) => { (bag[event] ??= []).push(fn); };
   const scene = {
     time: { get now() { return now.t; } },
+    anims: { exists: () => true },
     input: { keyboard: { addKeys: () => Object.fromEntries('CXZVS'.split('').map(k => [k, { isDown: false }])) } },
     events: { on: on(sceneEvents), once: on(sceneEvents), off() {} },
     // Hit boxes exist only on active frames, like the exported art.
@@ -145,7 +146,7 @@ function arena(character, speed) {
     setFlipX(v) { this.flipX = v; return this; }, setDepth() { return this; }, play() { return this; },
     controller: {
       opts: { speed }, facing: 'right', override: {}, keys: {}, busy: null, stunnedUntil: 0,
-      readInput() { return { left: false, right: false, up: false, down: false, ...this.override }; }, update() { this.updateTopdown(this.readInput()); },
+      readInput() { return { left: false, right: false, up: false, down: false, ...this.override }; }, update(t) { if (t < this.stunnedUntil) return; this.updateTopdown(this.readInput()); },
       updateTopdown(input) {
         const dx = Number(!!input.right) - Number(!!input.left), dy = Number(!!input.down) - Number(!!input.up);
         sprite.body.setVelocity(dx * speed, dy * speed);
@@ -153,7 +154,7 @@ function arena(character, speed) {
       stun(ms) { this.stunnedUntil = now.t + ms; },
     },
   };
-  const combat = new TitusCombat(scene, sprite, { targets: () => [target] });
+  const combat = new TitusCombat(scene, sprite, { targets: () => [target], ...options });
   // One frame: controller, physics, the frame the animation is on, then postupdate hit checks.
   const step = (input) => {
     now.t += 1000 / 60;
@@ -234,4 +235,45 @@ test('punches alternate hands facing up and down, when the character has the oth
   assert.equal(attackAnim('titus', 'punch', 'left', 1, has), 'titus_punch_side', 'side punches keep the near hand');
   assert.equal(attackAnim('titus', 'kick', 'down', 1, has), 'titus_kick_down');
   assert.equal(attackAnim('mason', 'punch', 'down', 1, () => false), 'mason_punch_down', 'no alt art: same punch');
+});
+
+test('local: a swing that touches nobody whiffs once its active frames end; a hit never whiffs', () => {
+  const whiffs = [];
+  const miss = arena('titus', 140, { onWhiff: (s, move, facing) => whiffs.push([move, facing, s.controller.facing]) });
+  Object.assign(miss.target, { x: 300, y: 0 });
+  miss.step({ punch: true });
+  while (miss.combat.rules.attack && miss.sprite.frame.name !== 'active') miss.step({});
+  assert.deepEqual(whiffs, [], 'not during the active frames');
+  while (miss.combat.rules.attack) miss.step({});
+  assert.deepEqual(whiffs.map(w => w.slice(0, 2)), [['punch', 'right']]);
+  const hit = arena('titus', 140, { onWhiff: () => whiffs.push('hit') });
+  Object.assign(hit.target, { x: 20, y: 0 });
+  hit.step({ punch: true });
+  while (hit.combat.rules.attack) hit.step({});
+  assert.equal(hit.hits.length, 1); assert.equal(whiffs.length, 1);
+  // Online: a swing that visibly reaches another player isn't a whiff, even though the host judges it.
+  const online = arena('titus', 140, { onWhiff: () => whiffs.push('online'), others: () => [{ active: true, x: 20, y: 0 }] });
+  Object.assign(online.target, { x: 300, y: 0 });
+  online.step({ punch: true });
+  while (online.combat.rules.attack) online.step({});
+  assert.equal(whiffs.length, 1);
+});
+
+test('local: a hit flinches the victim, then slides them its knockback distance after the freeze', () => {
+  for (const name of ['punch', 'kick']) {
+    const { sprite, combat, step } = arena('titus', 140);
+    combat.rules.update(0, { punch: true }, 'right');
+    const spec = ATTACKS[name], start = sprite.x;
+    sprite.hitFreeze = { until: 1 };   // as hitFeel.js leaves it
+    const result = combat.receive({ x: sprite.x - 20, y: 0 }, spec);
+    assert.equal(combat.rules.attack, null, `${name}: own swing cancelled`);
+    step({ right: true });
+    assert.equal(sprite.x, start, 'held while frozen');
+    delete sprite.hitFreeze;
+    for (let t = 0; t < spec.slide + 50; t += 1000 / 60) step({ right: true });
+    const moved = sprite.x - start;
+    assert.ok(Math.abs(moved - spec.knockback) <= 1.5, `${name}: slid ${moved.toFixed(1)}px for ${spec.knockback}`);
+    assert.equal(sprite.controller.facing, 'left', 'turned to face the hit');
+    assert.ok(sprite.controller.stunnedUntil >= result.stagger - 20, 'the arrows cannot steer out of the flinch');
+  }
 });

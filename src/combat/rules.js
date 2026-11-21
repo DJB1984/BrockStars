@@ -4,14 +4,19 @@ import { wallBetween } from './walls.js';
 // frames = [windup, active, return, recovery] ms; the build scripts bake them into both sprites'
 // animations; rebuild Grapple with scripts/build-mason-grapple.mjs and re-export after timing changes.
 // lunge = px/s added toward the attack's facing through windup+active, closing the gap mid-swing.
+// stagger = ms from contact the victim can't act, counting the hit's freeze (hitFeel.js): every hit
+// interrupts, so a clean hit wins the exchange instead of both fighters trading.
+// knockback = px the victim slides away, over `slide` ms, fast at first and easing out.
 export const ATTACKS = Object.freeze({
-  punch: { key: 'C', damage: 4, cooldown: 300, frames: [70, 90, 60, 100], reach: 34, width: 20, lunge: 60, knockback: 25, stagger: 0 },
-  kick: { key: 'X', damage: 9, cooldown: 5000, frames: [110, 120, 80, 150], reach: 50, width: 22, lunge: 80, knockback: 45, stagger: 0 },
-  headbutt: { key: 'Z', damage: 10, cooldown: 10000, frames: [150, 110, 90, 200], reach: 30, width: 20, lunge: 110, knockback: 140, stagger: 350 },
+  punch: { key: 'C', damage: 4, cooldown: 300, frames: [70, 90, 60, 100], reach: 34, width: 20, lunge: 60, knockback: 7, slide: 120, stagger: 210 },
+  kick: { key: 'X', damage: 9, cooldown: 5000, frames: [110, 120, 80, 150], reach: 50, width: 22, lunge: 80, knockback: 15, slide: 160, stagger: 340 },
+  headbutt: { key: 'Z', damage: 10, cooldown: 10000, frames: [150, 110, 90, 200], reach: 30, width: 20, lunge: 110, knockback: 49, slide: 300, stagger: 350 },
   bellow: { key: 'S', character: 'james', damage: 10, cooldown: 25000, frames: [350, 120, 180, 250], radial: true, reach: 10 * 16, speed: 0, knockback: 0, stagger: 5000, stun: 5000, unblockable: true },
-  grapple: { key: 'S', character: 'mason', damage: 25, cooldown: 20000, frames: [450, 120, 2000, 300], reach: 22, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 250, hold: true },
-  takedown: { key: 'S', character: 'titus', damage: 30, cooldown: 20000, frames: [500, 100, 180, 320], reach: 24, width: 10, maxTargets: 1, speed: 0, knockback: 45, stagger: 1500, knockdown: 1500 },
+  grapple: { key: 'S', character: 'mason', damage: 25, cooldown: 20000, frames: [450, 120, 2000, 300], reach: 22, width: 10, maxTargets: 1, speed: 0, knockback: 11, slide: 200, stagger: 250, hold: true },
+  takedown: { key: 'S', character: 'titus', damage: 30, cooldown: 20000, frames: [500, 100, 180, 320], reach: 24, width: 10, maxTargets: 1, speed: 0, knockback: 4, slide: 80, stagger: 1500, knockdown: 1500 },
 });
+// A knockback's starting speed (px/s): sliding `knockback` px over `slide` ms, slowing evenly to a stop.
+export const pushSpeed = (knockback, slide) => slide > 0 ? 2 * knockback * 1000 / slide : 0;
 // Positions are body centres, but people are hit on their body, not at their centre: every
 // attack zone is credited the defender's half-width on all sides.
 export const BODY = 9;
@@ -168,7 +173,9 @@ export class CombatRules {
       this.staggerUntil = Math.max(this.staggerUntil, now + stagger);
       this.knockedDownUntil = Math.max(this.knockedDownUntil, now + knockdown);
       if (knockdown) this.knockdownFacing = incomingSide;
+      else this.hurtFacing = incomingSide;
     }
-    return { damage, blocked, stagger, stun, knockdown, knockdownFacing: knockdown ? incomingSide : null, knockback: spec.knockback * (blocked ? 0.25 : 1) };
+    return { damage, blocked, stagger, stun, knockdown, knockdownFacing: knockdown ? incomingSide : null,
+      knockback: (spec.knockback ?? 0) * (blocked ? 0.25 : 1), slide: spec.slide ?? 0 };
   }
 }

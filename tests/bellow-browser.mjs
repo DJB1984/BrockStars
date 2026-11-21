@@ -10,14 +10,14 @@ try {
     const check=(name,ok)=>{if(!ok)throw Error(name);out.push(name);};
     window.resetBellow=(dx=60,dy=0)=>{
       s.combat.cancelGrapple();s.health.reset();s.partnerHealth.reset();
-      for(const c of [s.combat,s.partnerCombat]) {c.rules.attack=null;c.rules.block=null;c.rules.heldBy=null;c.rules.previous={};c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.rules.blockReadyAt=0;c.controller.stunnedUntil=0;c.controller.busy=null;}
+      for(const c of [s.combat,s.partnerCombat]) {c.rules.attack=null;c.rules.block=null;c.rules.heldBy=null;c.rules.previous={};c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.rules.blockReadyAt=0;c.controller.stunnedUntil=0;c.push=null;c.controller.busy=null;}
       s.player.body.reset(300,220);s.partner.body.reset(300+dx,220+dy);s.player.controller.facing='right';s.partner.controller.override={};play.step(17,{});
     };
     for(const [dx,dy] of [[80,0],[-80,0],[0,70],[0,-70],[112,50]]){
       resetBellow(dx,dy);play.step(300,{bellow:true});check('windup '+dx+','+dy,s.partnerHealth.value===125);
       play.step(150,{bellow:true});check('10 damage '+dx+','+dy,s.partnerHealth.value===115);
       check('stunned animation '+dx+','+dy,s.partner.anims.currentAnim.key.includes('stunned'));
-      const start=[s.partner.x,s.partner.y],read=s.partner.controller.readInput;
+      const start=[s.partner.hitFreeze?.x??s.partner.x,s.partner.hitFreeze?.y??s.partner.y],read=s.partner.controller.readInput;
       s.partner.controller.readInput=()=>({...read(),right:true,punch:true,block:true});s.partnerHealth.quiet=45000;
       check('direct healing blocked '+dx+','+dy,s.partnerHealth.heal(10)===0);
       play.step(4700,{bellow:true});check('rooted for five seconds '+dx+','+dy,s.partner.x===start[0]&&s.partner.y===start[1]&&!s.partnerCombat.rules.attack&&!s.partnerCombat.rules.block);

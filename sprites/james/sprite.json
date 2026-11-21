@@ -34,7 +34,33 @@
     "hit_*": "hit"
   },
   "hurt_pad": -1,
-  "groups": {"Movement":["idle_*","walk_*"],"Punch":["punch_*"],"Kick":["kick_*"],"Headbutt":["headbutt_*"],"Block":["block_*"],"Bellow":["bellow_*"],"Reactions":["knockdown_*","grappled_*","stunned_*"]},
+  "groups": {
+    "Movement": [
+      "idle_*",
+      "walk_*"
+    ],
+    "Punch": [
+      "punch_*"
+    ],
+    "Kick": [
+      "kick_*"
+    ],
+    "Headbutt": [
+      "headbutt_*"
+    ],
+    "Block": [
+      "block_*"
+    ],
+    "Bellow": [
+      "bellow_*"
+    ],
+    "Reactions": [
+      "hurt_*",
+      "knockdown_*",
+      "grappled_*",
+      "stunned_*"
+    ]
+  },
   "animations": {
     "idle_down": {
       "loop": true,
@@ -1620,6 +1646,217 @@
             "side_head"
           ],
           "duration": 250
+        }
+      ]
+    },
+    "hurt_down": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "from": "front_torso",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "hurt_front_arm_l_snap",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "hurt_front_arm_r_snap",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "front_head",
+              "offset": [
+                0,
+                -3
+              ]
+            }
+          ],
+          "duration": 90
+        },
+        {
+          "layers": [
+            "front_shadow",
+            "front_legs_stand",
+            {
+              "from": "front_torso",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "hurt_front_arm_l_recoil",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "hurt_front_arm_r_recoil",
+              "offset": [
+                0,
+                -1
+              ]
+            },
+            {
+              "from": "front_head",
+              "offset": [
+                0,
+                -2
+              ]
+            }
+          ],
+          "duration": 260
+        }
+      ]
+    },
+    "hurt_up": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "from": "back_torso",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "hurt_back_arm_l_snap",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "hurt_back_arm_r_snap",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "back_head",
+              "offset": [
+                0,
+                3
+              ]
+            }
+          ],
+          "duration": 90
+        },
+        {
+          "layers": [
+            "back_shadow",
+            "back_legs_stand",
+            {
+              "from": "back_torso",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "hurt_back_arm_l_recoil",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "hurt_back_arm_r_recoil",
+              "offset": [
+                0,
+                1
+              ]
+            },
+            {
+              "from": "back_head",
+              "offset": [
+                0,
+                2
+              ]
+            }
+          ],
+          "duration": 260
+        }
+      ]
+    },
+    "hurt_side": {
+      "loop": false,
+      "frames": [
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            {
+              "from": "side_torso",
+              "offset": [
+                -1,
+                0
+              ]
+            },
+            {
+              "from": "hurt_side_arm_snap",
+              "offset": [
+                -1,
+                0
+              ]
+            },
+            {
+              "from": "side_head",
+              "offset": [
+                -3,
+                0
+              ]
+            }
+          ],
+          "duration": 90
+        },
+        {
+          "layers": [
+            "side_shadow",
+            "side_legs_stand",
+            {
+              "from": "side_torso",
+              "offset": [
+                -1,
+                0
+              ]
+            },
+            {
+              "from": "hurt_side_arm_recoil",
+              "offset": [
+                -1,
+                0
+              ]
+            },
+            {
+              "from": "side_head",
+              "offset": [
+                -2,
+                0
+              ]
+            }
+          ],
+          "duration": 260
         }
       ]
     }

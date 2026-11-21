@@ -43,18 +43,19 @@ export class Walker {
     if (this.walk) s.play(this.walk, true);
   }
 
-  // Struck by the player's attack (`from` is the player).
-  hit(from, spec = { damage: 4, stagger: 250, knockback: 120 }) {
+  // Struck by the player's attack (`from` is the player). Returns what happened, for the hit's feel.
+  hit(from, spec = { damage: 4, stagger: 250, knockback: 30 }) {
     const s = this.sprite;
     this.hp -= spec.damage;
     this.recoverAt = Math.max(this.recoverAt, this.scene.time.now + Math.max(80, spec.stagger));
     if (spec.stun) this.stunUntil = Math.max(this.stunUntil ?? 0, this.scene.time.now + spec.stun);
     this.scene.feel.flash(s);
     if (spec.stun) s.body.setVelocity(0, 0);
-    else this.scene.feel.knockback(s, from, spec.knockback);
+    else this.scene.feel.knockback(s, from, spec.knockback * 1000 / Math.max(80, spec.stagger));   // knockback px over the recovery
     if (this.hp <= 0) {
       s.body.enable = false;
       this.scene.tweens.add({ targets: s, alpha: 0, duration: 200, onComplete: () => s.destroy() });
     }
+    return { damage: spec.damage };
   }
 }

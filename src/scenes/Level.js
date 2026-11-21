@@ -4,6 +4,7 @@ import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixe
          spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../game.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
+import { HitFeel } from '../combat/hitFeel.js';
 import { ATTACKS, BLOCK } from '../combat/rules.js';
 import { releaseTouch } from '../combat/touch.js';
 import { showHud } from './Hud.js';
@@ -29,8 +30,9 @@ const TYPES = { enemy: Walker };
 //   chests ("type": "chest") open on touch and give their props.loot;
 //   anything with props.text (a sign, an NPC, a trigger zone) opens a dialog box on touch, once per visit;
 //   TYPES: sprites with those types get a behaviour object (enemies hurt on touch, die to attacks).
-// Hits land with this.feel (pixelforgeFeel): a hit stop, a small shake, a flash, knockback, and the
-// 'fx_hit' effect when the art has one.
+// Hits land with this.hitFeel (combat/hitFeel.js), whoever threw them (this player, an enemy, or a fight between
+// two other players the host resolved): the two fighters freeze, the victim shakes, flashes and flinches, a
+// spark pops at the contact point, and the camera shakes only for someone in the fight. A miss swishes.
 // Multiplayer (src/net/): the other players in this level are drawn from `net`, and this player's state is
 // sent to them every frame.
 // The HUD is React (src/ui/Hud.tsx) over the canvas: this scene tells it, through src/ui/bridge.ts, who's
@@ -62,6 +64,7 @@ export class Level extends Phaser.Scene {
     this.rooms = new RoomShadows(this, level, player ? [player.x, player.y] : undefined);
     this.showers = new ShowerEffects(this);
     this.feel = pixelforgeFeel(this);
+    this.hitFeel = new HitFeel(this, { me: () => this.level.player, crowd: () => this.fightersOnScreen() });
     this.hud = showHud(this);
     mountHud();
     this.superMove = superMove(this.character);
@@ -107,7 +110,10 @@ export class Level extends Phaser.Scene {
     if (player) {
       const hittable = () => this.actors.filter((a) => a.hit && a.sprite.active).map((a) => a.sprite);
       if (FIGHTER_IDS.includes(this.character)) {
-        this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable });
+        this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable,
+          onHit: (target, move, result) => this.hitFeel.land(player, target, move, result),
+          onWhiff: (sprite, move, facing) => this.hitFeel.whiff(sprite, move, facing),
+          others: () => this.remotes.sprites() });
         on(player, 'pixelforge-attack', () => {
           const attack = this.combat.rules.attack;
           if (attack) net.combatCommand(attack.name, attack.facing);
@@ -154,6 +160,17 @@ export class Level extends Phaser.Scene {
       // clipping a corner by a few pixels slides you around it instead of stopping you
       if (level.info?.view !== 'side') enableCornerSlide(player, { layers: Object.values(level.layers), props: level.props });
     }
+    // Every hit the host resolved in this level, felt here. This player's own hits were applied just above,
+    // so their hurt pose is already playing when the freeze holds it.
+    on(net, 'combat', ({ hits }) => {
+      if (this.inLobby) return;
+      for (const hit of hits) {
+        const victim = hit.target === net.id ? player : this.remotes.sprite(hit.target);
+        const attacker = hit.source === net.id ? player : this.remotes.sprite(hit.source);
+        // Your own swing confirmed after it already ended: spark and shake, but don't stop you mid-step.
+        this.hitFeel.land(attacker, victim, hit.move, hit, { freezeAttacker: attacker !== player || !!this.combat?.rules.attack });
+      }
+    });
 
     if (import.meta.env.DEV) {
       installPixelforgePlay(this, level, { extra: () => ({ health: state.health, coins: state.coins, inventory: [...state.inventory], combat: player?.combat?.snapshot() }) });
@@ -214,6 +231,13 @@ export class Level extends Phaser.Scene {
     }
     const p = this.level.player;
     if (p?.active) this.selfBar?.update(state.health / state.maxHealth, p.x, p.y - headroom(this, this.character), delta);
+  }
+
+  // Fighters on the camera: you, the other players and the enemies. A crowd shortens each hit's freeze.
+  fightersOnScreen() {
+    const view = this.cameras.main.worldView;
+    return (this.level.player?.active ? 1 : 0) + this.remotes.onScreen()
+      + this.actors.filter((a) => a.sprite.active && view.contains(a.sprite.x, a.sprite.y)).length;
   }
 
   // A short message at the top of the screen (the game ended, the host left).
@@ -308,7 +332,7 @@ export class Level extends Phaser.Scene {
     if (this.time.now < (this.invulnerableUntil ?? 0) || state.health <= 0) return;
     this.invulnerableUntil = this.time.now + 1000;
     if (net.active) { net.combatCommand('hazard'); return; }
-    if (p.combat) p.combat.receive(enemy, ATTACKS.punch);
+    if (p.combat) this.hitFeel.land(enemy, p, 'punch', p.combat.receive(enemy, ATTACKS.punch));
     else { damage(ATTACKS.punch.damage); this.feel.knockback(p, enemy, 140, { lift: 160 }).shake(120, 2); }
     this.tweens.add({ targets: p, alpha: 0.3, duration: 100, yoyo: true, repeat: 4, onComplete: () => p.setAlpha(1) });
   }

@@ -69,14 +69,15 @@ export class RoomCombat {
     if (f.rules.block && now >= f.rules.block.until) f.rules.endBlock(now);
   }
 
-  damage(targetId, sourceId, spec, from, now) {
+  // `move` names the attack (punch, grapple...) so clients can make the hit feel right; null for hazards.
+  damage(targetId, sourceId, spec, from, now, move = null) {
     const f = this.fighters.get(targetId);
     const p = f.position;
     const result = f.rules.receive(spec, from ? directionTo(from.x-p.x, from.y-p.y) : null, now);
     if (!result.damage) return;
     if (result.stun) f.stunAnchor = { x:p.x, y:p.y, level:f.level };
     if (result.stagger) { f.action = null; f.rules.heldBy?.cancel(); }
-    this.events.push({ target: targetId, source: sourceId, from, ...result });
+    this.events.push({ target: targetId, source: sourceId, from, move, ...result });
     if (!f.rules.health.value) f.respawnAt = now + 400;
   }
 
@@ -93,7 +94,7 @@ export class RoomCombat {
         Object.assign(victim.position, grapplePosition(anchor, hold.attack.facing));
       } else {
         f.hold = null;
-        if (state === 'damage') this.damage(targetId, id, f.rules.attackSpec('grapple'), anchor, now);
+        if (state === 'damage') this.damage(targetId, id, f.rules.attackSpec('grapple'), anchor, now, 'grapple');
       }
     }
     // A disconnected holder must not leave a surviving player permanently captured.
@@ -144,7 +145,7 @@ export class RoomCombat {
               victim.action = null;
               victim.heldSource = id;
               f.hold = { hold, targetId: target, anchor: { x:p.x, y:p.y }, level: f.level, character: victim.rules.character };
-            } else this.damage(target, id, spec, {x:p.x,y:p.y}, now);
+            } else this.damage(target, id, spec, {x:p.x,y:p.y}, now, a.name);
           }
         }
         a.checked = now;
@@ -164,6 +165,7 @@ export class RoomCombat {
       stagger: Math.max(0, f.rules.staggerUntil-now),
       knockdown: Math.max(0, f.rules.knockedDownUntil-now),
       knockdownFacing: f.rules.knockdownFacing ?? null,
+      hurtFacing: f.rules.hurtFacing ?? null,
       grappleCooldown: Math.max(0, (f.rules.readyAt.grapple ?? 0)-now),
       grapple: f.hold ? { target: f.hold.targetId, ...f.hold.anchor, facing: f.hold.hold.attack.facing } : null,
       held: f.rules.heldBy ? { source: f.heldSource, ...f.position, facing: f.rules.heldBy.attack.facing } : null,

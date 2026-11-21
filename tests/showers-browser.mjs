@@ -8,7 +8,7 @@ try {
   for (const character of ['titus','mason']) {
     const ctx = await browser.newContext({viewport:{width:1280,height:760}}), p = await ctx.newPage(); pages.push(p);
     p.on('pageerror',e=>errors.push(e.message));
-    await p.goto('http://127.0.0.1:5173/?solo&character='+character);
+    await p.goto((process.env.TEST_BASE_URL ?? 'http://127.0.0.1:5173')+'/?solo&character='+character);
     await p.waitForFunction(()=>window.pixelforgePlay?.scene?.showers);
   }
   const [host,guest] = pages;

@@ -16,7 +16,7 @@ try {
       const [dx,dy]={right:[distance,0],left:[-distance,0],up:[0,-distance],down:[0,distance]}[facing];
       s.player.body.reset(300,220);s.partner.body.reset(300+dx,220+dy);s.player.controller.facing=facing;
       for(const c of [s.combat,s.partnerCombat]){
-        c.rules.attack=null;c.rules.block=null;c.rules.heldBy=null;c.rules.previous={};c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.rules.blockReadyAt=0;c.controller.stunnedUntil=0;c.controller.busy=null;
+        c.rules.attack=null;c.rules.block=null;c.rules.heldBy=null;c.rules.previous={};c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.rules.blockReadyAt=0;c.controller.stunnedUntil=0;c.push=null;c.controller.busy=null;
       }
       s.partner.controller.override={};play.step(17,{});
     };

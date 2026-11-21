@@ -1,5 +1,5 @@
 import { playFacing, pixelforgeBoxes } from '../../export/pixelforge.js';
-import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, attackAnim, directionTo, attackTargets, extendPath } from './rules.js';
+import { ATTACKS, BLOCK, BODY, DIRECTIONS, CombatRules, attackAnim, directionTo, attackTargets, extendPath, pushSpeed } from './rules.js';
 import { GrappleHold, grapplePosition } from './grapple.js';
 import { showGrappleOverlay } from './grappleVisuals.js';
 import { updateBellowVisuals } from './bellowVisuals.js';
@@ -7,13 +7,21 @@ import { touch } from './touch.js';
 import { levelWalls } from './walls.js';
 
 // Extend the existing Pixel Forge movement controller; keep its physics, input overrides and playtest API.
+// onHit(target, move, result) runs for every hit this fighter lands, and onWhiff(sprite, move, facing) for
+// a swing whose active frames ended without touching anyone: hitFeel.js makes both felt. `others` are
+// fighters the host judges (online players): they can't be hit from here, but a swing that visibly
+// reaches one isn't a whiff.
 export class TitusCombat {
-  constructor(scene, sprite, { health, targets = () => [], onHit = () => {} } = {}) {
+  constructor(scene, sprite, { health, targets = () => [], onHit = () => {}, onWhiff = () => {}, others = () => [] } = {}) {
     this.scene = scene;
     this.sprite = sprite;
     this.rules = new CombatRules(health, sprite.texture.key);
     this.targets = targets;
     this.onHit = onHit;
+    this.onWhiff = onWhiff;
+    this.others = others;
+    this.swing = null;   // the current attack: {live} once its active frames start, {landed} once it touches someone
+    this.push = null;    // a knockback slide in progress
     this.struck = new Set();
     this.path = [];
     this.punches = 0;   // alternates hands facing up and down
@@ -42,6 +50,9 @@ export class TitusCombat {
     };
     const update = c.update.bind(c);
     c.update = (time) => {
+      // A hit's freeze (hitFeel.js) holds the fighter still: no input, no movement, the pose paused.
+      if (sprite.hitFreeze) return;
+      this.updatePush(time);
       this.updateGrapple();
       if (time < this.rules.stunUntil) {
         this.rules.previous = { ...c.readInput() };
@@ -102,6 +113,7 @@ export class TitusCombat {
         }
         this.struck.clear();
         this.path = [{ x: sprite.x, y: sprite.y }];
+        this.swing = { live: false, landed: false };
         const { name, facing } = this.rules.attack;
         c.busy = attackAnim(sprite.texture.key, name, facing, name === 'punch' ? this.punches++ : 0, key => scene.anims.exists(key));
         sprite.setFlipX(facing === 'left').play(c.busy, true);
@@ -154,14 +166,25 @@ export class TitusCombat {
     showGrappleOverlay(this.sprite, heldFacing, !!heldFacing);
     const attack = this.rules.attack;
     updateBellowVisuals(this.scene, this.sprite, attack, Math.max(0, this.rules.stunUntil-this.scene.time.now));
-    if (!attack || !this.sprite.active || this.rules.health.value <= 0) return;
+    if (!attack || !this.sprite.active || this.rules.health.value <= 0) { this.swing = null; return; }
     // Track the lunge from the wind-up on, so the strike covers everyone the swing carried us over.
     extendPath(this.path, this.sprite);
-    const spec = this.rules.attackSpec(attack.name);
-    if (spec.radial) {
-      const elapsed = this.scene.time.now - attack.start;
-      if (elapsed < spec.frames[0] || elapsed >= spec.frames[0] + spec.frames[1]) return;
-    } else if (!pixelforgeBoxes(this.sprite, 'hit').length) return;
+    const spec = this.rules.attackSpec(attack.name), elapsed = this.scene.time.now - attack.start;
+    const active = spec.radial ? elapsed >= spec.frames[0] && elapsed < spec.frames[0] + spec.frames[1]
+      : pixelforgeBoxes(this.sprite, 'hit').length > 0;
+    if (!active) {
+      // The active frames just ended: a swing that touched nobody whiffs.
+      if (this.swing?.live) {
+        if (!this.swing.landed) this.onWhiff(this.sprite, attack.name, attack.facing);
+        this.swing = null;
+      }
+      return;
+    }
+    if (this.swing) {
+      this.swing.live = true;
+      const seen = this.others().filter(o => o.active && o.visible !== false);
+      if (!this.swing.landed && attackTargets(this.sprite, seen, attack.facing, spec, this.path, this.walls).length) this.swing.landed = true;
+    }
     const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (!spec.hold || (!target.grappledBy && !target.combat?.rules.heldBy)) && (target.combat ? target.combat.rules.health.value > 0 : true));
     for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path, this.walls)) {
       // In this three-quarter view a head and boot have different drawn heights. Combat range
@@ -169,6 +192,7 @@ export class TitusCombat {
       // The exported art still determines the active frames, never the wind-up or recovery.
       if (this.struck.size >= (spec.maxTargets ?? Infinity)) break;
       this.struck.add(target);
+      if (this.swing) this.swing.landed = true;
       if (spec.hold && !target.combat?.rules.blocks(directionTo(this.sprite.x-target.x, this.sprite.y-target.y), this.scene.time.now)) {
         const rules = target.combat?.rules ?? (target.actor ? { health: { get value() { return target.actor.hp; } } } : null);
         if (rules) {
@@ -237,15 +261,16 @@ export class TitusCombat {
     const result = this.rules.receive(spec, directionTo(from.x - this.sprite.x, from.y - this.sprite.y), this.scene.time.now);
     return this.applyHit(from, result);
   }
-  // Network damage is already resolved by the host; apply its visual/physics result once.
+  // Network damage is already resolved by the host; apply its pose/physics result once. The flash, freeze
+  // and spark are hitFeel.js's, run by whoever calls this.
   applyHit(from, result) {
     if (!result.damage) return result;
+    const incoming = directionTo(from.x-this.sprite.x, from.y-this.sprite.y);
     if (result.stun) {
       this.rules.health.stunUntil = Math.max(this.rules.stunUntil, this.scene.time.now + result.stun);
       this.rules.health.healingBlockedFor = Math.max(this.rules.health.healingBlockedFor ?? 0, result.stun);
-      this.rules.health.stunFacing = directionTo(from.x-this.sprite.x, from.y-this.sprite.y) ?? this.controller.facing;
+      this.rules.health.stunFacing = incoming ?? this.controller.facing;
     }
-    if (!result.knockdown) this.scene.feel?.flash(this.sprite, 90, result.blocked ? 0x77bbff : 0xffffff);
     if (result.stagger) {
       this.rules.attack = null;
       this.cancelGrapple();
@@ -258,15 +283,38 @@ export class TitusCombat {
         this.rules.knockdownFacing = result.knockdownFacing ?? directionTo(from.x-this.sprite.x, from.y-this.sprite.y) ?? this.controller.facing;
         this.controller.facing = this.rules.knockdownFacing;
         playFacing(this.sprite, 'knockdown', this.controller.facing);
-      } else if (this.scene.time.now >= this.rules.knockedDownUntil) playFacing(this.sprite, 'idle', this.controller.facing);
+      } else if (result.stun) {
+        // Into the stunned pose now, so the hit's freeze holds it.
+        playFacing(this.sprite, 'stunned', this.rules.health.stunFacing);
+      } else if (this.scene.time.now >= this.rules.knockedDownUntil) {
+        // The flinch: turn to the hit and play the hurt pose (head snapped back, arms out) for the stagger.
+        if (incoming) this.controller.facing = incoming;
+        const hurt = this.scene.anims.exists(`${this.sprite.texture.key}_hurt_${this.controller.facing === 'left' || this.controller.facing === 'right' ? 'side' : this.controller.facing}`);
+        playFacing(this.sprite, hurt ? 'hurt' : 'idle', this.controller.facing);
+      }
+      this.controller.stun(result.stagger);
     }
-    // A brief push for light attacks; headbutt holds the victim in recovery longer.
-    const pushTime = result.knockdown ? 80 : (result.stagger || 80);
-    this.controller.stun(result.stagger || pushTime);
-    const dx = this.sprite.x - from.x, dy = this.sprite.y - from.y, length = Math.hypot(dx, dy) || 1;
-    this.sprite.body.setVelocity(this.scene.time.now < this.rules.stunUntil ? 0 : dx / length * result.knockback, this.scene.time.now < this.rules.stunUntil ? 0 : dy / length * result.knockback);
-    this.scene.time.delayedCall(pushTime, () => { if (this.sprite.active) this.sprite.body.setVelocity(0, 0); });
+    // Slide away from the hit once the freeze lets go: fast, then easing to a stop. A stunned fighter stays put.
+    const speed = pushSpeed(result.knockback ?? 0, result.slide ?? 0);
+    if (speed && this.scene.time.now >= this.rules.stunUntil) {
+      const dx = this.sprite.x - from.x, dy = this.sprite.y - from.y, length = Math.hypot(dx, dy) || 1;
+      this.push = { vx: dx / length * speed, vy: dy / length * speed, slide: result.slide, start: null };
+    }
     return result;
+  }
+  // The knockback slide, a frame at a time. It starts on the first frame after the freeze, and the
+  // controller lets go of the body until it ends, so a held arrow can't steer out of it.
+  updatePush(time) {
+    const p = this.push;
+    if (!p) return;
+    p.start ??= time;
+    // The speed at the middle of the coming frame (as long as the last one), so it covers exactly its distance.
+    const frame = time - (p.last ?? time - 1000 / 60);
+    p.last = time;
+    if (time - p.start >= p.slide || !this.sprite.active) { this.push = null; if (this.sprite.active) this.sprite.body.setVelocity(0, 0); return; }
+    const left = Math.max(0, 1 - (time - p.start + frame / 2) / p.slide);
+    this.controller.stunnedUntil = Math.max(this.controller.stunnedUntil ?? 0, p.start + p.slide);
+    this.sprite.body.setVelocity(p.vx * left, p.vy * left);
   }
   snapshot() {
     const now = this.scene.time.now;

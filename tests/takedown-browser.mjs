@@ -22,7 +22,7 @@ try {
       s.player.controller.facing=facing;
       for(const c of [s.combat,s.partnerCombat]) {
         c.rules.attack=null;c.rules.block=null;c.rules.previous={};c.rules.blockReadyAt=0;
-        c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.controller.stunnedUntil=0;c.controller.busy=null;
+        c.rules.staggerUntil=0;c.rules.knockedDownUntil=0;c.controller.stunnedUntil=0;c.push=null;c.controller.busy=null;
       }
       play.step(17,{});
     };

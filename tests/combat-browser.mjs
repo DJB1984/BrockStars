@@ -20,7 +20,7 @@ try {
       scene.player.body.reset(300,220); scene.partner.body.reset(300+offset[0],220+offset[1]);
       scene.player.controller.facing=direction;
       for(const c of [scene.combat,scene.partnerCombat]) {
-        c.rules.attack=null;c.rules.block=null;c.rules.readyAt={};c.rules.previous={};c.rules.blockReadyAt=0;c.rules.staggerUntil=0;c.controller.stunnedUntil=0;c.controller.busy=null;
+        c.rules.attack=null;c.rules.block=null;c.rules.readyAt={};c.rules.previous={};c.rules.blockReadyAt=0;c.rules.staggerUntil=0;c.controller.stunnedUntil=0;c.push=null;c.controller.busy=null;
       }
       play.step(17,{});
     };

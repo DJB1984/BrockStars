@@ -26,7 +26,12 @@
     "wardrobe",
     "wardrobe_side"
   ],
-  "fx": [],
+  "fx": [
+    "fx_block",
+    "fx_hit",
+    "fx_hit_heavy",
+    "fx_swish"
+  ],
   "tilesets": [
     "dorm"
   ],

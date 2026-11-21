@@ -1,0 +1,170 @@
+{
+  "frames": {
+    "0": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "duration": 40,
+      "pixelforge": {
+        "hurt": [],
+        "hit": []
+      }
+    },
+    "1": {
+      "frame": {
+        "x": 33,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "duration": 50,
+      "pixelforge": {
+        "hurt": [],
+        "hit": []
+      }
+    },
+    "2": {
+      "frame": {
+        "x": 66,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "duration": 50,
+      "pixelforge": {
+        "hurt": [],
+        "hit": []
+      }
+    },
+    "3": {
+      "frame": {
+        "x": 99,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 32,
+        "h": 24
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 24
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      },
+      "duration": 50,
+      "pixelforge": {
+        "hurt": [],
+        "hit": []
+      }
+    }
+  },
+  "meta": {
+    "app": "pixelforge",
+    "version": "1.0",
+    "image": "fx_swish.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 131,
+      "h": 24
+    },
+    "scale": "1",
+    "frameTags": [
+      {
+        "name": "fx_swish_play",
+        "from": 0,
+        "to": 3,
+        "direction": "forward",
+        "color": "#000000ff"
+      }
+    ],
+    "layers": [],
+    "slices": [],
+    "pixelforge": {
+      "sprite": "fx_swish",
+      "kind": "fx",
+      "view": "topdown",
+      "class": null,
+      "origin": [
+        16,
+        12
+      ],
+      "anchor": "feet",
+      "body": {
+        "x": 18,
+        "y": 5,
+        "w": 3,
+        "h": 14
+      },
+      "animations": {
+        "fx_swish_play": {
+          "anim": "play",
+          "loop": false,
+          "fps": 8.0,
+          "frames": 4
+        }
+      },
+      "fx": {
+        "layer": "front"
+      }
+    }
+  }
+}
