@@ -28,6 +28,7 @@
   ],
   "fx": [
     "fx_block",
+    "fx_glint",
     "fx_hit",
     "fx_hit_heavy",
     "fx_swish"

@@ -5,7 +5,9 @@ import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixe
 import { state, bus, damage, addCoins, addItem, reset, playerHealth } from '../game.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
 import { HitFeel } from '../combat/hitFeel.js';
-import { ATTACKS, BLOCK } from '../combat/rules.js';
+import { FightMarks } from '../combat/fightMarks.js';
+import { ATTACKS, BLOCK, characterAttack, directionTo } from '../combat/rules.js';
+import { dudClick } from '../sound.js';
 import { releaseTouch } from '../combat/touch.js';
 import { showHud } from './Hud.js';
 import { Walker } from '../objects/Walker.js';
@@ -33,10 +35,16 @@ const TYPES = { enemy: Walker };
 // Hits land with this.hitFeel (combat/hitFeel.js), whoever threw them (this player, an enemy, or a fight between
 // two other players the host resolved): the two fighters freeze, the victim shakes, flashes and flinches, a
 // spark pops at the contact point, and the camera shakes only for someone in the fight. A miss swishes.
+// Online, your own swing that visibly reaches someone is felt at once (predictHit); the host's answer, judged
+// against what your screen showed (lag compensation, net/combat.js), only brings the damage.
+// this.marks (combat/fightMarks.js) keeps the fight readable: rings at everyone's feet, a second one while a
+// Super is ready, a glint and a floor zone as heavy moves wind up, a shield arc on a block. A hit from someone
+// you can't see points an arrow at them from the edge of the screen.
 // Multiplayer (src/net/): the other players in this level are drawn from `net`, and this player's state is
 // sent to them every frame.
 // The HUD is React (src/ui/Hud.tsx) over the canvas: this scene tells it, through src/ui/bridge.ts, who's
-// online and when Block and the Super come back, and gives its menu Change fighter and Leave game.
+// online and when each move comes back, and gives its menu Change fighter and Leave game. A move pressed
+// while it's still cooling down wiggles its keycap and clicks (combat-dud).
 // Health is a bar over every fighter's head (objects/HeadBar.js), drawn here in the world.
 // Rooms (roomShadows.js) are dark from the hall, with whoever's inside hidden; from a room you see out.
 // Dev only: B toggles the hit/hurt boxes, and window.pixelforgePlay drives the game for `pixelforge play`.
@@ -94,6 +102,9 @@ export class Level extends Phaser.Scene {
     });
 
     this.remotes = new RemotePlayers(this, net);
+    this.marks = new FightMarks(this, () => this.markedFighters());
+    this.predicted = new Map();   // remote id -> { move, at }: hits felt before the host confirmed them
+    this.hitArrows = 0;
     const showRoom = () => hud.set({ net: { active: net.active, world: net.room === WORLD_ROOM, room: net.room, count: net.count } });
     showRoom();
     on(net, 'players', showRoom);
@@ -113,10 +124,16 @@ export class Level extends Phaser.Scene {
         this.combat = new TitusCombat(this, player, { health: playerHealth, targets: hittable,
           onHit: (target, move, result) => this.hitFeel.land(player, target, move, result),
           onWhiff: (sprite, move, facing) => this.hitFeel.whiff(sprite, move, facing),
-          others: () => this.remotes.sprites() });
+          others: () => this.remotes.sprites(),
+          onPredict: (other, move) => this.predictHit(other, move) });
+        this.marks.follow(this.combat);
         on(player, 'pixelforge-attack', () => {
           const attack = this.combat.rules.attack;
-          if (attack) net.combatCommand(attack.name, attack.facing);
+          if (attack) net.combatCommand(attack.name, attack.facing, this.remotes.seenTime());
+        });
+        on(player, 'combat-dud', (move) => {
+          hud.set({ dud: { move, id: (hud.get().dud?.id ?? 0) + 1 } });
+          dudClick(this);
         });
         on(player, 'combat-block', (facing) => net.combatCommand('block', facing));
         on(player, 'combat-release', () => net.combatCommand('release'));
@@ -167,6 +184,10 @@ export class Level extends Phaser.Scene {
       for (const hit of hits) {
         const victim = hit.target === net.id ? player : this.remotes.sprite(hit.target);
         const attacker = hit.source === net.id ? player : this.remotes.sprite(hit.source);
+        if (hit.target === net.id && hit.source && hit.source !== net.id) this.pointAtHitter(attacker, hit.from);
+        // Already felt the moment your swing reached them: the host's answer only brings the damage.
+        const felt = hit.source === net.id && this.predicted.get(hit.target);
+        if (felt && felt.move === hit.move && this.time.now - felt.at < 700) { this.predicted.delete(hit.target); continue; }
         // Your own swing confirmed after it already ended: spark and shake, but don't stop you mid-step.
         this.hitFeel.land(attacker, victim, hit.move, hit, { freezeAttacker: attacker !== player || !!this.combat?.rules.attack });
       }
@@ -233,6 +254,38 @@ export class Level extends Phaser.Scene {
     if (p?.active) this.selfBar?.update(state.health / state.maxHealth, p.x, p.y - headroom(this, this.character), delta);
   }
 
+  // Your swing visibly reached another player (as this screen draws them): feel the hit now, as the host will
+  // almost certainly agree (it judges against the same moment). If it doesn't, only the damage is missing.
+  predictHit(other, move) {
+    const player = this.level.player, state = net.combatState.fighters[other.netId], spec = ATTACKS[move];
+    if (!player?.active || !state?.health || state.held) return;
+    const blocked = !spec.unblockable && state.block === directionTo(player.x - other.x, player.y - other.y);
+    this.hitFeel.land(player, other, move, { damage: 1, blocked, knockdown: blocked ? 0 : spec.knockdown ?? 0 });
+    this.predicted.set(other.netId, { move, at: this.time.now });
+  }
+
+  // Hit by someone you can't see (off the screen, or in a dark room): an arrow at the screen's edge points
+  // toward them. `from` is where the host saw them, if their sprite isn't here.
+  pointAtHitter(attacker, from) {
+    const p = this.level.player, view = this.cameras.main.worldView, at = attacker ?? from;
+    if (!p?.active || !at || (attacker?.visible && view.contains(attacker.x, attacker.y))) return;
+    hud.set({ hitArrow: { id: ++this.hitArrows, angle: Math.atan2(at.y - p.y, at.x - p.x),
+      from: [(p.x - view.x) / view.width, (p.y - view.y) / view.height] } });
+  }
+
+  // Who fightMarks.js draws rings, shields and Super rings around: you, the other players, the enemies.
+  markedFighters() {
+    const p = this.level.player, out = [];
+    if (p?.active && this.combat) {
+      const r = this.combat.rules, special = this.superMove.move, alive = r.health.value > 0;
+      out.push({ sprite: p, mine: true, alive, block: r.block?.facing ?? null,
+        superReady: alive && !!special && this.time.now >= (r.readyAt[special] ?? 0) });
+    }
+    for (const s of this.remotes.sprites()) out.push({ sprite: s, mine: false, alive: s.alive, block: s.blockFacing, superReady: s.superReady });
+    for (const a of this.actors) if (a.hp !== undefined && a.sprite.active) out.push({ sprite: a.sprite, mine: false, alive: a.hp > 0 });
+    return out;
+  }
+
   // Fighters on the camera: you, the other players and the enemies. A crowd shortens each hit's freeze.
   fightersOnScreen() {
     const view = this.cameras.main.worldView;
@@ -245,8 +298,8 @@ export class Level extends Phaser.Scene {
     hud.toast(text);
   }
 
-  // Block and the Super, for the HUD's keycaps: sent when a cooldown starts or a block goes up or down,
-  // as deadlines the HUD counts down by itself.
+  // Every move's keycap (punch, kick, headbutt, Block, the Super): sent when a cooldown starts or a block goes
+  // up or down, as deadlines the HUD counts down by itself.
   pushHud() {
     const snap = this.combat?.snapshot();
     if (!snap) return;
@@ -256,10 +309,14 @@ export class Level extends Phaser.Scene {
       : { phase: 'ready' };
     const left = this.superMove.move ? snap.cooldowns[this.superMove.move] : 0;
     const special = { ...this.superMove, endsAt: left ? now + left : 0 };
+    const moves = Object.fromEntries(['punch', 'kick', 'headbutt'].map((name) => [name,
+      { endsAt: snap.cooldowns[name] ? now + snap.cooldowns[name] : 0, duration: characterAttack(this.character, name).cooldown }]));
     const shown = hud.get();
     const moved = (a, b) => a.phase !== b.phase || Math.abs((a.endsAt ?? 0) - (b.endsAt ?? 0)) > 120;
-    if (moved(shown.shield, shield) || moved({ phase: 'cooldown', ...shown.super }, { phase: 'cooldown', ...special })) {
-      hud.set({ shield, super: special });
+    const cooling = (t) => ({ phase: 'cooldown', ...t });
+    if (moved(shown.shield, shield) || moved(cooling(shown.super), cooling(special))
+        || Object.keys(moves).some((name) => moved(cooling(shown.moves[name]), cooling(moves[name])))) {
+      hud.set({ shield, super: special, moves });
     }
   }
 

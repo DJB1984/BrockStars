@@ -188,15 +188,34 @@
   transform: rotate(-8deg);
 }
 
-/* desktop: the two cooldowns worth watching, side by side at the bottom */
+/* desktop: every move's keycap, side by side at the bottom */
 .hud-keys {
   position: absolute;
   left: 50%;
   bottom: var(--gy);
   display: flex;
   align-items: end;
-  gap: 26px;
+  gap: 22px;
   translate: -50% 0;
+}
+@media (max-width: 720px) {
+  .hud-keys { gap: 14px; }
+  .hud-keys .mk { --size: 40px; }
+  .hud-keys .mk-label { font-size: 17px; }
+}
+
+/* a hit from someone you can't see: a red arrow on the screen's edge, pointing at them */
+.hit-arrow {
+  position: absolute;
+  width: 28px;
+  height: 44px;
+  animation: hit-arrow 900ms steps(9) forwards;
+}
+.hit-arrow svg { display: block; width: 100%; height: 100%; }
+@keyframes hit-arrow {
+  0%, 22%, 44% { opacity: 1; }
+  11%, 33% { opacity: 0.35; }
+  100% { opacity: 0; }
 }
 
 /* ---- touch controls ----------------------------------------------------------------------------- */

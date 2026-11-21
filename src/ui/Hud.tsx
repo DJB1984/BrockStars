@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState, useSyncExternalStore, type CSSProperties, type PointerEvent as ReactPointerEvent, type ReactNode } from 'react';
 import { ATTACKS, BLOCK } from '../combat/rules.js';
-import { hud, touch, actions, releaseTouch, type HudState, type NetBadge, type TouchInput } from './bridge';
+import { hud, touch, actions, releaseTouch, type Basic, type HudState, type HitArrow, type NetBadge, type TouchInput } from './bridge';
 import { installFrames } from './pixel';
 import { Icon, type IconName } from './Icon';
 import { canFullscreen, toggleFullscreen, useFullscreen } from './fullscreen';
 
 // The HUD over a level: the menu button (Esc) top left (Resume, Controls, Full screen on and off, Change
-// fighter, Leave game), who's online top right, and at the bottom the two cooldowns worth watching, Block
-// and the Super, as keycaps that stay pushed down until the move is back.
+// fighter, Leave game), who's online top right, and at the bottom every move as a keycap (Punch, Kick,
+// Headbutt, Block, the Super) that stays pushed down until the move is back. A move pressed too early
+// wiggles its cap. A hit from someone you can't see flashes an arrow at the screen's edge, pointing at them.
 // On touch screens the bottom becomes the controls: a Brawl Stars movement circle on the left, the five
-// moves on the right, with the same two keycaps among them.
+// moves on the right, filling the same way as they come back.
 
 type Phase = 'ready' | 'holding' | 'cooldown' | 'locked';
 type Timer = { phase: Phase; endsAt: number; duration: number };
@@ -38,6 +39,9 @@ export function Hud() {
 
   const shield = shieldTimer(s);
   const special = superTimer(s);
+  const moves = { punch: moveTimer(s, 'punch'), kick: moveTimer(s, 'kick'), headbutt: moveTimer(s, 'headbutt') };
+  const dud = (move: string) => (s.dud?.move === move ? s.dud.id : 0);
+  const superDud = s.dud && !['punch', 'kick', 'headbutt', 'block'].includes(s.dud.move) ? s.dud.id : 0;
 
   return (
     <div ref={root} className={`hud${touchMode ? ' is-touch' : ''}`} hidden={!s.visible}>
@@ -51,13 +55,17 @@ export function Hud() {
           </header>
 
           <Toast toast={s.toast} />
+          <HitArrows arrow={s.hitArrow} />
 
           {touchMode ? (
-            <TouchControls shield={shield} special={special} superName={s.super.name} superIcon={superIcon(s)} />
+            <TouchControls shield={shield} special={special} moves={moves} dud={dud} superDud={superDud} superName={s.super.name} superIcon={superIcon(s)} />
           ) : (
             <div className="hud-keys">
-              <MoveKey icon="block" tone="cream" label="Block" keyLabel="V" timer={shield} />
-              <MoveKey icon={superIcon(s)} tone="amber" label={s.super.name} keyLabel={s.super.locked ? undefined : s.super.key} timer={special} count />
+              <MoveKey icon="punch" tone="ember" label="Punch" keyLabel={ATTACKS.punch.key} timer={moves.punch} dud={dud('punch')} />
+              <MoveKey icon="kick" tone="ember" label="Kick" keyLabel={ATTACKS.kick.key} timer={moves.kick} dud={dud('kick')} count />
+              <MoveKey icon="headbutt" tone="brick" label="Headbutt" keyLabel={ATTACKS.headbutt.key} timer={moves.headbutt} dud={dud('headbutt')} count />
+              <MoveKey icon="block" tone="cream" label="Block" keyLabel="V" timer={shield} dud={dud('block')} />
+              <MoveKey icon={superIcon(s)} tone="amber" label={s.super.name} keyLabel={s.super.locked ? undefined : s.super.key} timer={special} dud={superDud} count />
             </div>
           )}
 
@@ -85,6 +93,10 @@ function shieldTimer(s: HudState): Timer {
   return s.shield.phase === 'ready' ? { phase: 'ready', endsAt: 0, duration: 1 } : s.shield;
 }
 
+function moveTimer(s: HudState, move: Basic): Timer {
+  return { phase: 'cooldown', endsAt: s.moves[move].endsAt, duration: s.moves[move].duration };
+}
+
 function superTimer(s: HudState): Timer {
   if (s.super.locked) return { phase: 'locked', endsAt: 0, duration: 1 };
   return { phase: 'cooldown', endsAt: s.super.endsAt, duration: s.super.duration };
@@ -101,21 +113,30 @@ type MoveKeyProps = {
   count?: boolean;            // show whole seconds while it cools (the long Super cooldown)
   hold?: keyof TouchInput;    // a touch button: holding it holds this input down
   tag?: string;               // a word on the cap, under the icon (touch buttons)
+  dud?: number;               // counts up each time the move is pressed while cooling: the cap wiggles
   style?: CSSProperties;
   className?: string;
 };
 
 // A move as a chunky pixel keycap. Used, it drops onto its lip and stays down while the move cools; the
 // badge's sunset rises inside it (brick, ember, amber), and it pops back up with a flash when it's ready.
-// Block held up drains a cream bar instead, over the three seconds a block can last.
-function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, tag, style, className = '' }: MoveKeyProps) {
+// Block held up drains a cream bar instead, over the three seconds a block can last. Pressed while it's down,
+// it shakes its head: a quick side-to-side wiggle (the game clicks at the same time).
+// Short cooldowns (a punch's 300 ms) come back without the pop, which would flash on every mashed punch.
+function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, tag, dud = 0, style, className = '' }: MoveKeyProps) {
   const phase = usePhase(timer);
   const [pops, setPops] = useState(0);
   const last = useRef(phase);
+  const el = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (phase === 'ready' && (last.current === 'cooldown' || last.current === 'holding')) setPops((n) => n + 1);
+    if (phase === 'ready' && (last.current === 'cooldown' || last.current === 'holding') && (timer?.duration ?? 0) >= 1000) setPops((n) => n + 1);
     last.current = phase;
   }, [phase]);
+  useEffect(() => {
+    if (!dud) return;
+    const cap = el.current?.querySelector('.mk-cap');
+    cap?.animate([0, -3, 3, -2, 2, 0].map((x) => ({ translate: `${x}px 0` })), { duration: 240, easing: 'steps(6, end)' });
+  }, [dud]);
 
   const [pressed, handlers] = useHold(hold);
   const down = pressed || phase === 'cooldown' || phase === 'holding' || phase === 'locked';
@@ -123,6 +144,7 @@ function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, tag, style, 
 
   return (
     <Tag
+      ref={el}
       {...(hold ? { type: 'button' as const, 'aria-label': label } : {})}
       {...handlers}
       className={`mk mk-${tone} is-${phase}${down ? ' is-down' : ''}${tag ? ' has-tag' : ''}${className ? ` ${className}` : ''}`}
@@ -210,7 +232,8 @@ function useHold(name?: keyof TouchInput) {
 
 // ---- touch controls --------------------------------------------------------------------------------
 
-type TouchProps = { shield: Timer; special: Timer; superName: string; superIcon: IconName; demo?: boolean };
+type TouchProps = { shield: Timer; special: Timer; moves?: Record<Basic, Timer>; dud?: (move: string) => number; superDud?: number;
+  superName: string; superIcon: IconName; demo?: boolean };
 
 // Offsets from Punch (the right thumb's home), in button units: an arc of moves around it.
 // `tag` is the word printed on the cap: at thumb size an icon alone doesn't say which move it is.
@@ -222,13 +245,13 @@ const ARC: { name: keyof TouchInput; label: string; tag: string; icon?: IconName
   { name: 'block', label: 'Block', tag: 'Block', icon: 'block', tone: 'cream', cx: -2.78, cy: 0.12, s: 1 },
 ];
 
-function TouchControls({ shield, special, superName, superIcon, demo }: TouchProps) {
+function TouchControls({ shield, special, moves, dud = () => 0, superDud = 0, superName, superIcon, demo }: TouchProps) {
   return (
     <div className={`touch${demo ? ' is-demo' : ''}`} aria-hidden={demo || undefined}>
       <Stick demo={demo} />
       <div className="arc" role={demo ? undefined : 'group'} aria-label={demo ? undefined : 'Moves'}>
         {ARC.map((b) => {
-          const timer = b.name === 'block' ? shield : b.name === 'takedown' ? special : undefined;
+          const timer = b.name === 'block' ? shield : b.name === 'takedown' ? special : moves?.[b.name as Basic];
           const style = { '--cx': b.cx, '--cy': b.cy, '--s': b.s } as CSSProperties;
           return (
             <MoveKey
@@ -239,7 +262,8 @@ function TouchControls({ shield, special, superName, superIcon, demo }: TouchPro
               tone={b.tone}
               label={b.name === 'takedown' ? superName : b.label}
               timer={timer}
-              count={b.name === 'takedown'}
+              count={b.name !== 'punch' && b.name !== 'block'}
+              dud={b.name === 'takedown' ? superDud : dud(b.name)}
               tag={timer?.phase === 'locked' ? undefined : b.tag}
               hold={demo || timer?.phase === 'locked' ? undefined : b.name}
             />
@@ -372,6 +396,53 @@ function Online({ net }: { net: NetBadge }) {
     </div>
   );
 }
+
+// Each hit from someone off screen (or in a dark room): a red pixel arrow on the screen's edge, where the
+// line from you toward them leaves the screen, pointing out at them. It blinks and fades in under a second.
+function HitArrows({ arrow }: { arrow: HitArrow | null }) {
+  const [shown, setShown] = useState<HitArrow[]>([]);
+  useEffect(() => {
+    if (!arrow) return;
+    setShown((list) => [...list.slice(-3), arrow]);
+    const t = setTimeout(() => setShown((list) => list.filter((a) => a.id !== arrow.id)), 900);
+    return () => clearTimeout(t);
+  }, [arrow?.id]);
+  return (
+    <>
+      {shown.map((a) => {
+        const w = innerWidth, h = innerHeight, inset = 34;
+        const ox = a.from[0] * w, oy = a.from[1] * h, cos = Math.cos(a.angle), sin = Math.sin(a.angle);
+        // Along the ray from you, to whichever edge (inset) comes first.
+        const reach = Math.min(cos > 0 ? (w - inset - ox) / cos : cos < 0 ? (inset - ox) / cos : Infinity,
+                               sin > 0 ? (h - inset - oy) / sin : sin < 0 ? (inset - oy) / sin : Infinity);
+        const x = ox + cos * Math.max(0, reach), y = oy + sin * Math.max(0, reach);
+        return (
+          <span key={a.id} className="hit-arrow" style={{ left: x, top: y, transform: `translate(-50%, -50%) rotate(${a.angle}rad)` }} aria-hidden="true">
+            <svg viewBox={`0 0 ${ARROW[0].length} ${ARROW.length}`} shapeRendering="crispEdges">
+              {ARROW.flatMap((row, y) => [...row].map((c, x) => c === '.' ? null
+                : <rect key={`${x},${y}`} x={x} y={y} width={1} height={1} fill={c === 'k' ? '#12212a' : c === 'w' ? '#ffffff' : '#e43b44'} />))}
+            </svg>
+          </span>
+        );
+      })}
+    </>
+  );
+}
+
+// Pointing right (angle 0): ink outline, red inside, a lit edge on top.
+const ARROW = [
+  'kk.....',
+  'kwk....',
+  'krwk...',
+  'krrrk..',
+  'krrrrk.',
+  'krrrrrk',
+  'krrrrk.',
+  'krrrk..',
+  'krrk...',
+  'krk....',
+  'kk.....',
+];
 
 function Toast({ toast }: { toast: HudState['toast'] }) {
   const [shown, setShown] = useState<HudState['toast']>(null);

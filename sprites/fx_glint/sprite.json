@@ -1,0 +1,38 @@
+{
+  "name": "fx_glint",
+  "type": "fx",
+  "size": [
+    15,
+    15
+  ],
+  "origin": [
+    8,
+    8
+  ],
+  "palette": {
+    "w": "white",
+    "y": "yellow"
+  },
+  "animations": {
+    "play": {
+      "frames": [
+        {
+          "from": "fx_0",
+          "duration": 50
+        },
+        {
+          "from": "fx_1",
+          "duration": 80
+        },
+        {
+          "from": "fx_2",
+          "duration": 80
+        },
+        {
+          "from": "fx_3",
+          "duration": 60
+        }
+      ]
+    }
+  }
+}

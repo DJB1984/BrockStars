@@ -3,7 +3,8 @@
 //   fx_hit_heavy  headbutt and the Supers: bigger, with a shock ring
 //   fx_block      a blocked hit: a cyan ring that breaks into blue sparks
 //   fx_swish      a swing that missed: a pale arc of air, drawn facing right (rotated in the game)
-// Run: node scripts/build-hit-fx.mjs, then pixelforge export fx_hit fx_hit_heavy fx_block fx_swish.
+//   fx_glint      a heavy move winding up (headbutt, the Supers): a thin white star that flares on the head
+// Run: node scripts/build-hit-fx.mjs, then pixelforge export fx_hit fx_hit_heavy fx_block fx_swish fx_glint.
 import fs from 'node:fs';
 
 function canvas(W, H) {
@@ -79,7 +80,28 @@ const sprites = {
       [c => { c.diagonals(6, 8, ['n']); }, 60],
     ],
   },
+  // Longer and thinner than a hit's star, and white, not amber: a warning, not a contact. One pixel wide, so
+  // it's drawn on an odd canvas (15x15) around its middle pixel rather than with the mirrored helpers.
+  fx_glint: {
+    palette: { w: 'white', y: 'yellow' },
+    frames: [
+      [c => glint(c, 2, 0, 'w'), 50],
+      [c => glint(c, 7, 2, 'w'), 80],
+      [c => glint(c, 5, 1, 'w'), 80],
+      [c => glint(c, 2, 0, 'y'), 60],
+    ],
+  },
 };
+
+// A star `arm` pixels long each way (its tips yellow), with `diag` pixels of diagonal around the middle.
+function glint(c, arm, diag, color) {
+  const m = (c.g.length - 1) / 2, set = (x, y, k) => { c.g[y][x] = k; };
+  for (let s = 0; s < arm; s++) {
+    const k = s >= arm - 1 && arm > 3 ? 'y' : color;
+    for (const [x, y] of [[m + s, m], [m - s, m], [m, m + s], [m, m - s]]) set(x, y, k);
+  }
+  for (let s = 1; s <= diag; s++) for (const [x, y] of [[m + s, m + s], [m - s, m + s], [m + s, m - s], [m - s, m - s]]) set(x, y, color);
+}
 
 for (const [name, spec] of Object.entries(sprites)) {
   const dir = `sprites/${name}`, json = JSON.parse(fs.readFileSync(`${dir}/sprite.json`, 'utf8'));
@@ -107,4 +129,4 @@ for (const [name, spec] of Object.entries(sprites)) {
   }) } };
   fs.writeFileSync(`${dir}/sprite.json`, JSON.stringify(json, null, 2) + '\n');
 }
-console.log('Built fx_hit, fx_hit_heavy, fx_block and fx_swish.');
+console.log('Built fx_hit, fx_hit_heavy, fx_block, fx_swish and fx_glint.');

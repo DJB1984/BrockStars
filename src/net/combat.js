@@ -4,7 +4,25 @@ import { levelWalls } from '../combat/walls.js';
 
 import { GrappleHold, grapplePosition } from '../combat/grapple.js';
 
-// Only the host runs this clock. Clients send actions, never damage or hit claims.
+// Lag compensation. Everyone draws the other players a little in the past (remotes.js), so the host keeps
+// HISTORY_MS of each fighter's positions and judges an attack against where its victims stood at the moment
+// the attacker was looking at: the host time the attacker's screen showed (`seen`, sent with the command).
+// A claim older than MAX_REWIND isn't believed past that, and TOLERANCE either side of the moment absorbs the
+// smoothing between snapshots. A victim can now and then be hit just after stepping out of range on their own
+// screen: fairer than a swing that clearly connected and missed.
+export const HISTORY_MS = 1000, MAX_REWIND = 300, TOLERANCE = 40;
+
+// Where a fighter stood at host time t, between the two history samples around it.
+export function positionAt(history, t, current) {
+  if (!history?.length || t >= history.at(-1).t) return current;
+  if (t <= history[0].t) return history[0];
+  let i = history.length - 1;
+  while (history[i - 1].t > t) i--;
+  const a = history[i - 1], b = history[i], u = (t - a.t) / Math.max(1, b.t - a.t);
+  return { x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u };
+}
+
+// Only the host runs this clock. Clients send actions (with when they saw the world), never damage.
 // walls(level) gives a level's wall grid (walls.js), so nobody is hit through a wall.
 export class RoomCombat {
   constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.walls = walls; this.showers = new ShowerWorld(); }
@@ -59,7 +77,9 @@ export class RoomCombat {
     this.expire(f, now);
     r.previous = {}; // these are distinct key presses, not a held input stream
     r.update(now, { [command.action]: true }, command.facing);
-    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }] };
+    // How far back the attacker saw everyone else: judged against that moment, within MAX_REWIND.
+    const rewind = Number.isFinite(command.seen) ? Math.min(MAX_REWIND, Math.max(0, now - command.seen)) : 0;
+    if (r.attack && !f.action) f.action = { ...r.attack, start: now, checked: now, struck: new Set(), path: [{ x: f.position.x, y: f.position.y }], rewind };
   }
 
   expire(f, now) {
@@ -105,6 +125,12 @@ export class RoomCombat {
 
   tick(players, now, connected) {
     this.sync(players, now, connected);
+    for (const f of this.fighters.values()) {
+      const h = (f.history ??= []);
+      if (h.length && f.level !== h.at(-1).level) h.length = 0;   // a door: the old level's positions are gone
+      h.push({ t: now, x: f.position.x, y: f.position.y, level: f.level });
+      while (h.length > 2 && h[1].t < now - HISTORY_MS) h.shift();
+    }
     const delta = this.last === null ? 0 : Math.max(0, now-this.last);
     this.last = now;
     for (const f of this.fighters.values()) {
@@ -133,9 +159,15 @@ export class RoomCombat {
         // Intersect the whole tick interval so a 60ms punch cannot fall between 66ms snapshots.
         if (now >= begin && a.checked <= end) {
           const p = f.position;
-          const candidates = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || !other.rules.heldBy))
-            .map(([id, other]) => ({id, ...other.position}));
-          for (const other of attackTargets(p, candidates, a.facing, spec, a.path, this.walls(f.level))) {
+          const others = [...this.fighters].filter(([target, other]) => target!==id && other.present && !a.struck.has(target) && other.level===f.level && other.rules.health.value > 0 && (!spec.hold || !other.rules.heldBy));
+          // Everyone where the attacker saw them (and a moment either side), or where they are now with no rewind.
+          const found = new Map();
+          for (const t of a.rewind ? [now - a.rewind, now - a.rewind - TOLERANCE, now - a.rewind + TOLERANCE] : [now]) {
+            const candidates = others.map(([id, other]) => ({ id, ...positionAt(other.history, t, other.position) }));
+            for (const o of attackTargets(p, candidates, a.facing, spec, a.path, this.walls(f.level))) if (!found.has(o.id)) found.set(o.id, o);
+          }
+          const hit = [...found.values()].sort((u, v) => Math.hypot(u.x-p.x, u.y-p.y) - Math.hypot(v.x-p.x, v.y-p.y));
+          for (const other of hit) {
             if (a.struck.size >= (spec.maxTargets ?? Infinity)) break;
             const target = other.id;
             a.struck.add(target);

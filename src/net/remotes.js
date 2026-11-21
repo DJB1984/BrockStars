@@ -5,8 +5,10 @@ import { ATTACKS, attackAnim } from '../combat/rules.js';
 import { HeadBar, headroom } from '../objects/HeadBar.js';
 
 // Updates arrive ~15 times a second, a little unevenly, so each remote player is drawn DELAY_MS in the
-// past, between the two updates around that moment: smooth walking instead of hops.
-const DELAY_MS = 110;
+// past, between the two updates around that moment: smooth walking instead of hops. Each update also
+// remembers the host's clock it came from, so seenTime() can tell the host which moment this screen shows
+// (the host judges this player's attacks against it: lag compensation in combat.js).
+export const DELAY_MS = 110;
 const TELEPORT = 160;   // farther than this between updates (a respawn, a door) jumps instead of sliding
 
 // The other players in this scene's level, drawn from net.players: a sprite each, playing what they play,
@@ -41,17 +43,20 @@ export class RemotePlayers {
         r.n = p.n;
         const last = r.samples.at(-1);
         if (last && Math.hypot(p.x - last.x, p.y - last.y) > TELEPORT) r.samples.length = 0;
-        r.samples.push({ t: now, x: p.x, y: p.y });
+        // h: the host's clock for this position (on the host, when it arrived; on a client, the snapshot's).
+        r.samples.push({ t: now, x: p.x, y: p.y, h: this.net.role === 'host' ? (p.heard ?? now) : (this.net.snapTime ?? now) });
         if (r.samples.length > 10) r.samples.shift();
       }
       const at = now - DELAY_MS, s = r.samples;
       while (s.length > 2 && s[1].t <= at) s.shift();
-      let { x, y } = s.at(-1);
+      let { x, y, h } = s.at(-1);
       if (s.length >= 2 && s[0].t <= at) {
         const u = Math.min(1, (at - s[0].t) / Math.max(1, s[1].t - s[0].t));
         x = s[0].x + (s[1].x - s[0].x) * u;
         y = s[0].y + (s[1].y - s[0].y) * u;
+        h = s[0].h + (s[1].h - s[0].h) * u;
       }
+      r.seen = h;
       const sprite = r.sprite;
       if (sprite.texture.key !== p.char) sprite.setTexture(p.char);
       const combat = this.net.combatState.fighters[id];
@@ -68,7 +73,12 @@ export class RemotePlayers {
       else if (combat?.attack) {
         // A new attack (none before, or its clock restarted) counts toward alternating punch hands.
         const started = !r.attack || combat.attack.elapsed < r.attack.elapsed;
-        if (started) { r.swingStart = now - combat.attack.elapsed; r.whiffed = false; }
+        if (started) {
+          r.swingStart = now - combat.attack.elapsed; r.whiffed = false;
+          // A heavy move winding up glints, and a Super draws its reach on the floor (fightMarks.js).
+          const { name, facing, elapsed } = combat.attack, start = r.swingStart;
+          scene.marks?.telegraph(sprite, name, facing, elapsed, () => this.shown.get(id)?.swingStart === start && this.shown.get(id)?.attack?.name === name);
+        }
         if (started && combat.attack.name === 'punch') r.punches = (r.punches ?? -1) + 1;
         anim = attackAnim(p.char, combat.attack.name, combat.attack.facing, r.punches ?? 0, key => scene.anims.exists(key));
         // Its active frames are over and it touched nobody since it started: a whiff.
@@ -82,6 +92,11 @@ export class RemotePlayers {
       else if (hurt && scene.anims.exists(`${p.char}_hurt_${dir}`)) anim = `${p.char}_hurt_${dir}`;
       else if (combat && (!combat.health || combat.stagger)) anim = `${p.char}_idle_down`;
       r.attack = combat?.attack ?? null;
+      // What fightMarks.js draws around them: a block's shield, the second ring when their Super is ready.
+      const special = Object.keys(ATTACKS).find(name => ATTACKS[name].character === p.char);
+      sprite.alive = (combat?.health ?? 1) > 0;
+      sprite.blockFacing = combat?.block ?? null;
+      sprite.superReady = !!combat && sprite.alive && !!special && !combat[`${special}Cooldown`];
       const frozen = sprite.hitFreeze;   // a hit's freeze (hitFeel.js) holds the sprite's spot and pose
       if (anim && scene.anims.exists(anim)) {
         if (frozen) {
@@ -112,6 +127,18 @@ export class RemotePlayers {
   // The sprite drawn for a player id, if they're in this level.
   sprite(id) { return this.shown.get(id)?.sprite ?? null; }
 
+  // The host time this screen shows the others at, by the one nearest this player (the one you'd swing at).
+  seenTime() {
+    const me = this.scene.level?.player;
+    let best = null;
+    for (const r of this.shown.values()) {
+      if (r.seen === undefined) continue;
+      const d = me ? Math.hypot(r.sprite.x - me.x, r.sprite.y - me.y) : 0;
+      if (!best || d < best.d) best = { d, seen: r.seen };
+    }
+    return best?.seen ?? null;
+  }
+
   // Every remote player you can see.
   sprites() { return [...this.shown.values()].map(r => r.sprite).filter(s => s.active && s.visible); }
 
@@ -123,6 +150,7 @@ export class RemotePlayers {
 
   add(id, p) {
     const sprite = this.scene.add.sprite(p.x, p.y, p.char);
+    sprite.netId = id;
     const bar = new HeadBar(this.scene, { name: p.name || 'Player' });
     const r = { sprite, bar, n: null, samples: [] };
     this.shown.set(id, r);

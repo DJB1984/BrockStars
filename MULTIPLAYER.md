@@ -101,8 +101,30 @@ connects with nobody swishes instead.
 
 Combat commands and results use an ordered, reliable WebRTC channel. Movement still sends about
 15 snapshots a second. Both players need the updated game files; refresh older open tabs after deploying.
-The host validates combat against the latest reported positions; movement remains client-controlled.
+Movement remains client-controlled.
+
+**Lag compensation.** Every screen draws the other players about 110 ms in the past (`DELAY_MS` in
+`src/net/remotes.js`), so the host doesn't judge an attack against where people are now: it keeps a second of
+everyone's positions and judges it against where they stood at the moment the attacker's screen showed. Each
+snapshot carries the host's clock (`t`), each remote position remembers the snapshot it came from, and an
+attack command carries `seen`, the host time the attacker was looking at (`RemotePlayers.seenTime()`). The host
+rewinds that far, at most `MAX_REWIND` (300 ms), with `TOLERANCE` (40 ms) either side for the smoothing
+(`src/net/combat.js`). Clients still never send damage; they do say when they saw the world, which a cheater
+could stretch by up to 300 ms. Among friends that's the right trade: a swing that clearly connected and then
+missed feels worse than the rare hit just after someone stepped out of range.
+
+**Your own hits feel instant.** When your swing visibly reaches another player on your screen, the freeze and
+spark play right away (`Level.predictHit`); the host's answer, a round trip later, brings only the damage and
+isn't felt a second time. If the host disagrees, the damage just doesn't happen.
+
+**Reading the fight** (`src/combat/fightMarks.js`): a ring at everyone's feet (amber for you, red for the
+others) with a second, pulsing ring while their Super is ready (the snapshot's `<move>Cooldown`); a white glint
+as a headbutt or a Super winds up, and a Super's reach on the floor through its wind-up; a shield arc on a block,
+flashing when it stops a hit. A hit from someone you can't see puts a red arrow on your screen's edge, pointing
+at them. The HUD shows every move's cooldown, and a move pressed too early wiggles its keycap and clicks.
 
 Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against
 `npm run dev` to exercise two browser clients (Playwright and Chrome/Chromium required).
 `npm run test:hitfeel` and `npm run test:hitfeel:multiplayer` check that hits land and misses swish, solo and online.
+`npm run test:readable` and `npm run test:readable:multiplayer` check the rings, telegraphs, shields, keycaps and
+dud presses, and online the `seen` time, the predicted hit felt once, and the off-screen arrow.

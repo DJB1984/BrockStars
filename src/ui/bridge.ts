@@ -15,11 +15,24 @@ export type Super = { name: string; key: string; locked: boolean } & Timed;
 
 export type NetBadge = { active: boolean; world: boolean; room: string | null; count: number };
 
+// The three basic moves' cooldowns: ready once endsAt has passed (0 = ready).
+export type Basic = 'punch' | 'kick' | 'headbutt';
+
+// A move pressed while it was still cooling down (`id` counts up, so the same move twice wiggles twice).
+export type Dud = { move: Basic | 'block' | 'bellow' | 'grapple' | 'takedown'; id: number };
+
+// Hit by someone you can't see: `angle` (radians, screen axes) from you toward them, `from` where you are on
+// the screen (fractions of its width and height).
+export type HitArrow = { id: number; angle: number; from: [number, number] };
+
 export type HudState = {
   visible: boolean;            // only while a level is being played (not over the lobby or practice)
   character: string;
   shield: Shield;
   super: Super;
+  moves: Record<Basic, Timed>;
+  dud: Dud | null;
+  hitArrow: HitArrow | null;
   net: NetBadge;
   toast: { id: number; text: string } | null;
 };
@@ -29,6 +42,9 @@ let state: HudState = {
   character: 'titus',
   shield: { phase: 'ready' },
   super: { name: '', key: 'S', locked: true, endsAt: 0, duration: 1 },
+  moves: { punch: { endsAt: 0, duration: 1 }, kick: { endsAt: 0, duration: 1 }, headbutt: { endsAt: 0, duration: 1 } },
+  dud: null,
+  hitArrow: null,
   net: { active: false, world: false, room: null, count: 1 },
   toast: null,
 };

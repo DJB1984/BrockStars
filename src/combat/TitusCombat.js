@@ -10,9 +10,11 @@ import { levelWalls } from './walls.js';
 // onHit(target, move, result) runs for every hit this fighter lands, and onWhiff(sprite, move, facing) for
 // a swing whose active frames ended without touching anyone: hitFeel.js makes both felt. `others` are
 // fighters the host judges (online players): they can't be hit from here, but a swing that visibly
-// reaches one isn't a whiff.
+// reaches one isn't a whiff, and onPredict(other, move) runs the moment it does, so the hit can be felt
+// now instead of a round trip later (the host's answer only brings the damage). The sprite emits
+// 'combat-dud' (move) when a move is pressed while it's still cooling down.
 export class TitusCombat {
-  constructor(scene, sprite, { health, targets = () => [], onHit = () => {}, onWhiff = () => {}, others = () => [] } = {}) {
+  constructor(scene, sprite, { health, targets = () => [], onHit = () => {}, onWhiff = () => {}, others = () => [], onPredict = () => {} } = {}) {
     this.scene = scene;
     this.sprite = sprite;
     this.rules = new CombatRules(health, sprite.texture.key);
@@ -20,6 +22,7 @@ export class TitusCombat {
     this.onHit = onHit;
     this.onWhiff = onWhiff;
     this.others = others;
+    this.onPredict = onPredict;
     this.swing = null;   // the current attack: {live} once its active frames start, {landed} once it touches someone
     this.push = null;    // a knockback slide in progress
     this.struck = new Set();
@@ -96,6 +99,7 @@ export class TitusCombat {
         if (dx || dy) c.facing = dx ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up');
       }
       this.rules.update(now, input, c.facing);
+      if (this.rules.dud) sprite.emit('combat-dud', this.rules.dud);
       if (!wasBlocking && this.rules.block) sprite.emit('combat-block', this.rules.block.facing);
       if (wasBlocking && !this.rules.block) sprite.emit('combat-release');
       if (!old && this.rules.attack) {
@@ -113,7 +117,7 @@ export class TitusCombat {
         }
         this.struck.clear();
         this.path = [{ x: sprite.x, y: sprite.y }];
-        this.swing = { live: false, landed: false };
+        this.swing = { live: false, landed: false, predicted: new Set() };
         const { name, facing } = this.rules.attack;
         c.busy = attackAnim(sprite.texture.key, name, facing, name === 'punch' ? this.punches++ : 0, key => scene.anims.exists(key));
         sprite.setFlipX(facing === 'left').play(c.busy, true);
@@ -182,8 +186,14 @@ export class TitusCombat {
     }
     if (this.swing) {
       this.swing.live = true;
-      const seen = this.others().filter(o => o.active && o.visible !== false);
-      if (!this.swing.landed && attackTargets(this.sprite, seen, attack.facing, spec, this.path, this.walls).length) this.swing.landed = true;
+      // Online opponents this swing visibly reaches, as this screen draws them: each one's hit is felt now.
+      const seen = this.others().filter(o => o.active && o.visible !== false && o.alive !== false && !this.swing.predicted.has(o));
+      for (const other of attackTargets(this.sprite, seen, attack.facing, spec, this.path, this.walls)) {
+        if (this.swing.predicted.size >= (spec.maxTargets ?? Infinity)) break;
+        this.swing.predicted.add(other);
+        this.swing.landed = true;
+        if (!spec.hold) this.onPredict(other, attack.name);   // a Grapple's damage waits for the hold to finish
+      }
     }
     const candidates = this.targets().filter(target => target.active && target !== this.sprite && !this.struck.has(target) && (!spec.hold || (!target.grappledBy && !target.combat?.rules.heldBy)) && (target.combat ? target.combat.rules.health.value > 0 : true));
     for (const target of attackTargets(this.sprite, candidates, attack.facing, spec, this.path, this.walls)) {

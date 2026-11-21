@@ -134,8 +134,20 @@ export class CombatRules {
   }
   get stunUntil() { return this.health.stunUntil ?? 0; }
   attackSpec(name) { return characterAttack(this.character, name); }
+  // `dud` is set to the move whose key was just pressed while it was still cooling down (null otherwise), so
+  // the HUD can say no out loud instead of the press silently doing nothing. Only cooldowns of a second or
+  // more count: a mashed punch isn't a dud.
   update(now, input, facing) {
+    this.dud = null;
     if (this.block && (!input.block || now >= this.block.until)) this.endBlock(now);
+    if (this.health.value > 0 && !this.heldBy && now >= this.stunUntil) {
+      if (input.block && !this.previous.block && !this.block && now < this.blockReadyAt) this.dud = 'block';
+      for (const name of Object.keys(ATTACKS)) {
+        const spec = this.attackSpec(name);
+        if (spec.character && spec.character !== this.character) continue;
+        if (input[name] && !this.previous[name] && now < (this.readyAt[name] ?? 0) && spec.cooldown >= 1000) this.dud = name;
+      }
+    }
     const available = !this.heldBy && !this.attack && !this.block && now >= this.staggerUntil && now >= this.stunUntil && this.health.value > 0;
     if (available && input.block && !this.previous.block && now >= this.blockReadyAt) {
       this.block = { facing, until: now + characterStats(this.character).blockDuration };

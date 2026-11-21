@@ -73,6 +73,7 @@ class NetSession extends Phaser.Events.EventEmitter {
     this.commandNumber = 0;
     this.arena = new RoomCombat();
     this.combatState = { fighters: {}, hits: [] };
+    this.snapTime = null;    // client: the host's clock at the latest snapshot
     this.rosterKey = '';
   }
 
@@ -170,7 +171,8 @@ class NetSession extends Phaser.Events.EventEmitter {
     const combat = this.arena.tick(players, now, [this.id,...this.peers.keys()]);
     this.combatState = combat;
     this.emit('combat', combat);
-    const text = JSON.stringify({ type: 'snap', n, players, combat });
+    // `t` is the host's clock at this snapshot: clients send it back with an attack (combat.js lag compensation).
+    const text = JSON.stringify({ type: 'snap', n, t: now, players, combat });
     for (const { channel } of this.peers.values()) {
       if (channel?.readyState === 'open') try { channel.send(text); } catch { /* closing */ }
     }
@@ -221,6 +223,7 @@ class NetSession extends Phaser.Events.EventEmitter {
     const msg = JSON.parse(text);
     if (msg.type !== 'snap' || msg.n <= this.heard) return;
     this.heard = msg.n;
+    this.snapTime = msg.t;
     delete msg.players[this.id];
     this.players = msg.players;
     if (msg.combat) {
@@ -244,9 +247,10 @@ class NetSession extends Phaser.Events.EventEmitter {
     return { ...players, ...(this.local ? { [this.id]: this.local } : {}) };
   }
 
-  combatCommand(action, facing) {
+  // `seen`: the host time this player's screen shows the others at (RemotePlayers.seenTime), for attacks.
+  combatCommand(action, facing, seen) {
     if (!this.active) return;
-    const command = { action, facing, n: ++this.commandNumber };
+    const command = { action, facing, n: ++this.commandNumber, ...(Number.isFinite(seen) ? { seen } : {}) };
     if (this.role === 'host') {
       this.arena.sync(this.roomPlayers(), performance.now(), [this.id,...this.peers.keys()]);
       this.arena.command(this.id, command, performance.now());

@@ -45,6 +45,7 @@ export class HitFeel {
   land(attacker, victim, move, result, { freezeAttacker = true } = {}) {
     if (!victim?.active || !result?.damage) return;
     const blocked = !!result.blocked, feel = HIT_FEEL[move];
+    if (blocked) this.scene.marks?.flashShield(victim);   // the shield arc that stopped it (fightMarks.js)
     if (!result.knockdown) this.scene.feel?.flash(victim, 90, blocked ? 0x77bbff : 0xffffff);
     if (!feel || !attacker?.active) return;
     const ms = freezeTime(move, this.crowd(), blocked);

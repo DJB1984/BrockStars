@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { addPixelforgePlayer, pixelforgeFeel, installPixelforgePlay, drawPixelforgeBoxes, playFacing } from '../../export/pixelforge.js';
 import { TitusCombat } from '../combat/TitusCombat.js';
 import { HitFeel } from '../combat/hitFeel.js';
+import { FightMarks } from '../combat/fightMarks.js';
 import { CHARACTERS, isCharacter } from '../characters.js';
 import { HealthPool, directionTo, ATTACKS } from '../combat/rules.js';
 
@@ -13,7 +14,7 @@ export class CombatPractice extends Phaser.Scene {
     this.characterLabel = CHARACTERS[character].name;
     this.physics.world.setBounds(24, 100, 592, 200);
     this.cameras.main.setBackgroundColor('#171c29');
-    const floor = this.add.graphics();
+    const floor = this.add.graphics().setDepth(-5000);   // under the rings fightMarks.js draws at the feet
     floor.fillStyle(0x242d3e).fillRoundedRect(24, 90, 592, 220, 8);
     floor.lineStyle(1, 0x303c50);
     for (let x=40; x<616; x+=24) floor.lineBetween(x,100,x,300);
@@ -41,6 +42,11 @@ export class CombatPractice extends Phaser.Scene {
     const onWhiff=(sprite,move,facing)=>this.hitFeel.whiff(sprite,move,facing);
     this.combat=new TitusCombat(this,this.player,{health:this.health,targets:()=>[this.partner],onHit:landed(this.player),onWhiff});
     this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:landed(this.partner),onWhiff});
+    // Rings, shields and wind-up telegraphs for both fighters, as in a level.
+    const superReady=(c)=>{const move=Object.keys(ATTACKS).find(n=>ATTACKS[n].character===c.rules.character);return !!move&&c.rules.health.value>0&&this.time.now>=(c.rules.readyAt[move]??0);};
+    const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,block:c.rules.block?.facing??null,superReady:superReady(c)});
+    this.marks=new FightMarks(this,()=>[marked(this.combat,true),marked(this.partnerCombat,false)]);
+    this.marks.follow(this.combat);this.marks.follow(this.partnerCombat);
     this.player.controller.facing='right';
     this.partner.controller.facing='left';
     playFacing(this.player,'idle','right');
