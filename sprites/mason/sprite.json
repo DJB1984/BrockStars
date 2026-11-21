@@ -31,6 +31,7 @@
   "hit_*": "hit"
  },
  "hurt_pad": -1,
+ "groups": {"Movement":["idle_*","walk_*"],"Punch":["punch_*"],"Kick":["kick_*"],"Headbutt":["headbutt_*"],"Block":["block_*"],"Grapple":["grapple_*"],"Reactions":["knockdown_*","grappled_*","stunned_*"]},
  "animations": {
   "idle_down": {
    "loop": true,

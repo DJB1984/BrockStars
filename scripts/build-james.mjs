@@ -8,6 +8,9 @@ const source = path.resolve('sprites/mason');
 fs.mkdirSync(dir, { recursive: true });
 const spec = JSON.parse(fs.readFileSync(path.join(source, 'sprite.json'), 'utf8'));
 spec.name = 'james';
+// Keep James's own animation groups (Bellow, not Mason's Grapple).
+const ownGroups = JSON.parse(fs.readFileSync(path.join(root, 'sprite.json'), 'utf8')).groups;
+if (ownGroups) spec.groups = ownGroups;
 spec.class = 'tall_topdown';
 spec.palette = {
   k:'#17151c', z:'#18142555', s:'#edb38a', S:'#c98c67', a:'#f8c9a1',

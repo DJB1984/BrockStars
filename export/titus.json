@@ -5174,7 +5174,76 @@
           "fps": 8.0,
           "frames": 2
         }
-      }
+      },
+      "groups": [
+        {
+          "name": "Movement",
+          "anims": [
+            "idle_down",
+            "idle_up",
+            "idle_side",
+            "walk_down",
+            "walk_up",
+            "walk_side"
+          ]
+        },
+        {
+          "name": "Punch",
+          "anims": [
+            "punch_down",
+            "punch_up",
+            "punch_side",
+            "punch_alt_down",
+            "punch_alt_up"
+          ]
+        },
+        {
+          "name": "Kick",
+          "anims": [
+            "kick_down",
+            "kick_up",
+            "kick_side"
+          ]
+        },
+        {
+          "name": "Headbutt",
+          "anims": [
+            "headbutt_down",
+            "headbutt_up",
+            "headbutt_side"
+          ]
+        },
+        {
+          "name": "Block",
+          "anims": [
+            "block_down",
+            "block_up",
+            "block_side"
+          ]
+        },
+        {
+          "name": "Takedown",
+          "anims": [
+            "takedown_down",
+            "takedown_up",
+            "takedown_side"
+          ]
+        },
+        {
+          "name": "Reactions",
+          "anims": [
+            "knockdown_down",
+            "knockdown_up",
+            "knockdown_side",
+            "grappled_down",
+            "grappled_up",
+            "grappled_side",
+            "stunned_down",
+            "stunned_up",
+            "stunned_side"
+          ]
+        }
+      ]
     }
   }
 }

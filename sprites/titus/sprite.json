@@ -24,6 +24,7 @@
   "*shadow": "none"
  },
  "hurt_pad": -1,
+ "groups": {"Movement":["idle_*","walk_*"],"Punch":["punch_down","punch_up","punch_side","punch_alt_*"],"Kick":["kick_*"],"Headbutt":["headbutt_*"],"Block":["block_*"],"Takedown":["takedown_*"],"Reactions":["knockdown_*","grappled_*","stunned_*"]},
  "animations": {
   "idle_down": {
    "loop": true,
