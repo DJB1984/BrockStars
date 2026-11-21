@@ -1,3 +1,4 @@
+import { ShowerEffects } from '../showerEffects.js';
 import Phaser from 'phaser';
 import { pixelforgeLevel, enablePixelforgeHits, drawPixelforgeBoxes, installPixelforgePlay, pixelforgeFeel, pixelforgeDialog,
          spawnPixelforgeFx } from '../../export/pixelforge.js';
@@ -59,6 +60,7 @@ export class Level extends Phaser.Scene {
     const player = level.player;
     if (player && this.playerPosition) player.body.reset(...this.playerPosition);
     this.rooms = new RoomShadows(this, level, player ? [player.x, player.y] : undefined);
+    this.showers = new ShowerEffects(this);
     this.feel = pixelforgeFeel(this);
     this.hud = showHud(this);
     mountHud();
@@ -171,6 +173,7 @@ export class Level extends Phaser.Scene {
     }
     if (p?.active) this.rooms.update(p.x, p.y);
     this.remotes.update(delta);
+    this.showers.update(time, delta);
     for (const a of this.actors) {
       if (!a.sprite.active) continue;
       const seen = this.rooms.canSee(a.sprite.x, a.sprite.y);

@@ -1,3 +1,4 @@
+import { ShowerWorld, SHOWER } from '../showers.js';
 import { ATTACKS, CombatRules, DIRECTIONS, directionTo, attackTargets, extendPath } from '../combat/rules.js';
 import { levelWalls } from '../combat/walls.js';
 
@@ -6,7 +7,7 @@ import { GrappleHold, grapplePosition } from '../combat/grapple.js';
 // Only the host runs this clock. Clients send actions, never damage or hit claims.
 // walls(level) gives a level's wall grid (walls.js), so nobody is hit through a wall.
 export class RoomCombat {
-  constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.walls = walls; }
+  constructor({ walls = levelWalls } = {}) { this.fighters = new Map(); this.last = null; this.events = []; this.walls = walls; this.showers = new ShowerWorld(); }
 
   sync(players, now, connected = Object.keys(players)) {
     const members = new Set(connected);
@@ -41,6 +42,12 @@ export class RoomCombat {
     f.lastCommand = command.n;
     const r = f.rules;
     if (command.action === 'release') { if (r.block) r.endBlock(now); return; }
+    if (command.action === 'interact') {
+      if (r.health.value > 0 && !r.heldBy && now >= r.stunUntil && now >= (f.interactReady ?? 0)) {
+        if (this.showers.toggle(f.level, f.position)) f.interactReady = now + 250;
+      }
+      return;
+    }
     if (command.action === 'hazard') {
       if (now >= (f.hazardReady ?? 0)) {
         f.hazardReady = now + 1000;
@@ -105,7 +112,17 @@ export class RoomCombat {
         f.rules = new CombatRules(undefined, f.position.char ?? 'titus'); f.action = null; f.respawnAt = null; f.life++;
       }
     }
+    this.showers.update(delta);
     this.updateGrapples(now);
+    for (const [id, f] of this.fighters) {
+      if (f.present && f.rules.health.value > 0 && this.showers.burning(f.level, f.position)) {
+        f.burn = (f.burn ?? 0) + delta;
+        while (f.burn >= SHOWER.interval && f.rules.health.value > 0) {
+          this.damage(id, null, { damage: SHOWER.damage, unblockable: true, knockback: 0 }, null, now);
+          f.burn -= SHOWER.interval;
+        }
+      } else f.burn = 0;
+    }
     for (const [id, f] of this.fighters) {
       const a = f.action;
       if (a && f.present && f.rules.health.value > 0) {
@@ -152,6 +169,6 @@ export class RoomCombat {
       held: f.rules.heldBy ? { source: f.heldSource, ...f.position, facing: f.rules.heldBy.attack.facing } : null,
       takedownCooldown: Math.max(0, (f.rules.readyAt.takedown ?? 0)-now),
     }]));
-    return { fighters, hits: this.events.splice(0) };
+    return { fighters, hits: this.events.splice(0), showers: this.showers.levels };
   }
 }

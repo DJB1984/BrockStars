@@ -1,3 +1,4 @@
+import { registerLevelShowers } from '../showers.js';
 import Phaser from 'phaser';
 import { loadPixelforgeAll, createPixelforgeAll, PIXELFORGE_INDEX } from '../../export/pixelforge.js';
 import { showLobby } from '../ui/mount.tsx';
@@ -30,7 +31,11 @@ export class Boot extends Phaser.Scene {
     createPixelforgeAll(this);
     const levels = this.cache.json.get(PIXELFORGE_INDEX)?.levels ?? [];
     // every level's walls, for hits: the host resolves fights in levels it isn't standing in
-    for (const name of levels) registerLevelWalls(name, this.cache.tilemap.get(name)?.data);
+    for (const name of levels) {
+      const data = this.cache.tilemap.get(name)?.data;
+      registerLevelWalls(name, data);
+      registerLevelShowers(name, data);
+    }
     if (new URLSearchParams(location.search).get('practice') === '1') {
       this.scene.start('combat-practice');
       return;

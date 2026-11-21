@@ -453,6 +453,7 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
                     name={superName}
                     note={superLocked ? 'Not built yet' : 'Super'}
                   />
+                  <KeyRow keys={<kbd className="key">E</kbd>} name="Interact" note="Toggle nearest shower" />
                   <KeyRow keys={<kbd className="key">Esc</kbd>} icon="menu" name="Menu" />
                 </ul>
               </section>
