@@ -59,7 +59,7 @@ fails, so home games stay direct).
 Cloudflare's TURN is free for the first 1,000 GB a month, which is far more than this game uses, and it
 listens on port 443 over TLS, which campus firewalls let through like ordinary HTTPS:
 
-1. In the Cloudflare dashboard, open **Realtime → TURN Server** and create a TURN key. Copy its
+1. In the Cloudflare dashboard, open **Realtime â†’ TURN Server** and create a TURN key. Copy its
    **Turn Token ID** and **API Token** (the token is shown once).
 2. On the server, create `net.config.php` next to `net.php` (deploys don't overwrite it):
    ```php
@@ -119,8 +119,8 @@ isn't felt a second time. If the host disagrees, the damage just doesn't happen.
 
 **Reading the fight** (`src/combat/fightMarks.js`): a ring at everyone's feet (amber for you, red for the
 others) with a second, pulsing ring while their Super is ready (the snapshot's `<move>Cooldown`); a white glint
-as a headbutt or a Super winds up, and a Super's reach on the floor through its wind-up; a shield arc on a block,
-flashing when it stops a hit. A hit from someone you can't see puts a red arrow on your screen's edge, pointing
+as a headbutt or a Super winds up (their hit zones stay hidden); a shield arc on a block, flashing when it stops a
+hit. A hit from someone you can't see puts a red arrow on your screen's edge, pointing
 at them. The HUD shows every move's cooldown, and a move pressed too early wiggles its keycap and clicks.
 
 Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against

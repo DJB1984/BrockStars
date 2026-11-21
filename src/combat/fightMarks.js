@@ -1,12 +1,12 @@
 import { spawnPixelforgeFx } from '../../export/pixelforge.js';
-import { ATTACKS, BODY, DIRECTIONS } from './rules.js';
+import { ATTACKS, DIRECTIONS } from './rules.js';
 import { headroom } from '../objects/HeadBar.js';
 
 // What makes a crowded fight readable at a glance, drawn around every fighter:
 //   a ring at the feet, amber for you and red for everyone else, so you can find yourself in a pile of 8;
 //   a second, pulsing ring while a fighter's Super is ready (as in Brawl Stars), so everyone knows whom to respect;
-//   a white glint on the head as a heavy move winds up (headbutt and the Supers), and a Super's reach drawn on
-//     the floor through its wind-up, filling toward its edge: when the fill gets there, it fires;
+//   a white glint on the head as a heavy move winds up (headbutt and the Supers). Their hit zones stay hidden:
+//     the glint is the whole warning;
 //   a shield arc on the side a block covers, which flashes when it stops a hit.
 //
 //   this.marks = new FightMarks(this, () => [{ sprite, mine, alive, superReady, block }, ...]);   // every frame
@@ -16,7 +16,6 @@ import { headroom } from '../objects/HeadBar.js';
 // Nothing is drawn for a sprite that's hidden (a dark room you aren't in).
 
 export const GLINT = ['headbutt', 'bellow', 'grapple', 'takedown'];
-const zoned = (move) => !!ATTACKS[move]?.character;     // the Supers
 const FLOOR_DEPTH = -3900;   // over the tile layers (-5000 + i) and room shadows (-4000), under every fighter
 const MINE = 0xfeae34, OTHER = 0xe43b44, SHIELD = 0x2ce8f5, LIT = 0xffffff, INK = 0x124e89;
 
@@ -105,30 +104,8 @@ export class FightMarks {
       const age = now - t.start;
       if (age >= t.windup || !t.sprite.active || !t.alive()) return false;
       this.placeGlint(t);
-      if (zoned(t.move) && t.sprite.visible) this.drawZone(g, t, age / t.windup);
       return true;
     });
-  }
-
-  // The floor a Super will hit: anyone whose feet are inside it. Outlined, faintly filled, and filling from
-  // the fighter outward as the wind-up runs.
-  drawZone(g, t, progress) {
-    const spec = ATTACKS[t.move], color = t.mine ? MINE : OTHER, x = Math.round(t.sprite.x), y = Math.round(t.sprite.y) - 1;
-    if (spec.radial) {
-      g.fillStyle(color, 0.1).fillCircle(x, y, spec.reach);
-      g.fillStyle(color, 0.18).fillCircle(x, y, Math.max(2, spec.reach * progress));
-      g.lineStyle(1, color, 0.85).strokeCircle(x, y, spec.reach);
-      return;
-    }
-    const [fx, fy] = DIRECTIONS[t.facing], near = -BODY, far = spec.reach + BODY, half = (spec.width ?? 18) + BODY;
-    const rect = (from, to) => {   // forward from..to, across ±half, as an axis-aligned rectangle
-      const xs = [x + fx * from + fy * half, x + fx * to - fy * half], ys = [y + fy * from + fx * half, y + fy * to - fx * half];
-      return [Math.min(...xs), Math.min(...ys), Math.abs(xs[1] - xs[0]) || 1, Math.abs(ys[1] - ys[0]) || 1];
-    };
-    const [rx, ry, rw, rh] = rect(near, far);
-    g.fillStyle(color, 0.16).fillRect(rx, ry, rw, rh);
-    g.fillStyle(color, 0.32).fillRect(...rect(near, near + (far - near) * progress));
-    g.fillStyle(color, 0.9).fillRect(rx, ry, rw, 1).fillRect(rx, ry + rh - 1, rw, 1).fillRect(rx, ry, 1, rh).fillRect(rx + rw - 1, ry, 1, rh);
   }
 
   // A shield arc on the blocked side, at chest height: behind the fighter when they face up, in front otherwise.

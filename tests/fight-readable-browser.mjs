@@ -1,6 +1,6 @@
 // Run against npm run dev: solo, every move has a keycap that goes down while it cools, a move pressed while
 // cooling is a dud (the cap wiggles, the HUD hears it), your feet have an amber ring with a second one while
-// the Super is ready, heavy moves glint and a Super draws its reach on the floor, and a block draws a shield.
+// the Super is ready, heavy moves glint (no Super shows its hit zone), and a block draws a shield.
 // Screenshots go to previews/fight-readable-*.png for a look.
 const { chromium } = await import(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 import assert from 'node:assert/strict';
@@ -38,7 +38,7 @@ try {
   const dud = await page.evaluate(async () => (await import('/src/ui/bridge.ts')).hud.get().dud);
   const wiggling = await page.$eval('.hud-keys .mk:nth-child(2) .mk-cap', el => el.getAnimations().length);
 
-  // Headbutt glints; Takedown glints and draws its reach on the floor through its 500 ms wind-up.
+  // Headbutt glints; Takedown glints too, but draws no zone on the floor.
   await page.evaluate(() => { window.pixelforgePlay.player.controller.override = { headbutt: true }; });
   await wait(50);
   const headbutt = await marks();
@@ -72,7 +72,7 @@ try {
   assert.ok(wiggling > 0, 'the kick cap wiggles');
   assert.deepEqual(headbutt.telegraphs, [{ move: 'headbutt', glint: true }], 'headbutt glints');
   assert.deepEqual(takedown.telegraphs, [{ move: 'takedown', glint: true }], 'takedown glints');
-  assert.ok(takedown.floorDrawn > spent.floorDrawn, 'takedown draws its reach on the floor');
+  assert.equal(takedown.floorDrawn, spent.floorDrawn, 'takedown keeps its hit zone hidden (only the glint warns)');
   assert.equal(spent.telegraphs.length, 0, 'the telegraph ends with the wind-up');
   assert.equal(spent.fighters[0].superReady, false, 'no Super ring while it cools');
   assert.equal(block.fighters[0].block, 'right');

@@ -188,6 +188,9 @@ export class Level extends Phaser.Scene {
         // Already felt the moment your swing reached them: the host's answer only brings the damage.
         const felt = hit.source === net.id && this.predicted.get(hit.target);
         if (felt && felt.move === hit.move && this.time.now - felt.at < 700) { this.predicted.delete(hit.target); continue; }
+        // The host answered before this screen saw the swing connect (a fast connection): don't feel it again then.
+        const swing = this.combat?.swing;
+        if (hit.source === net.id && victim && swing && this.combat.rules.attack?.name === hit.move) swing.predicted.add(victim);
         // Your own swing confirmed after it already ended: spark and shake, but don't stop you mid-step.
         this.hitFeel.land(attacker, victim, hit.move, hit, { freezeAttacker: attacker !== player || !!this.combat?.rules.attack });
       }
