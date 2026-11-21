@@ -112,7 +112,6 @@ type MoveKeyProps = {
   timer?: Timer;
   count?: boolean;            // show whole seconds while it cools (the long Super cooldown)
   hold?: keyof TouchInput;    // a touch button: holding it holds this input down
-  tag?: string;               // a word on the cap, under the icon (touch buttons)
   dud?: number;               // counts up each time the move is pressed while cooling: the cap wiggles
   style?: CSSProperties;
   className?: string;
@@ -123,7 +122,7 @@ type MoveKeyProps = {
 // Block held up drains a cream bar instead, over the three seconds a block can last. Pressed while it's down,
 // it shakes its head: a quick side-to-side wiggle (the game clicks at the same time).
 // Short cooldowns (a punch's 300 ms) come back without the pop, which would flash on every mashed punch.
-function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, tag, dud = 0, style, className = '' }: MoveKeyProps) {
+function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, dud = 0, style, className = '' }: MoveKeyProps) {
   const phase = usePhase(timer);
   const [pops, setPops] = useState(0);
   const last = useRef(phase);
@@ -147,20 +146,18 @@ function MoveKey({ icon, tone, label, keyLabel, timer, count, hold, tag, dud = 0
       ref={el}
       {...(hold ? { type: 'button' as const, 'aria-label': label } : {})}
       {...handlers}
-      className={`mk mk-${tone} is-${phase}${down ? ' is-down' : ''}${tag ? ' has-tag' : ''}${className ? ` ${className}` : ''}`}
+      className={`mk mk-${tone} is-${phase}${down ? ' is-down' : ''}${className ? ` ${className}` : ''}`}
       style={style}
     >
       <span key={pops} className={`mk-cap${pops ? ' is-pop' : ''}`}>
         {timer && phase === 'cooldown' && <Fill key={`fill-${timer.endsAt}`} className="mk-fill" timer={timer} />}
         {timer && phase === 'holding' && <Fill key={`drain-${timer.endsAt}`} className="mk-drain" timer={timer} />}
         <Icon name={phase === 'locked' ? 'lock' : icon} size={hold ? 3 : 4} className="mk-icon" />
-        {tag && <span className="mk-tag">{tag}</span>}
         {count && timer && phase === 'cooldown' && timer.duration >= 3000 && <Seconds key={`secs-${timer.endsAt}`} endsAt={timer.endsAt} />}
         {pops > 0 && <span className="mk-flash" aria-hidden="true" />}
       </span>
       {phase === 'locked' && <span className="mk-soon">Soon</span>}
       {keyLabel && <kbd className="key mk-key">{keyLabel}</kbd>}
-      {!hold && <span className="mk-label">{label}</span>}
     </Tag>
   );
 }
@@ -236,13 +233,12 @@ type TouchProps = { shield: Timer; special: Timer; moves?: Record<Basic, Timer>;
   superName: string; superIcon: IconName; demo?: boolean };
 
 // Offsets from Punch (the right thumb's home), in button units: an arc of moves around it.
-// `tag` is the word printed on the cap: at thumb size an icon alone doesn't say which move it is.
-const ARC: { name: keyof TouchInput; label: string; tag: string; icon?: IconName; tone: Tone; cx: number; cy: number; s: number }[] = [
-  { name: 'punch', label: 'Punch', tag: 'Punch', icon: 'punch', tone: 'ember', cx: 0, cy: 0, s: 1.35 },
-  { name: 'kick', label: 'Kick', tag: 'Kick', icon: 'kick', tone: 'ember', cx: -1.5, cy: 0.05, s: 1 },
-  { name: 'headbutt', label: 'Headbutt', tag: 'Head', icon: 'headbutt', tone: 'brick', cx: -1.16, cy: -1.16, s: 1 },
-  { name: 'takedown', label: 'Super', tag: 'Super', tone: 'amber', cx: 0, cy: -1.55, s: 1 },
-  { name: 'block', label: 'Block', tag: 'Block', icon: 'block', tone: 'cream', cx: -2.78, cy: 0.12, s: 1 },
+const ARC: { name: keyof TouchInput; label: string; icon?: IconName; tone: Tone; cx: number; cy: number; s: number }[] = [
+  { name: 'punch', label: 'Punch', icon: 'punch', tone: 'ember', cx: 0, cy: 0, s: 1.35 },
+  { name: 'kick', label: 'Kick', icon: 'kick', tone: 'ember', cx: -1.5, cy: 0.05, s: 1 },
+  { name: 'headbutt', label: 'Headbutt', icon: 'headbutt', tone: 'brick', cx: -1.16, cy: -1.16, s: 1 },
+  { name: 'takedown', label: 'Super', tone: 'amber', cx: 0, cy: -1.55, s: 1 },
+  { name: 'block', label: 'Block', icon: 'block', tone: 'cream', cx: -2.78, cy: 0.12, s: 1 },
 ];
 
 function TouchControls({ shield, special, moves, dud = () => 0, superDud = 0, superName, superIcon, demo }: TouchProps) {
@@ -264,7 +260,6 @@ function TouchControls({ shield, special, moves, dud = () => 0, superDud = 0, su
               timer={timer}
               count={b.name !== 'punch' && b.name !== 'block'}
               dud={b.name === 'takedown' ? superDud : dud(b.name)}
-              tag={timer?.phase === 'locked' ? undefined : b.tag}
               hold={demo || timer?.phase === 'locked' ? undefined : b.name}
             />
           );

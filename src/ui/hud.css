@@ -167,13 +167,6 @@
 @keyframes spark-r { to { transform: translate(10px, -12px) scale(0.6); opacity: 0; } }
 
 .mk-key { position: absolute; z-index: 2; top: -10px; left: -10px; }
-.mk-label {
-  font: 400 21px/0.9 var(--display);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  text-shadow: var(--outline-2), 0 3px 0 var(--ink);
-  white-space: nowrap;
-}
 .mk-soon {
   position: absolute;
   z-index: 2;
@@ -201,7 +194,6 @@
 @media (max-width: 720px) {
   .hud-keys { gap: 14px; }
   .hud-keys .mk { --size: 40px; }
-  .hud-keys .mk-label { font-size: 17px; }
 }
 
 /* a hit from someone you can't see: a red arrow on the screen's edge, pointing at them */
@@ -269,21 +261,6 @@
   pointer-events: auto;
   touch-action: none;
   cursor: pointer;
-}
-.arc-key .mk-label { display: none; }
-/* touch caps carry their move's name under the icon */
-.mk.has-tag .mk-cap { align-content: center; gap: 3px; }
-.mk.has-tag .mk-icon { width: min(calc(var(--size) * 0.5), 30px); }
-.mk-tag {
-  position: relative;
-  z-index: 1;
-  font: 400 14px/0.75 var(--display);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--on);
-}
-.mk-ember .mk-tag, .mk-brick .mk-tag, .mk.is-cooldown .mk-tag, .mk.is-holding .mk-tag {
-  text-shadow: -1px 0 0 var(--ink), 1px 0 0 var(--ink), 0 -1px 0 var(--ink), 0 2px 0 var(--ink);
 }
 .arc-key .mk-soon { font-size: 15px; right: -10px; }
 
@@ -367,7 +344,7 @@
 }
 .touch.is-demo { --u: 10cqw; --px: 1px; --gx: 4cqw; --gy: 4cqw; --gl: 4cqw; }
 .phone { container-type: inline-size; }
-.touch.is-demo .mk-label, .touch.is-demo .mk-key, .touch.is-demo .mk-tag { display: none; }
+.touch.is-demo .mk-key { display: none; }
 .touch.is-demo .stick-zone { top: 0; }
 .touch.is-demo .stick-ring { --ring: 30cqw; opacity: 1; }
 .touch.is-demo .mk-soon { font-size: 10px; top: -5px; right: -8px; padding: 0 3px; }
