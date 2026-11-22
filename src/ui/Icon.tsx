@@ -64,23 +64,21 @@ const ICONS = {
     '.xxxxxxxx',
     'oooooooo.',
   ],
-  // a head in profile, facing forward: half-tone hair, one eye under the brow, nose and chin
-  // (no stray sparks: the keys' 3px outline fills any gap smaller than ~3 cells)
+  // an angry head from the front, like the fist: half-tone hair, brows down, a gritted mouth
+  // (drawn in dark lines, which the keys' 3px outline fills in; any gap under ~3 cells fills the same way)
   headbutt: [
     '...oooooo...',
-    '.ooooooooo..',
-    'oooooooooxx.',
-    'oooooooxxxxx',
-    'ooooxxxx.xx.',
-    'oooxxxxxxxx.',
-    'ooxxxxxxxxxx',
-    '.oxxxxxxxxx.',
+    '.oooooooooo.',
+    'oooooooooooo',
+    'xxxxxxxxxxxx',
+    'x..xxxxxx..x',
+    'xxx..xx..xxx',
+    'xxxx.xx.xxxx',
+    'xxxxxxxxxxxx',
+    'xxx......xxx',
+    '.xxxxxxxxxx.',
     '..xxxxxxxx..',
-    '..xxxxxxxxx.',
-    '...xxxxxxx..',
-    '....xxxxx...',
-    '....xxx.....',
-    '....xxx.....',
+    '...xxxxxx...',
   ],
   block: [
     'xxxxxxxxx',
