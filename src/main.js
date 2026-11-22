@@ -7,9 +7,12 @@ import { followSoundSettings } from './sound.js';
 
 // The screen fills the browser window: the game's size is the window divided by "zoom" from pixelforge.json
 // (default 3), how many screen pixels each game pixel gets. Whole zooms keep the pixels square, so the size is
-// rounded up and the last row/column of game pixels may run a little off the edge.
+// rounded up and the last row/column of game pixels may run a little off the edge. It's rounded up to an even
+// size, too: an odd one puts the camera's centre on half a pixel, and then the tiles snap to whole pixels but
+// the room shadows (Graphics) don't, leaving a 1px unshaded sliver down a room's right (or bottom) edge.
 const zoom = project.zoom ?? 3;
-const fit = () => [Math.ceil(window.innerWidth / zoom), Math.ceil(window.innerHeight / zoom)];
+const even = (n) => Math.ceil(n / 2) * 2;
+const fit = () => [even(window.innerWidth / zoom), even(window.innerHeight / zoom)];
 const [width, height] = fit();
 
 const game = new Phaser.Game({
