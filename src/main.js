@@ -3,6 +3,7 @@ import project from '../pixelforge.json';
 import { Boot } from './scenes/Boot.js';
 import { Level } from './scenes/Level.js';
 import { CombatPractice } from './scenes/CombatPractice.js';
+import { followSoundSettings } from './sound.js';
 
 // The screen fills the browser window: the game's size is the window divided by "zoom" from pixelforge.json
 // (default 3), how many screen pixels each game pixel gets. Whole zooms keep the pixels square, so the size is
@@ -26,6 +27,9 @@ const game = new Phaser.Game({
   },
   scene: [Boot, Level, CombatPractice],
 });
+
+// The menu's Volume and Mute (sound.js), for every sound the game makes.
+followSoundSettings(game.sound);
 
 // Follow the window. Cameras that filled the old size grow with it (Phaser's camera manager does that).
 window.addEventListener('resize', () => game.scale.resize(...fit()));

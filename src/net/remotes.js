@@ -84,6 +84,7 @@ export class RemotePlayers {
           // A heavy move winding up glints, and a Super draws its reach on the floor (fightMarks.js).
           const { name, facing, elapsed } = combat.attack, start = r.swingStart;
           scene.marks?.telegraph(sprite, name, facing, elapsed, () => this.shown.get(id)?.swingStart === start && this.shown.get(id)?.attack?.name === name);
+          scene.hitFeel?.swing(sprite, name, elapsed);
         }
         if (started && combat.attack.name === 'punch') r.punches = (r.punches ?? -1) + 1;
         anim = attackAnim(p.char, combat.attack.name, combat.attack.facing, r.punches ?? 0, key => scene.anims.exists(key));

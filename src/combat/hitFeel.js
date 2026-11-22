@@ -1,7 +1,7 @@
 import { spawnPixelforgeFx } from '../../export/pixelforge.js';
 import { ATTACKS, DIRECTIONS } from './rules.js';
 import { headroom } from '../objects/HeadBar.js';
-import { parryTing } from '../sound.js';
+import { clank, hearing, hitSound, koSting, parryTing, whoosh } from '../sound.js';
 import { KO } from './match.js';
 
 // How a connecting hit feels, per move: the freeze on contact (ms; Smash's hitlag, longer for heavier
@@ -27,11 +27,15 @@ export function freezeTime(move, crowd = 2, blocked = false) {
 //   const hitFeel = new HitFeel(this, { me: () => player, crowd: () => fightersOnScreen });
 //   hitFeel.land(attacker, victim, 'punch', result);   // after the victim's applyHit, so its hurt pose freezes
 //   hitFeel.whiff(attacker, 'punch', 'right');         // a swing that connected with nobody
+//   hitFeel.swing(attacker, 'punch');                  // a swing starting: its whoosh (sound.js)
 // land() freezes both fighters (only those two: the rest of the brawl keeps moving), shakes the victim
 // in place, flashes them, sparks at the contact point and shakes the camera, but only on the screen of
 // someone in the fight. A frozen sprite carries `hitFreeze`: TitusCombat and RemotePlayers leave it alone.
 // The hit that KOs (result.ko) lands harder whatever the move: KO.freeze for both, the heavy spark, a bigger
 // shake, and "KO!" popping over the body.
+// Every hit is heard on the frame its freeze starts (sound.js): the move's own hit sound, a clank when it's
+// blocked, a sting on a KO. Full volume for a fight you're in; anyone else's fades with distance and is muted
+// in a room you can't see into.
 export class HitFeel {
   constructor(scene, { me = () => null, crowd = () => 2 } = {}) {
     this.scene = scene;
@@ -51,15 +55,20 @@ export class HitFeel {
     if (!victim?.active || !result?.damage) return;
     const blocked = !!result.blocked, feel = HIT_FEEL[move];
     if (!result.knockdown) this.scene.feel?.flash(victim, 90, blocked ? 0x77bbff : 0xffffff);
-    const ko = !!result.ko;
-    if (ko) this.scene.marks?.pop(victim, 'KO!', 0xe43b44, 24);   // a shower's KO too
+    const ko = !!result.ko, me = this.me(), mine = !!me && (attacker === me || victim === me);
+    const loud = hearing(this.scene, victim, mine);
+    if (ko) {
+      this.scene.marks?.pop(victim, 'KO!', 0xe43b44, 24);   // a shower's KO too
+      koSting(this.scene, mine ? 1 : loud * 0.6);            // loudest for the one KO'd and the one who did it
+    }
     if (!feel || !attacker?.active) return;
+    if (blocked && !ko) clank(this.scene, loud);
+    else hitSound(this.scene, move, loud);
     const ms = ko ? KO.freeze : freezeTime(move, this.crowd(), blocked);
     this.freeze(victim, ms, !blocked);
     if (freezeAttacker) this.freeze(attacker, ms);
     this.spark(attacker, victim, ko ? 'fx_hit_heavy' : blocked ? 'fx_block' : feel.spark);
-    const me = this.me();
-    if (!blocked && me && (attacker === me || victim === me)) this.scene.feel?.shake(...(ko ? [160, 3] : feel.shake));
+    if (!blocked && mine) this.scene.feel?.shake(...(ko ? [160, 3] : feel.shake));
   }
 
   // A perfect block: the attacker is caught in a longer, shaking freeze than the blocker's,
@@ -68,13 +77,20 @@ export class HitFeel {
     if (!blocker?.active) return;
     this.scene.marks?.pop(blocker, 'PERFECT', 0x2ce8f5);
     this.scene.feel?.flash(blocker, 90, 0xffffff);
-    parryTing(this.scene);
+    const me = this.me(), mine = !!me && (attacker === me || blocker === me);
+    parryTing(this.scene, hearing(this.scene, blocker, mine));
     if (!attacker?.active) return;
     this.freeze(blocker, 60);
     this.freeze(attacker, 140, true);
     this.spark(attacker, blocker, 'fx_block');
-    const me = this.me();
-    if (me && (attacker === me || blocker === me)) this.scene.feel?.shake(80, 1);
+    if (mine) this.scene.feel?.shake(80, 1);
+  }
+
+  // A swing starting (`elapsed` ms ago: an online player's shows up a little late): its whoosh, from the
+  // wind-up on, so a miss is heard too and the hit sound has something to land on.
+  swing(attacker, move, elapsed = 0) {
+    if (!attacker?.active) return;
+    whoosh(this.scene, move, hearing(this.scene, attacker, attacker === this.me()), elapsed);
   }
 
   // A swing that missed: a puff of air in front of the fighter, and no freeze.

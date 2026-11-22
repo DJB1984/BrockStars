@@ -7,6 +7,7 @@ import { installFrames } from './pixel';
 import { Icon, type IconName } from './Icon';
 import { canFullscreen, toggleFullscreen, useFullscreen } from './fullscreen';
 import { LAYOUTS, keyLabel, layoutId, onLayout, setLayout } from '../controls.js';
+import { onSound, setSound, soundSettings } from '../sound.js';
 
 type Layout = (typeof LAYOUTS)[keyof typeof LAYOUTS];
 const useLayout = (): [keyof typeof LAYOUTS, Layout] => {
@@ -564,6 +565,24 @@ function Toast({ toast }: { toast: HudState['toast'] }) {
 
 // ---- the menu --------------------------------------------------------------------------------------
 
+// The menu's Volume slider and Mute switch (sound.js), remembered on this device. Moving the slider unmutes.
+function SoundRow() {
+  const { volume, muted } = useSyncExternalStore(onSound, soundSettings);
+  const percent = Math.round(volume * 100);
+  return (
+    <div className={`hud-sound${muted ? ' is-muted' : ''}`}>
+      <label className="hud-sound-label" htmlFor="hud-volume">Volume</label>
+      <input id="hud-volume" className="hud-volume" type="range" min={0} max={100} step={5} value={percent}
+        style={{ '--fill': `${percent}%` } as CSSProperties} aria-valuetext={muted ? `${percent}%, muted` : `${percent}%`}
+        onChange={(e) => setSound({ volume: Number(e.currentTarget.value) / 100, muted: false })} />
+      <button type="button" className={`btn btn-small ${muted ? 'btn-brick' : 'btn-pine'} hud-mute`} aria-pressed={muted}
+        onClick={() => setSound({ muted: !muted })}>
+        <span className="btn-face">Mute</span>
+      </button>
+    </div>
+  );
+}
+
 type MenuProps = {
   view: 'main' | 'controls';
   onView: (v: 'main' | 'controls') => void;
@@ -607,6 +626,7 @@ function Menu({ view, onView, onClose, superName, superLocked, superKey, superIc
                 <span className="btn-face">{fullscreen ? 'Exit full screen' : 'Full screen'}</span>
               </button>
             )}
+            <SoundRow />
             <button type="button" className="btn btn-pine" onClick={() => { onClose(); actions.changeFighter(); }}>
               <span className="btn-face">Change fighter</span>
             </button>

@@ -40,6 +40,8 @@ const NAMES = new Map();
 // Hits land with this.hitFeel (combat/hitFeel.js), whoever threw them (this player, an enemy, or a fight between
 // two other players the host resolved): the two fighters freeze, the victim shakes, flashes and flinches, a
 // spark pops at the contact point, and the camera shakes only for someone in the fight. A miss swishes.
+// Every swing whooshes from its wind-up and every hit is heard (sound.js): loud for your own fight, fading
+// with distance for others', silent from a room you can't see into. The menu's Volume and Mute apply.
 // Online, your own swing that visibly reaches someone is felt at once (predictHit); the host's answer, judged
 // against what your screen showed (lag compensation, net/combat.js), only brings the damage.
 // this.marks (combat/fightMarks.js) keeps the fight readable: rings at everyone's feet, a second one while a
@@ -143,6 +145,7 @@ export class Level extends Phaser.Scene {
         on(player, 'pixelforge-attack', () => {
           this.safeUntil = 0;   // swinging gives up the spawn safety (the host does the same)
           const attack = this.combat.rules.attack;
+          if (attack) this.hitFeel.swing(player, attack.name);
           if (attack) net.combatCommand(attack.name, attack.facing, this.remotes.seenTime());
         });
         on(player, 'combat-dud', (move) => {

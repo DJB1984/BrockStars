@@ -43,6 +43,7 @@ export class CombatPractice extends Phaser.Scene {
     const onWhiff=(sprite,move,facing)=>this.hitFeel.whiff(sprite,move,facing);
     this.combat=new TitusCombat(this,this.player,{health:this.health,targets:()=>[this.partner],onHit:landed(this.player),onWhiff});
     this.partnerCombat=new TitusCombat(this,this.partner,{health:this.partnerHealth,targets:()=>[this.player],onHit:landed(this.partner),onWhiff});
+    for(const c of [this.combat,this.partnerCombat]) c.sprite.on('pixelforge-attack',()=>{if(c.rules.attack)this.hitFeel.swing(c.sprite,c.rules.attack.name);});
     // Rings, "MASH!" and wind-up telegraphs for both fighters, as in a level.
     const superReady=(c)=>{const move=Object.keys(ATTACKS).find(n=>ATTACKS[n].character===c.rules.character);return !!move&&c.rules.health.value>0&&this.time.now>=(c.rules.readyAt[move]??0);};
     const marked=(c,mine)=>({sprite:c.sprite,mine,alive:c.rules.health.value>0,superReady:superReady(c),mash:!!c.rules.heldBy||this.time.now<c.rules.stunUntil});
