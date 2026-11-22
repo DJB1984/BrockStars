@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type CSSProperties } from 'react';
 import { FIGHTERS } from '../fighters.js';
-import { characterAttack, BLOCK, REGEN } from '../combat/rules.js';
+import { characterAttack, BLOCK } from '../combat/rules.js';
 import { net, type Session } from './session';
 import { Sprite, preloadSprite, spriteTop } from './Sprite';
 import { Icon, Platform } from './Icon';
@@ -140,14 +140,14 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
               <dt>Speed</dt>
               <dd>
                 <Meter cells={speedCells} />
-                <span className="stat-num">{f.speed}<small>{f.trait}</small></span>
+                <span className="stat-num">{f.speed}</span>
               </dd>
             </div>
             <div className="stat">
               <dt>Health</dt>
               <dd>
                 <Meter cells={10} tone="green" />
-                <span className="stat-num">{f.health}<small>Heals after {REGEN.delay / 1000}s</small></span>
+                <span className="stat-num">{f.health}</span>
               </dd>
             </div>
           </dl>
@@ -156,7 +156,6 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
           <ul className="moves">
             {moves(f.id).map((m) => (
               <li key={m.name} className="move">
-                <kbd className="key">{m.key}</kbd>
                 <span className="move-name">{m.name}</span>
                 <span className="dmg" aria-label={`${m.damage} damage`}>
                   {Array.from({ length: MAX_DAMAGE }, (_, i) => <i key={i} className={i < m.damage ? 'on' : ''} />)}
@@ -165,7 +164,6 @@ export function ChooseFighter({ session, initialId, onFight, onBack }: Props) {
               </li>
             ))}
             <li className="move">
-              <kbd className="key">V</kbd>
               <span className="move-name">Block <small>hold</small></span>
               <span className="move-note"><span className="long">Takes </span>{Math.round(BLOCK.reduction * 100)}% less<span className="long"> damage</span></span>
             </li>
@@ -245,9 +243,10 @@ function RoomBadge({ session, count }: { session: Session; count: number }) {
   if (session.mode === 'world') {
     return (
       <div className="room-badge">
-        <span className="room-badge-label">Everyone's in</span>
-        <span className="room-badge-code">Brock</span>
-        <span className="room-badge-count"><Icon name="person" size={2} /> {count} online</span>
+        <div className="hud-online px-panel" role="status" aria-live="polite">
+          <i className="online-dot" aria-hidden="true" />
+          <span><b>{count}</b> online</span>
+        </div>
       </div>
     );
   }
