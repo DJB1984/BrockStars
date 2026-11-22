@@ -8,7 +8,7 @@ import { CHARACTER_STATS } from './characters.js';
 export const FIGHTERS = [
   {
     id: 'mason', name: 'Mason', fullName: 'Mason Risner', trait: 'Fast',
-    special: { name: 'Grapple', text: 'Grab one opponent in a two-second headlock for 25 damage. 20-second cooldown.', ready: true },
+    special: { name: 'Grapple', text: 'Grab one opponent in a two-second headlock for 25 damage.', ready: true },
   },
   {
     id: 'titus', name: 'Titus', fullName: 'Titus Webster', trait: 'Normal',
@@ -16,7 +16,7 @@ export const FIGHTERS = [
   },
   {
     id: 'james', name: 'James', fullName: 'James Ricci', trait: 'Slow',
-    special: { name: 'Bellow', text: 'A sound wave hits all opponents within 10 blocks for 10 damage, stopping movement and healing for 5 seconds. 25-second cooldown.', ready: true },
+    special: { name: 'Bellow', text: 'A sound wave hits all opponents within 10 blocks for 10 damage, stopping movement and healing for 5 seconds.', ready: true },
   },
 ].map(f => ({ ...f, ...CHARACTER_STATS[f.id] }));
 
