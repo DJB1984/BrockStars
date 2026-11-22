@@ -24,7 +24,8 @@
     "test:readable": "node tests/fight-readable-browser.mjs",
     "test:readable:multiplayer": "node tests/fight-readable-network-browser.mjs",
     "test:controls": "node tests/controls-browser.mjs",
-    "test:controls:multiplayer": "node tests/controls-network-browser.mjs"
+    "test:controls:multiplayer": "node tests/controls-network-browser.mjs",
+    "test:match": "node tests/match-network-browser.mjs"
   },
   "dependencies": {
     "@fontsource/dotgothic16": "^5.3.1",

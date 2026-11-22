@@ -134,6 +134,19 @@ player for 150 ms, and its snapshot carries `dodge` so the others draw the after
 fresh press; the host takes 120 ms off the hold (never under 600 ms) or 150 ms off the stun (never under 1 s),
 counts presses no closer than 50 ms, and won't let anyone grab a freed player again for a second.
 
+**A KO counts** (`src/combat/match.js`, timings in `KO`). The host judges a KO when a hit empties someone's
+health: it credits the last player who damaged them within `KO.credit` (5 s), even if a hazard or a shower
+finished them, and with nobody that recent it counts only as a fall. Each fighter keeps the session's tally
+(`score`: KOs, falls, and the streak of KOs since their last fall); ending a streak of `KO.streak` (3) or more is
+worth a bonus KO. The hit carries `ko`, every snapshot carries each fighter's `ko` (who, which way, time left),
+`safe` and `score` plus the `leader`, and `kos` lists the KOs since the last snapshot. Every screen gives the KO
+hit a 250 ms freeze, the heavy spark and a big "KO!"; the body lies in its knockdown pose and fades out. The
+victim's screen dims with "KO'd by Mason". After `KO.respawn` (2 s) they're back at the level's spawn in the
+same scene, blinking and untouchable for `KO.safe` (1.5 s), which their own swing ends early. The HUD shows a
+kill feed under the online count and the scores in the menu and while Tab is held; name tags carry a small
+crown for the leader and, small and dim beside the name, a streak of 3 or more. The tally lives on the host:
+when the hub's tab closes, the new hub starts everyone at zero.
+
 Run `npm test` for combat rules and host authority checks, and `npm run test:multiplayer` against
 `npm run dev` to exercise two browser clients (Playwright and Chrome/Chromium required).
 `npm run test:hitfeel` and `npm run test:hitfeel:multiplayer` check that hits land and misses swish, solo and online.
@@ -141,3 +154,5 @@ Run `npm test` for combat rules and host authority checks, and `npm run test:mul
 dud presses, and online the `seen` time, the predicted hit felt once, and the off-screen arrow.
 `npm run test:controls` and `npm run test:controls:multiplayer` check the buffer, tap aim, perfect and three-sided
 blocks, mashing out, both keyboard layouts and touch taps, solo and online.
+`npm run test:match` checks the KO, the respawn in place, spawn safety, the kill feed, the crown, streaks and the
+scores, solo and online.
